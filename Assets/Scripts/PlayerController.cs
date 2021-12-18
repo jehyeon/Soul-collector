@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private Vector3 clickedPos = Vector3.zero;
+    public float playerSpeed = 10f;
+    
+    private bool isMove;
+    private Vector3 destinationPos;
     
     void Update()
     {
@@ -16,14 +19,34 @@ public class PlayerController : MonoBehaviour
             {
                 if (raycastHit.collider.CompareTag("Ground"))
                 {
-                    clickedPos = raycastHit.point + new Vector3(0, 1, 0);
-                }
-                else
-                {
-                    clickedPos = this.transform.position;
+                    SetDestination(raycastHit.point + new Vector3(0, 1, 0));
                 }
             }
-            this.transform.position = clickedPos;
         }
+
+        Move();
+    }
+
+    private void Move()
+    {
+        if (isMove)
+        {
+            if (Vector3.Distance(destinationPos, this.transform.position) <= 0.1f)
+            {
+                // 목적지에 플레이어가 도착하면
+                isMove = false;
+                return;
+            }
+            
+            Vector3 dir = destinationPos - this.transform.position;
+
+            this.transform.position += dir.normalized * Time.deltaTime * playerSpeed;
+        }
+    }
+
+    private void SetDestination(Vector3 pos)
+    {
+        destinationPos = pos;
+        isMove = true;
     }
 }
