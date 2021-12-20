@@ -6,7 +6,10 @@ public class EnemyController : MonoBehaviour
 {
     public float enemySpeed = 8f;
     public float hp = 100f;
-
+    public float attackSpeed = 2f;
+    public float timeAfterAttack;
+    public float damage = 5f;
+    
     private GameObject player;
     private Vector3 startPos;
     private bool isMove;
@@ -21,6 +24,8 @@ public class EnemyController : MonoBehaviour
 
         isMove = false;
         isBack = false;
+
+        timeAfterAttack = attackSpeed;
     }
 
     void Update()
@@ -28,9 +33,14 @@ public class EnemyController : MonoBehaviour
         FindNearbyPlayer();
         Move();
 
+        timeAfterAttack += Time.deltaTime;
         if (isAttack)
         {
-            Attack();
+            if (timeAfterAttack > attackSpeed)
+            {
+                Attack();
+                timeAfterAttack = 0f;
+            }
         }
     }
 
@@ -104,6 +114,6 @@ public class EnemyController : MonoBehaviour
 
     private void Attack()
     {
-        player.GetComponent<PlayerController>().Hit(Time.deltaTime);
+        player.GetComponent<PlayerController>().Hit(damage);
     }
 }

@@ -1,17 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
     public float playerSpeed = 10f;
-    public float hp = 100f;
-    
+    public float maxHp = 100f;
+    public float nowHp;
+    public float attackSpeed = 2f;
+    public float damage = 5f;
+    public float timeAfterAttack;
+
     private bool isMove;
     private Vector3 destinationPos;
     
     private bool isTarget;
     private GameObject targetEnemy;
+
+    public Slider hpBar;
+    
+    void Start()
+    {
+        hpBar.maxValue = maxHp;
+        nowHp = maxHp;
+        timeAfterAttack = attackSpeed;
+    }
 
     void Update()
     {
@@ -38,10 +52,18 @@ public class PlayerController : MonoBehaviour
 
         Move();
 
+        timeAfterAttack += Time.deltaTime;
+
         if (isTarget)
         {
-            Attack();
+            if (timeAfterAttack > attackSpeed)
+            {
+                Attack();
+                timeAfterAttack = 0f;
+            }
         }
+
+        UpdateHpBar();
     }
 
     private void Move()
@@ -71,7 +93,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Vector3.Distance(targetEnemy.transform.position, this.transform.position) <= 1.1f)
         {
-            targetEnemy.GetComponent<EnemyController>().Hit(Time.deltaTime);
+            targetEnemy.GetComponent<EnemyController>().Hit(damage);
         }
     }
 
@@ -83,6 +105,11 @@ public class PlayerController : MonoBehaviour
 
     public void Hit(float damage)
     {
-        hp -= damage;
+        nowHp -= damage;
+    }
+
+    private void UpdateHpBar()
+    {
+        hpBar.value = nowHp;
     }
 }
