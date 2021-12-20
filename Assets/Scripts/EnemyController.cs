@@ -9,7 +9,7 @@ public class EnemyController : MonoBehaviour
     public float attackSpeed = 2f;
     public float timeAfterAttack;
     public float damage = 5f;
-    
+
     private GameObject player;
     private Vector3 startPos;
     private bool isMove;
@@ -105,7 +105,7 @@ public class EnemyController : MonoBehaviour
     {
         hp -= damage;
 
-        if (hp < 0f)
+        if (hp <= 0f)
         {
             Destroy(gameObject);
             player.GetComponent<PlayerController>().Kill();
