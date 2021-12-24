@@ -108,6 +108,7 @@ public class EnemyController : MonoBehaviour
         if (hp <= 0f)
         {
             Destroy(gameObject);
+            this.GetComponent<DropItems>().DropItem();
             player.GetComponent<PlayerController>().Kill();
         }
     }

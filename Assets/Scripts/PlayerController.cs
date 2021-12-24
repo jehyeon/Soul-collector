@@ -8,14 +8,14 @@ public class PlayerController : MonoBehaviour
     public float playerSpeed = 10f;
     public float maxHp = 100f;
     public float nowHp;
-    public float attackSpeed = 2f;
+    public float attackSpeed = 1f;
     public float damage = 5f;
     public float timeAfterAttack;
 
     private bool isMove;
     private Vector3 destinationPos;
     
-    private bool isTarget;
+    public bool isTarget;
     private GameObject targetEnemy;
 
     public Slider hpBar;
@@ -44,8 +44,7 @@ public class PlayerController : MonoBehaviour
                 // 적 클릭하면 target 설정
                 if (raycastHit.collider.CompareTag("Enemy"))
                 {
-                    targetEnemy = raycastHit.collider.gameObject;
-                    isTarget = true;
+                    SetTarget(raycastHit.collider.gameObject);
                 }
             }
         }
@@ -56,10 +55,13 @@ public class PlayerController : MonoBehaviour
 
         if (isTarget)
         {
-            if (timeAfterAttack > attackSpeed)
+            if (CheckEnemyInAttackRange())
             {
-                Attack();
-                timeAfterAttack = 0f;
+                if (timeAfterAttack > attackSpeed)
+                {
+                    Attack();
+                    timeAfterAttack = 0f;
+                }
             }
         }
 
@@ -89,12 +91,28 @@ public class PlayerController : MonoBehaviour
         isMove = true;
     }
 
-    private void Attack()
+    public void SetTarget(GameObject targetObject)
+    {
+        targetEnemy = targetObject;
+        SetDestination(targetObject.transform.position);
+        isTarget = true;
+    }
+
+    private bool CheckEnemyInAttackRange()
     {
         if (Vector3.Distance(targetEnemy.transform.position, this.transform.position) <= 1.1f)
         {
-            targetEnemy.GetComponent<EnemyController>().Hit(damage);
+            isMove = false;
+            return true;
         }
+        
+        return false;
+    }
+
+    private void Attack()
+    {
+        isMove = false;
+        targetEnemy.GetComponent<EnemyController>().Hit(damage);
     }
 
     public void Kill()
