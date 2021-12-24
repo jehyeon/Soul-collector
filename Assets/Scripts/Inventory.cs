@@ -2,19 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InventoryUI : MonoBehaviour
+public class Inventory : MonoBehaviour
 {
     public bool inventoryActivated = false;
+    [SerializeField] 
+    private GameObject go_inventoryBase;
+    [SerializeField]
+    private GameObject go_SlotsParent;
 
-    public GameObject inventoryBase;
+    private Slot[] slots;
+    private int index;
 
-    // Start is called before the first frame update
     void Start()
     {
-        
+        slots = go_SlotsParent.GetComponentsInChildren<Slot>();
+        index = 0;    
     }
 
-    // Update is called once per frame
     void Update()
     {
         UseInventory();
@@ -37,13 +41,25 @@ public class InventoryUI : MonoBehaviour
     
     private void OpenInventory()
     {
-        inventoryBase.SetActive(true);
+        go_inventoryBase.SetActive(true);
         inventoryActivated = true;
     }
 
     public void CloseInventory()
     {
-        inventoryBase.SetActive(false);
+        go_inventoryBase.SetActive(false);
         inventoryActivated = false;
+    }
+
+    public bool AcquireItem(GameObject _item, int _count = 1)
+    {
+        if (index >= slots.Length)
+        {
+            return false;
+        }
+
+        slots[index].AddItem(_item, _count);
+        index += 1;
+        return true;
     }
 }

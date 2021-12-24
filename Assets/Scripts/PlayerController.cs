@@ -20,6 +20,9 @@ public class PlayerController : MonoBehaviour
 
     public Slider hpBar;
     
+    [SerializeField]
+    private Canvas cv;
+
     void Start()
     {
         hpBar.maxValue = maxHp;
@@ -45,6 +48,11 @@ public class PlayerController : MonoBehaviour
                 if (raycastHit.collider.CompareTag("Enemy"))
                 {
                     SetTarget(raycastHit.collider.gameObject);
+                }
+
+                if (raycastHit.collider.CompareTag("Item"))
+                {
+                    GetItem(raycastHit.collider.gameObject);
                 }
             }
         }
@@ -129,5 +137,19 @@ public class PlayerController : MonoBehaviour
     private void UpdateHpBar()
     {
         hpBar.value = nowHp;
+    }
+
+    public void GetItem(GameObject _targetObject)
+    {
+        bool emptyInventory = cv.GetComponent<Inventory>().AcquireItem(_targetObject);
+
+        if (emptyInventory)
+        {
+            Destroy(_targetObject);
+        }
+        else
+        {
+            Debug.Log("인벤토리 꽉 참");
+        }
     }
 }
