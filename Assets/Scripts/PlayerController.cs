@@ -5,12 +5,12 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-    public float playerSpeed = 10f;
     public float maxHp = 100f;
     public float nowHp;
     public float attackSpeed = 1f;
     public float damage = 5f;
-    public float timeAfterAttack;
+    public float attackCoolTime;
+    PlayerStat _stat;
 
     private bool isMove;
     private Vector3 destinationPos;
@@ -25,9 +25,11 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        _stat = gameObject.GetComponent<PlayerStat>();
+
         hpBar.maxValue = maxHp;
         nowHp = maxHp;
-        timeAfterAttack = attackSpeed;
+        attackCoolTime = attackSpeed;
     }
 
     void Update()
@@ -59,16 +61,16 @@ public class PlayerController : MonoBehaviour
 
         Move();
 
-        timeAfterAttack += Time.deltaTime;
+        attackCoolTime += Time.deltaTime;
 
         if (isTarget)
         {
             if (CheckEnemyInAttackRange())
             {
-                if (timeAfterAttack > attackSpeed)
+                if (attackCoolTime > attackSpeed)
                 {
                     Attack();
-                    timeAfterAttack = 0f;
+                    attackCoolTime = 0f;
                 }
             }
         }
@@ -89,7 +91,7 @@ public class PlayerController : MonoBehaviour
             
             Vector3 dir = destinationPos - this.transform.position;
 
-            this.transform.position += dir.normalized * Time.deltaTime * playerSpeed;
+            this.transform.position += dir.normalized * Time.deltaTime * _stat.MoveSpeed;
         }
     }
 
