@@ -13,7 +13,6 @@ public class TempSpawner : MonoBehaviour
 
     void Start()
     {
-        Instantiate(enemyPref, this.transform.position, this.transform.rotation);
     }
 
     // Update is called once per frame
@@ -24,7 +23,15 @@ public class TempSpawner : MonoBehaviour
         if (tempNow > temp)
         {
             tempNow = 0;
-            Instantiate(enemyPref, this.transform.position + new Vector3(0, 1, 0), this.transform.rotation);
+            Spawn();
         }
+    }
+
+    void Spawn()
+    {
+        int spwanX = Random.Range((int)(this.transform.position.x - fieldX), (int)(this.transform.position.x + fieldX));
+        int spwanZ = Random.Range((int)(this.transform.position.y - fieldY), (int)(this.transform.position.y + fieldY));
+
+        Instantiate(enemyPref, new Vector3(spwanX, 1, spwanZ), this.transform.rotation);
     }
 }
