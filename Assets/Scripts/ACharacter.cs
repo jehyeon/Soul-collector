@@ -48,7 +48,7 @@ public class ACharacter : MonoBehaviour
     {
         int calculedDamage = CalculDamage();
 
-        Debug.Log(gameObject.name + "이 " + targetObject.name + "을 " + calculedDamage + " 데미지로 공격");
+        // Debug.Log(gameObject.name + "이 " + targetObject.name + "을 " + calculedDamage + " 데미지로 공격");
         
         // 공격 대상이 Player인지 Enemy인지 확인
         Player isPlayer = targetObject.GetComponent<Player>();
@@ -70,7 +70,7 @@ public class ACharacter : MonoBehaviour
     {
         _stat.Attacked(damage);
 
-        Debug.Log(gameObject.name + "의 체력이 " + damage + "만큼 감소하여 현재 체력이 " + _stat.Hp);
+        // Debug.Log(gameObject.name + "의 체력이 " + damage + "만큼 감소하여 현재 체력이 " + _stat.Hp);
 
         if (_stat.Hp < 1)
         {

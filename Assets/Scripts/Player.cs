@@ -11,10 +11,16 @@ public class Player : ACharacter
 
     [SerializeField]
     private Slider hpBar;
+    [SerializeField]
+    private Text hpBarText;
+
+    // 방어
+    private float hpRecoveryCoolTime;
 
     protected override void Awake()
     {
         base.Awake();
+        hpRecoveryCoolTime = 0f;
     }
 
     void Start()
@@ -31,6 +37,9 @@ public class Player : ACharacter
 
         // state가 Move면 destinationPos로 이동
         Move();
+
+        // Hp 자동회복
+        RecoveryHp();
 
         // UI
         UpdateHpBar();
@@ -59,6 +68,23 @@ public class Player : ACharacter
 
     private void UpdateHpBar()
     {
-        hpBar.value = _stat.Hp;
+        hpBar.value = (float)_stat.Hp / (float)_stat.MaxHp * 100f;
+        hpBarText.text = _stat.Hp + " / " + _stat.MaxHp;
+    }
+
+    private void RecoveryHp()
+    {
+        if (_stat.Hp == _stat.MaxHp)
+        {
+            return;
+        }
+        hpRecoveryCoolTime += Time.deltaTime;
+
+        if (hpRecoveryCoolTime > 10)
+        {
+            hpRecoveryCoolTime = 0f;
+            _stat.RecoveryHp();
+            Debug.Log("HP 자동회복" + _stat.HpRecovery);
+        }
     }
 }

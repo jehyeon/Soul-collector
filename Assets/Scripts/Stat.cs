@@ -14,6 +14,7 @@ public class Stat : MonoBehaviour
     protected int _absoluteAccuracy;    // 명중률
 
     // 방어
+    protected int _maxHp;
     protected int _hp;                  // 체력
     protected int _hpRecovery;          // Hp 자동 회복
     protected int _damageReduction;     // 데미지 감소
@@ -29,6 +30,7 @@ public class Stat : MonoBehaviour
     public int DefaultDamage { get { return _defaultDamage; }}
     public int Accuracy { get { return _accuracy; }}
     public int AbsoluteAccuracy { get { return _absoluteAccuracy; }}
+    public int MaxHp { get { return _maxHp; }}
     public int Hp { get { return _hp; }}
     public int HpRecovery { get { return _hpRecovery; }}
     public int DamageReduction { get { return _damageReduction; }}
@@ -43,8 +45,9 @@ public class Stat : MonoBehaviour
         _defaultDamage = 1;
         _accuracy = 0;
         _absoluteAccuracy = 0;
+        _maxHp = 100;
         _hp = 100;
-        _hpRecovery = 0;
+        _hpRecovery = 5;
         _damageReduction = 0;
         _evasionPercent = 0;
         _moveSpeed = 10f;
@@ -65,11 +68,18 @@ public class Stat : MonoBehaviour
         _defaultDamage = (int)data[id]["defaultDamage"];
         _accuracy = (int)data[id]["accuracy"];
         _absoluteAccuracy = (int)data[id]["absoluteAccuracy"];
+        _maxHp = (int)data[id]["maxHp"];
         _hp = (int)data[id]["hp"];
         _hpRecovery = (int)data[id]["hpRecovery"];
         _damageReduction = (int)data[id]["damageReduction"];
         _evasionPercent = (int)data[id]["evasionPercent"];
         _moveSpeed = (float)System.Convert.ToDouble(data[id]["moveSpeed"]);
+    }
+
+    // 방어
+    public void RecoveryHp()
+    {
+        _hp += _hpRecovery;
     }
 
     public override string ToString()
