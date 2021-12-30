@@ -27,7 +27,7 @@ public class Item : MonoBehaviour
 
     public int ImageId { get { return _imageId; }}
 
-    private void LoadFromCSV(int id, string fileName)
+    public void LoadFromCSV(int id, string fileName)
     {
         List<Dictionary<string, object>> data = CSVReader.Read(fileName);
         _imageId = (int)data[id]["imageId"];
@@ -43,6 +43,31 @@ public class Item : MonoBehaviour
     public void SetId(int id)
     {
         _id = id;
-        LoadFromCSV(_id, "Item");
     }
+
+    public override string ToString()
+    {
+        if (_itemType == 1 || _itemType == 2 || _itemType == 3)
+        {
+            // 무기 description
+            string description = "";
+
+            if (_attackSpeed != 0)
+            {
+                description += "공격속도 " + _attackSpeed.ToString() + "\n";
+            }
+            if (_defaultDamage != 0)
+            {
+                description += "기본 데미지 " + _defaultDamage.ToString() + "\n";
+            }
+            return description
+                + "최소 데미지 " + _minDamage.ToString() + "\n"
+                + "최대 데미지 " + _maxDamage.ToString() + "\n";
+        }
+        else
+        {
+            // 임시
+            return "";
+        }
+    }    
 }

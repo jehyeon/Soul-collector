@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour
 
     public void GetItem(GameObject targetObject)
     {
-        bool emptyInventory = player.cv.GetComponent<Inventory>().AcquireItem(targetObject);
+        bool emptyInventory = player.cv.GetComponent<Inventory>().AcquireItem(targetObject.GetComponent<Item>()._id);
 
         if (emptyInventory)
         {
