@@ -12,6 +12,11 @@ public class Player : ACharacter
     [SerializeField]
     private Slider hpBar;
 
+    protected override void Awake()
+    {
+        base.Awake();
+    }
+
     void Start()
     {
         hpBar.maxValue = _stat.Hp;

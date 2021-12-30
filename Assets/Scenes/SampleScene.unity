@@ -579,6 +579,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f29448a9aba320943b25e1476878088c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyId: 0
   enemyPref: {fileID: 3076087873692225936, guid: 797a0d174211039409c59b9dc0d78cc6, type: 3}
   fieldX: 5
   fieldY: 5
@@ -12593,7 +12594,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21f1ded2e21ad8347ba2b1b31d534402, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _stat: {fileID: 1954890778}
+  _stat: {fileID: 0}
   state: 0
   destinationPos: {x: 0, y: 0, z: 0}
   targetEnemy: {fileID: 0}

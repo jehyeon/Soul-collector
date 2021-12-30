@@ -10,11 +10,15 @@ public class Enemy : ACharacter
     private int findRange = 5;      // 플레이어 감지 범위 (임시)
     private int backRange = 20;     // 스폰 위치로부터의 제한 거리 (임시)
 
+    protected override void Awake()
+    {
+        base.Awake();
+    }
+
     void Start()
     {
         player = GameObject.FindWithTag("Player");
         startPos = this.transform.position;
-        state = State.Idle;
     }
 
     void Update()

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TempSpawner : MonoBehaviour
 {
+    public int enemyId = 0;
     public GameObject enemyPref;
     public float fieldX = 50;
     public float fieldY = 50;
@@ -24,7 +25,7 @@ public class TempSpawner : MonoBehaviour
         if (tempNow > temp)
         {
             tempNow = 0;
-            // Spawn();
+            Spawn();
         }
     }
 
@@ -33,6 +34,7 @@ public class TempSpawner : MonoBehaviour
         int spwanX = Random.Range((int)(this.transform.position.x - fieldX), (int)(this.transform.position.x + fieldX));
         int spwanZ = Random.Range((int)(this.transform.position.y - fieldY), (int)(this.transform.position.y + fieldY));
 
-        Instantiate(enemyPref, new Vector3(spwanX, 1, spwanZ), this.transform.rotation);
+        GameObject instance = Instantiate(enemyPref, new Vector3(spwanX, 1, spwanZ), this.transform.rotation);
+        instance.GetComponent<Enemy>()._stat.LoadFromCSV(enemyId, "Enemy");
     }
 }

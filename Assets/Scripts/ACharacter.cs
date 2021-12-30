@@ -22,7 +22,7 @@ public class ACharacter : MonoBehaviour
     // 이동
     public Vector3 destinationPos;
 
-    private void Start()
+    protected virtual void Awake()
     {
         _stat = gameObject.GetComponent<Stat>();
         state = State.Idle;
@@ -106,5 +106,10 @@ public class ACharacter : MonoBehaviour
     {
         // 스탯 기반 데미지로 수정 예정
         return 5;
+    }
+
+    public void SetStat(Stat newStat)
+    {
+        _stat = newStat;
     }
 }

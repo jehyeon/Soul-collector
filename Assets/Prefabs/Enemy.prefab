@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3076087873692225950}
   - component: {fileID: 3076087873692225951}
   - component: {fileID: 3076087873692225946}
-  - component: {fileID: -1150021237247790832}
+  - component: {fileID: 8427083703917344523}
   - component: {fileID: 3076087873692225945}
   m_Layer: 0
   m_Name: Enemy
@@ -112,7 +112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfb8464b28b66a6488abeed8949fbb19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _stat: {fileID: -1150021237247790832}
+  _stat: {fileID: 0}
   state: 0
   destinationPos: {x: 0, y: 0, z: 0}
 --- !u!54 &3076087873692225946
@@ -131,7 +131,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &-1150021237247790832
+--- !u!114 &8427083703917344523
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
