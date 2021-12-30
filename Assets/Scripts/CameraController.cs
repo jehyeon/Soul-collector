@@ -16,6 +16,10 @@ public class CameraController : MonoBehaviour
 
     void Update()
     {
+        if (player == null)
+        {
+            return;
+        }
         Vector3 willGoPos = player.transform.position + offset;
         this.transform.position = Vector3.Lerp(this.transform.position, willGoPos, cameraSpeed);
     }

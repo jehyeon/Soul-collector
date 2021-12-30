@@ -13,6 +13,7 @@ public class TempSpawner : MonoBehaviour
 
     void Start()
     {
+        Spawn();
     }
 
     // Update is called once per frame
@@ -23,7 +24,7 @@ public class TempSpawner : MonoBehaviour
         if (tempNow > temp)
         {
             tempNow = 0;
-            Spawn();
+            // Spawn();
         }
     }
 

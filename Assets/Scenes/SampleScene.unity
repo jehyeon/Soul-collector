@@ -12590,18 +12590,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1954890770}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a8b53d7b2c190345be3ed958eeb88fb, type: 3}
+  m_Script: {fileID: 11500000, guid: 21f1ded2e21ad8347ba2b1b31d534402, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerSpeed: 10
-  maxHp: 100
-  nowHp: 0
-  attackSpeed: 2
-  damage: 5
-  timeAfterAttack: 0
-  isTarget: 0
-  hpBar: {fileID: 343514038}
+  _stat: {fileID: 1954890778}
+  state: 0
+  destinationPos: {x: 0, y: 0, z: 0}
+  targetEnemy: {fileID: 0}
   cv: {fileID: 1975117034}
+  hpBar: {fileID: 343514038}
 --- !u!54 &1954890776
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -12627,11 +12624,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1954890770}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3462050c941354547bd633dc2c1aaa13, type: 3}
+  m_Script: {fileID: 11500000, guid: 9a8b53d7b2c190345be3ed958eeb88fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  findEnemyCoolTime: 2
-  isAutoHunt: 0
 --- !u!114 &1954890778
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12641,7 +12636,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1954890770}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9bb6facd72bb1e4438c5137b6748c1db, type: 3}
+  m_Script: {fileID: 11500000, guid: ff37c9c8e6546d64fb5c9a0cb9f32098, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1975117031

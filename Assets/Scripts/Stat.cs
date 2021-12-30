@@ -43,4 +43,9 @@ public class Stat : MonoBehaviour
         _evasionPercent = 0;
         _moveSpeed = 10f;
     }
+
+    public void Attacked(int damage)
+    {
+        _hp -= damage;
+    }
 }
