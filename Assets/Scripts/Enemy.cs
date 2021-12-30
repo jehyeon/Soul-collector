@@ -87,4 +87,10 @@ public class Enemy : ACharacter
             state = State.Back;
         }
     }
+
+    public override void Die()
+    {
+        gameObject.GetComponent<DropItems>().DropItem();
+        Destroy(gameObject);
+    }
 }

@@ -95,7 +95,7 @@ public class ACharacter : MonoBehaviour
         }
     }    
 
-    protected void Die()
+    public virtual void Die()
     {
         // Die action
         Debug.Log("Die!");

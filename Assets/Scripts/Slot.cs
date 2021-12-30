@@ -14,16 +14,12 @@ public class Slot : MonoBehaviour
     private Text text_Count;
     [SerializeField]
     private Image image_EquipImage;
-    [SerializeField]
-    private Image image_TempBackground;
     
     private void SetColor(float _alpha)
     {
         Color color = itemImage.color;
         color.a = _alpha;
         itemImage.color = color;
-
-        image_TempBackground.color = color;
     }
 
     // 슬롯에 아이템 추가
@@ -31,7 +27,7 @@ public class Slot : MonoBehaviour
     {
         item = _item;
         itemCount = _count;
-        itemImage.sprite = item.GetComponent<Item>().itemImage;
+        itemImage.sprite = Resources.Load<Sprite>("Item Images/" + item.GetComponent<Item>()._id);
 
         // if (item.itemType != Item.ItemType.Equipment)
         // {
@@ -42,9 +38,6 @@ public class Slot : MonoBehaviour
         // {
         //     text_Count.text = "";
         // }
-
-        // Temp
-        TempColor(item.GetComponent<Item>().id);
 
         SetColor(1);
     }
@@ -72,24 +65,4 @@ public class Slot : MonoBehaviour
         text_Count.text = "";
     }
 
-    private void TempColor(int itemCode)
-    {
-        // "#ffffff00", "#487B46FF", "#465D7BFF", "#7B4C46FF", "#74467BFF"
-        
-        switch (itemCode)
-        {
-            case 1:
-                image_TempBackground.color = new Color(72/255f, 123/255f, 70/255f);
-                break;
-            case 2:
-                image_TempBackground.color = new Color(70/255f, 93/255f, 123/255f);
-                break;
-            case 3:
-                image_TempBackground.color = new Color(123/255f, 76/255f, 70/255f);
-                break;
-            case 4:
-                image_TempBackground.color = new Color(116/255f, 70/255f, 123/255f);
-                break;
-        }
-    }
 }

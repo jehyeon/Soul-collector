@@ -27,17 +27,17 @@ def getDefaultDamage(weaponDamage, hitRating):
 
     return result, sum/10000, weight
 
-print(getDefaultDamage(15, 0))
-print(getDefaultDamage(15, 10)[1])
-print(getDefaultDamage(15, 20)[1])
-print(getDefaultDamage(15, 30)[1])
-print(getDefaultDamage(15, 40)[1])
-print(getDefaultDamage(15, 50))
-print(getDefaultDamage(15, 60)[1])
-print(getDefaultDamage(15, 70)[1])
-print(getDefaultDamage(15, 80)[1])
-print(getDefaultDamage(15, 90)[1])
-print(getDefaultDamage(15, 100))
+# print(getDefaultDamage(15, 0))
+# print(getDefaultDamage(15, 10)[1])
+# print(getDefaultDamage(15, 20)[1])
+# print(getDefaultDamage(15, 30)[1])
+# print(getDefaultDamage(15, 40)[1])
+# print(getDefaultDamage(15, 50))
+# print(getDefaultDamage(15, 60)[1])
+# print(getDefaultDamage(15, 70)[1])
+# print(getDefaultDamage(15, 80)[1])
+# print(getDefaultDamage(15, 90)[1])
+# print(getDefaultDamage(15, 100))
 
 # ({4: 1448, 3: 1437, 2: 1420, 1: 1371, 6: 1375, 5: 1515, 7: 1434}, 4.0177, [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0])
 # 4.7768
@@ -50,3 +50,10 @@ print(getDefaultDamage(15, 100))
 # 10.163
 # 10.8393
 # ({8: 1350, 9: 1317, 13: 1268, 10: 1241, 11: 1181, 12: 1260, 14: 1196, 15: 1187}, 11.4207, [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0])
+
+def calculAverageDamage(defaultDamage, minDamage, maxDamage, attackSpeed):
+    return ((minDamage + maxDamage) / 2 + defaultDamage) * (100 + attackSpeed) / 100
+
+print(calculAverageDamage(1, 1, 2, 20))
+print(calculAverageDamage(0, 1, 5, 0))
+print(calculAverageDamage(1, 1, 3, 0))

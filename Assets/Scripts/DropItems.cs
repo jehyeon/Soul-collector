@@ -8,11 +8,7 @@ public class DropItems : MonoBehaviour
 
     public void DropItem()
     {
-        // if (Random.value < 0.5f)
-        // {
-            dropItem.GetComponent<Item>().SetId(Random.Range(0,4));
-
-            Instantiate(dropItem, this.transform.position, this.transform.rotation);
-        // }
+        dropItem.GetComponent<Item>().SetId(1);
+        Instantiate(dropItem, this.transform.position, this.transform.rotation);
     }
 }
