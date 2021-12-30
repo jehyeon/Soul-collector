@@ -70,7 +70,7 @@ public class Enemy : ACharacter
         }
         else
         {
-            if (state == State.Attack)
+            if (state == State.Attack || state == State.Move)
             {
                 // 멀어졌는데 공격 중이면 Back 전 까지 따라감
                 state = State.Move;

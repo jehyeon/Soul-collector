@@ -105,7 +105,7 @@ public class ACharacter : MonoBehaviour
     private int CalculDamage()
     {
         // 스탯 기반 데미지로 수정 예정
-        return 5;
+        return _stat.DefaultDamage;
     }
 
     public void SetStat(Stat newStat)

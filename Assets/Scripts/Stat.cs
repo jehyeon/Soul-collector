@@ -41,7 +41,7 @@ public class Stat : MonoBehaviour
         _maxDamage = 0;
         _minDamage = 0;
         _defaultDamage = 1;
-        _accuracy = 1;
+        _accuracy = 0;
         _absoluteAccuracy = 0;
         _hp = 100;
         _hpRecovery = 0;
