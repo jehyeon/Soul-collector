@@ -104,7 +104,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler
     {
         image_EquipImage.gameObject.SetActive(true);
         cv.GetComponent<Inventory>().go_player.GetComponent<Stat>().Equip(item);
-
+        cv.GetComponent<Inventory>().UpdateStatDetail();
         isEquip = true;
     }
 
@@ -112,7 +112,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler
     {
         image_EquipImage.gameObject.SetActive(false);
         cv.GetComponent<Inventory>().go_player.GetComponent<Stat>().UnEquip(item);
-        
+        cv.GetComponent<Inventory>().UpdateStatDetail();
         isEquip = false;
     }
 }

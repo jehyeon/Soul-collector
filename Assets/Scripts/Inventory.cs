@@ -5,7 +5,11 @@ using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour
 {
-    public bool inventoryActivated = false;
+    private bool inventoryActivated = false;
+    private bool statDetailActivated = false;
+
+    [SerializeField]
+    private GameObject go_statDetail;
     [SerializeField] 
     private GameObject go_inventoryBase;
     [SerializeField]
@@ -22,12 +26,17 @@ public class Inventory : MonoBehaviour
     void Awake()
     {
         slots = go_SlotsParent.GetComponentsInChildren<Slot>();
-        index = 0;    
+        index = 0;
     }
 
+    void Start()
+    {
+        UpdateStatDetail();
+    }
     void Update()
     {
         UseInventory();
+        UseStatDetail();
     }
 
     private void UseInventory()
@@ -44,7 +53,39 @@ public class Inventory : MonoBehaviour
             }
         }
     }
+
+    private void UseStatDetail()
+    {
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            if (statDetailActivated)
+            {
+                CloseStatDetail();
+            } 
+            else
+            {
+                OpenStatDetail();
+            }
+        }
+    }
     
+    // Stat UI
+    private void OpenStatDetail()
+    {
+        go_statDetail.SetActive(true);
+        statDetailActivated = true;
+    }
+    public void CloseStatDetail()
+    {
+        go_statDetail.SetActive(false);
+        statDetailActivated = false;
+    }
+    public void UpdateStatDetail()
+    {
+        go_statDetail.transform.GetChild(1).GetComponent<Text>().text = go_player.GetComponent<Player>()._stat.ToString();
+    }
+
+    // Inventory UI
     private void OpenInventory()
     {
         go_inventoryBase.SetActive(true);

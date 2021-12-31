@@ -84,7 +84,7 @@ public class Player : ACharacter
         {
             hpRecoveryCoolTime = 0f;
             _stat.RecoveryHp();
-            Debug.Log("HP 자동회복" + _stat.HpRecovery);
+            // Debug.Log("HP 자동회복" + _stat.HpRecovery);
         }
     }
 }
