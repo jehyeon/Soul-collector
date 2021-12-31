@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Enemy : ACharacter
 {
+    public int _id;
+
     public GameObject player;
     private Vector3 startPos;
 
@@ -43,6 +45,10 @@ public class Enemy : ACharacter
         CheckFarComeFromStartPos();
     }
 
+    public void SetId(int id)
+    {
+        _id = id;
+    }
     private void FindNearbyPlayer()
     {
         if (state == State.Idle)
