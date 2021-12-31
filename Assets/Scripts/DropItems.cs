@@ -5,12 +5,15 @@ using UnityEngine;
 public class DropItems : MonoBehaviour
 {
     // 드랍 테이블로 수정
-    public GameObject dropItem;
+    [SerializeField]
+    private GameObject dropWeapon;
+    [SerializeField]
+    public GameObject dropBox;
 
     public void DropItem()
     {
-        dropItem.GetComponent<Item>().SetId(Random.Range(0,3));
-        Instantiate(dropItem, this.transform.position, this.transform.rotation);
+        dropWeapon.GetComponent<Item>().SetId(Random.Range(0,3));
+        Instantiate(dropWeapon, this.transform.position + new Vector3(0, 1, 0), this.transform.rotation);
     }
     public void DropGold()
     {

@@ -156,4 +156,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31fc047fb9d40734db6b1e0fd0b0f786, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropItem: {fileID: 5077650760184880940, guid: 1259ef7971e69a04da217b712700f47f, type: 3}
+  dropWeapon: {fileID: 5077650760184880940, guid: 1259ef7971e69a04da217b712700f47f, type: 3}
+  dropBox: {fileID: 7947193396002527311, guid: e8602d8a8c540384c8364ba1f5a7a541, type: 3}
