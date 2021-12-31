@@ -20,6 +20,8 @@ public class Inventory : MonoBehaviour
     [SerializeField]
     public GameObject go_player;
 
+    public int[] equipped;  // 장착 중인 슬롯의 id
+
     private Slot[] slots;
     private int index;
 
@@ -27,6 +29,13 @@ public class Inventory : MonoBehaviour
     {
         slots = go_SlotsParent.GetComponentsInChildren<Slot>();
         index = 0;
+
+        equipped = new int[12];
+        // 장착 정보를 -1로 초기화
+        for (int i = 0; i < equipped.Length; i++)
+        {
+            equipped[i] = -1;
+        }
     }
 
     void Start()
@@ -128,5 +137,24 @@ public class Inventory : MonoBehaviour
         go_itemDetail.transform.GetChild(1).GetComponent<Image>().sprite = null;
         go_itemDetail.transform.GetChild(2).GetComponent<Text>().text = "";
         go_itemDetail.transform.GetChild(3).GetComponent<Text>().text = "";
+    }
+
+    public void UnEquipItemType(int itempType)
+    {
+        // itemType의 장비를 UnEquip
+        if (equipped[itempType] == -1)
+        {
+            return;
+        }
+        else
+        {
+            slots[equipped[itempType]].UnEquip();
+            equipped[itempType] = -1;
+        }
+    }
+
+    public void EquipItemType(int itemType, int slotId)
+    {
+        equipped[itemType] = slotId;
     }
 }

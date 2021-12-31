@@ -19,8 +19,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler
     [SerializeField]
     private Image image_EquipImage;
     
-    // 더블 클릭
-    private float currentClickTime;
+    private float currentClickTime;     // 더블 클릭
 
     private void SetColor(float _alpha)
     {
@@ -102,13 +101,16 @@ public class Slot : MonoBehaviour, IPointerClickHandler
 
     private void Equip()
     {
+        cv.GetComponent<Inventory>().UnEquipItemType(item.ItemType);    // 해당 파츠 아이템을 UnEquip, 없으면 return;
+        cv.GetComponent<Inventory>().EquipItemType(item.ItemType, int.Parse(gameObject.name));
+
         image_EquipImage.gameObject.SetActive(true);
         cv.GetComponent<Inventory>().go_player.GetComponent<Stat>().Equip(item);
         cv.GetComponent<Inventory>().UpdateStatDetail();
         isEquip = true;
     }
 
-    private void UnEquip()
+    public void UnEquip()
     {
         image_EquipImage.gameObject.SetActive(false);
         cv.GetComponent<Inventory>().go_player.GetComponent<Stat>().UnEquip(item);

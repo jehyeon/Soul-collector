@@ -101,7 +101,7 @@ public class Stat : MonoBehaviour
 
     public void Equip(Item item)
     {
-        if (item.ItemType == 1 || item.ItemType == 2 || item.ItemType == 3)
+        if (item.ItemType == 0)
         {
             // 무기
             _maxDamage += item.MaxDamage;
@@ -113,7 +113,7 @@ public class Stat : MonoBehaviour
 
     public void UnEquip(Item item)
     {
-        if (item.ItemType == 1 || item.ItemType == 2 || item.ItemType == 3)
+        if (item.ItemType == 0)
         {
             // 무기
             _maxDamage -= item.MaxDamage;

@@ -47,7 +47,7 @@ public class Item : MonoBehaviour
 
     public override string ToString()
     {
-        if (_itemType == 1 || _itemType == 2 || _itemType == 3)
+        if (_itemType == 0)
         {
             // 무기 description
             string description = "";
