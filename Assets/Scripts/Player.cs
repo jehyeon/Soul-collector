@@ -14,6 +14,9 @@ public class Player : ACharacter
     [SerializeField]
     private Text hpBarText;
 
+    // 골드
+    private int gold;
+
     // 방어
     private float hpRecoveryCoolTime;
 
@@ -74,7 +77,7 @@ public class Player : ACharacter
 
     private void RecoveryHp()
     {
-        if (_stat.Hp == _stat.MaxHp)
+        if (_stat.Hp >= _stat.MaxHp)
         {
             return;
         }
@@ -86,5 +89,12 @@ public class Player : ACharacter
             _stat.RecoveryHp();
             // Debug.Log("HP 자동회복" + _stat.HpRecovery);
         }
+    }
+
+    // 골드
+    public void GetGold(int droppedGold)
+    {
+        gold += droppedGold;
+        cv.GetComponent<Inventory>().UpdateGoldText(gold);
     }
 }

@@ -16,6 +16,8 @@ public class Inventory : MonoBehaviour
     private GameObject go_SlotsParent;
     [SerializeField]
     private GameObject go_itemDetail;
+    [SerializeField]
+    private Text text_gold;
 
     [SerializeField]
     public GameObject go_player;
@@ -156,5 +158,10 @@ public class Inventory : MonoBehaviour
     public void EquipItemType(int itemType, int slotId)
     {
         equipped[itemType] = slotId;
+    }
+
+    public void UpdateGoldText(int gold)
+    {
+        text_gold.text = gold.ToString() + " gold";
     }
 }

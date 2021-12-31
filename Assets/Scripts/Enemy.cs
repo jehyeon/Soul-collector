@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Enemy : ACharacter
 {
-    private GameObject player;
+    public GameObject player;
     private Vector3 startPos;
 
     private int findRange = 5;      // 플레이어 감지 범위 (임시)
@@ -91,6 +91,7 @@ public class Enemy : ACharacter
     public override void Die()
     {
         gameObject.GetComponent<DropItems>().DropItem();
+        gameObject.GetComponent<DropItems>().DropGold();
         Destroy(gameObject);
     }
 }
