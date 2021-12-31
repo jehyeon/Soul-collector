@@ -115,6 +115,7 @@ MonoBehaviour:
   _stat: {fileID: 0}
   state: 0
   destinationPos: {x: 0, y: 0, z: 0}
+  player: {fileID: 0}
 --- !u!54 &3076087873692225946
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -155,4 +156,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31fc047fb9d40734db6b1e0fd0b0f786, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropItem: {fileID: 9218968091596986856, guid: c8ff7c49c62b8744fa808c439d4436c7, type: 3}
+  dropItem: {fileID: 5077650760184880940, guid: 1259ef7971e69a04da217b712700f47f, type: 3}
