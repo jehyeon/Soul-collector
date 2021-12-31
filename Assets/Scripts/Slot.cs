@@ -82,7 +82,14 @@ public class Slot : MonoBehaviour, IPointerClickHandler
 
         if ((Time.time - currentClickTime) < 0.3f)
         {
-            Equip();
+            if (!isEquip)
+            {
+                Equip();
+            }
+            else
+            {
+                UnEquip();
+            }
             currentClickTime = -1;
         }
         else
@@ -95,7 +102,17 @@ public class Slot : MonoBehaviour, IPointerClickHandler
 
     private void Equip()
     {
-        isEquip = !isEquip;
-        image_EquipImage.gameObject.SetActive(isEquip);
+        image_EquipImage.gameObject.SetActive(true);
+        cv.GetComponent<Inventory>().go_player.GetComponent<Stat>().Equip(item);
+
+        isEquip = true;
+    }
+
+    private void UnEquip()
+    {
+        image_EquipImage.gameObject.SetActive(false);
+        cv.GetComponent<Inventory>().go_player.GetComponent<Stat>().UnEquip(item);
+        
+        isEquip = false;
     }
 }

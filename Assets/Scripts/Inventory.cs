@@ -13,6 +13,9 @@ public class Inventory : MonoBehaviour
     [SerializeField]
     private GameObject go_itemDetail;
 
+    [SerializeField]
+    public GameObject go_player;
+
     private Slot[] slots;
     private int index;
 

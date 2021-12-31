@@ -8,7 +8,7 @@ public class DropItems : MonoBehaviour
 
     public void DropItem()
     {
-        dropItem.GetComponent<Item>().SetId(1);
+        dropItem.GetComponent<Item>().SetId(0);
         Instantiate(dropItem, this.transform.position, this.transform.rotation);
     }
 }

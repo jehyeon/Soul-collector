@@ -97,4 +97,28 @@ public class Stat : MonoBehaviour
             + "회피율: " + _evasionPercent.ToString() + "\n"
             + "이동속도: " + _moveSpeed.ToString() + "\n";
     }
+
+    public void Equip(Item item)
+    {
+        if (item.ItemType == 1 || item.ItemType == 2 || item.ItemType == 3)
+        {
+            // 무기
+            _maxDamage += item.MaxDamage;
+            _minDamage += item.MinDamage;
+            _defaultDamage += item.DefaultDamage;
+            _attackSpeed = (_attackSpeed * 100f - item.AttackSpeed) / 100f;
+        }
+    }
+
+    public void UnEquip(Item item)
+    {
+        if (item.ItemType == 1 || item.ItemType == 2 || item.ItemType == 3)
+        {
+            // 무기
+            _maxDamage -= item.MaxDamage;
+            _minDamage -= item.MinDamage;
+            _defaultDamage -= item.DefaultDamage;
+            _attackSpeed = (_attackSpeed * 100f + item.AttackSpeed) / 100f;
+        }
+    }
 }
