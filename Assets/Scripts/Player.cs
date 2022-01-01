@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
-
 public class Player : ACharacter
 {
     public GameObject targetEnemy;
@@ -13,9 +13,6 @@ public class Player : ACharacter
     private Slider hpBar;
     [SerializeField]
     private Text hpBarText;
-
-    // 골드
-    private int gold;
 
     // 방어
     private float hpRecoveryCoolTime;
@@ -94,7 +91,6 @@ public class Player : ACharacter
     // 골드
     public void GetGold(int droppedGold)
     {
-        gold += droppedGold;
-        cv.GetComponent<Inventory>().UpdateGoldText(gold);
+        cv.GetComponent<Inventory>().UpdateGold(droppedGold);
     }
 }

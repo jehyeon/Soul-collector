@@ -24,13 +24,17 @@ public class Inventory : MonoBehaviour
 
     public int[] equipped;  // 장착 중인 슬롯의 id
 
+    private int gold;   // 골드
     private Slot[] slots;
     private int index;
+
+    SaveManager saveManager;
 
     void Awake()
     {
         slots = go_SlotsParent.GetComponentsInChildren<Slot>();
         index = 0;
+        gold = 0;
 
         equipped = new int[12];
         // 장착 정보를 -1로 초기화
@@ -42,6 +46,8 @@ public class Inventory : MonoBehaviour
 
     void Start()
     {
+        saveManager = new SaveManager();
+        Load();
         UpdateStatDetail();
     }
     void Update()
@@ -181,8 +187,20 @@ public class Inventory : MonoBehaviour
         equipped[itemType] = slotId;
     }
 
-    public void UpdateGoldText(int gold)
+    public void UpdateGold(int droppedGold)
     {
+        gold += droppedGold;
+        text_gold.text = gold.ToString() + " gold";
+
+        // Save
+        saveManager.save._gold = gold;
+        saveManager.Save();
+    }
+
+    private void Load()
+    {
+        // 골드
+        gold = saveManager.save._gold;
         text_gold.text = gold.ToString() + " gold";
     }
 }
