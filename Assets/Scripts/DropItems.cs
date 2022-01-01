@@ -74,7 +74,6 @@ public class DropItems : MonoBehaviour
 
         // _dropItems는 확률 오름차순 정렬
         string[] itemInfos = _dropItems.Split('/');
-        // Debug.Log(itemInfos.ToString());
         for (int i = 0; i < itemInfos.Length; i++)
         {
             string[] itemInfo = itemInfos[i].Split('|');

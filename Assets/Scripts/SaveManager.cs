@@ -1,30 +1,36 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+
+using LitJson;
 
 public class SaveManager
 {
     private string saveFileName = "save.json";
 
-    public UserSave save;
+    public Save save;
 
-    public SaveManager()
-    {
-        // SaveManager 생성 시 Load
-        LoadSave();
-    }
 
-    public void LoadSave()
+    public void Load()
     {
         string filePath = Path.Combine(Application.dataPath, saveFileName);
+
         string rawSave = File.ReadAllText(filePath);
-        save = JsonUtility.FromJson<UserSave>(rawSave);
+        this.save = JsonMapper.ToObject<Save>(rawSave);
     }
 
     public void Save()
     {
-        string json = JsonUtility.ToJson(save, true);
+        string json = JsonMapper.ToJson(save);
+        string path = Path.Combine(Application.dataPath, "save.json");
+
+        File.WriteAllText(path, json);
+    }
+
+    public void Init()
+    {
+        Save temp = new Save();
+        string json = JsonMapper.ToJson(temp);
+        
         string path = Path.Combine(Application.dataPath, "save.json");
 
         File.WriteAllText(path, json);

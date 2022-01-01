@@ -29,9 +29,10 @@ public class Slot : MonoBehaviour, IPointerClickHandler
     }
 
     // 슬롯에 아이템 추가
-    public void AddItem(Item addingItem, int _count = 1)
+    public void AddItem(int _id, int _count = 1)
     {
-        item = addingItem;
+        item = gameObject.AddComponent<Item>();
+        item.LoadFromCSV(_id, "Item");
         itemCount = _count;
         itemImage.sprite = Resources.Load<Sprite>("Item Images/" + item.Id);
 
@@ -46,9 +47,6 @@ public class Slot : MonoBehaviour, IPointerClickHandler
         }
 
         SetColor(1);
-
-        Debug.Log(addingItem.ItemName);
-        Debug.Log(_count);
     }
 
     // 아이템 수량 변경
