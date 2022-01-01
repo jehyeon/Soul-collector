@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 public class Slot : MonoBehaviour, IPointerClickHandler
 {
-    Item item;
+    public Item item;
     public int itemCount;
     public Image itemImage;
     public bool isEquip;
@@ -29,24 +29,26 @@ public class Slot : MonoBehaviour, IPointerClickHandler
     }
 
     // 슬롯에 아이템 추가
-    public void AddItem(int _id, int _count = 1)
+    public void AddItem(Item addingItem, int _count = 1)
     {
-        item = gameObject.AddComponent<Item>();
-        item.LoadFromCSV(_id, "Item");
+        item = addingItem;
         itemCount = _count;
-        itemImage.sprite = Resources.Load<Sprite>("Item Images/" + _id);
+        itemImage.sprite = Resources.Load<Sprite>("Item Images/" + item.Id);
 
-        // if (item.itemType != Item.ItemType.Equipment)
-        // {
-        //     // 장착 아이템이 아닌 경우 item count 활성화
-        //     text_Count.text = itemCount.ToString();
-        // }
-        // else
-        // {
-        //     text_Count.text = "";
-        // }
+        if (item.ItemType > 12)
+        {
+            // 장착 아이템이 아닌 경우 item count 활성화
+            text_Count.text = itemCount.ToString();
+        }
+        else
+        {
+            text_Count.text = "";
+        }
 
         SetColor(1);
+
+        Debug.Log(addingItem.ItemName);
+        Debug.Log(_count);
     }
 
     // 아이템 수량 변경
@@ -79,6 +81,16 @@ public class Slot : MonoBehaviour, IPointerClickHandler
             return;
         }
 
+        // Open 상세 보기 UI
+        cv.GetComponent<Inventory>().OpenItemDetail(item, itemImage);
+
+        // 장비 아이템이 아닌 경우 더블클릭 이벤트 무시
+        if (item.ItemType > 12)
+        {
+            return;
+        }
+
+        // Equip, UnEquip
         if ((Time.time - currentClickTime) < 0.3f)
         {
             if (!isEquip)
@@ -96,7 +108,6 @@ public class Slot : MonoBehaviour, IPointerClickHandler
             currentClickTime = Time.time;
         }
 
-        cv.GetComponent<Inventory>().OpenItemDetail(item, itemImage);
     }
 
     private void Equip()

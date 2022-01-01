@@ -17,6 +17,7 @@ public class Item : MonoBehaviour
     private int _attackSpeed;
     private int _rank;
 
+    public int Id { get { return _id; }}
     public string ItemName { get { return _itemName; }}
     public int ItemType { get { return _itemType; }}
     public int MaxDamage { get { return _maxDamage; }}
@@ -29,6 +30,7 @@ public class Item : MonoBehaviour
 
     public void LoadFromCSV(int id, string fileName)
     {
+        SetId(id);
         List<Dictionary<string, object>> data = CSVReader.Read(fileName);
         _imageId = (int)data[id]["imageId"];
         _itemType = (int)data[id]["itemType"];
