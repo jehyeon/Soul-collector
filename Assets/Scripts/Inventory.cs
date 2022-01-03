@@ -178,22 +178,19 @@ public class Inventory : MonoBehaviour
         return true;
     }
 
-    public void UnEquipItemType(int itempType)
+    public void UnEquipItemType(int itemType)
     {
-        // itemType의 장비를 UnEquip
-        if (equipped[itempType] == -1)
-        {
-            return;
-        }
-        else
-        {
-            slots[equipped[itempType]].UnEquip();
-            equipped[itempType] = -1;
-        }
+        equipped[itemType] = -1;
     }
 
     public void EquipItemType(int itemType, int slotId)
     {
+        if (equipped[itemType] != -1)
+        {
+            // 해당 파츠를 착용하고 있으면 먼저 UnEquip
+            slots[equipped[itemType]].UnEquip();
+        }
+
         equipped[itemType] = slotId;
     }
 

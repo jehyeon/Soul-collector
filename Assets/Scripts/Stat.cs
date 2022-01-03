@@ -109,6 +109,17 @@ public class Stat : MonoBehaviour
             _defaultDamage += item.DefaultDamage;
             _attackSpeed = (_attackSpeed * 100f - item.AttackSpeed) / 100f;
         }
+
+        else if (item.ItemType >= 2 || item.ItemType <=9)
+        {
+            // 방어구
+            _damageReduction += item.DamageReduction;
+            _maxHp += item.MaxHp;
+            _hpRecovery += item.HpRecovery;
+            _evasionPercent += item.EvasionPercent;
+            _criticalPercent += item.CriticalPercent;
+            _moveSpeed += item.MoveSpeed;
+        }
     }
 
     public void UnEquip(Item item)
@@ -120,6 +131,16 @@ public class Stat : MonoBehaviour
             _minDamage -= item.MinDamage;
             _defaultDamage -= item.DefaultDamage;
             _attackSpeed = (_attackSpeed * 100f + item.AttackSpeed) / 100f;
+        }
+        else if (item.ItemType >= 2 || item.ItemType <=9)
+        {
+            // 방어구
+            _damageReduction -= item.DamageReduction;
+            _maxHp -= item.MaxHp;
+            _hpRecovery -= item.HpRecovery;
+            _evasionPercent -= item.EvasionPercent;
+            _criticalPercent -= item.CriticalPercent;
+            _moveSpeed -= item.MoveSpeed;
         }
     }
 }
