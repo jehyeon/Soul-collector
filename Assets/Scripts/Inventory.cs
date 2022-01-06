@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
+using TMPro;
 using LitJson;
 public class Inventory : MonoBehaviour
 {
@@ -17,8 +18,11 @@ public class Inventory : MonoBehaviour
     private GameObject go_SlotsParent;
     [SerializeField]
     private GameObject go_itemDetail;
+
     [SerializeField]
-    private Text text_gold;
+    private TextMeshProUGUI text_gold;      // Text Gold
+    [SerializeField]
+    private TextMeshProUGUI text_damageReduction;      // Text Gold
 
     [SerializeField]
     public GameObject go_player;
@@ -109,6 +113,7 @@ public class Inventory : MonoBehaviour
     public void UpdateStatDetail()
     {
         go_statDetail.transform.GetChild(1).GetComponent<Text>().text = go_player.GetComponent<Player>()._stat.ToString();
+        text_damageReduction.text = go_player.GetComponent<Player>()._stat.DamageReduction.ToString();
     }
 
     // Inventory UI
@@ -197,7 +202,7 @@ public class Inventory : MonoBehaviour
     public void UpdateGold(int droppedGold)
     {
         gold += droppedGold;
-        text_gold.text = gold.ToString() + " gold";
+        text_gold.text = gold.ToString();   // , 추가하기
 
         Save();
     }
@@ -222,7 +227,7 @@ public class Inventory : MonoBehaviour
     {
         // 골드
         gold = saveManager.save.gold;
-        text_gold.text = gold.ToString() + " gold";
+        text_gold.text = gold.ToString();
 
         // 인벤토리
         index = saveManager.save.slotIndex;

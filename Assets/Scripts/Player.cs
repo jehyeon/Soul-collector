@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+
 public class Player : ACharacter
 {
     public GameObject targetEnemy;
@@ -10,8 +12,9 @@ public class Player : ACharacter
 
     [SerializeField]
     private Slider hpBar;
+
     [SerializeField]
-    private Text hpBarText;
+    private TextMeshProUGUI hpBarText;      // Text Hp
 
     // 방어
     private float hpRecoveryCoolTime;
@@ -68,7 +71,8 @@ public class Player : ACharacter
     private void UpdateHpBar()
     {
         hpBar.value = (float)_stat.Hp / (float)_stat.MaxHp * 100f;
-        hpBarText.text = _stat.Hp + " / " + _stat.MaxHp;
+        hpBarText.text = _stat.Hp + "/" + _stat.MaxHp;
+        // , 추가하기
     }
 
     private void RecoveryHp()
