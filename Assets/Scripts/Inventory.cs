@@ -7,32 +7,54 @@ using TMPro;
 using LitJson;
 public class Inventory : MonoBehaviour
 {
+    // UI 창 활성화 여부
     private bool inventoryActivated = false;
     private bool statDetailActivated = false;
 
+    // 캐릭터 스탯 UI
     [SerializeField]
     private GameObject go_statDetail;
+
+    // 아이템 detail UI
+    [SerializeField]
+    private GameObject go_itemDetail;
+    [SerializeField]
+    private Image img_itemDetailBackground;
+    [SerializeField]
+    private Image img_itemDetailImage;
+    [SerializeField]
+    private Image img_itemDetailFrame;
+    [SerializeField]
+    private TextMeshProUGUI text_itemDetailName;
+
+    [SerializeField]
+    private TextMeshProUGUI text_itemDetailDes;
+
+    // 인벤토리 UI
     [SerializeField] 
     private GameObject go_inventoryBase;
     [SerializeField]
     private GameObject go_SlotsParent;
-    [SerializeField]
-    private GameObject go_itemDetail;
-
+    
+    // 캐릭터 체력 및 Gold
     [SerializeField]
     private TextMeshProUGUI text_gold;      // Text Gold
     [SerializeField]
-    private TextMeshProUGUI text_damageReduction;      // Text Gold
+    private TextMeshProUGUI text_damageReduction;      // Text damage reduction
 
     [SerializeField]
     public GameObject go_player;
 
-    public int[] equipped;  // 장착 중인 슬롯의 id
-
     private int gold;   // 골드
-    private Slot[] slots;
-    private int index;
 
+    // 인벤토리 Slot
+    private Slot[] slots;
+    private int index;  // 마지막 슬롯 index
+
+    public int[] equipped;  // 장착정보
+    private int selectedSlotIndex;      // 선택된 index
+
+    // For save and load
     public SaveManager saveManager;
 
     void Awake()
@@ -53,11 +75,18 @@ public class Inventory : MonoBehaviour
     {
         saveManager = new SaveManager();
 
-        // save.json이 없으면
-        // saveManager.Init();
+        // 세이브 파일 로드, 없으면 생성
+        string path = Path.Combine(Application.dataPath, "save.json");
+        FileInfo fileInfo = new FileInfo(path);
+        if (fileInfo.Exists)
+        {
+            saveManager.Load();
+        }
+        else
+        {
+            saveManager.Init();
+        }
 
-        // save.json이 있으면
-        saveManager.Load(); 
         Load();
 
         UpdateStatDetail();
@@ -133,29 +162,35 @@ public class Inventory : MonoBehaviour
     }
 
     // Item detail UI
-    public void OpenItemDetail(Item item, Image itemImage)
+    public void OpenItemDetail(Item item, Image itemImage, Image itemFrame, Color itemBackground)
     {
-        go_itemDetail.transform.GetChild(1).GetComponent<Image>().sprite = itemImage.sprite;
-        go_itemDetail.transform.GetChild(2).GetComponent<Text>().text = item.ItemName;
-        go_itemDetail.transform.GetChild(3).GetComponent<Text>().text = item.ToString();
+        img_itemDetailImage.sprite = itemImage.sprite;
+        img_itemDetailFrame.sprite = itemFrame.sprite;
+        img_itemDetailBackground.color = itemBackground;
+        text_itemDetailName.text = item.ItemName;
+        text_itemDetailDes.text = item.ToString();
 
         go_itemDetail.SetActive(true);
     }
 
-    private void CloseItemDetail()
+    public void CloseItemDetail()
     {
         go_itemDetail.SetActive(false);
-        go_itemDetail.transform.GetChild(1).GetComponent<Image>().sprite = null;
-        go_itemDetail.transform.GetChild(2).GetComponent<Text>().text = "";
-        go_itemDetail.transform.GetChild(3).GetComponent<Text>().text = "";
+        slots[selectedSlotIndex].UnSelect();
+        
+        // img_itemDetailImage.sprite = null;
+        // img_itemDetailFrame.sprite = null;
+        // img_itemDetailBackground.color = null;
+        // text_itemDetailName.text = "";
+        // text_itemDetailDes.text = "";
     }
 
     // 아이템 획득
     public bool AcquireItem(int _id, int _count = 1)
     {
-        if (_id >= 600)
+        if (_id >= 1600)
         {
-            // resource인 경우 (item id 600 이후가 resource)
+            // resource인 경우 (item id 1600 이후가 resource)
             for (int i = 0; i < index; i++)
             {
                 if (slots[i].item != null && slots[i].item.Id == _id)
@@ -236,5 +271,11 @@ public class Inventory : MonoBehaviour
             // save 데이터로 부터 받아온 값을 다시 slot에 add
             slots[i].AddItem(saveManager.save.slots[i].id, saveManager.save.slots[i].count);
         }
+    }
+
+    public void UpdateSelect(int slotIndex)
+    {
+        slots[selectedSlotIndex].UnSelect();
+        selectedSlotIndex = slotIndex;
     }
 }

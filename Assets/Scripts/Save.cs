@@ -11,7 +11,7 @@ public class Save
     {
         gold = 0;
         slotIndex = 0;
-        slots = new SlotSave[24];
+        slots = new SlotSave[60];
         for (int i = 0; i < slots.Length; i++)
         {
             slots[i] = new SlotSave();
