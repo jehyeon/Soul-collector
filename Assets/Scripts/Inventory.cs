@@ -10,10 +10,15 @@ public class Inventory : MonoBehaviour
     // UI 창 활성화 여부
     private bool inventoryActivated = false;
     private bool statDetailActivated = false;
+    private bool shopActivated = false;
 
     // 캐릭터 스탯 UI
     [SerializeField]
     private GameObject go_statDetail;
+    
+    // Shop UI
+    [SerializeField]
+    private GameObject go_shop;
 
     // 아이템 detail UI
     [SerializeField]
@@ -95,6 +100,7 @@ public class Inventory : MonoBehaviour
     {
         UseInventory();
         UseStatDetail();
+        UseShop();
     }
 
     // UI 조작키
@@ -124,6 +130,22 @@ public class Inventory : MonoBehaviour
             else
             {
                 OpenStatDetail();
+            }
+        }
+    }
+
+    private void UseShop()
+    {
+        // Temp
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            if (shopActivated)
+            {
+                CloseShop();
+            } 
+            else
+            {
+                OpenShop();
             }
         }
     }
@@ -159,6 +181,19 @@ public class Inventory : MonoBehaviour
 
         // 아이템 디테일 창도 닫음
         CloseItemDetail();
+    }
+
+    // Shop UI
+    private void OpenShop()
+    {
+        go_shop.SetActive(true);
+        shopActivated = true;
+    }
+
+    public void CloseShop()
+    {
+        go_shop.SetActive(false);
+        shopActivated = false;
     }
 
     // Item detail UI

@@ -113,7 +113,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler
         }
         else
         {
-            cv.GetComponent<Inventory>().UpdateSelect(int.Parse(gameObject.name));
+            cv.GetComponent<Inventory>().UpdateSelect(int.Parse(gameObject.name.Split('(')[1].Split(')')[0]));
             Select();
             cv.GetComponent<Inventory>().OpenItemDetail(item);
             SetInventoryBtn();      // 인벤토리 버튼 활성화
