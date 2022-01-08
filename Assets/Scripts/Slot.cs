@@ -7,6 +7,7 @@ using TMPro;
 
 public class Slot : MonoBehaviour, IPointerClickHandler
 {
+    // 슬롯 별
     public Item item;
     public int itemCount;
     [SerializeField]
@@ -15,19 +16,22 @@ public class Slot : MonoBehaviour, IPointerClickHandler
     private Image slotBackground;
     [SerializeField]
     private Image slotFrame;
-    public bool isEquip;
-    public bool isSelected;
-
     [SerializeField]
-    private Canvas cv;
-
-    [SerializeField]
-    private TextMeshProUGUI text_Count;     // Item Count
+    private TextMeshProUGUI text_Count;
     [SerializeField]
     private Image image_EquipImage;
     [SerializeField]
     private GameObject go_selectedFrame;
 
+    // 공통
+    [SerializeField]
+    private Canvas cv;
+    [SerializeField]
+    private Transform go_inventoryBtn;
+    public bool isEquip;
+    public bool isSelected;
+
+    // 아이콘 이미지 활성화
     private void SetColor(float _alpha)
     {
         Color color = itemImage.color;
@@ -42,46 +46,14 @@ public class Slot : MonoBehaviour, IPointerClickHandler
         item.LoadFromCSV(_id, "Item");
         itemCount = _count;
 
-        // Item icon
-        itemImage.sprite = Resources.Load<Sprite>("Item Images/" + item.Id);
+        // Item icon, frame
+        itemImage.sprite = item.ItemImage;
+        slotFrame.sprite = item.ItemFrame;
         SetColor(1);
 
-        // Item rank
-        Color backgroundColor;
-        if (item.Rank == 2 || item.Rank == 7)
-        {
-            // green
-            ColorUtility.TryParseHtmlString("#142E22FF", out backgroundColor);
-            slotFrame.sprite = Resources.Load<Sprite>("sprites/frame_2");
-        }
-        else if (item.Rank == 3 || item.Rank == 8)
-        {
-            // blue
-            ColorUtility.TryParseHtmlString("#021334FF", out backgroundColor);
-            slotFrame.sprite = Resources.Load<Sprite>("sprites/frame_3");
-        }
-        else if (item.Rank == 4 || item.Rank == 9)
-        {
-            // red
-            ColorUtility.TryParseHtmlString("#270A08FF", out backgroundColor);
-            slotFrame.sprite = Resources.Load<Sprite>("sprites/frame_4");
-        }
-        else if (item.Rank == 5)
-        {
-            // purple
-            ColorUtility.TryParseHtmlString("#210D34FF", out backgroundColor);
-            slotFrame.sprite = Resources.Load<Sprite>("sprites/frame_5");
-        }
-        else
-        {
-            // Include rank 1, 6
-            // default
-            ColorUtility.TryParseHtmlString("#28241DFF", out backgroundColor);
-            slotFrame.sprite = Resources.Load<Sprite>("sprites/frame_1");
-        }
-
-        // Slot background
-        slotBackground.color = backgroundColor;
+        // background, color
+        slotBackground.color = item.BackgroundColor;
+        // 폰트 컬러는 요기에서
 
         if (item.ItemType > 11)
         {
@@ -128,23 +100,28 @@ public class Slot : MonoBehaviour, IPointerClickHandler
     {
         if (item == null)
         {
+            // 아이템이 아닌 경우 return
             return;
         }
 
+        // 아이템 선택
         if (isSelected)
         {
             // UnSelect();
             cv.GetComponent<Inventory>().CloseItemDetail();
+            HideInventoryBtn();     // 인벤토리 버튼 비활성화
         }
         else
         {
             cv.GetComponent<Inventory>().UpdateSelect(int.Parse(gameObject.name));
             Select();
-            cv.GetComponent<Inventory>().OpenItemDetail(item, itemImage, slotFrame, slotBackground.color);
+            cv.GetComponent<Inventory>().OpenItemDetail(item);
+            SetInventoryBtn();      // 인벤토리 버튼 활성화
         }
     }
 
-    private void Equip()
+    // 장착
+    public void Equip()
     {
         cv.GetComponent<Inventory>().EquipItemType(item.ItemType, int.Parse(gameObject.name));
 
@@ -153,6 +130,8 @@ public class Slot : MonoBehaviour, IPointerClickHandler
         cv.GetComponent<Inventory>().go_player.GetComponent<Stat>().Equip(item);
         cv.GetComponent<Inventory>().UpdateStatDetail();
         isEquip = true;
+
+        SetInventoryBtn();
     }
 
     public void UnEquip()
@@ -163,8 +142,11 @@ public class Slot : MonoBehaviour, IPointerClickHandler
         cv.GetComponent<Inventory>().go_player.GetComponent<Stat>().UnEquip(item);
         cv.GetComponent<Inventory>().UpdateStatDetail();
         isEquip = false;
+
+        SetInventoryBtn();
     }
 
+    // 선택
     private void Select()
     {
         isSelected = true;
@@ -176,5 +158,46 @@ public class Slot : MonoBehaviour, IPointerClickHandler
         // Inventory.cs 에서 Unselect 할때 쓰임
         isSelected = false;
         go_selectedFrame.SetActive(isSelected);
+    }
+
+    private void SetInventoryBtn()
+    {
+        string btnText = "";
+        if (item.ItemType > 12)
+        {
+            HideInventoryBtn();
+            return;
+        }
+
+        if (item.ItemType < 12)
+        {
+            // 장착 아이템
+            if (isEquip)
+            {
+                btnText = "해제";
+            }
+            else
+            {
+                btnText = "장착";
+            }
+        }
+        else if (item.ItemType == 12)
+        {
+            btnText = "사용";
+        }
+
+        go_inventoryBtn.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = btnText;
+        go_inventoryBtn.gameObject.SetActive(true);
+    }
+
+    private void HideInventoryBtn()
+    {
+        // 장착, 사용 아이템이 아닌 경우
+        go_inventoryBtn.gameObject.SetActive(false);
+    }
+
+    public void Use()
+    {
+        Debug.Log("사용");
     }
 }

@@ -162,12 +162,13 @@ public class Inventory : MonoBehaviour
     }
 
     // Item detail UI
-    public void OpenItemDetail(Item item, Image itemImage, Image itemFrame, Color itemBackground)
+    public void OpenItemDetail(Item item)
     {
-        img_itemDetailImage.sprite = itemImage.sprite;
-        img_itemDetailFrame.sprite = itemFrame.sprite;
-        img_itemDetailBackground.color = itemBackground;
+        img_itemDetailImage.sprite = item.ItemImage;
+        img_itemDetailFrame.sprite = item.ItemFrame;
+        img_itemDetailBackground.color = item.BackgroundColor;
         text_itemDetailName.text = item.ItemName;
+        text_itemDetailName.color = item.FontColor;
         text_itemDetailDes.text = item.ToString();
 
         go_itemDetail.SetActive(true);
@@ -177,7 +178,7 @@ public class Inventory : MonoBehaviour
     {
         go_itemDetail.SetActive(false);
         slots[selectedSlotIndex].UnSelect();
-        
+
         // img_itemDetailImage.sprite = null;
         // img_itemDetailFrame.sprite = null;
         // img_itemDetailBackground.color = null;
@@ -277,5 +278,33 @@ public class Inventory : MonoBehaviour
     {
         slots[selectedSlotIndex].UnSelect();
         selectedSlotIndex = slotIndex;
+    }
+
+    public void ClickInventoryBtn()
+    {
+        if (slots[selectedSlotIndex].item.ItemType > 12)
+        {
+            // 장비, 사용 아이템이 아닌 경우
+            return;
+        }
+
+        if (slots[selectedSlotIndex].item.ItemType < 12)
+        {
+            // selectedSlotIndex 의 slot이 선택 되었을 때
+            if (slots[selectedSlotIndex].isEquip)
+            {
+                slots[selectedSlotIndex].UnEquip();
+            }
+            else
+            {
+                slots[selectedSlotIndex].Equip();
+            }
+        }
+        else if (slots[selectedSlotIndex].item.ItemType == 12)
+        {
+            slots[selectedSlotIndex].Use();
+        }
+
+        return;
     }
 }

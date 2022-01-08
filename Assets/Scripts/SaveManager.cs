@@ -34,5 +34,6 @@ public class SaveManager
         string path = Path.Combine(Application.dataPath, "save.json");
 
         File.WriteAllText(path, json);
+        Load();
     }
 }

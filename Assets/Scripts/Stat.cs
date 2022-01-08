@@ -119,6 +119,11 @@ public class Stat : MonoBehaviour
             _evasionPercent += item.EvasionPercent;
             _criticalPercent += item.CriticalPercent;
             _moveSpeed += item.MoveSpeed;
+
+            if (_hp > _maxHp)
+            {
+                _hp = _maxHp;
+            }
         }
     }
 
