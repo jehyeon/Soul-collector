@@ -141,7 +141,7 @@ public class Inventory : MonoBehaviour
     }
     public void UpdateStatDetail()
     {
-        go_statDetail.transform.GetChild(1).GetComponent<Text>().text = go_player.GetComponent<Player>()._stat.ToString();
+        go_statDetail.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = go_player.GetComponent<Player>()._stat.ToString();
         text_damageReduction.text = go_player.GetComponent<Player>()._stat.DamageReduction.ToString();
     }
 

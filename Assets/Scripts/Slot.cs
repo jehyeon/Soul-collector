@@ -158,6 +158,8 @@ public class Slot : MonoBehaviour, IPointerClickHandler
         // Inventory.cs 에서 Unselect 할때 쓰임
         isSelected = false;
         go_selectedFrame.SetActive(isSelected);
+        
+        HideInventoryBtn();
     }
 
     private void SetInventoryBtn()
