@@ -2,12 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using TMPro;
 
-public class ShopItem : MonoBehaviour
+public class ShopItem : MonoBehaviour, IPointerClickHandler
 {
-    private int itemId;
-    private int price;
+    // select 된 shopItemId를 shop.cs에서 동기화하고
+    // 구입 시 ShopItem[shopItemId]의 id와 price에 접근
+    private int shopItemId;
+    public int itemId;
+    public int price;
+
     private Item item;
     [SerializeField]
     private Image itemImage;
@@ -20,8 +25,13 @@ public class ShopItem : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI text_itemPrice;
 
-    public void Set(int _id, int _price)
+    [SerializeField]
+    private GameObject go_selectedFrame;
+
+    private bool isSelected;
+    public void Set(int _shopItemId, int _id, int _price)
     {
+        shopItemId = _shopItemId;
         itemId = _id;
         price = _price;
         item = gameObject.AddComponent<Item>();
@@ -33,11 +43,40 @@ public class ShopItem : MonoBehaviour
 
         text_itemName.text = item.ItemName;
         text_itemName.color = item.FontColor;
-        text_itemPrice.text = price.ToString();     // "," 추가하기
+        text_itemPrice.text = string.Format("{0:#,###}", price).ToString();
     }
 
     public int GetId()
     {
         return itemId;
+    }
+
+    // 클릭 이벤트
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        // 기존 선택된 아이템을 unselect
+        this.transform.parent.gameObject.GetComponent<Shop>().UnSelect();
+        
+        if (isSelected)
+        {
+            UnSelect();
+        }
+        else
+        {
+            Select();
+        }
+    }
+
+    private void Select()
+    {
+        isSelected = true;
+        go_selectedFrame.SetActive(isSelected);
+        this.transform.parent.gameObject.GetComponent<Shop>().SetSelectedShopItemId(shopItemId);
+    }
+
+    public void UnSelect()
+    {
+        isSelected = false;
+        go_selectedFrame.SetActive(isSelected);
     }
 }

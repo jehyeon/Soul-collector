@@ -194,6 +194,8 @@ public class Inventory : MonoBehaviour
     {
         go_shop.SetActive(false);
         shopActivated = false;
+        // shop UI를 닫으면 selected 아이템 초기화
+        go_shop.transform.GetChild(2).GetChild(0).GetComponent<Shop>().UnSelect();
     }
 
     // Item detail UI
@@ -273,7 +275,7 @@ public class Inventory : MonoBehaviour
     public void UpdateGold(int droppedGold)
     {
         gold += droppedGold;
-        text_gold.text = gold.ToString();   // , 추가하기
+        text_gold.text = string.Format("{0:#,###}", gold).ToString();
 
         Save();
     }
@@ -298,7 +300,7 @@ public class Inventory : MonoBehaviour
     {
         // 골드
         gold = saveManager.save.gold;
-        text_gold.text = gold.ToString();
+        text_gold.text = string.Format("{0:#,###}", gold).ToString();
 
         // 인벤토리
         index = saveManager.save.slotIndex;
@@ -341,5 +343,24 @@ public class Inventory : MonoBehaviour
         }
 
         return;
+    }
+
+    public void Buy(int itemId, int price)
+    {
+        if (gold < price)
+        {
+            // 돈이 부족하다는 pop_up 띄우기
+            return;
+        }
+
+
+        // 우선 한개만 구입가능함
+        // 인벤토리 초과 시  false return
+        bool result = AcquireItem(itemId, 1);
+        if (result)
+        {
+            // 정상 구매인 경우에만 돈 차감
+            UpdateGold(-1 * price);
+        }
     }
 }

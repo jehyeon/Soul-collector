@@ -123,7 +123,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler
     // 장착
     public void Equip()
     {
-        cv.GetComponent<Inventory>().EquipItemType(item.ItemType, int.Parse(gameObject.name));
+        cv.GetComponent<Inventory>().EquipItemType(item.ItemType, int.Parse(gameObject.name.Split('(')[1].Split(')')[0]));
 
         image_EquipImage.gameObject.SetActive(true);
         Debug.Log(item.ToString());
