@@ -57,7 +57,7 @@ public class Inventory : MonoBehaviour
     private int index;  // 마지막 슬롯 index
 
     public int[] equipped;  // 장착정보
-    private int selectedSlotIndex;      // 선택된 index
+    public int selectedSlotIndex;      // 선택된 index
 
     // For save and load
     public SaveManager saveManager;
@@ -67,6 +67,7 @@ public class Inventory : MonoBehaviour
         slots = go_SlotsParent.GetComponentsInChildren<Slot>();
         index = 0;
         gold = 0;
+        selectedSlotIndex = -1;
 
         equipped = new int[12];
         // 장착 정보를 -1로 초기화
@@ -214,13 +215,11 @@ public class Inventory : MonoBehaviour
     public void CloseItemDetail()
     {
         go_itemDetail.SetActive(false);
-        slots[selectedSlotIndex].UnSelect();
 
-        // img_itemDetailImage.sprite = null;
-        // img_itemDetailFrame.sprite = null;
-        // img_itemDetailBackground.color = null;
-        // text_itemDetailName.text = "";
-        // text_itemDetailDes.text = "";
+        if (selectedSlotIndex != -1)
+        {
+            slots[selectedSlotIndex].UnSelect();
+        }
     }
 
     // 아이템 획득
@@ -275,8 +274,13 @@ public class Inventory : MonoBehaviour
     public void UpdateGold(int droppedGold)
     {
         gold += droppedGold;
-        text_gold.text = string.Format("{0:#,###}", gold).ToString();
-
+        string text = string.Format("{0:#,###}", gold).ToString();
+        
+        if (text == "")
+        {
+            text = "0";
+        }
+        text_gold.text = text;
         Save();
     }
 
@@ -300,7 +304,13 @@ public class Inventory : MonoBehaviour
     {
         // 골드
         gold = saveManager.save.gold;
-        text_gold.text = string.Format("{0:#,###}", gold).ToString();
+        string text = string.Format("{0:#,###}", gold).ToString();
+        
+        if (text == "")
+        {
+            text = "0";
+        }
+        text_gold.text = text;
 
         // 인벤토리
         index = saveManager.save.slotIndex;
@@ -313,7 +323,11 @@ public class Inventory : MonoBehaviour
 
     public void UpdateSelect(int slotIndex)
     {
-        slots[selectedSlotIndex].UnSelect();
+        if (slotIndex != -1 && selectedSlotIndex != -1)
+        {
+            // 전에 장착한 아이템이 있는 경우
+            slots[selectedSlotIndex].UnSelect();
+        }
         selectedSlotIndex = slotIndex;
     }
 
@@ -362,5 +376,28 @@ public class Inventory : MonoBehaviour
             // 정상 구매인 경우에만 돈 차감
             UpdateGold(-1 * price);
         }
+    }
+
+    public void Delete()
+    {
+        if (selectedSlotIndex == -1)
+        {
+            return;    
+        }
+
+        // 아이템 삭제 후 save
+        saveManager.Delete(selectedSlotIndex);
+        saveManager.Save();
+
+        // 선택한 ItemDetail 닫음
+        CloseItemDetail();
+
+        // Slot all clear
+        for (int i = 0; i < index; i++)
+        {
+            slots[i].ClearSlot();
+        }
+
+        Load();     // 슬롯 비우고 다시 load
     }
 }

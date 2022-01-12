@@ -80,20 +80,28 @@ public class Slot : MonoBehaviour, IPointerClickHandler
     }
 
     // 슬롯 비우기
-    private void ClearSlot()
+    public void ClearSlot()
     {
+        // 아이템, 아이템 이미지 초기화
         item = null;
         itemImage.sprite = null;
         SetColor(0);
 
-        itemCount = 0;
-        text_Count.text = "";
-
+        // background, slot frame 초기화
         Color backgroundColor;
         ColorUtility.TryParseHtmlString("#28241DFF", out backgroundColor);
         slotBackground.color = backgroundColor;
-
         slotFrame.sprite = Resources.Load<Sprite>("sprites/frame_1");
+
+        // count 초기화
+        itemCount = 0;
+        text_Count.text = "";
+
+        // 슬롯 unselect
+        UnSelect();
+
+        // 장착 해제
+        UnEquip();
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -136,6 +144,11 @@ public class Slot : MonoBehaviour, IPointerClickHandler
 
     public void UnEquip()
     {
+        if (!isEquip)
+        {
+            return;
+        }
+        
         cv.GetComponent<Inventory>().UnEquipItemType(item.ItemType);    // 해당 파츠 아이템을 UnEquip
 
         image_EquipImage.gameObject.SetActive(false);
@@ -160,6 +173,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler
         go_selectedFrame.SetActive(isSelected);
         
         HideInventoryBtn();
+        cv.GetComponent<Inventory>().UpdateSelect(-1);  // inventory selectedIndex -1로 초기화
     }
 
     private void SetInventoryBtn()

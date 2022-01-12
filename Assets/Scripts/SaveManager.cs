@@ -1,6 +1,6 @@
 using System.IO;
 using UnityEngine;
-
+using System.Linq;
 using LitJson;
 
 public class SaveManager
@@ -35,5 +35,18 @@ public class SaveManager
 
         File.WriteAllText(path, json);
         Load();
+    }
+
+    public void Delete(int slotIndex)
+    {
+        Debug.Log(slotIndex);
+        save.slots[slotIndex] = null;
+
+        save.slots = save.slots
+            .Where(slot => slot != null)
+            .ToList();
+
+        save.slots.Add(new SlotSave());
+        save.slotIndex -= 1;
     }
 }
