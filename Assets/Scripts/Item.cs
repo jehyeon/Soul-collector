@@ -54,31 +54,33 @@ public class Item : MonoBehaviour
     public int MoveSpeed { get { return _moveSpeed; }}
     public int CriticalPercent { get { return _criticalPercent; }}
 
-    public void LoadFromCSV(int id, string fileName)
+    public void Set(int itemId, Dictionary<string, object> data)
     {
-        SetId(id);
-        List<Dictionary<string, object>> data = CSVReader.Read(fileName);
-        _imageId = (int)data[id]["imageId"];
-        _itemType = (int)data[id]["itemType"];
-        _rank = (int)data[id]["rank"];
-        _itemName = data[id]["itemName"].ToString();
-        _defaultDamage = (int)data[id]["defaultDamage"];
-        _maxDamage = (int)data[id]["maxDamage"];
-        _minDamage = (int)data[id]["minDamage"];
-        _attackSpeed = (int)data[id]["attackSpeed"];
-        _damageReduction = (int)data[id]["damageReduction"];
-        _evasionPercent = (int)data[id]["evasionPercent"];
-        _maxHp = (int)data[id]["maxHp"];
-        _hpRecovery = (int)data[id]["hpRecovery"];
-        _moveSpeed = (int)data[id]["moveSpeed"];
-        _criticalPercent = (int)data[id]["criticalPercent"];
-        _des = data[id]["des"].ToString();
+        _id = itemId;
 
-        // 색상, 이미지
+        // 아이템 테이블로부터 가져온 정보
+        _imageId = (int)data["imageId"];
+        _itemType = (int)data["itemType"];
+        _rank = (int)data["rank"];
+        _itemName = data["itemName"].ToString();
+        _defaultDamage = (int)data["defaultDamage"];
+        _maxDamage = (int)data["maxDamage"];
+        _minDamage = (int)data["minDamage"];
+        _attackSpeed = (int)data["attackSpeed"];
+        _damageReduction = (int)data["damageReduction"];
+        _evasionPercent = (int)data["evasionPercent"];
+        _maxHp = (int)data["maxHp"];
+        _hpRecovery = (int)data["hpRecovery"];
+        _moveSpeed = (int)data["moveSpeed"];
+        _criticalPercent = (int)data["criticalPercent"];
+        _des = data["des"].ToString();
+
+        // 아이템 이미지
         _itemImage = Resources.Load<Sprite>("Item Images/" + _imageId);
 
+        // 배경색, 폰트색, 아이템 프레임
         Color backgroundColor;
-        Color fontColor;
+        Color fontColor;    // 나중에 업데이트
         if (_rank == 2 || _rank == 7)
         {
             // green
@@ -119,11 +121,6 @@ public class Item : MonoBehaviour
         // Slot background
         _backgroundColor = backgroundColor;
         _fontColor = fontColor;
-    }
-
-    public void SetId(int id)
-    {
-        _id = id;
     }
 
     public override string ToString()

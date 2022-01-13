@@ -42,8 +42,9 @@ public class Slot : MonoBehaviour, IPointerClickHandler
     // 슬롯에 아이템 추가
     public void AddItem(int _id, int _count = 1)
     {
-        item = gameObject.AddComponent<Item>();
-        item.LoadFromCSV(_id, "Item");
+        // item = gameObject.AddComponent<Item>();
+        // item.LoadFromCSV(_id, "Item");
+        item = ItemManager.Get(_shopItemId);
         itemCount = _count;
 
         // Item icon, frame

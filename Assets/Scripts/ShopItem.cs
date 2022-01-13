@@ -34,8 +34,9 @@ public class ShopItem : MonoBehaviour, IPointerClickHandler
         shopItemId = _shopItemId;
         itemId = _id;
         price = _price;
-        item = gameObject.AddComponent<Item>();
-        item.LoadFromCSV(itemId, "Item");
+        // item = gameObject.AddComponent<Item>();
+        // item.LoadFromCSV(itemId, "Item");
+        item = ItemManager.Get(_shopItemId);
         
         itemImage.sprite = item.ItemImage;
         slotFrame.sprite = item.ItemFrame;
