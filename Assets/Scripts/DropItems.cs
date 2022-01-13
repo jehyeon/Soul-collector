@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class DropItems : MonoBehaviour
 {
+
     // 드랍 테이블로 수정
     [SerializeField]
     private GameObject dropWeapon;
@@ -40,13 +41,16 @@ public class DropItems : MonoBehaviour
         if (_dropItemId >= 600)
         {
             // resources는 item id가 600 이상
-            dropBox.GetComponent<Item>().SetId(_dropItemId);
+            // dropBox.GetComponent<Item>().SetId(_dropItemId);
+            Item dropBoxItem = dropBox.AddComponent<Item>();
+            dropBoxItem = GameObject.Find("Item Manager").GetComponent<ItemManager>().Get(_dropItemId);
             Instantiate(dropBox, this.transform.position, this.transform.rotation);
         }
         else
         {
             // 장비 아이템 (현재 weapon prefab만 사용)
-            dropWeapon.GetComponent<Item>().SetId(_dropItemId);
+            Item dropBoxItem = dropBox.AddComponent<Item>();
+            dropBoxItem = GameObject.Find("Item Manager").GetComponent<ItemManager>().Get(_dropItemId);
             Instantiate(dropWeapon, this.transform.position, this.transform.rotation);
         }
     }

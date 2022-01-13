@@ -28,6 +28,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler
     private Canvas cv;
     [SerializeField]
     private Transform go_inventoryBtn;
+
     public bool isEquip;
     public bool isSelected;
 
@@ -44,7 +45,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler
     {
         // item = gameObject.AddComponent<Item>();
         // item.LoadFromCSV(_id, "Item");
-        item = ItemManager.Get(_shopItemId);
+        item = GameObject.Find("Item Manager").GetComponent<ItemManager>().Get(_id);
         itemCount = _count;
 
         // Item icon, frame

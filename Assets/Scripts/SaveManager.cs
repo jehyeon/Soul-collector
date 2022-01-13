@@ -39,7 +39,6 @@ public class SaveManager
 
     public void Delete(int slotIndex)
     {
-        Debug.Log(slotIndex);
         save.slots[slotIndex] = null;
 
         save.slots = save.slots
