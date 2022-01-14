@@ -181,8 +181,9 @@ public class Slot : MonoBehaviour, IPointerClickHandler
     private void SetInventoryBtn()
     {
         string btnText = "";
-        if (item.ItemType > 12)
+        if (item.ItemType == 12)
         {
+            // 제작 재료 아이템
             HideInventoryBtn();
             return;
         }
@@ -199,8 +200,9 @@ public class Slot : MonoBehaviour, IPointerClickHandler
                 btnText = "장착";
             }
         }
-        else if (item.ItemType == 12)
+        else if (item.ItemType > 12)
         {
+            // 사용 아이템
             btnText = "사용";
         }
 

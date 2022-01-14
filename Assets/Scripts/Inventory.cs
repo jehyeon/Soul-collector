@@ -333,7 +333,12 @@ public class Inventory : MonoBehaviour
 
     public void ClickInventoryBtn()
     {
-        if (slots[selectedSlotIndex].item.ItemType > 12)
+        if (selectedSlotIndex == -1)
+        {
+            return;
+        }
+
+        if (slots[selectedSlotIndex].item.ItemType == 12)
         {
             // 장비, 사용 아이템이 아닌 경우
             return;
@@ -351,9 +356,9 @@ public class Inventory : MonoBehaviour
                 slots[selectedSlotIndex].Equip();
             }
         }
-        else if (slots[selectedSlotIndex].item.ItemType == 12)
+        else if (slots[selectedSlotIndex].item.ItemType > 12)
         {
-            slots[selectedSlotIndex].Use();
+            Use(slots[selectedSlotIndex].item);
         }
 
         return;
@@ -380,8 +385,10 @@ public class Inventory : MonoBehaviour
 
     public void Delete()
     {
+        // Select slot item 삭제, 개수 선택 미구현
         if (selectedSlotIndex == -1)
         {
+            // 선택한 Slot이 없는 경우 삭제 안됨
             return;    
         }
 
@@ -399,5 +406,40 @@ public class Inventory : MonoBehaviour
         }
 
         Load();     // 슬롯 비우고 다시 load
+    }
+
+    public void Use(Item item)
+    {
+        // 13 - 뽑기 아이템, 14 - 체력 회복 아이템, 15 - 강화 아이템
+        if (item.itemType == 14)
+        {
+            // 우선 테이블을 쓰지 않음
+            if (item._id == 1620)
+            {
+                go_player.GetComponent<Stat>().Heal(50);
+            }
+            else if (item._id == 1621)
+            {
+                go_player.GetComponent<Stat>().Heal(200);
+            }
+        }
+        else if (item.itemType == 13)
+        {
+            GambleBox();
+        }
+        else if (item.itemType == 15)
+        {
+            Reinforce();
+        }
+    }
+
+    public void GambleBox()
+    {
+        Debug.Log("상자 뽑기");
+    }
+
+    public void Reinforce()
+    {
+        Debug.Log("강화");
     }
 }

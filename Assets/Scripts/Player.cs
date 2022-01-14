@@ -91,6 +91,11 @@ public class Player : ACharacter
         }
     }
 
+    public void Heal(int amount)
+    {
+        hp += amount;
+    }
+
     // 골드
     public void GetGold(int droppedGold)
     {
