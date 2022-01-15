@@ -51,9 +51,54 @@ def getDefaultDamage(weaponDamage, hitRating):
 # 10.8393
 # ({8: 1350, 9: 1317, 13: 1268, 10: 1241, 11: 1181, 12: 1260, 14: 1196, 15: 1187}, 11.4207, [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0])
 
-def calculAverageDamage(defaultDamage, minDamage, maxDamage, attackSpeed):
-    return ((minDamage + maxDamage) / 2 + defaultDamage) * (100 + attackSpeed) / 100
+def calculAverageDamage(defaultDamage, minDamage, maxDamage, attackSpeed, criticalPercent):
+    total = 0
+    for _ in range(1000):
+        rand = random.random()
+        if rand < criticalPercent:
+            total += (maxDamage + defaultDamage) * (100 + attackSpeed) / 100
+        else:
+            total += (random.choices(range(minDamage, maxDamage + 1))[0] + defaultDamage) * (100 + attackSpeed) / 100
+    
+    return total / 1000
 
-print(calculAverageDamage(1, 1, 2, 20))
-print(calculAverageDamage(0, 1, 5, 0))
-print(calculAverageDamage(1, 1, 3, 0))
+# 일반
+# 2 / 3.5
+# print(calculAverageDamage(0, 1, 2, 20, 0)) # 단검
+# print(calculAverageDamage(1, 1, 1, 10, 0)) # 한손검
+# print(calculAverageDamage(2, 1, 2, 0, 0))  # 양손검
+# print(calculAverageDamage(0, 1, 6, 0, 0))  # 양손도끼
+# print()
+
+# 고급
+# 3.5 / 6.0
+# print(calculAverageDamage(1, 1, 3, 20, 0)) # 단검
+# print(calculAverageDamage(2, 1, 2, 10, 0)) # 한손검
+# print(calculAverageDamage(3, 1, 5, 0, 0))  # 양손검
+# print(calculAverageDamage(0, 1, 11, 0, 0))  # 양손도끼
+# print()
+
+# 고급 #2
+# 5.0 / 8.0
+# print(calculAverageDamage(1, 2, 4, 20, 0)) # 단검
+# print(calculAverageDamage(2, 2, 3, 10, 0)) # 한손검
+# print(calculAverageDamage(4, 2, 6, 0, 0))  # 양손검
+# print(calculAverageDamage(0, 2, 15, 0, 0))  # 양손도끼 (드랍)
+# print()
+
+# 희귀 #1
+# 8.0 / 12.0
+# print(calculAverageDamage(3, 3, 4, 30, 0)) # 단검
+print(calculAverageDamage(5, 2, 3, 15, 0)) # 한손검
+# print(calculAverageDamage(5, 5, 8, 0, 0))  # 양손검
+# print(calculAverageDamage(1, 8, 0, 0))  # 양손도끼
+# print()
+
+# 희귀 #2
+# print(calculAverageDamage(1, 1, 10, 20, 0.2)) # 단검
+print(calculAverageDamage(3, 3, 10, 10, 0)) # 한손검
+# print(calculAverageDamage(14, 0, 0, 0, 0))  # 양손검
+
+
+print(calculAverageDamage(0, 1, 20, 15, 0)) 
+print(calculAverageDamage(0, 1, 30, 0, 0)) 
