@@ -38,19 +38,16 @@ public class DropItems : MonoBehaviour
             // 드랍 아이템이 없음
             return;
         }
-        if (_dropItemId >= 600)
+        if (_dropItemId >= 1600)
         {
-            // resources는 item id가 600 이상
-            // dropBox.GetComponent<Item>().SetId(_dropItemId);
-            Item dropBoxItem = dropBox.AddComponent<Item>();
-            dropBoxItem = GameObject.Find("Item Manager").GetComponent<ItemManager>().Get(_dropItemId);
+            // resources는 item id가 1600 이상
+            dropBox.GetComponent<Dropped>().droppedItemId = _dropItemId;
             Instantiate(dropBox, this.transform.position, this.transform.rotation);
         }
         else
         {
             // 장비 아이템 (현재 weapon prefab만 사용)
-            Item dropBoxItem = dropBox.AddComponent<Item>();
-            dropBoxItem = GameObject.Find("Item Manager").GetComponent<ItemManager>().Get(_dropItemId);
+            dropWeapon.GetComponent<Dropped>().droppedItemId = _dropItemId;
             Instantiate(dropWeapon, this.transform.position, this.transform.rotation);
         }
     }

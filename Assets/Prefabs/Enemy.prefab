@@ -115,6 +115,7 @@ MonoBehaviour:
   _stat: {fileID: 0}
   state: 0
   destinationPos: {x: 0, y: 0, z: 0}
+  _id: 0
   player: {fileID: 0}
 --- !u!54 &3076087873692225946
 Rigidbody:
@@ -157,4 +158,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dropWeapon: {fileID: 5077650760184880940, guid: 1259ef7971e69a04da217b712700f47f, type: 3}
-  dropBox: {fileID: 7947193396002527311, guid: e8602d8a8c540384c8364ba1f5a7a541, type: 3}
+  dropBox: {fileID: 5188575971391330686, guid: 41c3a3d7a0fd21d4b8da3d33b2673891, type: 3}
+  _dropGold: 0
+  _dropItemId: 0
