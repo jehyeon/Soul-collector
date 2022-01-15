@@ -458,10 +458,20 @@ public class Inventory : MonoBehaviour
             if (item._id == 1620)
             {
                 go_player.GetComponent<Stat>().Heal(50);
+                slots[selectedSlotIndex].SetSlotCount(-1);
+                if (slots[selectedSlotIndex].itemCount < 1)
+                {
+                    Delete();
+                }
             }
             else if (item._id == 1621)
             {
                 go_player.GetComponent<Stat>().Heal(200);
+                slots[selectedSlotIndex].SetSlotCount(-1);
+                if (slots[selectedSlotIndex].itemCount < 1)
+                {
+                    Delete();
+                }
             }
         }
         else if (item.ItemType == 13)

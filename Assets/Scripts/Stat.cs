@@ -85,6 +85,10 @@ public class Stat : MonoBehaviour
     public void Heal(int amount)
     {
         _hp += amount; 
+        if (_hp > _maxHp)
+        {
+            _hp = _maxHp;
+        }
     }
     
     public override string ToString()
