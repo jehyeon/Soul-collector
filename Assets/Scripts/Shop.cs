@@ -66,7 +66,7 @@ public class Shop : MonoBehaviour
 
     public void UnSelect()
     {
-        if (selectedShopItemId == -1)
+        if (selectedShopItemId == -1 || this.transform.childCount == 0)
         {
             // 아무것도 선택되지 않음
             return;

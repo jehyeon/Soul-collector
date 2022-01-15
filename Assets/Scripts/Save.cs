@@ -7,6 +7,7 @@ public class Save
 {
     public int gold;
     public int slotIndex;
+    public int lastSlotId;
     // public SlotSave[] slots;
     public List<SlotSave> slots;
 
@@ -14,25 +15,32 @@ public class Save
     {
         gold = 0;
         slotIndex = 0;
+        lastSlotId = 0;
         slots = new List<SlotSave>();
-        // slots = Enumerable.Repeact(new SlotSave(), 60).ToList();
-        // slots = new SlotSave[60];
         for (int i = 0; i < 60; i++)
         {
-            slots.Add(new SlotSave());
+            slots.Add(new SlotSave(lastSlotId));
+            lastSlotId += 1;
         }
     }
 }
 
 public class SlotSave
 {
-    // public int slotIndex;
+    public int slotId;
     public int id;
     public int count;
 
     public SlotSave()
     {
-        // slotIndex = _slotIndex;
+        slotId = -1;
+        id = -1;
+        count = 0;
+    }
+
+    public SlotSave(int _slotId)
+    {
+        slotId = _slotId;
         id = -1;
         count = 0;
     }

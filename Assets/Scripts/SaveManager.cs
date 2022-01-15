@@ -45,8 +45,12 @@ public class SaveManager
             .Where(slot => slot != null)
             .ToList();
 
-        save.slots.Add(new SlotSave());
-        Debug.Log("add");
+        save.slots.Add(new SlotSave(save.lastSlotId));
         save.slotIndex -= 1;
+    }
+
+    public void UpdateCount(int slotIndex, int count)
+    {
+        save.slots[slotIndex].count += count;
     }
 }

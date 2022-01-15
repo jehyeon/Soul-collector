@@ -23,6 +23,8 @@ public class Slot : MonoBehaviour, IPointerClickHandler
     [SerializeField]
     private GameObject go_selectedFrame;
 
+    private int slotIndex;
+
     // 공통
     [SerializeField]
     private Canvas cv;
@@ -31,6 +33,16 @@ public class Slot : MonoBehaviour, IPointerClickHandler
 
     public bool isEquip;
     public bool isSelected;
+    public int upgradeLevel;
+
+    private void Start()
+    {
+        slotIndex = -1;
+        if (gameObject.name != "Item Image")
+        {
+            slotIndex = int.Parse(gameObject.name.Split('(')[1].Split(')')[0]);
+        }
+    }
 
     // 아이콘 이미지 활성화
     private void SetColor(float _alpha)
@@ -43,8 +55,6 @@ public class Slot : MonoBehaviour, IPointerClickHandler
     // 슬롯에 아이템 추가
     public void AddItem(int _id, int _count = 1)
     {
-        // item = gameObject.AddComponent<Item>();
-        // item.LoadFromCSV(_id, "Item");
         item = GameObject.Find("Item Manager").GetComponent<ItemManager>().Get(_id);
         itemCount = _count;
 
@@ -64,9 +74,45 @@ public class Slot : MonoBehaviour, IPointerClickHandler
         }
         else
         {
-            text_Count.text = "";
+            // 장착 아이템인 경우 강화 수치 표기
+            if (item.ItemName.IndexOf("+") > -1)
+            {
+                upgradeLevel = int.Parse(item.ItemName.Split(' ')[0].Split('+')[1]);
+                text_Count.text = "+" + upgradeLevel;
+
+                Color itemCountColor;
+                ColorUtility.TryParseHtmlString("#FFFF00FF", out itemCountColor);
+                text_Count.color = itemCountColor;
+            }
+            else
+            {
+                text_Count.text = "";
+            }
         }
 
+    }
+
+    // 강화
+    public void Upgrade()
+    {
+        item = GameObject.Find("Item Manager").GetComponent<ItemManager>().Get(item.Id + 1);
+
+        // 장착 아이템인 경우 강화 수치 표기
+        if (item.ItemName.IndexOf("+") > -1)
+        {
+            upgradeLevel = int.Parse(item.ItemName.Split(' ')[0].Split('+')[1]);
+            text_Count.text = "+" + upgradeLevel;
+            Color fontColor;
+            ColorUtility.TryParseHtmlString("#FFFF00FF", out fontColor);
+            text_Count.color = fontColor;
+        }
+        else
+        {
+            text_Count.text = "";
+            Color backgroundColor;
+            ColorUtility.TryParseHtmlString("#FFFFFFFF", out backgroundColor);
+            text_Count.color = backgroundColor;
+        }
     }
 
     // 아이템 수량 변경
@@ -74,11 +120,6 @@ public class Slot : MonoBehaviour, IPointerClickHandler
     {
         itemCount += _count;
         text_Count.text = itemCount.ToString();
-
-        if (itemCount <= 0)
-        {
-            cv.GetComponent<Inventory>().Delete();
-        }
     }
 
     // 슬롯 비우기
@@ -98,6 +139,9 @@ public class Slot : MonoBehaviour, IPointerClickHandler
         // count 초기화
         itemCount = 0;
         text_Count.text = "";
+        Color itemCountColor;
+        ColorUtility.TryParseHtmlString("#FFFFFFFF", out itemCountColor);
+        text_Count.color = itemCountColor;
 
         // 슬롯 unselect
         UnSelect();
@@ -114,6 +158,62 @@ public class Slot : MonoBehaviour, IPointerClickHandler
             return;
         }
 
+        if (cv.GetComponent<Inventory>().reinforceMode)
+        {
+            if (item.Rank > 5)
+            {
+                // 강화 불가능한 등급 (ex. 9강, resource)
+                return;
+            }
+
+            // 강화 모드인 경우
+            int scrollType = cv.GetComponent<Inventory>().scrollType;
+            
+            if (scrollType == 15)
+            {
+                // 무기 강화
+                if (!(item.Id >= 0 && item.Id <= 499))
+                {
+                    // 무기가 아닌 경우
+                    return;
+                }
+                cv.GetComponent<Inventory>().Rush(slotIndex);
+            }
+            else if (scrollType == 16)
+            {
+                // 방어구 강화
+                if (!(item.Id >= 500 && item.Id <= 1299))
+                {
+                    // 방어구가 아닌 경우
+                    return;
+                }
+                cv.GetComponent<Inventory>().Rush(slotIndex);
+            }
+            else if (scrollType == 17)
+            {
+                // 장신구 강화
+                if (!(item.Id >= 1300 && item.Id <= 1600))
+                {
+                    // 장신구가 아닌 경우
+                    return;
+                }
+                cv.GetComponent<Inventory>().Rush(slotIndex);
+            }
+            else if (scrollType == 18)
+            {
+                // 소울스톤 강화
+                if (!(item.Id >= 1608 && item.Id <= 1613))
+                {
+                    // 소울스톤이 아닌 경우
+                    return;
+                }
+
+                // temp
+            }
+
+            return;
+        }
+
         // 아이템 선택
         if (isSelected)
         {
@@ -123,7 +223,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler
         }
         else
         {
-            cv.GetComponent<Inventory>().UpdateSelect(int.Parse(gameObject.name.Split('(')[1].Split(')')[0]));
+            cv.GetComponent<Inventory>().UpdateSelect(slotIndex);
             Select();
             cv.GetComponent<Inventory>().OpenItemDetail(item);
             SetInventoryBtn();      // 인벤토리 버튼 활성화
@@ -133,7 +233,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler
     // 장착
     public void Equip()
     {
-        cv.GetComponent<Inventory>().EquipItemType(item.ItemType, int.Parse(gameObject.name.Split('(')[1].Split(')')[0]));
+        cv.GetComponent<Inventory>().EquipItemType(item.ItemType, slotIndex);
 
         image_EquipImage.gameObject.SetActive(true);
         cv.GetComponent<Inventory>().go_player.GetComponent<Stat>().Equip(item);
