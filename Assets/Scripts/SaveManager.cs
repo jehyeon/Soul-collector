@@ -46,6 +46,7 @@ public class SaveManager
             .ToList();
 
         save.slots.Add(new SlotSave(save.lastSlotId));
+        save.lastSlotId += 1;
         save.slotIndex -= 1;
     }
 
