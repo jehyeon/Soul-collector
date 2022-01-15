@@ -82,6 +82,11 @@ public class Stat : MonoBehaviour
         _hp += _hpRecovery;
     }
 
+    public void Heal(int amount)
+    {
+        _hp += amount; 
+    }
+    
     public override string ToString()
     {
         return 

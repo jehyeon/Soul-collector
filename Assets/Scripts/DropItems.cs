@@ -87,7 +87,6 @@ public class DropItems : MonoBehaviour
             if (rand < percent)
             {
                 _dropItemId = int.Parse(itemInfo[0]);
-                Debug.Log(_dropItemId);
                 return;
             }
         }

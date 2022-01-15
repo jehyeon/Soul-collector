@@ -93,7 +93,7 @@ public class Player : ACharacter
 
     public void Heal(int amount)
     {
-        hp += amount;
+        _stat.Heal(amount);
     }
 
     // 골드

@@ -62,6 +62,9 @@ public class Inventory : MonoBehaviour
     // For save and load
     public SaveManager saveManager;
 
+    // 드랍 매니저
+    private DropManager dropManager;
+
     void Awake()
     {
         slots = go_SlotsParent.GetComponentsInChildren<Slot>();
@@ -75,6 +78,8 @@ public class Inventory : MonoBehaviour
         {
             equipped[i] = -1;
         }
+
+        dropManager = gameObject.AddComponent<DropManager>();
     }
 
     void Start()
@@ -358,6 +363,11 @@ public class Inventory : MonoBehaviour
         }
         else if (slots[selectedSlotIndex].item.ItemType > 12)
         {
+            if (index > 59)
+            {
+                // 인벤토리가 꽉차면 사용 안됨
+                return;
+            }
             Use(slots[selectedSlotIndex].item);
         }
 
@@ -411,7 +421,7 @@ public class Inventory : MonoBehaviour
     public void Use(Item item)
     {
         // 13 - 뽑기 아이템, 14 - 체력 회복 아이템, 15 - 강화 아이템
-        if (item.itemType == 14)
+        if (item.ItemType == 14)
         {
             // 우선 테이블을 쓰지 않음
             if (item._id == 1620)
@@ -423,11 +433,11 @@ public class Inventory : MonoBehaviour
                 go_player.GetComponent<Stat>().Heal(200);
             }
         }
-        else if (item.itemType == 13)
+        else if (item.ItemType == 13)
         {
             GambleBox();
         }
-        else if (item.itemType == 15)
+        else if (item.ItemType == 15)
         {
             Reinforce();
         }
@@ -435,7 +445,9 @@ public class Inventory : MonoBehaviour
 
     public void GambleBox()
     {
-        Debug.Log("상자 뽑기");
+        slots[selectedSlotIndex].GetComponent<Slot>().SetSlotCount(-1);
+        int itemId = dropManager.RandomItem(1);     // 상자깡 1개라 1로 고정
+        AcquireItem(itemId);    // 추가 후 저장
     }
 
     public void Reinforce()

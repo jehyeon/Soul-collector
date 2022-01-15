@@ -77,7 +77,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler
 
         if (itemCount <= 0)
         {
-            ClearSlot();
+            cv.GetComponent<Inventory>().Delete();
         }
     }
 
@@ -136,7 +136,6 @@ public class Slot : MonoBehaviour, IPointerClickHandler
         cv.GetComponent<Inventory>().EquipItemType(item.ItemType, int.Parse(gameObject.name.Split('(')[1].Split(')')[0]));
 
         image_EquipImage.gameObject.SetActive(true);
-        Debug.Log(item.ToString());
         cv.GetComponent<Inventory>().go_player.GetComponent<Stat>().Equip(item);
         cv.GetComponent<Inventory>().UpdateStatDetail();
         isEquip = true;
@@ -214,10 +213,5 @@ public class Slot : MonoBehaviour, IPointerClickHandler
     {
         // 장착, 사용 아이템이 아닌 경우
         go_inventoryBtn.gameObject.SetActive(false);
-    }
-
-    public void Use()
-    {
-        Debug.Log("사용");
     }
 }
