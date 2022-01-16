@@ -209,6 +209,9 @@ public class Inventory : MonoBehaviour
     {
         go_shop.SetActive(true);
         shopActivated = true;
+
+        CloseReinforceUI();
+        CloseItemDetail();
     }
 
     public void CloseShop()
@@ -476,7 +479,16 @@ public class Inventory : MonoBehaviour
         }
         else if (item.ItemType == 13)
         {
-            GambleBox();
+            if (item.Id == 1623)
+            {
+                // 방어구 상자
+                GambleBox(1);
+            }
+            else if (item.Id == 1625)
+            {
+                // 무기 상자
+                GambleBox(2);
+            }
         }
         else if (item.ItemType >= 15 && item.ItemType <= 18)
         {
@@ -484,14 +496,14 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public void GambleBox()
+    public void GambleBox(int dropId)
     {
         slots[selectedSlotIndex].SetSlotCount(-1);
         if (slots[selectedSlotIndex].itemCount < 1)
         {
             Delete();
         }
-        int itemId = dropManager.RandomItem(1);     // 상자깡 1개라 1로 고정
+        int itemId = dropManager.RandomItem(dropId);
         AcquireItem(itemId);    // 추가 후 저장
     }
 
