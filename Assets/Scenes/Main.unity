@@ -1204,7 +1204,8 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2037727615, guid: 69fb41826e3080847829d5a1584b549b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 69fb41826e3080847829d5a1584b549b, type: 3}
 --- !u!224 &1556741187 stripped
 RectTransform:
@@ -3590,6 +3591,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1975117035}
     m_Modifications:
+    - target: {fileID: 3659163053828084098, guid: be55c8558d09368438bfd443b680bc25, type: 3}
+      propertyPath: m_Colors.m_SelectedColor.b
+      value: 0.9607843
+      objectReference: {fileID: 0}
+    - target: {fileID: 3659163053828084098, guid: be55c8558d09368438bfd443b680bc25, type: 3}
+      propertyPath: m_Colors.m_SelectedColor.g
+      value: 0.9607843
+      objectReference: {fileID: 0}
+    - target: {fileID: 3659163053828084098, guid: be55c8558d09368438bfd443b680bc25, type: 3}
+      propertyPath: m_Colors.m_SelectedColor.r
+      value: 0.9607843
+      objectReference: {fileID: 0}
     - target: {fileID: 7189675855913217594, guid: be55c8558d09368438bfd443b680bc25, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

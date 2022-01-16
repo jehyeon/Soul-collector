@@ -38,6 +38,7 @@ public class Inventory : MonoBehaviour
     // Craft UI
     [SerializeField]
     private GameObject go_craftUI;
+    private bool craftActivated;
 
     // 인벤토리 UI
     [SerializeField] 
@@ -123,6 +124,7 @@ public class Inventory : MonoBehaviour
         UseInventory();
         UseStatDetail();
         UseShop();
+        UseCraft();
     }
 
     // UI 조작키
@@ -168,6 +170,22 @@ public class Inventory : MonoBehaviour
             else
             {
                 OpenShop();
+            }
+        }
+    }
+
+    private void UseCraft()
+    {
+        // Temp
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (craftActivated)
+            {
+                CloseCraftUI();
+            } 
+            else
+            {
+                OpenCraftUI();
             }
         }
     }
@@ -642,5 +660,18 @@ public class Inventory : MonoBehaviour
         }
 
         return -1;
+    }
+
+    public int GetAmountItem(int itemId)
+    {
+        for (int i = 0; i < saveManager.save.slotIndex; i++)
+        {
+            if (saveManager.save.slots[i].id == itemId)
+            {
+                return saveManager.save.slots[i].count;
+            }
+        }
+        
+        return 0;
     }
 }

@@ -28,6 +28,8 @@ public class Craft : MonoBehaviour
 
     void Start()
     {
+        selectCraftItemIndex = -1;
+
         inventory = GameObject.Find("Canvas").GetComponent<Inventory>();
         itemManager = GameObject.Find("Item Manager").GetComponent<ItemManager>();
         data = CSVReader.Read("Craft");
@@ -38,23 +40,25 @@ public class Craft : MonoBehaviour
             craftItem.transform.SetParent(go_craftItemList.transform);
 
             craftItem.GetComponent<CraftItem>().Set(i, itemManager.Get((int)data[i]["itemId"]));
-
-            LoadCreateMaterials(i);
         }
     }
 
     public void SelectCraftItem(int index)
     {
         selectCraftItemIndex = index;
+        OpenCreateMaterials();
+        LoadCreateMaterials(selectCraftItemIndex);
     }
 
     public void UnSelectCraftItem()
     {
-        Debug.Log(this.transform.GetChild(2).transform.GetChild(0).transform);
-        Debug.Log(this.transform.GetChild(2).transform.GetChild(0).transform.childCount);
-        Debug.Log(go_craftItemList.transform);
-        Debug.Log(go_craftItemList.transform.childCount);
-        // this.transform.GetChild(selectCraftItemIndex).GetComponent<CraftItem>().UnSelect();
+        if (selectCraftItemIndex == -1)
+        {
+            return;
+        }
+        
+        go_craftItemList.transform.GetChild(selectCraftItemIndex).GetComponent<CraftItem>().UnSelect();
+        selectCraftItemIndex = -1;
     }
 
     private void OpenCreateMaterials()
@@ -64,29 +68,61 @@ public class Craft : MonoBehaviour
     private void CloseCreateMaterialsUI()
     {
         go_craftMaterialsUI.SetActive(false);
+        ClearCreateMaterials();
     }
 
     private void LoadCreateMaterials(int createItemIndex)
     {
+        // 비우고
+        ClearCreateMaterials();
+
+        // 생성
         string materials = data[createItemIndex]["materialId"].ToString();
         foreach (string material in materials.Split('/'))
         {
             int materialItemId = Int32.Parse(material.Split('|')[0]);
             int numberOfmaterial = Int32.Parse(material.Split('|')[1]);
 
-            Debug.Log(materialItemId);
-            Debug.Log(numberOfmaterial);
+            GameObject craftMaterialItem = Instantiate(pref_itemMaterial);
+            craftMaterialItem.transform.SetParent(go_craftMaterialList.transform);
+
+            int amount = inventory.GetAmountItem(materialItemId);
+
+            craftMaterialItem.GetComponent<CraftMaterial>().Set(itemManager.Get(materialItemId), amount, numberOfmaterial, amount > numberOfmaterial);
+            
+            // Get from inventory
         }
-        // Instantiate
+
+        int gold = (int)data[createItemIndex]["gold"];
+        if (gold > 0)
+        {
+            GameObject craftMaterialItem = Instantiate(pref_itemMaterial);
+            craftMaterialItem.transform.SetParent(go_craftMaterialList.transform);
+
+            craftMaterialItem.GetComponent<CraftMaterial>().Set(itemManager.Get(1627), inventory.saveManager.save.gold, gold, inventory.saveManager.save.gold > gold);
+        }
     }
 
     private void ClearCreateMaterials()
     {
         // Destroy
+        Transform[] childList = go_craftMaterialList.GetComponentsInChildren<Transform>(true);
+        if (childList != null)
+        {
+            for (int i = 1; i < childList.Length; i++)
+            {
+                Destroy(childList[i].gameObject);
+            }
+        }
     }
 
     public void CraftItem()
     {
+        if (selectCraftItemIndex == -1)
+        {
+            return;
+        }
+
         Debug.Log("제작");
     }
 }

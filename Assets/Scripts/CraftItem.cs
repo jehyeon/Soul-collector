@@ -28,6 +28,7 @@ public class CraftItem : MonoBehaviour, IPointerClickHandler
 
     public void Set(int index, Item item)
     {
+        go_craft = this.transform.parent.parent.parent.gameObject;
         // item parameter의 값으로 수정
         craftItemIndex = index;
         craftItemId = item.Id;
@@ -43,7 +44,7 @@ public class CraftItem : MonoBehaviour, IPointerClickHandler
     {
         // 기존 선택된 아이템을 unselect
         go_craft.GetComponent<Craft>().UnSelectCraftItem();
-        
+
         if (isSelected)
         {
             UnSelect();

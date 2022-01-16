@@ -90,7 +90,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80237a6cd84c96744b863aff7e146913, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  go_craft: {fileID: 9023470406926048896, guid: be55c8558d09368438bfd443b680bc25, type: 3}
+  craftItemId: 0
+  go_craft: {fileID: 0}
   itemImage: {fileID: 8405015936287320962}
   slotFrame: {fileID: 7236326913494630085}
   slotBackground: {fileID: 542820002344340953}
