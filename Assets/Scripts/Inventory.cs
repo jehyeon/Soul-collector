@@ -35,6 +35,10 @@ public class Inventory : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI text_itemDetailDes;
 
+    // Craft UI
+    [SerializeField]
+    private GameObject go_craftUI;
+
     // 인벤토리 UI
     [SerializeField] 
     private GameObject go_inventoryBase;
@@ -245,6 +249,16 @@ public class Inventory : MonoBehaviour
             slots[selectedSlotIndex].UnSelect();
             // selectedSlotIndex는 -1로 초기화 됨
         }
+    }
+
+    // Craft UI
+    private void OpenCraftUI()
+    {
+        go_craftUI.SetActive(true);
+    }
+    public void CloseCraftUI()
+    {
+        go_craftUI.SetActive(false);
     }
 
     // 아이템 획득

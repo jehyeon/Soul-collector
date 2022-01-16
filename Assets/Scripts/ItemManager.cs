@@ -6,17 +6,17 @@ using System.Collections.Generic;
 public class ItemManager: MonoBehaviour
 {
     public List<Dictionary<string, object>> data;
-
+    private Item item;
+    
     private void Awake()
     {
         data = CSVReader.Read("Item");
+        item = gameObject.AddComponent<Item>();
     }
 
     public Item Get(int itemId)
     {
-        Item item = gameObject.AddComponent<Item>();
         item.Set(itemId, data[itemId]);
-
         return item;
     }
 }

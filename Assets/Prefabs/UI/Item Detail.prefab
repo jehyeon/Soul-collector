@@ -120,6 +120,7 @@ MonoBehaviour:
   go_inventoryBtn: {fileID: 0}
   isEquip: 0
   isSelected: 0
+  upgradeLevel: 0
 --- !u!1 &1415199228473953414
 GameObject:
   m_ObjectHideFlags: 0
