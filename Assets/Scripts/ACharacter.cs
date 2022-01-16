@@ -68,7 +68,13 @@ public class ACharacter : MonoBehaviour
 
     protected void Attacked(int damage)
     {
-        _stat.Attacked(damage);
+        int damageResult = damage - _stat.DamageReduction;
+        if (damageResult < 0)
+        {
+            damageResult = 0;
+        }
+
+        _stat.Attacked(damageResult);
 
         // Debug.Log(gameObject.name + "의 체력이 " + damage + "만큼 감소하여 현재 체력이 " + _stat.Hp);
 
@@ -104,6 +110,17 @@ public class ACharacter : MonoBehaviour
 
     private int CalculDamage()
     {
+        if (_stat.CriticalPercent > 0)
+        {
+            float rand = Random.value;
+
+            if (rand < _stat.CriticalPercent)
+            {
+                // cri effect 추가해야 함
+                return _stat.MaxDamage + _stat.DefaultDamage;
+            }
+        }
+
         return Random.Range(_stat.MinDamage, _stat.MaxDamage + 1) + _stat.DefaultDamage;
     }
 

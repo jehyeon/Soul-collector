@@ -12,9 +12,11 @@ GameObject:
   - component: {fileID: 5188575971390489982}
   - component: {fileID: 5188575971389392830}
   - component: {fileID: 4396415712246251654}
+  - component: {fileID: 4587604762306545191}
+  - component: {fileID: -623486643124519708}
   m_Layer: 0
   m_Name: Weapon box
-  m_TagString: Untagged
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -94,4 +96,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a4e2a17388a2864e96ccf3243ce7fd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  droppedItemId: 0
+  droppedItemId: 1602
+--- !u!65 &4587604762306545191
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5188575971391330686}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.0099943355, y: 0.0051729, z: 0.0039999993}
+  m_Center: {x: 4.656613e-10, y: 0.00008644989, z: 0}
+--- !u!54 &-623486643124519708
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5188575971391330686}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
