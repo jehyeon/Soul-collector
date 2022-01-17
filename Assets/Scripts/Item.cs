@@ -54,6 +54,11 @@ public class Item : MonoBehaviour
     public int MoveSpeed { get { return _moveSpeed; }}
     public int CriticalPercent { get { return _criticalPercent; }}
 
+    private void Start()
+    {
+        _id = -1;
+    }
+
     public void Set(int itemId, Dictionary<string, object> data)
     {
         _id = itemId;

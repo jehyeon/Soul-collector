@@ -108,8 +108,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0b45c0f7b11a954ea34514db52dedcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 0}
-  itemCount: 0
   itemImage: {fileID: 9026512140666962192}
   slotBackground: {fileID: 8429525402694081204}
   slotFrame: {fileID: 8420337810535332138}

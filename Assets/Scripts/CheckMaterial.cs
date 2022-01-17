@@ -6,8 +6,9 @@ class CheckMaterial
     
     public int Id { get { return _materialItemId; }}
     public int Count { get { return _requiredNumber; }}
-
-    public void CheckMaterial(int materialItemId, int requiredNumber, bool exist)
+    public bool Exist { get { return _exist; }}
+    
+    public CheckMaterial(int materialItemId, int requiredNumber, bool exist)
     {
         _exist = exist;
         _materialItemId = materialItemId;
