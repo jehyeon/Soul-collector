@@ -626,6 +626,19 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    public void SetItemCount(int slotIndex, int count)
+    {
+        slots[slotIndex].SetSlotCount(count);
+        if (slots[slotIndex].itemCount < 1) 
+        {
+            Delete(slotIndex);
+        }
+        else
+        {
+            Save();
+        }
+    }
+
     private int FindItemUsingItemId(int itemId)
     {
         if (itemId == -1)

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Linq;
 
 public class Craft : MonoBehaviour
 {
@@ -25,10 +26,12 @@ public class Craft : MonoBehaviour
     private GameObject pref_itemMaterial;
 
     private int selectCraftItemIndex;
+    private List<CheckMaterial> checkMaterials;
 
     void Start()
     {
         selectCraftItemIndex = -1;
+        checkMaterials = new List<CheckMaterial>();
 
         inventory = GameObject.Find("Canvas").GetComponent<Inventory>();
         itemManager = GameObject.Find("Item Manager").GetComponent<ItemManager>();
@@ -83,14 +86,15 @@ public class Craft : MonoBehaviour
             int materialItemId = Int32.Parse(material.Split('|')[0]);
             int numberOfmaterial = Int32.Parse(material.Split('|')[1]);
 
-            GameObject craftMaterialItem = Instantiate(pref_itemMaterial);
-            craftMaterialItem.transform.SetParent(go_craftMaterialList.transform);
-
             int amount = inventory.GetAmountItem(materialItemId);
 
+            // Material game object 생성
+            GameObject craftMaterialItem = Instantiate(pref_itemMaterial);
+            craftMaterialItem.transform.SetParent(go_craftMaterialList.transform);
             craftMaterialItem.GetComponent<CraftMaterial>().Set(itemManager.Get(materialItemId), amount, numberOfmaterial, amount > numberOfmaterial);
-            
-            // Get from inventory
+
+            // materials 정보를 저장
+            checkMaterials.Add(new CraftMaterial(materialItemId, amount, amount > numberOfmaterial));
         }
 
         int gold = (int)data[createItemIndex]["gold"];
@@ -98,8 +102,9 @@ public class Craft : MonoBehaviour
         {
             GameObject craftMaterialItem = Instantiate(pref_itemMaterial);
             craftMaterialItem.transform.SetParent(go_craftMaterialList.transform);
-
             craftMaterialItem.GetComponent<CraftMaterial>().Set(itemManager.Get(1627), inventory.saveManager.save.gold, gold, inventory.saveManager.save.gold > gold);
+
+            checkMaterials.Add(new CraftMaterial(1627, inventory.saveManager.save.gold, inventory.saveManager.save.gold > gold));
         }
     }
 
@@ -114,15 +119,44 @@ public class Craft : MonoBehaviour
                 Destroy(childList[i].gameObject);
             }
         }
+
+        // material 정보 초기화
+        checkMaterials = new List<CheckMaterial>();
     }
 
     public void CraftItem()
     {
         if (selectCraftItemIndex == -1)
         {
+            // 선택한 아이템이 없는 경우
             return;
         }
 
-        Debug.Log("제작");
+        if (checkMaterials.Count == 0)
+        {
+            // material 정보가 없는 경우
+            return;
+        }
+
+        List<bool> existList = checkMaterials.Select(material => material._exists);
+        if (existList.Find(exist => exist == false) < 0)
+        {
+            // 재료가 하나라도 부족한 경우
+            return;
+        }
+
+        foreach (CheckMaterial material in checkMaterials)
+        {
+            int slotIndex = inventory.FindItemUsingItemId(material.Id);
+            if (slotIndex == -1)
+            {
+                // 수량 변동이 생긴 경우
+                return;
+            }
+
+            inventory.SetItemCount(slotIndex, -1 * meterial.Count);
+        }
+
+        // Add Item
     }
 }
