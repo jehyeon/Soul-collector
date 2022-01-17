@@ -5,15 +5,13 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 
-public class ShopItem : MonoBehaviour, IPointerClickHandler
+public class CraftItem : MonoBehaviour, IPointerClickHandler
 {
-    // select 된 shopItemId를 shop.cs에서 동기화하고
-    // 구입 시 ShopItem[shopItemId]의 id와 price에 접근
-    private int shopItemId;
-    public int itemId;
-    public int price;
+    public int craftItemId;
 
-    private Item item;
+    [SerializeField]
+    private GameObject go_craft;
+
     [SerializeField]
     private Image itemImage;
     [SerializeField]
@@ -23,40 +21,30 @@ public class ShopItem : MonoBehaviour, IPointerClickHandler
     [SerializeField]
     private TextMeshProUGUI text_itemName;
     [SerializeField]
-    private TextMeshProUGUI text_itemPrice;
-
-    [SerializeField]
     private GameObject go_selectedFrame;
 
     private bool isSelected;
-    public void Set(int _shopItemId, int _id, int _price)
+    private int craftItemIndex;
+
+    public void Set(int index, Item item)
     {
-        shopItemId = _shopItemId;
-        itemId = _id;
-        price = _price;
-        // item = gameObject.AddComponent<Item>();
-        // item.LoadFromCSV(itemId, "Item");
-        item = GameObject.Find("Item Manager").GetComponent<ItemManager>().Get(itemId);
+        go_craft = this.transform.parent.parent.parent.gameObject;
+        // item parameter의 값으로 수정
+        craftItemIndex = index;
+        craftItemId = item.Id;
         itemImage.sprite = item.ItemImage;
         slotFrame.sprite = item.ItemFrame;
         slotBackground.color = item.BackgroundColor;
 
         text_itemName.text = item.ItemName;
         text_itemName.color = item.FontColor;
-        text_itemPrice.text = string.Format("{0:#,###}", price).ToString();
     }
 
-    public int GetId()
-    {
-        return itemId;
-    }
-
-    // 클릭 이벤트
     public void OnPointerClick(PointerEventData eventData)
     {
         // 기존 선택된 아이템을 unselect
-        this.transform.parent.gameObject.GetComponent<Shop>().UnSelect();
-        
+        go_craft.GetComponent<Craft>().UnSelectCraftItem();
+
         if (isSelected)
         {
             UnSelect();
@@ -71,7 +59,7 @@ public class ShopItem : MonoBehaviour, IPointerClickHandler
     {
         isSelected = true;
         go_selectedFrame.SetActive(isSelected);
-        this.transform.parent.gameObject.GetComponent<Shop>().SetSelectedShopItemId(shopItemId);
+        go_craft.GetComponent<Craft>().SelectCraftItem(craftItemIndex);
     }
 
     public void UnSelect()

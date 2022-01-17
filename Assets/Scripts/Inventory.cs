@@ -35,6 +35,11 @@ public class Inventory : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI text_itemDetailDes;
 
+    // Craft UI
+    [SerializeField]
+    private GameObject go_craftUI;
+    private bool craftActivated;
+
     // 인벤토리 UI
     [SerializeField] 
     private GameObject go_inventoryBase;
@@ -57,6 +62,7 @@ public class Inventory : MonoBehaviour
     private GameObject go_reinforce;
 
     // 인벤토리 Slot
+    // private Slot[] slots;
     private Slot[] slots;
     private int index;  // 마지막 슬롯 index
 
@@ -119,6 +125,13 @@ public class Inventory : MonoBehaviour
         UseInventory();
         UseStatDetail();
         UseShop();
+        UseCraft();
+
+        // temp
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            Save();
+        }
     }
 
     // UI 조작키
@@ -164,6 +177,22 @@ public class Inventory : MonoBehaviour
             else
             {
                 OpenShop();
+            }
+        }
+    }
+
+    private void UseCraft()
+    {
+        // Temp
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (craftActivated)
+            {
+                CloseCraftUI();
+            } 
+            else
+            {
+                OpenCraftUI();
             }
         }
     }
@@ -247,6 +276,18 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    // Craft UI
+    private void OpenCraftUI()
+    {
+        craftActivated = true;
+        go_craftUI.SetActive(craftActivated);
+    }
+    public void CloseCraftUI()
+    {
+        craftActivated = false;
+        go_craftUI.SetActive(craftActivated);
+    }
+
     // 아이템 획득
     public bool AcquireItem(int _id, int _count = 1)
     {
@@ -255,7 +296,7 @@ public class Inventory : MonoBehaviour
             // resource인 경우 (item id 1600 이후가 resource)
             for (int i = 0; i < index; i++)
             {
-                if (slots[i].item != null && slots[i].item.Id == _id)
+                if (slots[i].Item != null && slots[i].ItemId == _id)
                 {
                     // 같은 resource의 아이템이 인벤토리에 이미 있는 경우
                     // 수량만 바꿈
@@ -318,8 +359,8 @@ public class Inventory : MonoBehaviour
         saveManager.save.slotIndex = index;
         for (int i = 0; i < index; i++)
         {
-            saveManager.save.slots[i].id = slots[i].item.Id;
-            saveManager.save.slots[i].count = slots[i].itemCount;
+            saveManager.save.slots[i].id = slots[i].ItemId;
+            saveManager.save.slots[i].count = slots[i].ItemCount;
         }
 
         saveManager.Save();
@@ -373,13 +414,13 @@ public class Inventory : MonoBehaviour
             return;
         }
 
-        if (slots[selectedSlotIndex].item.ItemType == 12)
+        if (slots[selectedSlotIndex].Item.ItemType == 12)
         {
             // 장비, 사용 아이템이 아닌 경우
             return;
         }
 
-        if (slots[selectedSlotIndex].item.ItemType < 12)
+        if (slots[selectedSlotIndex].Item.ItemType < 12)
         {
             // selectedSlotIndex 의 slot이 선택 되었을 때
             if (slots[selectedSlotIndex].isEquip)
@@ -391,14 +432,14 @@ public class Inventory : MonoBehaviour
                 slots[selectedSlotIndex].Equip();
             }
         }
-        else if (slots[selectedSlotIndex].item.ItemType > 12)
+        else if (slots[selectedSlotIndex].Item.ItemType > 12)
         {
-            if (index > 59 && slots[selectedSlotIndex].item.ItemType == 13)
+            if (index > 59 && slots[selectedSlotIndex].Item.ItemType == 13)
             {
                 // 상자 아이템인 경우 인벤토리가 꽉찰 때 사용 안됨
                 return;
             }
-            Use(slots[selectedSlotIndex].item);
+            Use(slots[selectedSlotIndex].ItemId, slots[selectedSlotIndex].Item.ItemType);
         }
 
         return;
@@ -452,54 +493,54 @@ public class Inventory : MonoBehaviour
         Reload();
     }
 
-    public void Use(Item item)
+    public void Use(int itemId, int itemType)
     {
         // 13 - 뽑기 아이템, 14 - 체력 회복 아이템, 15 - 강화 아이템
-        if (item.ItemType == 14)
+        if (itemType == 14)
         {
             // 우선 테이블을 쓰지 않음
-            if (item._id == 1620)
+            if (itemId == 1620)
             {
                 go_player.GetComponent<Stat>().Heal(50);
                 slots[selectedSlotIndex].SetSlotCount(-1);
-                if (slots[selectedSlotIndex].itemCount < 1)
+                if (slots[selectedSlotIndex].ItemCount < 1)
                 {
                     Delete();
                 }
             }
-            else if (item._id == 1621)
+            else if (itemId == 1621)
             {
                 go_player.GetComponent<Stat>().Heal(200);
                 slots[selectedSlotIndex].SetSlotCount(-1);
-                if (slots[selectedSlotIndex].itemCount < 1)
+                if (slots[selectedSlotIndex].ItemCount < 1)
                 {
                     Delete();
                 }
             }
         }
-        else if (item.ItemType == 13)
+        else if (itemType == 13)
         {
-            if (item.Id == 1623)
+            if (itemId == 1623)
             {
                 // 방어구 상자
                 GambleBox(1);
             }
-            else if (item.Id == 1625)
+            else if (itemId == 1625)
             {
                 // 무기 상자
                 GambleBox(2);
             }
         }
-        else if (item.ItemType >= 15 && item.ItemType <= 18)
+        else if (itemType >= 15 && itemType <= 18)
         {
-            Reinforce(item.ItemType);
+            Reinforce(itemType);
         }
     }
 
     public void GambleBox(int dropId)
     {
         slots[selectedSlotIndex].SetSlotCount(-1);
-        if (slots[selectedSlotIndex].itemCount < 1)
+        if (slots[selectedSlotIndex].ItemCount < 1)
         {
             Delete();
         }
@@ -542,7 +583,7 @@ public class Inventory : MonoBehaviour
         }
 
         slots[scrollSlotIndex].SetSlotCount(-1);
-        if (slots[scrollSlotIndex].itemCount < 1) 
+        if (slots[scrollSlotIndex].ItemCount < 1) 
         {
             // scroll이 없어지면서 slotIndex가 바뀔 수도 있음
             int beforeSlotId = saveManager.save.slots[slotIndex].slotId;
@@ -594,7 +635,20 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    private int FindItemUsingItemId(int itemId)
+    public void SetItemCount(int slotIndex, int count)
+    {
+        slots[slotIndex].SetSlotCount(count);
+        if (slots[slotIndex].ItemCount < 1) 
+        {
+            Delete(slotIndex);
+        }
+        else
+        {
+            Save();
+        }
+    }
+
+    public int FindItemUsingItemId(int itemId)
     {
         if (itemId == -1)
         {
@@ -603,7 +657,7 @@ public class Inventory : MonoBehaviour
 
         for (int i = 0; i < index; i++)
         {
-            if (slots[i].item.Id == itemId)
+            if (slots[i].ItemId == itemId)
             {
                 return i;
             }
@@ -628,5 +682,28 @@ public class Inventory : MonoBehaviour
         }
 
         return -1;
+    }
+
+    public int GetAmountItem(int itemId)
+    {
+        for (int i = 0; i < saveManager.save.slotIndex; i++)
+        {
+            if (saveManager.save.slots[i].id == itemId)
+            {
+                return saveManager.save.slots[i].count;
+            }
+        }
+        
+        return 0;
+    }
+
+    public bool CheckEnoughInventory()
+    {
+        if (index >= slots.Length)
+        {
+            return false;
+        }
+        
+        return true;
     }
 }

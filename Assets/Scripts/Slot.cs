@@ -8,8 +8,13 @@ using TMPro;
 public class Slot : MonoBehaviour, IPointerClickHandler
 {
     // 슬롯 별
-    public Item item;
-    public int itemCount;
+    private Item item;
+    private int itemId;
+    private int itemCount;
+    public Item Item { get { return item; }}
+    public int ItemId { get { return itemId; }}
+    public int ItemCount { get { return itemCount; }}
+
     [SerializeField]
     private Image itemImage;
     [SerializeField]
@@ -30,6 +35,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler
     private Canvas cv;
     [SerializeField]
     private Transform go_inventoryBtn;
+    private ItemManager itemManager;
 
     public bool isEquip;
     public bool isSelected;
@@ -55,7 +61,18 @@ public class Slot : MonoBehaviour, IPointerClickHandler
     // 슬롯에 아이템 추가
     public void AddItem(int _id, int _count = 1)
     {
-        item = GameObject.Find("Item Manager").GetComponent<ItemManager>().Get(_id);
+        if (itemManager == null)
+        {
+            itemManager = GameObject.Find("Item Manager").GetComponent<ItemManager>();
+        }
+        if (item == null)
+        {
+            item = gameObject.AddComponent<Item>();
+        }
+        
+        item.Set(_id, itemManager.data[_id]);
+        
+        itemId = _id;
         itemCount = _count;
 
         // Item icon, frame
@@ -95,7 +112,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler
     // 강화
     public void Upgrade()
     {
-        item = GameObject.Find("Item Manager").GetComponent<ItemManager>().Get(item.Id + 1);
+        item = itemManager.Get(item.Id + 1);
 
         // 장착 아이템인 경우 강화 수치 표기
         if (item.ItemName.IndexOf("+") > -1)
@@ -172,7 +189,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler
             if (scrollType == 15)
             {
                 // 무기 강화
-                if (!(item.Id >= 0 && item.Id <= 499))
+                if (!(itemId >= 0 && itemId <= 499))
                 {
                     // 무기가 아닌 경우
                     return;
@@ -182,7 +199,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler
             else if (scrollType == 16)
             {
                 // 방어구 강화
-                if (!(item.Id >= 500 && item.Id <= 1299))
+                if (!(itemId >= 500 && itemId <= 1299))
                 {
                     // 방어구가 아닌 경우
                     return;
@@ -192,7 +209,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler
             else if (scrollType == 17)
             {
                 // 장신구 강화
-                if (!(item.Id >= 1300 && item.Id <= 1600))
+                if (!(itemId >= 1300 && itemId <= 1600))
                 {
                     // 장신구가 아닌 경우
                     return;
@@ -202,7 +219,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler
             else if (scrollType == 18)
             {
                 // 소울스톤 강화
-                if (!(item.Id >= 1608 && item.Id <= 1613))
+                if (!(itemId >= 1608 && itemId <= 1613))
                 {
                     // 소울스톤이 아닌 경우
                     return;
