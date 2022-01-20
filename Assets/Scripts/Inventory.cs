@@ -66,10 +66,7 @@ public class Inventory : MonoBehaviour
 
     // 인벤토리 Slot, 골드, Save
     private Slot[] slots;
-    private int index;  // 마지막 슬롯 index
-    public int[] equipped;  // 장착정보
-    public int selectedSlotIndex;      // 선택된 index
-    private int gold;
+    private int selectedSlotIndex;      // 선택된 index
     public int scrollSlotIndex;     // 주문서가 저장된 slot index
     public int scrollType;          // scrollSlotIndex의 주문서가 어떤 주문서 타입인지
     public bool reinforceMode;
@@ -93,18 +90,14 @@ public class Inventory : MonoBehaviour
 
         UpdateStatDetail();
     }
+
     void Update()
     {
+        // !!! 키보드 이벤트를 한 곳으로 옮기고 컨트롤러 따로 만들기
         UseInventory();
         UseStatDetail();
         UseShop();
         UseCraft();
-
-        // temp
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            Save();
-        }
     }
 
     // UI 조작키
@@ -267,89 +260,77 @@ public class Inventory : MonoBehaviour
         if (_id >= 1600)
         {
             // resource인 경우 (item id 1600 이후가 resource)
-            for (int i = 0; i < index; i++)
+            for (int i = 0; i < saveManager.Save.LastSlotIndex; i++)
             {
                 if (slots[i].Item != null && slots[i].ItemId == _id)
                 {
-                    // 같은 resource의 아이템이 인벤토리에 이미 있는 경우
-                    // 수량만 바꿈
+                    // 같은 resource의 아이템이 인벤토리에 이미 있는 경우, 수량만 바꿈
                     slots[i].SetSlotCount(_count);
-                    
-                    Save();
+                    saveManager.Save.Slots[i].UpdateCount(_count);
+
                     return true;
                 }
             }
         }
 
         // 인벤토리 꽉 찼는지 확인
-        if (index >= slots.Length)
+        if (saveManager.Save.LastSlotIndex >= slots.Length)
         {
             return false;
         }
 
-        slots[index].AddItem(_id, _count);
-        index += 1;
+        slots[saveManager.Save.LastSlotIndex].AddItem(_id, _count);
 
-        Save();
+        saveManager.Save.AddSlot(_id, _count);
+
         return true;
     }
 
     public void UnEquipItemType(int itemType)
     {
-        equipped[itemType] = -1;
+        saveManager.Save.Equipped[itemType] = -1;
     }
 
     public void EquipItemType(int itemType, int slotId)
     {
-        if (equipped[itemType] != -1)
+        if (saveManager.Save.Equipped[itemType] != -1)
         {
             // 해당 파츠를 착용하고 있으면 먼저 UnEquip
-            slots[equipped[itemType]].UnEquip();
+            slots[saveManager.Save.Equipped[itemType]].UnEquip();
         }
 
-        equipped[itemType] = slotId;
+        saveManager.Save.Equipped[itemType] = slotId;
     }
 
     public void UpdateGold(int droppedGold)
     {
-        gold += droppedGold;
-        Save();
+        saveManager.Save.Gold += droppedGold;
 
-        text_gold.text = saveManager.save.GoldText;
-    }
-
-    public void Save()
-    {
-        // 골드
-        saveManager.save.gold = gold;
-
-        // 인벤토리
-        saveManager.save.slotIndex = index;
-        for (int i = 0; i < index; i++)
-        {
-            saveManager.save.slots[i].id = slots[i].ItemId;
-            saveManager.save.slots[i].count = slots[i].ItemCount;
-        }
-
-        saveManager.Save();
-    }
-
-    private void Load()
-    {
-        // 골드
-        gold = saveManager.Save.Gold;
         text_gold.text = saveManager.Save.GoldText;
+    }
 
-        // 인벤토리
-        index = saveManager.save.slotIndex;
-        for (int i = 0; i < index; i++)
+    private void LoadInventory()
+    {
+        // saveManager.Save.Slots 기준으로 inventory clear 후 아이템 재생성
+        for (int i = 0; i < saveManager.Save.LastSlotIndex; i++)
         {
-            // save 데이터로 부터 받아온 값을 다시 slot에 add
-            slots[i].AddItem(saveManager.save.slots[i].id, saveManager.save.slots[i].count);
+            // slots[i].AddItem()
         }
 
-        // 장착 정보
-        equipped = saveManager.Save.Equipped;
+        // // 골드
+        // gold = saveManager.Save.Gold;
+        // text_gold.text = saveManager.Save.GoldText;
+
+        // // 인벤토리
+        // index = saveManager.save.slotIndex;
+        // for (int i = 0; i < index; i++)
+        // {
+        //     // save 데이터로 부터 받아온 값을 다시 slot에 add
+        //     slots[i].AddItem(saveManager.save.slots[i].id, saveManager.save.slots[i].count);
+        // }
+
+        // // 장착 정보
+        // equipped = saveManager.Save.Equipped;
     }
 
     private void Reload()

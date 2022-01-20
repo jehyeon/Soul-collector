@@ -123,9 +123,9 @@ public class Craft : MonoBehaviour
         {
             GameObject craftMaterialItem = Instantiate(pref_itemMaterial);
             craftMaterialItem.transform.SetParent(go_craftMaterialList.transform);
-            craftMaterialItem.GetComponent<CraftMaterial>().Set(itemManager.Get(1627), inventory.saveManager.save.gold, gold, inventory.saveManager.save.gold > gold);
+            craftMaterialItem.GetComponent<CraftMaterial>().Set(itemManager.Get(1627), inventory.saveManager.Save.Gold, gold, inventory.saveManager.Save.Gold > gold);
 
-            checkMaterials.Add(new CheckMaterial(1627, gold, inventory.saveManager.save.gold > gold));
+            checkMaterials.Add(new CheckMaterial(1627, gold, inventory.saveManager.Save.Gold > gold));
         }
     }
 

@@ -11,9 +11,11 @@ public class Slot : MonoBehaviour, IPointerClickHandler
     private Item item;
     private int itemId;
     private int itemCount;
+    private int slotId;
     public Item Item { get { return item; }}
     public int ItemId { get { return itemId; }}
     public int ItemCount { get { return itemCount; }}
+    public int SlotId { get { return slotId; }}
 
     [SerializeField]
     private Image itemImage;

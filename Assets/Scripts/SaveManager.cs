@@ -1,6 +1,5 @@
 using System.IO;
 using UnityEngine;
-using System.Linq;
 using LitJson;
 
 public class SaveManager
@@ -32,13 +31,13 @@ public class SaveManager
         this._save = JsonMapper.ToObject<Save>(File.ReadAllText(_filePath));
     }
 
-    public void Save()
+    public void SaveData()
     {
         // obj to json
         File.WriteAllText(_filePath, JsonMapper.ToJson(_save));
     }
 
-    public void Save(Save save)
+    public void SaveData(Save save)
     {
         // obj to json
         File.WriteAllText(_filePath, JsonMapper.ToJson(save));
@@ -46,25 +45,7 @@ public class SaveManager
     public void Init()
     {
         // 빈 세이브 생성 후 Load
-        this.Save(new Save());
+        this.SaveData(new Save());
         this.Load();
-    }
-
-    public void Delete(int slotIndex)
-    {
-        save.slots[slotIndex] = null;
-
-        save.slots = save.slots
-            .Where(slot => slot != null)
-            .ToList();
-
-        save.slots.Add(new SlotSave(save.lastSlotId));
-        save.lastSlotId += 1;
-        save.slotIndex -= 1;
-    }
-
-    public void UpdateCount(int slotIndex, int count)
-    {
-        save.slots[slotIndex].count += count;
     }
 }

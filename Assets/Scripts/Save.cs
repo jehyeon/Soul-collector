@@ -48,6 +48,12 @@ public class Save
         _lastSlotId += 1;
     }
 
+    public void AddSlot(int itemId, int count)
+    {
+        _slots.Add(new SlotSave(_lastSlotId, itemId, count));
+        _lastSlotId += 1;
+    }
+
     public void DeleteSlot(int slotIndex)
     {
         // slots의 slotIndex slot 삭제
@@ -96,6 +102,13 @@ public class SlotSave
         _id = id;
         _itemId = -1;
         _count = 0;
+    }
+
+    public SlotSave(int id, int itemId, int count)
+    {
+        _id = id;
+        _itemId = itemId;
+        _count = count;
     }
 
     public void UpdateCount(int diff)
