@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 public class Save
 {
@@ -11,10 +12,12 @@ public class Save
     private int _inventorySize;     // 인벤토리 사이즈
     private List<int> _equipped;    // 장착 상태인 슬롯 id list
     private List<SlotSave> _slots;  // 슬롯 정보
-    public List<int> Equipped { get { return _equipped; } }
-    
+
     // Properties
-    public int Gold { get { return _gold; } }
+    public List<SlotSave> Slots { get { return _slots; } set { _slots = value; } }
+    public int Gold { get { return _gold; } set { _gold = value; } }
+    public List<int> Equipped { get { return _equipped; } set { _equipped = value; } }
+    public int LastSlotIndex { get { return _lastSlotIndex; } set { _lastSlotIndex = value; } }
     public string GoldText
     {
         get
@@ -38,6 +41,38 @@ public class Save
             _lastSlotId += 1;
         }
     }
+
+    public void AddSlot()
+    {
+        _slots.Add(new SlotSave(_lastSlotId));
+        _lastSlotId += 1;
+    }
+
+    public void DeleteSlot(int slotIndex)
+    {
+        // slots의 slotIndex slot 삭제
+        _slots[slotIndex] = null;
+
+        _slots = _slots
+            .Where(slot => slot != null)
+            .ToList();
+
+        slotIndex -= 1;
+
+        // 빈 슬롯 생성
+        this.AddSlot();
+    }
+
+    public void UpgradeInventorySize()
+    {
+        // 슬롯 사이즈 추가
+        _inventorySize += 4;
+        for (int i = 0; i < 4; i++)
+        {
+            _slots.Add(new SlotSave(_lastSlotId));
+            _lastSlotId += 1;
+        }
+    }
 }
 
 public class SlotSave
@@ -46,7 +81,8 @@ public class SlotSave
     private int _itemId;
     private int _count;
     public int Count { get { return _count; } }
-    private int _equippedType;  // 장착 아이템이 아니거나, 장착하지 않은 경우 -1, 장착 시 itemType 번호 (ex. 무기 0, 방패 1 ...)
+    // 장착 아이템이 아니거나, 장착하지 않은 경우 -1, 장착 시 itemType 번호 (ex. 무기 0, 방패 1 ...)
+    // private int _equippedType;  
 
     public SlotSave()
     {
@@ -60,5 +96,17 @@ public class SlotSave
         _id = id;
         _itemId = -1;
         _count = 0;
+    }
+
+    public void UpdateCount(int diff)
+    {
+        _count += diff;
+    }
+    
+    public void Set(int slotId, int itemId, int itemCount)
+    {
+        _id = slotId;
+        _itemId = itemId;
+        _count = itemCount;
     }
 }
