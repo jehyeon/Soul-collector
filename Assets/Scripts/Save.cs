@@ -5,43 +5,60 @@ using System.Collections.Generic;
 
 public class Save
 {
-    public int gold;
-    public int slotIndex;
-    public int lastSlotId;
-    // public SlotSave[] slots;
-    public List<SlotSave> slots;
+    private int _gold;              // Gold 정보
+    private int _lastSlotIndex;     // 아이템이 있는 마지막 슬롯 index
+    private int _lastSlotId;        // 다음 슬롯의 id
+    private int _inventorySize;     // 인벤토리 사이즈
+    private List<int> _equipped;    // 장착 상태인 슬롯 id list
+    private List<SlotSave> _slots;  // 슬롯 정보
+    public List<int> Equipped { get { return _equipped; } }
+    
+    // Properties
+    public int Gold { get { return _gold; } }
+    public string GoldText
+    {
+        get
+        {
+            return string.Format("{0:#,0}", _gold).ToString();
+        }
+    }
 
+    // Methods
     public Save()
     {
-        gold = 0;
-        slotIndex = 0;
-        lastSlotId = 0;
-        slots = new List<SlotSave>();
-        for (int i = 0; i < 60; i++)
+        _gold = 0;
+        _lastSlotIndex = 0;
+        _lastSlotId = 0;
+        _equipped = new List<int> {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
+        _slots = new List<SlotSave>();
+        _inventorySize = 60;
+        for (int i = 0; i < _inventorySize; i++)
         {
-            slots.Add(new SlotSave(lastSlotId));
-            lastSlotId += 1;
+            _slots.Add(new SlotSave(_lastSlotId));
+            _lastSlotId += 1;
         }
     }
 }
 
 public class SlotSave
 {
-    public int slotId;
-    public int id;
-    public int count;
+    private int _id;
+    private int _itemId;
+    private int _count;
+    public int Count { get { return _count; } }
+    private int _equippedType;  // 장착 아이템이 아니거나, 장착하지 않은 경우 -1, 장착 시 itemType 번호 (ex. 무기 0, 방패 1 ...)
 
     public SlotSave()
     {
-        slotId = -1;
-        id = -1;
-        count = 0;
+        _id = -1;
+        _itemId = -1;
+        _count = 0;
     }
 
-    public SlotSave(int _slotId)
+    public SlotSave(int id)
     {
-        slotId = _slotId;
-        id = -1;
-        count = 0;
+        _id = id;
+        _itemId = -1;
+        _count = 0;
     }
 }

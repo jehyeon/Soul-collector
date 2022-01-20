@@ -4,13 +4,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 using TMPro;
-using LitJson;
+// using LitJson;
+
 public class Inventory : MonoBehaviour
 {
     // UI 창 활성화 여부
     private bool inventoryActivated = false;
     private bool statDetailActivated = false;
     private bool shopActivated = false;
+    private bool craftActivated = false;
 
     // 캐릭터 스탯 UI
     [SerializeField]
@@ -38,7 +40,6 @@ public class Inventory : MonoBehaviour
     // Craft UI
     [SerializeField]
     private GameObject go_craftUI;
-    private bool craftActivated;
 
     // 인벤토리 UI
     [SerializeField] 
@@ -55,47 +56,32 @@ public class Inventory : MonoBehaviour
     [SerializeField]
     public GameObject go_player;
 
-    private int gold;   // 골드
-
     // 강화 UI
     [SerializeField]
     private GameObject go_reinforce;
 
-    // 인벤토리 Slot
-    // private Slot[] slots;
+    // Manager
+    public SaveManager saveManager;
+    private DropManager dropManager;
+
+    // 인벤토리 Slot, 골드, Save
     private Slot[] slots;
     private int index;  // 마지막 슬롯 index
-
     public int[] equipped;  // 장착정보
     public int selectedSlotIndex;      // 선택된 index
+    private int gold;
+    public int scrollSlotIndex;     // 주문서가 저장된 slot index
+    public int scrollType;          // scrollSlotIndex의 주문서가 어떤 주문서 타입인지
     public bool reinforceMode;
-    public int scrollSlotIndex;
-    public int scrollType;
-
-    // For save and load
-    public SaveManager saveManager;
-
-    // 드랍 매니저
-    private DropManager dropManager;
 
     void Awake()
     {
+        // save로부터 초기화가 안되는 field 초기화
         slots = go_SlotsParent.GetComponentsInChildren<Slot>();
-        index = 0;
-        gold = 0;
         selectedSlotIndex = -1;
-
-        // 강화 관련
         reinforceMode = false;
         scrollSlotIndex = -1;
         scrollType = -1;
-
-        equipped = new int[12];
-        // 장착 정보를 -1로 초기화
-        for (int i = 0; i < equipped.Length; i++)
-        {
-            equipped[i] = -1;
-        }
 
         dropManager = gameObject.AddComponent<DropManager>();
     }
@@ -103,19 +89,6 @@ public class Inventory : MonoBehaviour
     void Start()
     {
         saveManager = new SaveManager();
-
-        // 세이브 파일 로드, 없으면 생성
-        string path = Path.Combine(Application.dataPath, "save.json");
-        FileInfo fileInfo = new FileInfo(path);
-        if (fileInfo.Exists)
-        {
-            saveManager.Load();
-        }
-        else
-        {
-            saveManager.Init();
-        }
-
         Load();
 
         UpdateStatDetail();
@@ -340,14 +313,9 @@ public class Inventory : MonoBehaviour
     public void UpdateGold(int droppedGold)
     {
         gold += droppedGold;
-        string text = string.Format("{0:#,###}", gold).ToString();
-        
-        if (text == "")
-        {
-            text = "0";
-        }
-        text_gold.text = text;
         Save();
+
+        text_gold.text = saveManager.save.GoldText;
     }
 
     public void Save()
@@ -369,14 +337,8 @@ public class Inventory : MonoBehaviour
     private void Load()
     {
         // 골드
-        gold = saveManager.save.gold;
-        string text = string.Format("{0:#,###}", gold).ToString();
-        
-        if (text == "")
-        {
-            text = "0";
-        }
-        text_gold.text = text;
+        gold = saveManager.Save.Gold;
+        text_gold.text = saveManager.Save.GoldText;
 
         // 인벤토리
         index = saveManager.save.slotIndex;
@@ -385,6 +347,9 @@ public class Inventory : MonoBehaviour
             // save 데이터로 부터 받아온 값을 다시 slot에 add
             slots[i].AddItem(saveManager.save.slots[i].id, saveManager.save.slots[i].count);
         }
+
+        // 장착 정보
+        equipped = saveManager.Save.Equipped;
     }
 
     private void Reload()
