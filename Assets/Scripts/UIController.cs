@@ -45,7 +45,53 @@ public class UIController: MonoBehaviour
 
     private void KeyBoardAction()
     {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (isActivatedStatUI)
+            {
+                CloseStatUI();
+            }
+            else
+            {
+                OpenStatUI();
+            }
+        }
 
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            if (isActivatedInventoryUI)
+            {
+                CloseInventoryUI();
+            }
+            else
+            {
+                OpenInventoryUI();
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            if (isActivatedShopUI)
+            {
+                CloseShopUI();
+            }
+            else
+            {
+                OpenShopUI();
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            if (isActivatedCraftUI)
+            {
+                CloseCraftUI();
+            }
+            else
+            {
+                OpenCraftUI();
+            }
+        }
     }
 
     // Stat UI
@@ -72,6 +118,10 @@ public class UIController: MonoBehaviour
     {
         go_inventoryUI.SetActive(false);
         isActivatedInventoryUI = false;
+
+        // Item detail 및 강화 UI도 닫음
+        CloseItemUI();
+        CloseReinforceUI();
     }
 
     // Item UI
@@ -107,7 +157,7 @@ public class UIController: MonoBehaviour
         isActivatedCraftUI = true;
     }
 
-    public void OpenCraftUI()
+    public void CloseCraftUI()
     {
         go_craftUI.SetActive(false);
         isActivatedCraftUI = false;

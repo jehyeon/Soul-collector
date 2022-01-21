@@ -90,116 +90,16 @@ public class Inventory : MonoBehaviour
 
         UpdateStatDetail();
     }
-
-    void Update()
-    {
-        // !!! 키보드 이벤트를 한 곳으로 옮기고 컨트롤러 따로 만들기
-        UseInventory();
-        UseStatDetail();
-        UseShop();
-        UseCraft();
-    }
-
-    // UI 조작키
-    private void UseInventory()
-    {
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            if (inventoryActivated)
-            {
-                CloseInventory();
-            } 
-            else
-            {
-                OpenInventory();
-            }
-        }
-    }
-
-    private void UseStatDetail()
-    {
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            if (statDetailActivated)
-            {
-                CloseStatDetail();
-            } 
-            else
-            {
-                OpenStatDetail();
-            }
-        }
-    }
-
-    private void UseShop()
-    {
-        // Temp
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            if (shopActivated)
-            {
-                CloseShop();
-            } 
-            else
-            {
-                OpenShop();
-            }
-        }
-    }
-
-    private void UseCraft()
-    {
-        // Temp
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            if (craftActivated)
-            {
-                CloseCraftUI();
-            } 
-            else
-            {
-                OpenCraftUI();
-            }
-        }
-    }
     
-    // Stat UI
-    private void OpenStatDetail()
-    {
-        go_statDetail.SetActive(true);
-        statDetailActivated = true;
-    }
-    public void CloseStatDetail()
-    {
-        go_statDetail.SetActive(false);
-        statDetailActivated = false;
-    }
     public void UpdateStatDetail()
     {
+        // !!! Need to move
         go_statDetail.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = go_player.GetComponent<Player>()._stat.ToString();
         text_damageReduction.text = go_player.GetComponent<Player>()._stat.DamageReduction.ToString();
     }
 
-    // Inventory UI
-    private void OpenInventory()
-    {
-        go_inventoryBase.SetActive(true);
-        inventoryActivated = true;
-    }
-
-    public void CloseInventory()
-    {
-        go_inventoryBase.SetActive(false);
-        inventoryActivated = false;
-
-        // 아이템 디테일 창도 닫음
-        CloseItemDetail();
-
-        // 강화 창 닫음
-        CloseReinforceUI();
-    }
-
     // Shop UI
+    // !!! Need to move
     private void OpenShop()
     {
         go_shop.SetActive(true);
@@ -216,8 +116,10 @@ public class Inventory : MonoBehaviour
         // shop UI를 닫으면 selected 아이템 초기화
         go_shop.transform.GetChild(2).GetChild(0).GetComponent<Shop>().UnSelect();
     }
+    // ------------------------
 
     // Item detail UI
+    // !!! Need to move
     public void OpenItemDetail(Item item)
     {
         img_itemDetailImage.sprite = item.ItemImage;
@@ -241,18 +143,7 @@ public class Inventory : MonoBehaviour
             // selectedSlotIndex는 -1로 초기화 됨
         }
     }
-
-    // Craft UI
-    private void OpenCraftUI()
-    {
-        craftActivated = true;
-        go_craftUI.SetActive(craftActivated);
-    }
-    public void CloseCraftUI()
-    {
-        craftActivated = false;
-        go_craftUI.SetActive(craftActivated);
-    }
+    // -------------------------
 
     // 아이템 획득
     public bool AcquireItem(int _id, int _count = 1)
@@ -282,6 +173,7 @@ public class Inventory : MonoBehaviour
         slots[saveManager.Save.LastSlotIndex].AddItem(_id, _count);
 
         saveManager.Save.AddSlot(_id, _count);
+        saveManager.SaveData();
 
         return true;
     }
@@ -289,6 +181,7 @@ public class Inventory : MonoBehaviour
     public void UnEquipItemType(int itemType)
     {
         saveManager.Save.Equipped[itemType] = -1;
+        saveManager.SaveData();
     }
 
     public void EquipItemType(int itemType, int slotId)
@@ -300,49 +193,32 @@ public class Inventory : MonoBehaviour
         }
 
         saveManager.Save.Equipped[itemType] = slotId;
+        saveManager.SaveData();
     }
 
     public void UpdateGold(int droppedGold)
     {
         saveManager.Save.Gold += droppedGold;
-
         text_gold.text = saveManager.Save.GoldText;
+        saveManager.SaveData();
     }
 
     private void LoadInventory()
     {
+        // !!! Need to update
         // saveManager.Save.Slots 기준으로 inventory clear 후 아이템 재생성
+        // slot all clear
+
         for (int i = 0; i < saveManager.Save.LastSlotIndex; i++)
         {
             // slots[i].AddItem()
         }
 
-        // // 골드
-        // gold = saveManager.Save.Gold;
-        // text_gold.text = saveManager.Save.GoldText;
-
-        // // 인벤토리
-        // index = saveManager.save.slotIndex;
-        // for (int i = 0; i < index; i++)
-        // {
-        //     // save 데이터로 부터 받아온 값을 다시 slot에 add
-        //     slots[i].AddItem(saveManager.save.slots[i].id, saveManager.save.slots[i].count);
-        // }
-
-        // // 장착 정보
-        // equipped = saveManager.Save.Equipped;
+        // 장착 정보 ?
+        
+        // 세이브 할 필요는 없음
     }
 
-    private void Reload()
-    {
-        // Slot all clear
-        for (int i = 0; i < index; i++)
-        {
-            slots[i].ClearSlot();
-        }
-
-        Load();     // 슬롯 비우고 다시 load
-    }
     public void UpdateSelect(int slotIndex)
     {
         if (slotIndex != -1 && selectedSlotIndex != -1)
@@ -436,7 +312,7 @@ public class Inventory : MonoBehaviour
         // 선택한 ItemDetail 닫음
         CloseItemDetail();
 
-        Reload();
+        LoadInventory();
     }
 
     public void Use(int itemId, int itemType)
@@ -563,7 +439,7 @@ public class Inventory : MonoBehaviour
             saveManager.save.slots[slotIndex].id += 1;
             saveManager.Save();
 
-            Reload();
+            LoadInventory();
         }
         else
         {

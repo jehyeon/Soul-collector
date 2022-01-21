@@ -5,59 +5,38 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 
-public class Slot : MonoBehaviour, IPointerClickHandler
+public class Slot : MonoBehaviour
 {
     // 슬롯 별
     private Item item;
-    private int itemId;
-    private int itemCount;
     private int slotId;
-    public Item Item { get { return item; }}
-    public int ItemId { get { return itemId; }}
-    public int ItemCount { get { return itemCount; }}
-    public int SlotId { get { return slotId; }}
+    // public Item Item { get { return item; } }
+    // public int SlotId { get { return slotId; } }
 
     [SerializeField]
-    private Image itemImage;
+    private Image img_item;
     [SerializeField]
-    private Image slotBackground;
+    private Image img_background;
     [SerializeField]
-    private Image slotFrame;
+    private Image img_frame;
     [SerializeField]
-    private TextMeshProUGUI text_Count;
+    private TextMeshProUGUI text_count;
     [SerializeField]
-    private Image image_EquipImage;
+    private Image image_equipped;
     [SerializeField]
     private GameObject go_selectedFrame;
 
-    private int slotIndex;
-
     // 공통
-    [SerializeField]
-    private Canvas cv;
-    [SerializeField]
-    private Transform go_inventoryBtn;
-    private ItemManager itemManager;
-
     public bool isEquip;
     public bool isSelected;
     public int upgradeLevel;
 
-    private void Start()
+    private void SetColor(float alpha)
     {
-        slotIndex = -1;
-        if (gameObject.name != "Item Image")
-        {
-            slotIndex = int.Parse(gameObject.name.Split('(')[1].Split(')')[0]);
-        }
-    }
-
-    // 아이콘 이미지 활성화
-    private void SetColor(float _alpha)
-    {
-        Color color = itemImage.color;
-        color.a = _alpha;
-        itemImage.color = color;
+        // 아이템 이미지 활성화
+        Color color = img_item.color;
+        color.a = alpha;
+        img_item.color = color;
     }
 
     // 슬롯에 아이템 추가
@@ -196,7 +175,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler
                     // 무기가 아닌 경우
                     return;
                 }
-                cv.GetComponent<Inventory>().Rush(slotIndex);
+                cv.GetComponent<Inventory>().Rush(inventoryIndex);
             }
             else if (scrollType == 16)
             {
@@ -206,7 +185,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler
                     // 방어구가 아닌 경우
                     return;
                 }
-                cv.GetComponent<Inventory>().Rush(slotIndex);
+                cv.GetComponent<Inventory>().Rush(inventoryIndex);
             }
             else if (scrollType == 17)
             {
@@ -216,7 +195,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler
                     // 장신구가 아닌 경우
                     return;
                 }
-                cv.GetComponent<Inventory>().Rush(slotIndex);
+                cv.GetComponent<Inventory>().Rush(inventoryIndex);
             }
             else if (scrollType == 18)
             {
@@ -242,7 +221,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler
         }
         else
         {
-            cv.GetComponent<Inventory>().UpdateSelect(slotIndex);
+            cv.GetComponent<Inventory>().UpdateSelect(inventoryIndex);
             Select();
             cv.GetComponent<Inventory>().OpenItemDetail(item);
             SetInventoryBtn();      // 인벤토리 버튼 활성화
@@ -252,7 +231,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler
     // 장착
     public void Equip()
     {
-        cv.GetComponent<Inventory>().EquipItemType(item.ItemType, slotIndex);
+        cv.GetComponent<Inventory>().EquipItemType(item.ItemType, inventoryIndex);
 
         image_EquipImage.gameObject.SetActive(true);
         cv.GetComponent<Inventory>().go_player.GetComponent<Stat>().Equip(item);
