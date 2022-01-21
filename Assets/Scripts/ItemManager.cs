@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public class ItemManager: MonoBehaviour
 {
-    public List<Dictionary<string, object>> data;
+    private List<Dictionary<string, object>> data;
     private Item item;
     
     private void Awake()

@@ -8,7 +8,7 @@ public class Item : MonoBehaviour
     public int _id;
     private string _itemName;
     private int _imageId;
-    private int _itemType;      // itemp type 1 ~ 13 (장비), 14 (리소스 itemCount가 존재)
+    private int _itemType;      // itemp type 0 ~ 11 (장비), 12 (리소스 itemCount가 존재)
     private int _rank;
     private string _des;        // description
     private Color _backgroundColor;
