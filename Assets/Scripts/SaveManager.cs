@@ -34,13 +34,23 @@ public class SaveManager
     public void SaveData()
     {
         // obj to json
-        File.WriteAllText(filePath, JsonMapper.ToJson(save));
+        JsonWriter writer = new JsonWriter();
+        writer.PrettyPrint = true;
+        writer.IndentValue = 2;
+        JsonMapper.ToJson(save, writer);
+
+        File.WriteAllText(filePath, writer.ToString());
     }
 
     public void SaveData(Save save)
     {
         // obj to json
-        File.WriteAllText(filePath, JsonMapper.ToJson(save));
+        JsonWriter writer = new JsonWriter();
+        writer.PrettyPrint = true;
+        writer.IndentValue = 2;
+        JsonMapper.ToJson(save, writer);
+
+        File.WriteAllText(filePath, writer.ToString());
     }
     public void Init()
     {
