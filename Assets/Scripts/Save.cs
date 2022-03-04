@@ -18,6 +18,7 @@ public class Save
     public int Gold { get { return _gold; } set { _gold = value; } }
     public List<int> Equipped { get { return _equipped; } set { _equipped = value; } }
     public int LastSlotIndex { get { return _lastSlotIndex; } set { _lastSlotIndex = value; } }
+    public int InventorySize { get { return _inventorySize; } }
     public string GoldText
     {
         get
@@ -86,6 +87,7 @@ public class SlotSave
     private int _id;
     private int _itemId;
     private int _count;
+    public int Id { get { return _itemId; } }
     public int Count { get { return _count; } }
     // 장착 아이템이 아니거나, 장착하지 않은 경우 -1, 장착 시 itemType 번호 (ex. 무기 0, 방패 1 ...)
     // private int _equippedType;  

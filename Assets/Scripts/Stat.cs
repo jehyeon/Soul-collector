@@ -117,7 +117,7 @@ public class Stat
 
     public void Equip(Item item)
     {
-        if (item.ItemType == 0)
+        if (item.ItemType == ItemType.Weapon)
         {
             // 무기
             // _maxDamage += item.MaxDamage;
@@ -125,8 +125,7 @@ public class Stat
             // _defaultDamage += item.DefaultDamage;
             // _attackSpeed = (_attackSpeed * 100f - item.AttackSpeed) / 100f;
         }
-
-        else if (item.ItemType >= 2 || item.ItemType <=9)
+        else if (item.ItemType == ItemType.Armor)
         {
             // 방어구
             // _damageReduction += item.DamageReduction;
@@ -145,7 +144,7 @@ public class Stat
 
     public void UnEquip(Item item)
     {
-        if (item.ItemType == 0)
+        if (item.ItemType == ItemType.Weapon)
         {
             // 무기
             // _maxDamage -= item.MaxDamage;
@@ -153,7 +152,7 @@ public class Stat
             // _defaultDamage -= item.DefaultDamage;
             // _attackSpeed = (_attackSpeed * 100f + item.AttackSpeed) / 100f;
         }
-        else if (item.ItemType >= 2 || item.ItemType <=9)
+        else if (item.ItemType == ItemType.Armor)
         {
             // 방어구
             // _damageReduction -= item.DamageReduction;

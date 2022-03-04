@@ -4,10 +4,16 @@ using UnityEngine;
 
 public class Player : ACharacter
 {
-    private GameManager gameManager;
+    public GameManager gameManager;
     private UIController ui;
 
-    void Start()
+    protected override void Awake()
+    {
+        base.Awake();
+
+        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+    }
+    private void Start()
     {
         // 체력바 설정
         ui = GetComponent<UIController>();

@@ -12,10 +12,8 @@ GameObject:
   - component: {fileID: 3076087873692225948}
   - component: {fileID: 3076087873692225949}
   - component: {fileID: 3076087873692225950}
-  - component: {fileID: 3076087873692225951}
   - component: {fileID: 3076087873692225946}
-  - component: {fileID: 8427083703917344523}
-  - component: {fileID: 3076087873692225945}
+  - component: {fileID: 3076087873692225951}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -100,23 +98,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3076087873692225951
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3076087873692225936}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bfb8464b28b66a6488abeed8949fbb19, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _stat: {fileID: 0}
-  state: 0
-  destinationPos: {x: 0, y: 0, z: 0}
-  _id: 0
-  player: {fileID: 0}
 --- !u!54 &3076087873692225946
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -133,7 +114,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &8427083703917344523
+--- !u!114 &3076087873692225951
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -142,22 +123,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 3076087873692225936}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff37c9c8e6546d64fb5c9a0cb9f32098, type: 3}
+  m_Script: {fileID: 11500000, guid: bfb8464b28b66a6488abeed8949fbb19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &3076087873692225945
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3076087873692225936}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31fc047fb9d40734db6b1e0fd0b0f786, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dropWeapon: {fileID: 5077650760184880940, guid: 1259ef7971e69a04da217b712700f47f, type: 3}
-  dropBox: {fileID: 5188575971391330686, guid: 41c3a3d7a0fd21d4b8da3d33b2673891, type: 3}
-  _dropGold: 0
-  _dropItemId: 0

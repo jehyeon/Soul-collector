@@ -34,23 +34,9 @@ public class PlayerController : MonoBehaviour
 
                 if (raycastHit.collider.CompareTag("Item"))
                 {
-                    GetItem(raycastHit.collider.gameObject);
+                    player.gameManager.GetItem(raycastHit.collider.gameObject);
                 }
             }
         }
     }
-
-    public void GetItem(GameObject targetObject)
-    {
-        // bool emptyInventory = player.cv.GetComponent<Inventory>().AcquireItem(targetObject.GetComponent<Dropped>().droppedItemId);
-
-        // if (emptyInventory)
-        // {
-        //     Destroy(targetObject);
-        // }
-        // else
-        // {
-        //     Debug.Log("인벤토리 꽉 참");
-        // }
-    }    
 }

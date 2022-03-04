@@ -23,7 +23,7 @@ public class DropItems : MonoBehaviour
     private void Awake()
     {
         // 드랍 테이블 가져오기
-        _enemyId = gameObject.GetComponent<Enemy>()._id;
+        // _enemyId = gameObject.GetComponent<Enemy>()._id;
         GetDropTable();
         _dropItemId = -1;
     }
@@ -41,19 +41,19 @@ public class DropItems : MonoBehaviour
         if (_dropItemId >= 1600)
         {
             // resources는 item id가 1600 이상
-            dropBox.GetComponent<Dropped>().droppedItemId = _dropItemId;
+            dropBox.GetComponent<DroppedItem>().SetDrop(_dropItemId);
             Instantiate(dropBox, this.transform.position, this.transform.rotation);
         }
         else
         {
             // 장비 아이템 (현재 weapon prefab만 사용)
-            dropWeapon.GetComponent<Dropped>().droppedItemId = _dropItemId;
+            dropBox.GetComponent<DroppedItem>().SetDrop(_dropItemId);
             Instantiate(dropWeapon, this.transform.position, this.transform.rotation);
         }
     }
     public void DropGold()
     {
-        gameObject.GetComponent<Enemy>().player.GetComponent<Player>().GetGold(_dropGold);
+        // gameObject.GetComponent<Enemy>().player.GetComponent<Player>().GetGold(_dropGold);
     }
 
     private void GetDropTable()

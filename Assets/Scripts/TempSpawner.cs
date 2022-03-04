@@ -35,7 +35,7 @@ public class TempSpawner : MonoBehaviour
         int spwanZ = Random.Range((int)(this.transform.position.y - fieldY), (int)(this.transform.position.y + fieldY));
 
         GameObject instance = Instantiate(enemyPref, new Vector3(spwanX, 1, spwanZ), this.transform.rotation);
-        instance.GetComponent<Enemy>()._stat.LoadFromCSV(enemyId, "Enemy");
-        instance.GetComponent<Enemy>().SetId(enemyId);
+        // instance.GetComponent<Enemy>()._stat.LoadFromCSV(enemyId, "Enemy");
+        // instance.GetComponent<Enemy>().SetId(enemyId);
     }
 }

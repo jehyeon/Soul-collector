@@ -3,20 +3,17 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class ItemManager: MonoBehaviour
+public class ItemManager
 {
     private List<Dictionary<string, object>> data;
-    private Item item;
     
-    private void Awake()
+    public ItemManager()
     {
         data = CSVReader.Read("Item");
-        item = gameObject.AddComponent<Item>();
     }
 
     public Item Get(int itemId)
     {
-        item.Set(itemId, data[itemId]);
-        return item;
+        return new Item(itemId, data[itemId]);
     }
 }
