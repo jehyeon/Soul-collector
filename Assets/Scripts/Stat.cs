@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Stat : MonoBehaviour
+public class Stat
 {
     // 공격
     protected int _criticalPercent;     // 치명타 확률
@@ -22,22 +22,26 @@ public class Stat : MonoBehaviour
 
     // 기타
     protected float _moveSpeed;         // 이동속도
+    protected float _attackRange;       // 공격 범위
 
-    public int CriticalPercent { get { return _criticalPercent; }}
-    public float AttackSpeed { get { return _attackSpeed; }}
-    public int MaxDamage { get { return _maxDamage; }}
-    public int MinDamage { get { return _minDamage; }}
-    public int DefaultDamage { get { return _defaultDamage; }}
-    public int Accuracy { get { return _accuracy; }}
-    public int AbsoluteAccuracy { get { return _absoluteAccuracy; }}
-    public int MaxHp { get { return _maxHp; }}
-    public int Hp { get { return _hp; }}
-    public int HpRecovery { get { return _hpRecovery; }}
-    public int DamageReduction { get { return _damageReduction; }}
-    public int EvasionPercent { get { return _evasionPercent; }}
-    public float MoveSpeed { get { return _moveSpeed; }}
-    private void Awake()
+    public int CriticalPercent { get { return _criticalPercent; } }
+    public float AttackSpeed { get { return _attackSpeed; } }
+    public int MaxDamage { get { return _maxDamage; } }
+    public int MinDamage { get { return _minDamage; } }
+    public int DefaultDamage { get { return _defaultDamage; } }
+    public int Accuracy { get { return _accuracy; } }
+    public int AbsoluteAccuracy { get { return _absoluteAccuracy; } }
+    public int MaxHp { get { return _maxHp; } }
+    public int Hp { get { return _hp; } }
+    public int HpRecovery { get { return _hpRecovery; } }
+    public int DamageReduction { get { return _damageReduction; } }
+    public int EvasionPercent { get { return _evasionPercent;  } }
+    public float MoveSpeed { get { return _moveSpeed; } }
+    public float AttackRange { get { return _attackRange; } }
+
+    public Stat()
     {
+        // 초기값
         _criticalPercent = 0;
         _attackSpeed = 1;
         _maxDamage = 0;
@@ -51,15 +55,17 @@ public class Stat : MonoBehaviour
         _damageReduction = 0;
         _evasionPercent = 0;
         _moveSpeed = 10f;
+        _attackRange = 1.1f;
     }
 
-    public void Attacked(int damage)
+    public void DecreaseHp(int damage)
     {
         _hp -= damage;
     }
 
     public void LoadFromCSV(int id, string fileName)
     {
+        // for enemy
         List<Dictionary<string, object>> data = CSVReader.Read(fileName);
         _criticalPercent = (int)data[id]["criticalPercent"];
         _attackSpeed = (float)System.Convert.ToDouble(data[id]["attackSpeed"]);
@@ -74,12 +80,13 @@ public class Stat : MonoBehaviour
         _damageReduction = (int)data[id]["damageReduction"];
         _evasionPercent = (int)data[id]["evasionPercent"];
         _moveSpeed = (float)System.Convert.ToDouble(data[id]["moveSpeed"]);
+        // !!! 공격 범위 추가하기
     }
 
     // 방어
-    public void RecoveryHp()
+    public void RecoverHp()
     {
-        _hp += _hpRecovery;
+        Heal(_hpRecovery);
     }
 
     public void Heal(int amount)
@@ -113,21 +120,21 @@ public class Stat : MonoBehaviour
         if (item.ItemType == 0)
         {
             // 무기
-            _maxDamage += item.MaxDamage;
-            _minDamage += item.MinDamage;
-            _defaultDamage += item.DefaultDamage;
-            _attackSpeed = (_attackSpeed * 100f - item.AttackSpeed) / 100f;
+            // _maxDamage += item.MaxDamage;
+            // _minDamage += item.MinDamage;
+            // _defaultDamage += item.DefaultDamage;
+            // _attackSpeed = (_attackSpeed * 100f - item.AttackSpeed) / 100f;
         }
 
         else if (item.ItemType >= 2 || item.ItemType <=9)
         {
             // 방어구
-            _damageReduction += item.DamageReduction;
-            _maxHp += item.MaxHp;
-            _hpRecovery += item.HpRecovery;
-            _evasionPercent += item.EvasionPercent;
-            _criticalPercent += item.CriticalPercent;
-            _moveSpeed += item.MoveSpeed;
+            // _damageReduction += item.DamageReduction;
+            // _maxHp += item.MaxHp;
+            // _hpRecovery += item.HpRecovery;
+            // _evasionPercent += item.EvasionPercent;
+            // _criticalPercent += item.CriticalPercent;
+            // _moveSpeed += item.MoveSpeed;
 
             if (_hp > _maxHp)
             {
@@ -141,20 +148,20 @@ public class Stat : MonoBehaviour
         if (item.ItemType == 0)
         {
             // 무기
-            _maxDamage -= item.MaxDamage;
-            _minDamage -= item.MinDamage;
-            _defaultDamage -= item.DefaultDamage;
-            _attackSpeed = (_attackSpeed * 100f + item.AttackSpeed) / 100f;
+            // _maxDamage -= item.MaxDamage;
+            // _minDamage -= item.MinDamage;
+            // _defaultDamage -= item.DefaultDamage;
+            // _attackSpeed = (_attackSpeed * 100f + item.AttackSpeed) / 100f;
         }
         else if (item.ItemType >= 2 || item.ItemType <=9)
         {
             // 방어구
-            _damageReduction -= item.DamageReduction;
-            _maxHp -= item.MaxHp;
-            _hpRecovery -= item.HpRecovery;
-            _evasionPercent -= item.EvasionPercent;
-            _criticalPercent -= item.CriticalPercent;
-            _moveSpeed -= item.MoveSpeed;
+            // _damageReduction -= item.DamageReduction;
+            // _maxHp -= item.MaxHp;
+            // _hpRecovery -= item.HpRecovery;
+            // _evasionPercent -= item.EvasionPercent;
+            // _criticalPercent -= item.CriticalPercent;
+            // _moveSpeed -= item.MoveSpeed;
         }
     }
 }

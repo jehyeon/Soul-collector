@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
+using TMPro;
 
 public class UIController: MonoBehaviour
 {
@@ -26,6 +28,13 @@ public class UIController: MonoBehaviour
     private bool isActivatedShopUI;
     private bool isActivatedCraftUI;
     private bool isActivatedReinforceUI;
+
+    // 플레이어 체력바
+    [SerializeField]
+    private Slider hpBar;
+
+    [SerializeField]
+    private TextMeshProUGUI hpBarText;      // Text Hp
 
     private void Awake()
     {
@@ -174,5 +183,17 @@ public class UIController: MonoBehaviour
     {
         go_reinforceUI.SetActive(false);
         isActivatedReinforceUI = false;
+    }
+
+    // 플레이어 체력바
+    public void InitPlayerHpBar(int maxHp)
+    {
+        hpBar.value = 1f;
+        hpBarText.text = string.Format("{0} / {0}", maxHp);
+    }
+    public void UpdatePlayerHpBar(int nowHp, int maxHp)
+    {
+        hpBar.value = (float)nowHp / (float)maxHp;
+        hpBarText.text = string.Format("{0} / {1}", nowHp, maxHp);
     }
 }

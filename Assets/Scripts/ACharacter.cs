@@ -2,130 +2,166 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum State
+{
+    Idle,
+    Die,
+    Attack,
+    Move,
+    Back    // for only Enemy
+}
+
 public class ACharacter : MonoBehaviour
 {
-    public enum State
-    {
-        Idle,
-        Die,
-        Attack,
-        Move,   // for only Player
-        Back    // for only Enemy
-    }
-    public Stat _stat;
-    public State state;
+    protected Stat stat;
+    protected State state;
+protected bool canAttack;   // 공격 쿨타임
 
-    // 공격
-    private float attackCoolTime;
-    protected bool canAttack;
-
-    // 이동
-    public Vector3 destinationPos;
+    // 목적지 및 타겟
+    protected Vector3 destinationPos;
+    protected GameObject target;
 
     protected virtual void Awake()
     {
-        _stat = gameObject.GetComponent<Stat>();
+        // 스탯 생성 및 Idle state
+        stat = new Stat();
         state = State.Idle;
-        attackCoolTime = 1f;
         canAttack = true;
     }
 
-    protected void CheckCanAttack()
+    // 타겟 지정
+    public void SetTarget(GameObject gameObject)
     {
-        // 공격 가능한지 확인
-        if (!canAttack)
-        {
-            attackCoolTime += Time.deltaTime;
-
-            if (attackCoolTime > _stat.AttackSpeed)
-            {
-                canAttack = true;
-            }
-        }
+        target = gameObject;
+        state = State.Move;     // 공격 범위 안에 들어오면 state = State.Attack;
+        InvokeRepeating("CheckTargetInAttackRange", .1f, .1f);  // 타겟이 지정되면 일정 주기마다 동작
     }
 
-    protected void Attack(GameObject targetObject)
+    public void SetDestination(Vector3 position)
     {
-        int calculedDamage = CalculDamage();
+        destinationPos = position;
+        state = State.Move;
+    }
 
-        // Debug.Log(gameObject.name + "이 " + targetObject.name + "을 " + calculedDamage + " 데미지로 공격");
-        
-        // 공격 대상이 Player인지 Enemy인지 확인
-        Player isPlayer = targetObject.GetComponent<Player>();
-        if (isPlayer == null)
+
+    private void CheckEnemyInAttackRange()
+    {
+        // 타겟이 attackRange 안에 있는지 확인
+        if (target == null)
         {
-            targetObject.GetComponent<Enemy>().Attacked(calculedDamage);    
+            // 공격 범위 확인 중지
+            CancelInvoke("CheckTargetInAttackRange");
+            return;
+        }
+
+        if (!canAttack)
+        {
+            // 공격 쿨타임인 경우
+            // !!! 함수 호출 주기에 따른 공격 딜레이가 발생할 수 있음
+            return;
+        }
+
+        if ((target.transform.position - this.transform.position).sqrMagnitude < stat.AttackRange * stat.AttackRange)
+        {
+            // 공격 범위 안에 들어온 경우
+            state = State.Attack;
+
+            Attack();
         }
         else
         {
-            targetObject.GetComponent<Player>().Attacked(calculedDamage);
+            // 타겟이 지정되어 있지만, 멀어진 경우
+            state = State.Move;
         }
-
-        // 공격 쿨타임 초기화
-        canAttack = false;
-        attackCoolTime = 0;
     }
 
-    protected void Attacked(int damage)
+    // 이동 관련
+    protected void Move()
     {
-        int damageResult = damage - _stat.DamageReduction;
-        if (damageResult < 0)
+        if (destinationPos == null || state != State.Move)
         {
-            damageResult = 0;
+            // 목적지가 없거나 Move 상태가 아닌 경우
+            return;
         }
 
-        _stat.Attacked(damageResult);
+        if ((destinationPos - this.transform.position).sqrMagnitude <= 0.1f)
+        {
+            // 목적지에 도착하면
+            // if (target == null)
+            // {
+                state = State.Idle;
+            // }
+            // else
+            // {
+            //     state = State.Attack;
+            // }
+            return;
+        }
+        
+        this.transform.position += (destinationPos - this.transform.position).normalized * Time.deltaTime * stat.MoveSpeed;
+    }    
 
-        // Debug.Log(gameObject.name + "의 체력이 " + damage + "만큼 감소하여 현재 체력이 " + _stat.Hp);
+    // 공격 관련
+    protected void Attack()
+    {
+        if (target == null || state != State.Attack || canAttack)
+        {
+            return;
+        }
 
-        if (_stat.Hp < 1)
+        target.GetComponent<ACharacter>().Attacked(CalculateDamage());
+        Invoke("StartAttackCoolTime", 0f);  // 공격 쿨타임 계산
+    }
+
+    private int CalculateDamage()
+    {
+        if (stat.CriticalPercent > 0)
+        {
+            float rand = Random.value;
+
+            if (rand < stat.CriticalPercent)
+            {
+                // cri effect 추가해야 함
+                return stat.MaxDamage + stat.DefaultDamage;
+            }
+        }
+
+        return Random.Range(stat.MinDamage, stat.MaxDamage + 1) + stat.DefaultDamage;
+    }
+
+    IEnumerator StartAttackCoolTime()
+    {
+        canAttack = false;
+        yield return new WaitForSeconds(stat.AttackSpeed);
+        canAttack = true;
+    }
+
+    // 피격 관련
+    protected void Attacked(int damage)
+    {
+        int damageResult = (damage - stat.DamageReduction) > 0
+            ? damage - stat.DamageReduction
+            : 0;
+
+        stat.DecreaseHp(damageResult);
+
+        UpdatePlayerHpBar();
+        
+        if (stat.Hp < 1)
         {
             Die();
         }
     }
 
-    protected void Move()
+    protected virtual void UpdatePlayerHpBar()
     {
-        if (state == State.Move || state == State.Back)
-        {
-            if (Vector3.Distance(destinationPos, this.transform.position) <= 0.1f)
-            {
-                // 목적지에 도착하면
-                state = State.Idle;
-                return;
-            }
-            
-            Vector3 dir = destinationPos - this.transform.position;
-
-            this.transform.position += dir.normalized * Time.deltaTime * _stat.MoveSpeed;
-        }
-    }    
+        // Player에서 재 선언
+    }
 
     public virtual void Die()
     {
         // Die action
         Debug.Log("Die!");
         Destroy(this.gameObject);
-    }
-
-    private int CalculDamage()
-    {
-        if (_stat.CriticalPercent > 0)
-        {
-            float rand = Random.value;
-
-            if (rand < _stat.CriticalPercent)
-            {
-                // cri effect 추가해야 함
-                return _stat.MaxDamage + _stat.DefaultDamage;
-            }
-        }
-
-        return Random.Range(_stat.MinDamage, _stat.MaxDamage + 1) + _stat.DefaultDamage;
-    }
-
-    public void SetStat(Stat newStat)
-    {
-        _stat = newStat;
     }
 }
