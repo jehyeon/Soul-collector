@@ -10,6 +10,7 @@ public class Inventory : MonoBehaviour
 {
     [SerializeField]
     private GameManager gameManager;
+    private UseItemSystem useItemSystem;
     
     [SerializeField]
     private GameObject goInventoryActBtn;
@@ -104,6 +105,26 @@ public class Inventory : MonoBehaviour
         gameManager.Player.Heal(9999); // 장비 정보 로드할 때에는 풀피로
     }
 
+    public void InitUseItemSystem()
+    {
+        useItemSystem = new UseItemSystem(gameManager);
+    }
+
+    public void SaveAndLoad()
+    {
+        gameManager.SaveManager.SaveData();
+        LoadInventory();
+    }
+
+    public void StartInventory()
+    {
+        // GameManager Start()에서 실행
+        UpdateGold(0);
+        InitInventorySlots();
+        LoadInventory();
+        LoadEquipInfo();
+        InitUseItemSystem();
+    }
     // -------------------------------------------------------------
     // 아이템 획득
     // -------------------------------------------------------------
@@ -192,36 +213,54 @@ public class Inventory : MonoBehaviour
 
     private void UpdateInventoryActBtn()
     {
-        // 인벤토리 버튼 관련 !!! temp
+        // 인벤토리 버튼 활성화 및 text 수정
+        // 현재 인벤토리 모드 및 아이템 type에 따라 다름
         if (deleteItemMode)
         {
             goInventoryActBtn.SetActive(true);
             textInventoryActBtn.text = "삭제";
             return;
         }
-        
+
+        // 강화 모드
+        // ...
+
         if (selectedSlotIndex == -1)
         {
+            // 선택된 slot이 없는 경우
             goInventoryActBtn.SetActive(false);
             textInventoryActBtn.text = "";
             return;
         }
 
-        if (slots[selectedSlotIndex].IsEquip)
+        if (slots[selectedSlotIndex].Item.ItemType == ItemType.Use)
         {
+            // 사용 아이템인 경우
             goInventoryActBtn.SetActive(true);
-            textInventoryActBtn.text = "장착 해제";
+            textInventoryActBtn.text = "사용";
         }
-        else
+
+        if (slots[selectedSlotIndex].Item.ItemType == ItemType.Weapon 
+        || slots[selectedSlotIndex].Item.ItemType == ItemType.Armor)
         {
-            goInventoryActBtn.SetActive(true);
-            textInventoryActBtn.text = "장착";
+            // 착용 장비인 경우
+            if (slots[selectedSlotIndex].IsEquip)
+            {
+                goInventoryActBtn.SetActive(true);
+                textInventoryActBtn.text = "장착 해제";
+            }
+            else
+            {
+                goInventoryActBtn.SetActive(true);
+                textInventoryActBtn.text = "장착";
+            }
+            return;
         }
     }
 
     public void ClickInventoryActBtn()
     {
-        // 인벤토리 버튼 클릭 이벤트 !!! 모드 따라 다름
+        // 인벤토리 버튼 클릭 이벤트
         if (deleteItemMode)
         {
             // 아이템 삭제하기
@@ -229,38 +268,54 @@ public class Inventory : MonoBehaviour
             return;
         }
 
+        // 강화 모드
+        // ...
+
         if (selectedSlotIndex == -1)
         {
+            // 선택된 아이템이 없는 경우, 버튼이 활성화되지 않아 호출도 안됨
             return;
         }
 
-        int partNum = slots[selectedSlotIndex].Item.PartNum;
-        if (!slots[selectedSlotIndex].IsEquip)
+        if (slots[selectedSlotIndex].Item.ItemType == ItemType.Use)
         {
-            // 장착
-            if (gameManager.SaveManager.Save.Equipped[partNum] != -1)
-            {
-                // 동일 파츠 아이템을 장착한 경우 UnEquip();
-                int slotId = gameManager.SaveManager.Save.Equipped[partNum];
-                int slotIndex = FindItemUsingSlotId(slotId);
-                if (slotIndex != -1)
-                {
-                    slots[slotIndex].UnEquip();     // only view
-                    gameManager.SaveManager.Save.Equipped[partNum] = -1;
-                }
-            }
-            slots[selectedSlotIndex].Equip();   // only view
-            gameManager.SaveManager.Save.Equipped[partNum] = slots[selectedSlotIndex].Id;
-            gameManager.Player.Equip(slots[selectedSlotIndex].Item);   // stat 업데이트
-            gameManager.SaveManager.SaveData();
+            // 사용 아이템인 경우
+            // UseItemSystem으로 item id, item slot index 전달
+            useItemSystem.Use(slots[selectedSlotIndex].Item.Id, selectedSlotIndex);
         }
-        else
+
+        if (slots[selectedSlotIndex].Item.ItemType == ItemType.Weapon 
+        || slots[selectedSlotIndex].Item.ItemType == ItemType.Armor)
         {
-            // 장착 해제
-            slots[selectedSlotIndex].UnEquip();     // only view
-            gameManager.SaveManager.Save.Equipped[partNum] = -1;
-            gameManager.Player.UnEquip(slots[selectedSlotIndex].Item);   // stat 업데이트
-            gameManager.SaveManager.SaveData();
+            // 착용 장비인 경우
+            int partNum = slots[selectedSlotIndex].Item.PartNum;
+            if (!slots[selectedSlotIndex].IsEquip)
+            {
+                // 장착
+                if (gameManager.SaveManager.Save.Equipped[partNum] != -1)
+                {
+                    // 동일 파츠 아이템을 장착한 경우 UnEquip();
+                    int slotId = gameManager.SaveManager.Save.Equipped[partNum];
+                    int slotIndex = FindItemUsingSlotId(slotId);
+                    if (slotIndex != -1)
+                    {
+                        slots[slotIndex].UnEquip();     // only view
+                        gameManager.SaveManager.Save.Equipped[partNum] = -1;
+                    }
+                }
+                slots[selectedSlotIndex].Equip();   // only view
+                gameManager.SaveManager.Save.Equipped[partNum] = slots[selectedSlotIndex].Id;
+                gameManager.Player.Equip(slots[selectedSlotIndex].Item);   // stat 업데이트
+                gameManager.SaveManager.SaveData();
+            }
+            else
+            {
+                // 장착 해제
+                slots[selectedSlotIndex].UnEquip();     // only view
+                gameManager.SaveManager.Save.Equipped[partNum] = -1;
+                gameManager.Player.UnEquip(slots[selectedSlotIndex].Item);   // stat 업데이트
+                gameManager.SaveManager.SaveData();
+            }
         }
 
         UpdateInventoryActBtn();
@@ -301,14 +356,13 @@ public class Inventory : MonoBehaviour
         selectedSlotIndexList = new List<int>();
     }
 
-    // private void Delete(int wantToDeleteItemIndex)
-    // {
-    //     ResetSelectSlot();
+    public void Delete(int wantToDeleteItemIndex)
+    {
+        ResetSelectSlot();
 
-    //     gameManager.SaveManager.Save.DeleteSlot(wantToDeleteItemIndex);
-    //     gameManager.SaveManager.SaveData();
-    //     LoadInventory();
-    // }
+        gameManager.SaveManager.Save.DeleteSlot(wantToDeleteItemIndex);
+        SaveAndLoad();
+    }
 
     private void Delete(List<int> wantToDeleteItemIndeices)
     {
@@ -322,8 +376,44 @@ public class Inventory : MonoBehaviour
             gameManager.SaveManager.Save.DeleteSlot(index - indexDiff);
             indexDiff += 1;
         }
-        gameManager.SaveManager.SaveData();
-        LoadInventory();
+        SaveAndLoad();
+    }
+
+    // -------------------------------------------------------------
+    // Update Count (ex. Use, Craft)
+    // -------------------------------------------------------------
+    public void UpdateItemCount(int slotIndex, int count = 1)
+    {
+        // 아이템 수량 조정
+        if (gameManager.SaveManager.Save.Slots[slotIndex].Count <= 1)
+        {
+            // 1개 남은 경우
+            gameManager.SaveManager.Save.DeleteSlot(slotIndex);
+            ResetSelectSlot();
+            SaveAndLoad();
+        }
+        else
+        {
+            gameManager.SaveManager.Save.Slots[slotIndex].Count -= 1;
+            gameManager.SaveManager.SaveData();
+            slots[slotIndex].SetSlotCount(-1);  // 인벤토리 Reload 안하고 view 수정
+        }
+    }
+
+    public bool TryToUpdateItemCount(int slotIndex, int count = 1)
+    {
+        // 아이템 수량 조정
+        // UpdateItemCount 호출 후 Save and Load 해야 함
+        if (gameManager.SaveManager.Save.Slots[slotIndex].Count <= 1)
+        {
+            // 1개 남은 경우 fail = true
+            return true;
+        }
+            
+        gameManager.SaveManager.Save.Slots[slotIndex].Count -= 1;
+        slots[slotIndex].SetSlotCount(-1);  // 인벤토리 Reload 안하고 view 수정
+        
+        return false;
     }
 
     // -------------------------------------------------------------
@@ -402,61 +492,6 @@ public class Inventory : MonoBehaviour
         EndDeleteMode();
         itemDetail.Close();     // Close Item detail UI
     }
-
-    // public void Use(int itemId, int itemType)
-    // {
-    //     // 13 - 뽑기 아이템, 14 - 체력 회복 아이템, 15 - 강화 아이템
-    //     if (itemType == 14)
-    //     {
-    //         // 우선 테이블을 쓰지 않음
-    //         if (itemId == 1620)
-    //         {
-    //             go_player.GetComponent<Stat>().Heal(50);
-    //             slots[selectedSlotIndex].SetSlotCount(-1);
-    //             if (slots[selectedSlotIndex].ItemCount < 1)
-    //             {
-    //                 Delete();
-    //             }
-    //         }
-    //         else if (itemId == 1621)
-    //         {
-    //             go_player.GetComponent<Stat>().Heal(200);
-    //             slots[selectedSlotIndex].SetSlotCount(-1);
-    //             if (slots[selectedSlotIndex].ItemCount < 1)
-    //             {
-    //                 Delete();
-    //             }
-    //         }
-    //     }
-    //     else if (itemType == 13)
-    //     {
-    //         if (itemId == 1623)
-    //         {
-    //             // 방어구 상자
-    //             GambleBox(1);
-    //         }
-    //         else if (itemId == 1625)
-    //         {
-    //             // 무기 상자
-    //             GambleBox(2);
-    //         }
-    //     }
-    //     else if (itemType >= 15 && itemType <= 18)
-    //     {
-    //         Reinforce(itemType);
-    //     }
-    // }
-
-    // public void GambleBox(int dropId)
-    // {
-    //     slots[selectedSlotIndex].SetSlotCount(-1);
-    //     if (slots[selectedSlotIndex].ItemCount < 1)
-    //     {
-    //         Delete();
-    //     }
-    //     int itemId = dropManager.RandomItem(dropId);
-    //     AcquireItem(itemId);    // 추가 후 저장
-    // }
 
     // public void Reinforce(int _scrollType)
     // {

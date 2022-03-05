@@ -3,11 +3,11 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class DropManager: MonoBehaviour
+public class DropManager
 {
     public List<Dictionary<string, object>> data;
 
-    private void Awake()
+    public DropManager()
     {
         data = CSVReader.Read("Drop");
     }

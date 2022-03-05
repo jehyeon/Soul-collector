@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 {
     private ItemManager itemManager;
     private SaveManager saveManager;
+    private DropManager dropManager;
 
     [SerializeField]
     private Player player;
@@ -14,6 +15,7 @@ public class GameManager : MonoBehaviour
     private Inventory inventory;
     public ItemManager ItemManager { get { return itemManager; } }
     public SaveManager SaveManager { get { return saveManager; } }
+    public DropManager DropManager { get { return dropManager; } }
     public Inventory Inventory { get { return inventory; } }
     public Player Player { get { return player; } }
 
@@ -21,26 +23,43 @@ public class GameManager : MonoBehaviour
     {
         itemManager = new ItemManager();
         saveManager = new SaveManager();
+        dropManager = new DropManager();
     }
 
     private void Start()
     {
         // Load Inventory, Equip info, gold
-        inventory.UpdateGold(0);
-        inventory.InitInventorySlots();
-        inventory.LoadInventory();
-        inventory.LoadEquipInfo();
+        Inventory.StartInventory();
     }
 
+    // -------------------------------------------------------------
     // 아이템 획득
+    // -------------------------------------------------------------
     public void GetItem(GameObject targetObject)
     {
         if (inventory.isFullInventory())
         {
-            // !!! 아이템이 꽉 참
+            InventoryIsFull();
             return;
         }
 
         inventory.AcquireItem(itemManager.Get(targetObject.GetComponent<DroppedItem>().Id));
+    }
+
+    public void GetItem(int itemId)
+    {
+        if (inventory.isFullInventory())
+        {
+            InventoryIsFull();
+            return;
+        }
+
+        inventory.AcquireItem(itemManager.Get(itemId));
+    }
+
+    private void InventoryIsFull()
+    {
+        // !!!
+        Debug.Log("Inventory is full.");
     }
 }

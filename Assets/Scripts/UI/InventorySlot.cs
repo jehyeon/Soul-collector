@@ -22,7 +22,9 @@ public class InventorySlot : Slot, IPointerClickHandler
     public int Id { get { return id; } }
     public bool IsEquip { get { return isEquip; } }
 
+    // -------------------------------------------------------------
     // 인벤토리 슬롯 생성 및 로드
+    // -------------------------------------------------------------
     public void Init(int slotindex, Inventory parentInventory)
     {
         // 게임 시작 시 슬롯 생성될 때 부여
@@ -43,7 +45,9 @@ public class InventorySlot : Slot, IPointerClickHandler
         UnEquip();
     }
 
+    // -------------------------------------------------------------
     // 인벤토리 슬롯 터치 이벤트
+    // -------------------------------------------------------------
     public void OnPointerClick(PointerEventData eventData)
     {
         if (item == null)
@@ -62,21 +66,6 @@ public class InventorySlot : Slot, IPointerClickHandler
             inventory.UnSelectSlot(index);
             UnSelect();
         }
-
-        // // 아이템 선택
-        // if (isSelected)
-        // {
-        //     // UnSelect();
-        //     cv.GetComponent<Inventory>().CloseItemDetail();
-        //     HideInventoryBtn();     // 인벤토리 버튼 비활성화
-        // }
-        // else
-        // {
-        //     cv.GetComponent<Inventory>().UpdateSelect(inventoryIndex);
-        //     Select();
-        //     cv.GetComponent<Inventory>().OpenItemDetail(item);
-        //     SetInventoryBtn();      // 인벤토리 버튼 활성화
-        // }
 
         // if (cv.GetComponent<Inventory>().reinforceMode)
         // {
@@ -135,7 +124,9 @@ public class InventorySlot : Slot, IPointerClickHandler
         // }
     }
 
+    // -------------------------------------------------------------
     // 인벤토리 슬롯 선택
+    // -------------------------------------------------------------
     private void Select()
     {
         isSelected = true;
@@ -148,7 +139,9 @@ public class InventorySlot : Slot, IPointerClickHandler
         go_selectedFrame.SetActive(false);
     }
 
+    // -------------------------------------------------------------
     // 인벤토리 슬롯 장착
+    // -------------------------------------------------------------
     public void Equip()
     {
         image_equipped.gameObject.SetActive(true);

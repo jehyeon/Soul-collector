@@ -53,6 +53,17 @@ public class Slot : MonoBehaviour
         // background, color
         img_background.color = item.BackgroundColor;
 
+        if (text_count != null)
+        {
+            if (itemCount <= 1)
+            {
+                text_count.text = "";
+            }
+            else
+            {
+                text_count.text = itemCount.ToString();
+            }
+        }
 
         // if (item.ItemType > 11)
         // {
@@ -102,9 +113,12 @@ public class Slot : MonoBehaviour
     // }
 
     // 아이템 수량 변경
-    public void SetSlotCount(int _count)
+    public void SetSlotCount(int count)
     {
-        itemCount = _count;
+        Debug.Log(itemCount);
+        Debug.Log(count);
+        itemCount += count;
+        Debug.Log(itemCount);
         text_count.text = itemCount.ToString();
     }
 
