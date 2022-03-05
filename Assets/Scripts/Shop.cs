@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Shop : MonoBehaviour
 {
+    private GameManager gameManager;
+
     [SerializeField]
     private GameObject pref_shopItem;
-    [SerializeField]
-    private Canvas cv;
 
     private int selectedShopItemId; // 현재 선택된 상점 아이템
 
@@ -18,17 +18,20 @@ public class Shop : MonoBehaviour
 
     void Awake()
     {
+        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+
         selectedShopItemId = -1;
         clickedTime = 0;
         isClick = false;
-        // count = 0;
+
         List<Dictionary<string, object>> data = CSVReader.Read("Shop");
 
         for (int id = 0; id < data.Count; id++)
         {
             GameObject item = Instantiate(pref_shopItem);
             item.transform.SetParent(this.transform);
-            item.GetComponent<ShopItem>().Set(id, (int)data[id]["itemId"], (int)data[id]["price"]);
+            Item shopItem = gameManager.ItemManager.Get((int)data[id]["itemId"]);
+            item.GetComponent<ShopItem>().SetShopItem(shopItem, id, (int)data[id]["price"]);
         }
     }
 
@@ -59,9 +62,8 @@ public class Shop : MonoBehaviour
             return;
         }
 
-        ShopItem item = this.transform.GetChild(selectedShopItemId).GetComponent<ShopItem>();
-        
-        cv.GetComponent<Inventory>().Buy(item.itemId, item.price);
+        ShopItem shopItem = this.transform.GetChild(selectedShopItemId).GetComponent<ShopItem>();
+        gameManager.Inventory.Buy(shopItem.Item, shopItem.Price);
     }
 
     public void UnSelect()
@@ -92,4 +94,23 @@ public class Shop : MonoBehaviour
         clickedTime = 0f;
         buyingTime = 0f;
     }
+
+    // // Shop UI
+    // // !!! Need to move
+    // private void OpenShop()
+    // {
+    //     go_shop.SetActive(true);
+    //     shopActivated = true;
+
+    //     // CloseReinforceUI();
+    //     // CloseItemDetail();
+    // }
+
+    // public void CloseShop()
+    // {
+    //     go_shop.SetActive(false);
+    //     shopActivated = false;
+    //     // shop UI를 닫으면 selected 아이템 초기화
+    //     go_shop.transform.GetChild(2).GetChild(0).GetComponent<Shop>().UnSelect();
+    // }
 }

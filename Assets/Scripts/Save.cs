@@ -6,61 +6,57 @@ using System.Linq;
 
 public class Save
 {
-    private int _gold;              // Gold 정보
-    private int _lastSlotIndex;     // 아이템이 있는 마지막 슬롯 index
-    private int _lastSlotId;        // 다음 슬롯의 id
-    private int _inventorySize;     // 인벤토리 사이즈
-    private List<int> _equipped;    // 장착 상태인 슬롯 id list
-    private List<SlotSave> _slots;  // 슬롯 정보
-
-    // Properties
-    public List<SlotSave> Slots { get { return _slots; } set { _slots = value; } }
-    public int Gold { get { return _gold; } set { _gold = value; } }
-    public List<int> Equipped { get { return _equipped; } set { _equipped = value; } }
-    public int LastSlotIndex { get { return _lastSlotIndex; } set { _lastSlotIndex = value; } }
-    public int InventorySize { get { return _inventorySize; } }
-    public string GoldText
-    {
-        get
-        {
-            return string.Format("{0:#,0}", _gold).ToString();
-        }
-    }
+    // json to obj를 위해 save는 모두 public으로 선언
+    public int Gold;              // Gold 정보
+    public int LastSlotIndex;     // 아이템이 있는 마지막 슬롯 index
+    public int LastSlotId;        // 다음 슬롯의 id
+    public int InventorySize;     // 인벤토리 사이즈
+    public List<int> Equipped;    // 장착 상태인 슬롯 id list
+    public List<SlotSave> Slots;  // 슬롯 정보
 
     // Methods
     public Save()
     {
-        _gold = 0;
-        _lastSlotIndex = 0;
-        _lastSlotId = 0;
-        _equipped = new List<int> {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
-        _slots = new List<SlotSave>();
-        _inventorySize = 60;
-        for (int i = 0; i < _inventorySize; i++)
+        Gold = 9999999;     // !!! for test
+        LastSlotIndex = 0;
+        LastSlotId = 0;
+        Equipped = new List<int> {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
+        Slots = new List<SlotSave>();
+        InventorySize = 60;
+        for (int i = 0; i < InventorySize; i++)
         {
-            _slots.Add(new SlotSave(_lastSlotId));
-            _lastSlotId += 1;
+            Slots.Add(new SlotSave(LastSlotId));
+            LastSlotId += 1;
         }
     }
 
+    // 맨 앞 빈 슬롯에 아이템 추가
+    public void AddItem(int itemId, int itemCount)
+    {
+        Slots[LastSlotIndex].ItemId = itemId;
+        Slots[LastSlotIndex].Count = itemCount;
+        LastSlotIndex += 1;
+    }
+
+    // 인벤토리 마지막에 빈 슬롯 추가
     public void AddSlot()
     {
-        _slots.Add(new SlotSave(_lastSlotId));
-        _lastSlotId += 1;
+        Slots.Add(new SlotSave(LastSlotId));
+        LastSlotId += 1;
     }
 
     public void AddSlot(int itemId, int count)
     {
-        _slots.Add(new SlotSave(_lastSlotId, itemId, count));
-        _lastSlotId += 1;
+        Slots.Add(new SlotSave(LastSlotId, itemId, count));
+        LastSlotId += 1;
     }
 
     public void DeleteSlot(int slotIndex)
     {
         // slots의 slotIndex slot 삭제
-        _slots[slotIndex] = null;
+        Slots[slotIndex] = null;
 
-        _slots = _slots
+        Slots = Slots
             .Where(slot => slot != null)
             .ToList();
 
@@ -73,55 +69,53 @@ public class Save
     public void UpgradeInventorySize()
     {
         // 슬롯 사이즈 추가
-        _inventorySize += 4;
+        InventorySize += 4;
         for (int i = 0; i < 4; i++)
         {
-            _slots.Add(new SlotSave(_lastSlotId));
-            _lastSlotId += 1;
+            Slots.Add(new SlotSave(LastSlotId));
+            LastSlotId += 1;
         }
     }
 }
 
 public class SlotSave
 {
-    private int _id;
-    private int _itemId;
-    private int _count;
-    public int Id { get { return _itemId; } }
-    public int Count { get { return _count; } }
+    public int Id;
+    public int ItemId;
+    public int Count;
     // 장착 아이템이 아니거나, 장착하지 않은 경우 -1, 장착 시 itemType 번호 (ex. 무기 0, 방패 1 ...)
     // private int _equippedType;  
 
     public SlotSave()
     {
-        _id = -1;
-        _itemId = -1;
-        _count = 0;
+        Id = -1;
+        ItemId = -1;
+        Count = 0;
     }
 
     public SlotSave(int id)
     {
-        _id = id;
-        _itemId = -1;
-        _count = 0;
+        Id = id;
+        ItemId = -1;
+        Count = 0;
     }
 
     public SlotSave(int id, int itemId, int count)
     {
-        _id = id;
-        _itemId = itemId;
-        _count = count;
+        Id = id;
+        ItemId = itemId;
+        Count = count;
     }
 
     public void UpdateCount(int diff)
     {
-        _count += diff;
+        Count += diff;
     }
     
     public void Set(int slotId, int itemId, int itemCount)
     {
-        _id = slotId;
-        _itemId = itemId;
-        _count = itemCount;
+        Id = slotId;
+        ItemId = itemId;
+        Count = itemCount;
     }
 }

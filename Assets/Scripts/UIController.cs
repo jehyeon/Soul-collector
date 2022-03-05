@@ -151,12 +151,14 @@ public class UIController: MonoBehaviour
     {
         go_shopUI.SetActive(true);
         isActivatedShopUI = true;
+        OpenInventoryUI();
     }
 
     public void CloseShopUI()
     {
         go_shopUI.SetActive(false);
         isActivatedShopUI = false;
+        CloseInventoryUI();
     }
 
     // Craft UI
@@ -196,4 +198,5 @@ public class UIController: MonoBehaviour
         hpBar.value = (float)nowHp / (float)maxHp;
         hpBarText.text = string.Format("{0} / {1}", nowHp, maxHp);
     }
+    
 }

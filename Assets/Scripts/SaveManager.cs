@@ -9,7 +9,6 @@ public class SaveManager
 
     private Save save;
     public Save Save { get { return save; } }
-
     public SaveManager()
     {
         // 파일이 있는 지 확인

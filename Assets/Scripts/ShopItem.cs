@@ -5,21 +5,14 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 
-public class ShopItem : MonoBehaviour, IPointerClickHandler
+public class ShopItem : Slot, IPointerClickHandler
 {
     // select 된 shopItemId를 shop.cs에서 동기화하고
     // 구입 시 ShopItem[shopItemId]의 id와 price에 접근
-    private int shopItemId;
+    private int id;
     public int itemId;
-    public int price;
+    private int price;
 
-    private Item item;
-    [SerializeField]
-    private Image itemImage;
-    [SerializeField]
-    private Image slotFrame;
-    [SerializeField]
-    private Image slotBackground;
     [SerializeField]
     private TextMeshProUGUI text_itemName;
     [SerializeField]
@@ -29,18 +22,16 @@ public class ShopItem : MonoBehaviour, IPointerClickHandler
     private GameObject go_selectedFrame;
 
     private bool isSelected;
-    public void Set(int _shopItemId, int _id, int _price)
-    {
-        shopItemId = _shopItemId;
-        itemId = _id;
-        price = _price;
-        // item = gameObject.AddComponent<Item>();
-        // item.LoadFromCSV(itemId, "Item");
-        item = GameObject.Find("Item Manager").GetComponent<ItemManager>().Get(itemId);
-        itemImage.sprite = item.ItemImage;
-        slotFrame.sprite = item.ItemFrame;
-        slotBackground.color = item.BackgroundColor;
 
+    public int Price { get { return price; } }
+
+    public void SetShopItem(Item itemFromItemManager, int shopItemId, int itemPrice)
+    {
+        Set(itemFromItemManager);
+
+        id = shopItemId;
+        price = itemPrice;
+        
         text_itemName.text = item.ItemName;
         text_itemName.color = item.FontColor;
         text_itemPrice.text = string.Format("{0:#,###}", price).ToString();
@@ -71,7 +62,7 @@ public class ShopItem : MonoBehaviour, IPointerClickHandler
     {
         isSelected = true;
         go_selectedFrame.SetActive(isSelected);
-        this.transform.parent.gameObject.GetComponent<Shop>().SetSelectedShopItemId(shopItemId);
+        this.transform.parent.gameObject.GetComponent<Shop>().SetSelectedShopItemId(id);
     }
 
     public void UnSelect()

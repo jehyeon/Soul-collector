@@ -11,11 +11,18 @@ public class GameManager : MonoBehaviour
     private Inventory inventory;
     public ItemManager ItemManager { get { return itemManager; } }
     public SaveManager SaveManager { get { return saveManager; } }
+    public Inventory Inventory { get { return inventory; } }
 
     private void Awake()
     {
         itemManager = new ItemManager();
         saveManager = new SaveManager();
+    }
+
+    private void Start()
+    {
+        // Load Gold UI
+        inventory.UpdateGold(0);
     }
 
     // 아이템 획득

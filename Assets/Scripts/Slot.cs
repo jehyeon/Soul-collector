@@ -8,7 +8,7 @@ using TMPro;
 public class Slot : MonoBehaviour
 {
     // 슬롯 별
-    private Item item;
+    protected Item item;
     private int itemCount;
 
     // 아이템 이미지
@@ -27,7 +27,8 @@ public class Slot : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI text_count;
 
-    public int ItemCount { get { return itemCount; } }
+    public Item Item { get { return item; } }
+    public int Count { get { return itemCount; } }
 
     private void SetColor(float alpha)
     {
@@ -41,6 +42,7 @@ public class Slot : MonoBehaviour
     public void Set(Item itemFromItemManager, int count = 1)
     {
         item = itemFromItemManager;
+        itemCount = count;
 
         // slot view 설정
         // Item icon, frame
@@ -51,7 +53,6 @@ public class Slot : MonoBehaviour
         // background, color
         img_background.color = item.BackgroundColor;
 
-        itemCount = count;
 
         // if (item.ItemType > 11)
         // {
@@ -135,86 +136,6 @@ public class Slot : MonoBehaviour
         // UnEquip();
     }
 
-    // public void OnPointerClick(PointerEventData eventData)
-    // {
-    //     if (item == null)
-    //     {
-    //         // 아이템이 아닌 경우 return
-    //         return;
-    //     }
-
-    //     if (cv.GetComponent<Inventory>().reinforceMode)
-    //     {
-    //         if (item.Rank > 5)
-    //         {
-    //             // 강화 불가능한 등급 (ex. 9강, resource)
-    //             return;
-    //         }
-
-    //         // 강화 모드인 경우
-    //         int scrollType = cv.GetComponent<Inventory>().scrollType;
-            
-    //         if (scrollType == 15)
-    //         {
-    //             // 무기 강화
-    //             if (!(itemId >= 0 && itemId <= 499))
-    //             {
-    //                 // 무기가 아닌 경우
-    //                 return;
-    //             }
-    //             cv.GetComponent<Inventory>().Rush(inventoryIndex);
-    //         }
-    //         else if (scrollType == 16)
-    //         {
-    //             // 방어구 강화
-    //             if (!(itemId >= 500 && itemId <= 1299))
-    //             {
-    //                 // 방어구가 아닌 경우
-    //                 return;
-    //             }
-    //             cv.GetComponent<Inventory>().Rush(inventoryIndex);
-    //         }
-    //         else if (scrollType == 17)
-    //         {
-    //             // 장신구 강화
-    //             if (!(itemId >= 1300 && itemId <= 1600))
-    //             {
-    //                 // 장신구가 아닌 경우
-    //                 return;
-    //             }
-    //             cv.GetComponent<Inventory>().Rush(inventoryIndex);
-    //         }
-    //         else if (scrollType == 18)
-    //         {
-    //             // 소울스톤 강화
-    //             if (!(itemId >= 1608 && itemId <= 1613))
-    //             {
-    //                 // 소울스톤이 아닌 경우
-    //                 return;
-    //             }
-
-    //             // temp
-    //         }
-
-    //         return;
-    //     }
-
-    //     // 아이템 선택
-    //     if (isSelected)
-    //     {
-    //         // UnSelect();
-    //         cv.GetComponent<Inventory>().CloseItemDetail();
-    //         HideInventoryBtn();     // 인벤토리 버튼 비활성화
-    //     }
-    //     else
-    //     {
-    //         cv.GetComponent<Inventory>().UpdateSelect(inventoryIndex);
-    //         Select();
-    //         cv.GetComponent<Inventory>().OpenItemDetail(item);
-    //         SetInventoryBtn();      // 인벤토리 버튼 활성화
-    //     }
-    // }
-
     // // 장착
     // public void Equip()
     // {
@@ -230,22 +151,7 @@ public class Slot : MonoBehaviour
 
 
 
-    // 선택
-    // private void Select()
-    // {
-    //     isSelected = true;
-    //     go_selectedFrame.SetActive(isSelected);
-    // }
 
-    // public void UnSelect()
-    // {
-    //     // Inventory.cs 에서 Unselect 할때 쓰임
-    //     isSelected = false;
-    //     go_selectedFrame.SetActive(isSelected);
-        
-    //     HideInventoryBtn();
-    //     cv.GetComponent<Inventory>().UpdateSelect(-1);  // inventory selectedIndex -1로 초기화
-    // }
 
     // private void SetInventoryBtn()
     // {

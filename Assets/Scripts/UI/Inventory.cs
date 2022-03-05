@@ -8,6 +8,7 @@ using TMPro;
 
 public class Inventory : MonoBehaviour
 {
+    [SerializeField]
     private GameManager gameManager;
     
     // 캐릭터 체력 및 Gold
@@ -15,21 +16,28 @@ public class Inventory : MonoBehaviour
     private TextMeshProUGUI text_gold;      // Text Gold
     [SerializeField]
     private GameObject go_slotParent;
+    [SerializeField]
+    private GameObject go_inventorySlotPref;
 
     // 인벤토리 Slot, 골드, Save
     private InventorySlot[] slots;
-    private int selectedSlotIndex;      // 선택된 index
     public int scrollSlotIndex;     // 주문서가 저장된 slot index
     public int scrollType;          // scrollSlotIndex의 주문서가 어떤 주문서 타입인지
     public bool reinforceMode;
 
+    // 슬롯 선택
+    private bool multiSelectMode;               // 다중 선택 모드 (삭제, 강화)
+    private int selectedSlotIndex;              // 선택된 index (multiSelectMode == false)
+    private List<int> selectedSlotIndexList;    // 선택된 index list (multiSelectMode == true)
+
+
     void Awake()
     {
-        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
         // save로부터 초기화가 안되는 field 초기화
-        slots = go_slotParent.GetComponentsInChildren<InventorySlot>();
         selectedSlotIndex = -1;
+        selectedSlotIndexList = new List<int>();
         reinforceMode = false;
+        multiSelectMode = false;
         scrollSlotIndex = -1;
         scrollType = -1;
 
@@ -38,11 +46,23 @@ public class Inventory : MonoBehaviour
 
     void Start()
     {
+        InitInventorySlots();
         LoadInventory();
     }
     
+    private void InitInventorySlots()
+    {
+        // 인벤토리 크기 만큼 슬롯 생성
+        for (int i = 0; i < gameManager.SaveManager.Save.InventorySize; i++)
+        {
+            GameObject inventorySlot = Instantiate(go_inventorySlotPref);
+            inventorySlot.transform.SetParent(go_slotParent.transform);
+            inventorySlot.GetComponent<InventorySlot>().Init(i, this.GetComponent<Inventory>());
+        }
 
-    
+        // 생성된 슬롯을 slots에 저장
+        slots = go_slotParent.GetComponentsInChildren<InventorySlot>();
+    }
     // ------------------------
 
     // Item detail UI
@@ -87,28 +107,55 @@ public class Inventory : MonoBehaviour
     public void AcquireItem(Item item, int count = 1)
     {
         // 인벤토리 Full이면 해당 함수 호출 안됨
-        
         if (item.ItemType == ItemType.Material || item.ItemType == ItemType.Use)
         {
             // 중첩 가능한 아이템만 확인
             // Inventory slot save 데이터에 동일한 아이템이 있는지 확인
             for (int i = 0; i < gameManager.SaveManager.Save.LastSlotIndex; i++)
             {
-                if (gameManager.SaveManager.Save.Slots[i].Id == item.Id)
+                if (gameManager.SaveManager.Save.Slots[i].ItemId == item.Id)
                 {
                     // 수량만 변경
-                    slots[i].SetSlotCount(count);  // only view
+                    slots[i].SetSlotCount(slots[i].Count + count);  // only view
                     gameManager.SaveManager.Save.Slots[i].UpdateCount(count);
+
+                    return;
                 }
             }
         }
+        
+        slots[gameManager.SaveManager.Save.LastSlotIndex].Set(item, count);     // only view
+        gameManager.SaveManager.Save.AddItem(item.Id, count);
+    }
+
+    // 슬롯 관련
+    public void SelectSlot(int slotIndex)
+    {
+        if (multiSelectMode)
+        {
+            selectedSlotIndexList.Add(slotIndex);
+        }
         else
         {
-            slots[gameManager.SaveManager.Save.LastSlotIndex].Set(item, count);     // only view
-            gameManager.SaveManager.Save.AddSlot(item.Id, count);
+            if (selectedSlotIndex != -1)
+            {
+                slots[selectedSlotIndex].UnSelect();    // 기존에 선택된 슬롯 선택 해제
+            }
+            selectedSlotIndex = slotIndex;
         }
     }
 
+    public void UnSelectSlot(int slotIndex)
+    {
+        if (multiSelectMode)
+        {
+            selectedSlotIndexList.Remove(slotIndex);
+        }
+        else
+        {
+            selectedSlotIndex = -1;
+        }
+    }
     // UnEquip
 //     cv.GetComponent<Inventory>().UnEquipItemType(item.ItemType);    // 해당 파츠 아이템을 UnEquip
     //     cv.GetComponent<Inventory>().go_player.GetComponent<Stat>().UnEquip(item);
@@ -135,12 +182,11 @@ public class Inventory : MonoBehaviour
     //     saveManager.SaveData();
     // }
 
-    // public void UpdateGold(int droppedGold)
-    // {
-    //     saveManager.Save.Gold += droppedGold;
-    //     text_gold.text = saveManager.Save.GoldText;
-    //     saveManager.SaveData();
-    // }
+    public void UpdateGold(int amount)
+    {
+        gameManager.SaveManager.Save.Gold += amount;
+        text_gold.text = string.Format("{0:#,0}", gameManager.SaveManager.Save.Gold).ToString();
+    }
 
     private void LoadInventory()
     {
@@ -150,23 +196,20 @@ public class Inventory : MonoBehaviour
         for (int i = 0; i < gameManager.SaveManager.Save.LastSlotIndex; i++)
         {   
             // 인벤토리 크기만큼 한번만 loop
-            slots[i].ClearSlot();
-            Item loaded = gameManager.ItemManager.Get(gameManager.SaveManager.Save.Slots[i].Id);
-            slots[i].Set(loaded, gameManager.SaveManager.Save.Slots[i].Count);
+            if (slots[i].Item != null)
+            {
+                slots[i].ClearSlot();
+            }
+
+            slots[i].Load(
+                gameManager.SaveManager.Save.Slots[i].Id, 
+                gameManager.ItemManager.Get(gameManager.SaveManager.Save.Slots[i].ItemId),
+                gameManager.SaveManager.Save.Slots[i].Count
+            );
         }
 
         // 장착 정보 로드
     }
-
-    // public void UpdateSelect(int slotIndex)
-    // {
-    //     if (slotIndex != -1 && selectedSlotIndex != -1)
-    //     {
-    //         // 전에 장착한 아이템이 있는 경우
-    //         slots[selectedSlotIndex].UnSelect();
-    //     }
-    //     selectedSlotIndex = slotIndex;
-    // }
 
     // public void ClickInventoryBtn()
     // {
@@ -206,24 +249,23 @@ public class Inventory : MonoBehaviour
     //     return;
     // }
 
-    // public void Buy(int itemId, int price)
-    // {
-    //     if (gold < price)
-    //     {
-    //         // 돈이 부족하다는 pop_up 띄우기
-    //         return;
-    //     }
-
-
-    //     // 우선 한개만 구입가능함
-    //     // 인벤토리 초과 시  false return
-    //     bool result = AcquireItem(itemId, 1);
-    //     if (result)
-    //     {
-    //         // 정상 구매인 경우에만 돈 차감
-    //         UpdateGold(-1 * price);
-    //     }
-    // }
+    public void Buy(Item item, int price)
+    {
+        if (gameManager.SaveManager.Save.Gold < price)
+        {
+            // !!! 돈이 부족하다는 pop_up 띄우기
+            return;
+        }
+        // 연속 구매를 해도 1개씩 Buy 호출
+        if (isFullInventory())
+        {
+            return;
+        }
+        // 아이템 추가, 골드 감소, 세이브 저장
+        AcquireItem(item);
+        UpdateGold(-1 * price);
+        gameManager.SaveManager.SaveData();
+    }
 
     // public void Delete(int slotIndex = -1)
     // {
