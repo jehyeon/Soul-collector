@@ -11,25 +11,28 @@ public class Inventory : MonoBehaviour
     [SerializeField]
     private GameManager gameManager;
     
-    // 캐릭터 체력 및 Gold
     [SerializeField]
     private TextMeshProUGUI text_gold;      // Text Gold
+    [SerializeField]
+    private ItemDetail itemDetail;
+
+    // Slot pref
     [SerializeField]
     private GameObject go_slotParent;
     [SerializeField]
     private GameObject go_inventorySlotPref;
 
-    // 인벤토리 Slot, 골드, Save
+    // slots
     private InventorySlot[] slots;
-    public int scrollSlotIndex;     // 주문서가 저장된 slot index
-    public int scrollType;          // scrollSlotIndex의 주문서가 어떤 주문서 타입인지
-    public bool reinforceMode;
 
     // 슬롯 선택
     private bool multiSelectMode;               // 다중 선택 모드 (삭제, 강화)
     private int selectedSlotIndex;              // 선택된 index (multiSelectMode == false)
     private List<int> selectedSlotIndexList;    // 선택된 index list (multiSelectMode == true)
 
+        public int scrollSlotIndex;     // 주문서가 저장된 slot index
+    public int scrollType;          // scrollSlotIndex의 주문서가 어떤 주문서 타입인지
+    public bool reinforceMode;
 
     void Awake()
     {
@@ -63,35 +66,7 @@ public class Inventory : MonoBehaviour
         // 생성된 슬롯을 slots에 저장
         slots = go_slotParent.GetComponentsInChildren<InventorySlot>();
     }
-    // ------------------------
-
-    // Item detail UI
-    // !!! Need to move
-    // public void OpenItemDetail(Item item)
-    // {
-    //     img_itemDetailImage.sprite = item.ItemImage;
-    //     img_itemDetailFrame.sprite = item.ItemFrame;
-    //     img_itemDetailBackground.color = item.BackgroundColor;
-    //     text_itemDetailName.text = item.ItemName;
-    //     text_itemDetailName.color = item.FontColor;
-    //     text_itemDetailDes.text = item.ToString();
-
-    //     go_itemDetail.SetActive(true);
-    // }
-
-    // public void CloseItemDetail()
-    // {
-    //     go_itemDetail.SetActive(false);
-
-    //     if (selectedSlotIndex != -1)
-    //     {
-    //         // 선택한 슬롯이 있는 경우 UnSelect()
-    //         slots[selectedSlotIndex].UnSelect();
-    //         // selectedSlotIndex는 -1로 초기화 됨
-    //     }
-    // }
-    // // -------------------------
-
+    
     // 인벤토리 꽉 찼는지 확인
     public bool isFullInventory()
     {
@@ -142,6 +117,7 @@ public class Inventory : MonoBehaviour
                 slots[selectedSlotIndex].UnSelect();    // 기존에 선택된 슬롯 선택 해제
             }
             selectedSlotIndex = slotIndex;
+            itemDetail.Open(slots[selectedSlotIndex].Item);
         }
     }
 
@@ -509,4 +485,16 @@ public class Inventory : MonoBehaviour
         
     //     return true;
     // }
+
+    // UI gameObject (use on UIController.cs)
+    public void Open()
+    {
+        this.gameObject.SetActive(true);
+    }
+
+    public void Close()
+    {
+        this.gameObject.SetActive(false);
+        itemDetail.Close();
+    }
 }

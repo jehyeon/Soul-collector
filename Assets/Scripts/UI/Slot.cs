@@ -124,10 +124,14 @@ public class Slot : MonoBehaviour
 
         // count 초기화
         itemCount = 0;
-        text_count.text = "";
-        Color itemCountColor;
-        ColorUtility.TryParseHtmlString("#FFFFFFFF", out itemCountColor);
-        text_count.color = itemCountColor;
+        if (text_count != null)
+        {
+            // slot에 item count가 없는 경우도 있음
+            text_count.text = "";
+            Color itemCountColor;
+            ColorUtility.TryParseHtmlString("#FFFFFFFF", out itemCountColor);
+            text_count.color = itemCountColor;
+        }
 
         // // 슬롯 unselect
         // UnSelect();
