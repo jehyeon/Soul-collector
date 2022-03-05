@@ -1,9 +1,10 @@
-Assets/Scripts/Test
 .vs
 .vscode
 .vsconfig
+.DS_Store
 
 save.json
+Assets/Scripts/Test
 
 # Created by https://www.toptal.com/developers/gitignore/api/unity
 # Edit at https://www.toptal.com/developers/gitignore?templates=unity
