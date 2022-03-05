@@ -8,10 +8,14 @@ public class GameManager : MonoBehaviour
     private SaveManager saveManager;
 
     [SerializeField]
+    private Player player;
+
+    [SerializeField]
     private Inventory inventory;
     public ItemManager ItemManager { get { return itemManager; } }
     public SaveManager SaveManager { get { return saveManager; } }
     public Inventory Inventory { get { return inventory; } }
+    public Player Player { get { return player; } }
 
     private void Awake()
     {
@@ -21,8 +25,11 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        // Load Gold UI
+        // Load Inventory, Equip info, gold
         inventory.UpdateGold(0);
+        inventory.InitInventorySlots();
+        inventory.LoadInventory();
+        inventory.LoadEquipInfo();
     }
 
     // 아이템 획득
@@ -35,5 +42,5 @@ public class GameManager : MonoBehaviour
         }
 
         inventory.AcquireItem(itemManager.Get(targetObject.GetComponent<DroppedItem>().Id));
-    }    
+    }
 }

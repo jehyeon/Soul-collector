@@ -958,12 +958,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35361fb560c845141b03cd796cfb8417, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  img_item: {fileID: 5925300449783556904}
+  img_background: {fileID: 5925300449950345673}
+  img_frame: {fileID: 5925300449810381632}
+  text_count: {fileID: 0}
   itemId: 0
-  price: 0
-  itemImage: {fileID: 5925300449783556904}
-  slotFrame: {fileID: 5925300449810381632}
-  slotBackground: {fileID: 5925300449950345673}
   text_itemName: {fileID: 5925300450060355329}
   text_itemPrice: {fileID: 92589665159060890}
   go_selectedFrame: {fileID: 5925300450924171687}
-  go_itemManager: {fileID: 576505022243729644, guid: 49aeb2dd601e8f04c9b95f9b02cf183d, type: 3}

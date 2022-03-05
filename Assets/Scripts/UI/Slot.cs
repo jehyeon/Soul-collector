@@ -132,12 +132,6 @@ public class Slot : MonoBehaviour
             ColorUtility.TryParseHtmlString("#FFFFFFFF", out itemCountColor);
             text_count.color = itemCountColor;
         }
-
-        // // 슬롯 unselect
-        // UnSelect();
-
-        // // 장착 해제
-        // UnEquip();
     }
 
     // // 장착

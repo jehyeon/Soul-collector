@@ -83,8 +83,6 @@ public class SlotSave
     public int Id;
     public int ItemId;
     public int Count;
-    // 장착 아이템이 아니거나, 장착하지 않은 경우 -1, 장착 시 itemType 번호 (ex. 무기 0, 방패 1 ...)
-    // private int _equippedType;  
 
     public SlotSave()
     {

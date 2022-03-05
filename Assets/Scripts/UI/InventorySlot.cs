@@ -9,7 +9,7 @@ public class InventorySlot : Slot, IPointerClickHandler
     private int index;
 
     private int id;
-    public bool isEquip;
+    private bool isEquip;
     public bool isSelected;
     public int upgradeLevel;
     private Inventory inventory;
@@ -19,6 +19,10 @@ public class InventorySlot : Slot, IPointerClickHandler
     [SerializeField]
     private GameObject go_selectedFrame;
 
+    public int Id { get { return id; } }
+    public bool IsEquip { get { return isEquip; } }
+
+    // 인벤토리 슬롯 생성 및 로드
     public void Init(int slotindex, Inventory parentInventory)
     {
         // 게임 시작 시 슬롯 생성될 때 부여
@@ -39,21 +43,9 @@ public class InventorySlot : Slot, IPointerClickHandler
         UnEquip();
     }
 
-    public void UnEquip()
-    {
-        if (!isEquip)
-        {
-            return;
-        }
-
-        image_equipped.gameObject.SetActive(false);
-        isEquip = false;
-    }
-
+    // 인벤토리 슬롯 터치 이벤트
     public void OnPointerClick(PointerEventData eventData)
     {
-        Debug.Log("clicked");
-        Debug.Log(item.ItemName);
         if (item == null)
         {
             // 아이템이 아닌 경우 return
@@ -143,6 +135,7 @@ public class InventorySlot : Slot, IPointerClickHandler
         // }
     }
 
+    // 인벤토리 슬롯 선택
     private void Select()
     {
         isSelected = true;
@@ -155,21 +148,21 @@ public class InventorySlot : Slot, IPointerClickHandler
         go_selectedFrame.SetActive(false);
     }
 
-    // 선택
-    // private void Select()
-    // {
-    //     isSelected = true;
-    //     go_selectedFrame.SetActive(isSelected);
-    // }
+    // 인벤토리 슬롯 장착
+    public void Equip()
+    {
+        image_equipped.gameObject.SetActive(true);
+        isEquip = true;
+    }
 
-    // public void UnSelect()
-    // {
-    //     // Inventory.cs 에서 Unselect 할때 쓰임
-    //     isSelected = false;
-    //     go_selectedFrame.SetActive(isSelected);
-        
-    //     HideInventoryBtn();
-    //     cv.GetComponent<Inventory>().UpdateSelect(-1);  // inventory selectedIndex -1로 초기화
-    // }
+    public void UnEquip()
+    {
+        if (!isEquip)
+        {
+            return;
+        }
 
+        image_equipped.gameObject.SetActive(false);
+        isEquip = false;
+    }
 }

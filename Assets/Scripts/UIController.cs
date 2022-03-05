@@ -8,9 +8,10 @@ public class UIController: MonoBehaviour
 {
     // on the canvas
     [SerializeField]
-    private Canvas cv;
-    [SerializeField]
     private GameObject go_statUI;
+    [SerializeField]
+    private TextMeshProUGUI textStat;
+
     [SerializeField]
     private Inventory inventory;
     [SerializeField]
@@ -114,6 +115,12 @@ public class UIController: MonoBehaviour
         isActivatedStatUI = false;
     }
 
+    public void UpdateStatUI(Stat characterStat)
+    {
+        // 게임 시작, 아이템 장착, 해제
+        textStat.text = characterStat.ToString();
+    }
+
     // Inventory UI
     public void OpenInventoryUI()
     {
@@ -135,14 +142,13 @@ public class UIController: MonoBehaviour
     {
         go_shopUI.SetActive(true);
         isActivatedShopUI = true;
-        OpenInventoryUI();
+        OpenInventoryUI();      // 상점 페이지 오픈 시 인벤토리도 오픈
     }
 
     public void CloseShopUI()
     {
         go_shopUI.SetActive(false);
         isActivatedShopUI = false;
-        CloseInventoryUI();
     }
 
     // Craft UI

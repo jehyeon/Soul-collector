@@ -5,7 +5,7 @@ using UnityEngine;
 public class Stat
 {
     // 공격
-    protected int _criticalPercent;     // 치명타 확률
+    protected float _criticalPercent;     // 치명타 확률
     protected float _attackSpeed;       // 공격속도
     protected int _maxDamage;           // 최대 가변 데미지
     protected int _minDamage;           // 최소 가변 데미지
@@ -24,7 +24,7 @@ public class Stat
     protected float _moveSpeed;         // 이동속도
     protected float _attackRange;       // 공격 범위
 
-    public int CriticalPercent { get { return _criticalPercent; } }
+    public float CriticalPercent { get { return _criticalPercent; } }
     public float AttackSpeed { get { return _attackSpeed; } }
     public int MaxDamage { get { return _maxDamage; } }
     public int MinDamage { get { return _minDamage; } }
@@ -100,6 +100,7 @@ public class Stat
     
     public override string ToString()
     {
+        // temp
         return 
             "치명타 확률: " + _criticalPercent.ToString() + "\n"
             + "공격속도: " + _attackSpeed.ToString() + "\n"
@@ -120,20 +121,20 @@ public class Stat
         if (item.ItemType == ItemType.Weapon)
         {
             // 무기
-            // _maxDamage += item.MaxDamage;
-            // _minDamage += item.MinDamage;
-            // _defaultDamage += item.DefaultDamage;
-            // _attackSpeed = (_attackSpeed * 100f - item.AttackSpeed) / 100f;
+            _maxDamage += item.MaxDamage;
+            _minDamage += item.MinDamage;
+            _defaultDamage += item.DefaultDamage;
+            _attackSpeed = (_attackSpeed * 100f - item.AttackSpeed) / 100f;
         }
         else if (item.ItemType == ItemType.Armor)
         {
             // 방어구
-            // _damageReduction += item.DamageReduction;
-            // _maxHp += item.MaxHp;
-            // _hpRecovery += item.HpRecovery;
-            // _evasionPercent += item.EvasionPercent;
-            // _criticalPercent += item.CriticalPercent;
-            // _moveSpeed += item.MoveSpeed;
+            _damageReduction += item.DamageReduction;
+            _maxHp += item.MaxHp;
+            _hpRecovery += item.HpRecovery;
+            _evasionPercent += item.EvasionPercent;
+            _criticalPercent += item.CriticalPercent;
+            _moveSpeed += item.MoveSpeed;
 
             if (_hp > _maxHp)
             {
@@ -147,20 +148,20 @@ public class Stat
         if (item.ItemType == ItemType.Weapon)
         {
             // 무기
-            // _maxDamage -= item.MaxDamage;
-            // _minDamage -= item.MinDamage;
-            // _defaultDamage -= item.DefaultDamage;
-            // _attackSpeed = (_attackSpeed * 100f + item.AttackSpeed) / 100f;
+            _maxDamage -= item.MaxDamage;
+            _minDamage -= item.MinDamage;
+            _defaultDamage -= item.DefaultDamage;
+            _attackSpeed = (_attackSpeed * 100f + item.AttackSpeed) / 100f;
         }
         else if (item.ItemType == ItemType.Armor)
         {
             // 방어구
-            // _damageReduction -= item.DamageReduction;
-            // _maxHp -= item.MaxHp;
-            // _hpRecovery -= item.HpRecovery;
-            // _evasionPercent -= item.EvasionPercent;
-            // _criticalPercent -= item.CriticalPercent;
-            // _moveSpeed -= item.MoveSpeed;
+            _damageReduction -= item.DamageReduction;
+            _maxHp -= item.MaxHp;
+            _hpRecovery -= item.HpRecovery;
+            _evasionPercent -= item.EvasionPercent;
+            _criticalPercent -= item.CriticalPercent;
+            _moveSpeed -= item.MoveSpeed;
         }
     }
 }

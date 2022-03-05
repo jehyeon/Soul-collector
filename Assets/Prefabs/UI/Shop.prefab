@@ -89,7 +89,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pref_shopItem: {fileID: 5925300451582801454, guid: 883d3d8051da5504db36c43bf88fec5c, type: 3}
-  cv: {fileID: 0}
 --- !u!1 &403948289
 GameObject:
   m_ObjectHideFlags: 0
@@ -303,8 +302,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Inventory, Assembly-CSharp
-        m_MethodName: CloseShop
+        m_TargetAssemblyTypeName: UIController, Assembly-CSharp
+        m_MethodName: CloseShopUI
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

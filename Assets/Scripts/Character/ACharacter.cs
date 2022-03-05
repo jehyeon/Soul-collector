@@ -15,7 +15,7 @@ public class ACharacter : MonoBehaviour
 {
     protected Stat stat;
     protected State state;
-protected bool canAttack;   // 공격 쿨타임
+    protected bool canAttack;   // 공격 쿨타임
 
     // 목적지 및 타겟
     protected Vector3 destinationPos;
@@ -119,7 +119,7 @@ protected bool canAttack;   // 공격 쿨타임
         {
             float rand = Random.value;
 
-            if (rand < stat.CriticalPercent)
+            if (rand < stat.CriticalPercent * 0.01f)
             {
                 // cri effect 추가해야 함
                 return stat.MaxDamage + stat.DefaultDamage;
