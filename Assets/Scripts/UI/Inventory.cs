@@ -35,21 +35,19 @@ public class Inventory : MonoBehaviour
     private int selectedSlotIndex;              // 선택된 index (multiSelectMode == false)
     private List<int> selectedSlotIndexList;    // 선택된 index list (multiSelectMode == true)
 
-    public int scrollSlotIndex;     // 주문서가 저장된 slot index
-    public int scrollType;          // scrollSlotIndex의 주문서가 어떤 주문서 타입인지
-    public bool reinforceMode;
+    // 삭제
+    private bool deleteItemMode;
 
+    // -------------------------------------------------------------
+    // Init, Update
+    // -------------------------------------------------------------
     void Awake()
     {
         // save로부터 초기화가 안되는 field 초기화
         selectedSlotIndex = -1;
         selectedSlotIndexList = new List<int>();
-        reinforceMode = false;
         multiSelectMode = false;
-        scrollSlotIndex = -1;
-        scrollType = -1;
-
-        // dropManager = gameObject.AddComponent<DropManager>();
+        deleteItemMode = false;
     }
     
     public void InitInventorySlots()
@@ -65,19 +63,50 @@ public class Inventory : MonoBehaviour
         // 생성된 슬롯을 slots에 저장
         slots = go_slotParent.GetComponentsInChildren<InventorySlot>();
     }
-    
-    // 인벤토리 꽉 찼는지 확인
-    public bool isFullInventory()
+
+    public void LoadInventory()
     {
-        if (gameManager.SaveManager.Save.LastSlotIndex >= gameManager.SaveManager.Save.InventorySize - 1)
-        {
-            return true;
+        // Save Inventory와 동기화
+        for (int i = 0; i < gameManager.SaveManager.Save.InventorySize; i++)
+        {   
+            // 인벤토리 크기만큼 한번만 loop (inventory clear 후 아이템 재생성)
+            if (slots[i].Item != null)
+            {
+                slots[i].ClearSlot();
+            }
+
+            if (i < gameManager.SaveManager.Save.LastSlotIndex)
+            {
+                slots[i].Load(
+                    gameManager.SaveManager.Save.Slots[i].Id, 
+                    gameManager.ItemManager.Get(gameManager.SaveManager.Save.Slots[i].ItemId),
+                    gameManager.SaveManager.Save.Slots[i].Count
+                );
+            }
         }
-        
-        return false;
     }
 
+    public void LoadEquipInfo()
+    {
+        for (int i = 0; i < gameManager.SaveManager.Save.Equipped.Count; i++)
+        {
+            if (gameManager.SaveManager.Save.Equipped[i] != -1)
+            {
+                int slotIndex = FindItemUsingSlotId(gameManager.SaveManager.Save.Equipped[i]);
+                if (slotIndex != -1)
+                {
+                    slots[slotIndex].Equip();
+                    gameManager.Player.Equip(slots[slotIndex].Item);
+                }    
+            }
+        }
+
+        gameManager.Player.Heal(9999); // 장비 정보 로드할 때에는 풀피로
+    }
+
+    // -------------------------------------------------------------
     // 아이템 획득
+    // -------------------------------------------------------------
     public void AcquireItem(Item item, int count = 1)
     {
         // 인벤토리 Full이면 해당 함수 호출 안됨
@@ -102,7 +131,10 @@ public class Inventory : MonoBehaviour
         gameManager.SaveManager.Save.AddItem(item.Id, count);
     }
 
-    // 슬롯 관련
+    
+    // -------------------------------------------------------------
+    // 인벤토리 UI action (Slot, Button)
+    // -------------------------------------------------------------
     public void SelectSlot(int slotIndex)
     {
         if (multiSelectMode)
@@ -137,14 +169,34 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    // 인벤토리 버튼 관련
+    private void ResetSelectSlot()
+    {
+        if (selectedSlotIndex != -1)
+        {
+            slots[selectedSlotIndex].UnSelect();
+            UnSelectSlot(selectedSlotIndex);
+            return;
+        }
+        
+        if (selectedSlotIndexList.Count > 0)
+        {
+            foreach(int index in selectedSlotIndexList)
+            {
+                slots[index].UnSelect();
+            }
+            selectedSlotIndexList = new List<int>();
+            UpdateInventoryActBtn();
+            itemDetail.Close();     // 선택된 슬롯이 없으므로 detail ui 닫기
+        }
+    }
+
     private void UpdateInventoryActBtn()
     {
-        // !!! temp
-        if (multiSelectMode)
+        // 인벤토리 버튼 관련 !!! temp
+        if (deleteItemMode)
         {
-            goInventoryActBtn.SetActive(false);
-            textInventoryActBtn.text = "";
+            goInventoryActBtn.SetActive(true);
+            textInventoryActBtn.text = "삭제";
             return;
         }
         
@@ -169,8 +221,14 @@ public class Inventory : MonoBehaviour
 
     public void ClickInventoryActBtn()
     {
-        // 인벤토리 버튼 클릭 이벤트
-        // !!! 모드 따라 다름
+        // 인벤토리 버튼 클릭 이벤트 !!! 모드 따라 다름
+        if (deleteItemMode)
+        {
+            // 아이템 삭제하기
+            Delete(selectedSlotIndexList);
+            return;
+        }
+
         if (selectedSlotIndex == -1)
         {
             return;
@@ -208,116 +266,69 @@ public class Inventory : MonoBehaviour
         UpdateInventoryActBtn();
     }
 
-    // UnEquip
-//     cv.GetComponent<Inventory>().UnEquipItemType(item.ItemType);    // 해당 파츠 아이템을 UnEquip
-    //     cv.GetComponent<Inventory>().go_player.GetComponent<Stat>().UnEquip(item);
-    //     cv.GetComponent<Inventory>().UpdateStatDetail();
-    //      slot.UnEquip()  // 그냥 equip표시만 없앰
-    //     SetInventoryBtn();
-
-
-    // public void UnEquipItemType(int itemType)
-    // {
-    //     saveManager.Save.Equipped[itemType] = -1;
-    //     saveManager.SaveData();
-    // }
-
-    // public void EquipItemType(int itemType, int slotId)
-    // {
-    //     if (saveManager.Save.Equipped[itemType] != -1)
-    //     {
-    //         // 해당 파츠를 착용하고 있으면 먼저 UnEquip
-    //         slots[saveManager.Save.Equipped[itemType]].UnEquip();
-    //     }
-
-    //     saveManager.Save.Equipped[itemType] = slotId;
-    //     saveManager.SaveData();
-    // }
-
-    public void UpdateGold(int amount)
+    
+    // -------------------------------------------------------------
+    // Delete Item
+    // -------------------------------------------------------------
+    public void ClickDeleteBtn()
     {
-        gameManager.SaveManager.Save.Gold += amount;
-        text_gold.text = string.Format("{0:#,0}", gameManager.SaveManager.Save.Gold).ToString();
-    }
-
-    public void LoadInventory()
-    {
-        // SaveManager slot과 동기화
-
-        // inventory clear 후 아이템 재생성
-        for (int i = 0; i < gameManager.SaveManager.Save.LastSlotIndex; i++)
-        {   
-            // 인벤토리 크기만큼 한번만 loop
-            if (slots[i].Item != null)
-            {
-                slots[i].ClearSlot();
-            }
-
-            slots[i].Load(
-                gameManager.SaveManager.Save.Slots[i].Id, 
-                gameManager.ItemManager.Get(gameManager.SaveManager.Save.Slots[i].ItemId),
-                gameManager.SaveManager.Save.Slots[i].Count
-            );
-        }
-    }
-
-    public void LoadEquipInfo()
-    {
-        for (int i = 0; i < gameManager.SaveManager.Save.Equipped.Count; i++)
+        // 인벤토리 우측 하단 삭제 버튼 클릭 시
+        if (!deleteItemMode)
         {
-            if (gameManager.SaveManager.Save.Equipped[i] != -1)
-            {
-                int slotIndex = FindItemUsingSlotId(gameManager.SaveManager.Save.Equipped[i]);
-                if (slotIndex != -1)
-                {
-                    slots[slotIndex].Equip();
-                    gameManager.Player.Equip(slots[slotIndex].Item);
-                }    
-            }
+            StartDeleteMode();
         }
-
-        gameManager.Player.Heal(9999); // 장비 정보 로드할 때에는 풀피로
+        else
+        {
+            EndDeleteMode();
+        }
     }
 
-    // public void ClickInventoryBtn()
+    private void StartDeleteMode()
+    {
+        ResetSelectSlot();
+        deleteItemMode = true;
+        multiSelectMode = true;
+
+        // !!! 삭제 모드 UI 띄우기
+        UpdateInventoryActBtn();
+    }
+
+    public void EndDeleteMode()
+    {
+        deleteItemMode = false;
+        multiSelectMode = false;
+        ResetSelectSlot();
+        selectedSlotIndexList = new List<int>();
+    }
+
+    // private void Delete(int wantToDeleteItemIndex)
     // {
-    //     if (selectedSlotIndex == -1)
-    //     {
-    //         return;
-    //     }
+    //     ResetSelectSlot();
 
-    //     if (slots[selectedSlotIndex].Item.ItemType == 12)
-    //     {
-    //         // 장비, 사용 아이템이 아닌 경우
-    //         return;
-    //     }
-
-    //     if (slots[selectedSlotIndex].Item.ItemType < 12)
-    //     {
-    //         // selectedSlotIndex 의 slot이 선택 되었을 때
-    //         if (slots[selectedSlotIndex].isEquip)
-    //         {
-    //             slots[selectedSlotIndex].UnEquip();
-    //         }
-    //         else
-    //         {
-    //             slots[selectedSlotIndex].Equip();
-    //         }
-    //     }
-    //     else if (slots[selectedSlotIndex].Item.ItemType > 12)
-    //     {
-    //         if (index > 59 && slots[selectedSlotIndex].Item.ItemType == 13)
-    //         {
-    //             // 상자 아이템인 경우 인벤토리가 꽉찰 때 사용 안됨
-    //             return;
-    //         }
-    //         Use(slots[selectedSlotIndex].ItemId, slots[selectedSlotIndex].Item.ItemType);
-    //     }
-
-    //     return;
+    //     gameManager.SaveManager.Save.DeleteSlot(wantToDeleteItemIndex);
+    //     gameManager.SaveManager.SaveData();
+    //     LoadInventory();
     // }
 
+    private void Delete(List<int> wantToDeleteItemIndeices)
+    {
+        ResetSelectSlot();
+
+        // 아이템이 삭제되면 index가 1씩 줄어들어서 diff로 조정
+        wantToDeleteItemIndeices.Sort();
+        int indexDiff = 0;  
+        foreach(int index in wantToDeleteItemIndeices)
+        {
+            gameManager.SaveManager.Save.DeleteSlot(index - indexDiff);
+            indexDiff += 1;
+        }
+        gameManager.SaveManager.SaveData();
+        LoadInventory();
+    }
+
+    // -------------------------------------------------------------
     // 아이템 구매 (Decrease gold + Add item)
+    // -------------------------------------------------------------
     public void Buy(Item item, int price)
     {
         if (gameManager.SaveManager.Save.Gold < price)
@@ -336,34 +347,61 @@ public class Inventory : MonoBehaviour
         gameManager.SaveManager.SaveData();
     }
 
-    // public void Delete(int slotIndex = -1)
-    // {
-    //     // save의 배열이 바뀌게 되므로 Reload()를 해줘야 함
-    //     // All slot clear -> Load()
+    // -------------------------------------------------------------
+    // Search
+    // -------------------------------------------------------------
+    public bool isFullInventory()
+    {
+        // 인벤토리 꽉 찼는지 확인
+        if (gameManager.SaveManager.Save.LastSlotIndex > gameManager.SaveManager.Save.InventorySize - 1)
+        {
+            return true;
+        }
+        
+        return false;
+    }
 
-    //     // Select slot item 삭제, 개수 선택 미구현
-    //     if (slotIndex == -1)
-    //     {
-    //         // 파라미터 없이 호출되었을 때에는 selectedSlotIndex를 삭제
+    private int FindItemUsingSlotId(int slotId)
+    {
+        if (slotId == -1)
+        {
+            return -1;
+        }
 
-    //         if (selectedSlotIndex == -1)
-    //         {
-    //             // 선택한 Slot이 없는 경우 삭제 안됨
-    //             return;    
-    //         }
+        for (int i = 0; i < gameManager.SaveManager.Save.LastSlotIndex; i++)
+        {
+            if (gameManager.SaveManager.Save.Slots[i].Id == slotId)
+            {
+                return i;
+            }
+        }
 
-    //         slotIndex = selectedSlotIndex;
-    //     }       
+        return -1;
+    }
 
-    //     // 아이템 삭제 후 save
-    //     saveManager.Delete(slotIndex);
-    //     saveManager.Save();
+    // -------------------------------------------------------------
+    // Gold
+    // -------------------------------------------------------------
+    public void UpdateGold(int amount)
+    {
+        gameManager.SaveManager.Save.Gold += amount;
+        text_gold.text = string.Format("{0:#,0}", gameManager.SaveManager.Save.Gold).ToString();
+    }
 
-    //     // 선택한 ItemDetail 닫음
-    //     CloseItemDetail();
+    // -------------------------------------------------------------
+    // UI gameObject (use on UIController.cs)
+    // -------------------------------------------------------------
+    public void Open()
+    {
+        this.gameObject.SetActive(true);
+    }
 
-    //     LoadInventory();
-    // }
+    public void Close()
+    {
+        this.gameObject.SetActive(false);
+        EndDeleteMode();
+        itemDetail.Close();     // Close Item detail UI
+    }
 
     // public void Use(int itemId, int itemType)
     // {
@@ -538,56 +576,4 @@ public class Inventory : MonoBehaviour
     //     return -1;
     // }
 
-    private int FindItemUsingSlotId(int slotId)
-    {
-        if (slotId == -1)
-        {
-            return -1;
-        }
-
-        for (int i = 0; i < gameManager.SaveManager.Save.LastSlotIndex; i++)
-        {
-            if (gameManager.SaveManager.Save.Slots[i].Id == slotId)
-            {
-                return i;
-            }
-        }
-
-        return -1;
-    }
-
-    // public int GetAmountItem(int itemId)
-    // {
-    //     for (int i = 0; i < saveManager.save.slotIndex; i++)
-    //     {
-    //         if (saveManager.save.slots[i].id == itemId)
-    //         {
-    //             return saveManager.save.slots[i].count;
-    //         }
-    //     }
-        
-    //     return 0;
-    // }
-
-    // public bool CheckEnoughInventory()
-    // {
-    //     if (index >= slots.Length)
-    //     {
-    //         return false;
-    //     }
-        
-    //     return true;
-    // }
-
-    // UI gameObject (use on UIController.cs)
-    public void Open()
-    {
-        this.gameObject.SetActive(true);
-    }
-
-    public void Close()
-    {
-        this.gameObject.SetActive(false);
-        itemDetail.Close();
-    }
 }

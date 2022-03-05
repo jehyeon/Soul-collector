@@ -60,7 +60,7 @@ public class Save
             .Where(slot => slot != null)
             .ToList();
 
-        slotIndex -= 1;
+        LastSlotIndex -= 1;
 
         // 빈 슬롯 생성
         this.AddSlot();
