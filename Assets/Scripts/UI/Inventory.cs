@@ -140,7 +140,7 @@ public class Inventory : MonoBehaviour
                 if (gameManager.SaveManager.Save.Slots[i].ItemId == item.Id)
                 {
                     // 수량만 변경
-                    slots[i].SetSlotCount(slots[i].Count + count);  // only view
+                    slots[i].SetSlotCount(count);  // only view
                     gameManager.SaveManager.Save.Slots[i].UpdateCount(count);
 
                     return;
@@ -282,6 +282,9 @@ public class Inventory : MonoBehaviour
             // 사용 아이템인 경우
             // UseItemSystem으로 item id, item slot index 전달
             useItemSystem.Use(slots[selectedSlotIndex].Item.Id, selectedSlotIndex);
+            
+            UpdateInventoryActBtn();
+            return;
         }
 
         if (slots[selectedSlotIndex].Item.ItemType == ItemType.Weapon 

@@ -583,10 +583,8 @@ MonoBehaviour:
   img_background: {fileID: 7097860456583548801}
   img_frame: {fileID: 7097860456699807600}
   text_count: {fileID: 7097860457615080139}
-  isEquip: 0
   isSelected: 0
   upgradeLevel: 0
-  inventory: {fileID: 0}
   image_equipped: {fileID: 18225325390695759}
   go_selectedFrame: {fileID: 8010622409954945657}
 --- !u!1 &7097860456699807602
