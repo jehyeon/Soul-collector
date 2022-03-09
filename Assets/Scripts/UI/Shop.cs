@@ -5,6 +5,8 @@ using UnityEngine;
 public class Shop : MonoBehaviour
 {
     private GameManager gameManager;
+    [SerializeField]
+    private GameObject go_shop;
 
     [SerializeField]
     private GameObject pref_shopItem;
@@ -41,9 +43,9 @@ public class Shop : MonoBehaviour
         {
             clickedTime += Time.deltaTime;
 
-            if (clickedTime > 1.5f)
+            if (clickedTime > 1f)
             {
-                // 1.5초 이상 누르고 있으면 0.1초마다 아이템 구입
+                // 1초 이상 누르고 있으면 0.1초마다 아이템 구입
                 buyingTime += Time.deltaTime;
                 if (buyingTime > .1f)
                 {
@@ -95,22 +97,16 @@ public class Shop : MonoBehaviour
         buyingTime = 0f;
     }
 
-    // // Shop UI
-    // // !!! Need to move
-    // private void OpenShop()
-    // {
-    //     go_shop.SetActive(true);
-    //     shopActivated = true;
+    // Shop UI
+    public void Open()
+    {
+        go_shop.SetActive(true);
+    }
 
-    //     // CloseReinforceUI();
-    //     // CloseItemDetail();
-    // }
-
-    // public void CloseShop()
-    // {
-    //     go_shop.SetActive(false);
-    //     shopActivated = false;
-    //     // shop UI를 닫으면 selected 아이템 초기화
-    //     go_shop.transform.GetChild(2).GetChild(0).GetComponent<Shop>().UnSelect();
-    // }
+    public void Close()
+    {
+        go_shop.SetActive(false);
+        isClick = false;
+        clickedTime = 0f;
+    }
 }

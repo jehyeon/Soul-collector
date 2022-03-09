@@ -32,7 +32,7 @@ public class Stat
     public int Accuracy { get { return _accuracy; } }
     public int AbsoluteAccuracy { get { return _absoluteAccuracy; } }
     public int MaxHp { get { return _maxHp; } }
-    public int Hp { get { return _hp; } }
+    public int Hp { get { return _hp; } set { _hp = value; } }
     public int HpRecovery { get { return _hpRecovery; } }
     public int DamageReduction { get { return _damageReduction; } }
     public int EvasionPercent { get { return _evasionPercent;  } }
@@ -163,5 +163,7 @@ public class Stat
             _criticalPercent -= item.CriticalPercent;
             _moveSpeed -= item.MoveSpeed;
         }
+
+        Heal(0);    // 장비 착용 해제 후 hp가 maxHp 넘는 경우 maxHp가 되도록 고정
     }
 }

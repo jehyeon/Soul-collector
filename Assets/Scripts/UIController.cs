@@ -15,7 +15,7 @@ public class UIController: MonoBehaviour
     [SerializeField]
     private Inventory inventory;
     [SerializeField]
-    private GameObject go_shopUI;
+    private Shop shop;
     [SerializeField]
     private GameObject go_craftUI;
     [SerializeField]
@@ -140,14 +140,15 @@ public class UIController: MonoBehaviour
     // Shop UI
     public void OpenShopUI()
     {
-        go_shopUI.SetActive(true);
+        shop.Open();
         isActivatedShopUI = true;
         OpenInventoryUI();      // 상점 페이지 오픈 시 인벤토리도 오픈
+        inventory.CloseReinforceUI();   // 상점 페이지 오픈 시 강화 모드 취소
     }
 
     public void CloseShopUI()
     {
-        go_shopUI.SetActive(false);
+        shop.Close();
         isActivatedShopUI = false;
     }
 
@@ -167,13 +168,13 @@ public class UIController: MonoBehaviour
     // Reinforce UI
     public void OpenReinforceUI()
     {
-        go_reinforceUI.SetActive(true);
+        inventory.OpenReinforceUI();
         isActivatedReinforceUI = true;
     }
 
     public void CloseReinforceUI()
     {
-        go_reinforceUI.SetActive(false);
+        inventory.CloseReinforceUI();
         isActivatedReinforceUI = false;
     }
 

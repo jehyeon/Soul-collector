@@ -88,6 +88,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a34d70b091299fe4dae16747a07084a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  go_shop: {fileID: 1485188352258576463}
   pref_shopItem: {fileID: 5925300451582801454, guid: 883d3d8051da5504db36c43bf88fec5c, type: 3}
 --- !u!1 &403948289
 GameObject:

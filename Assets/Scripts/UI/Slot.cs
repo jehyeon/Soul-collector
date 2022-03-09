@@ -9,7 +9,7 @@ public class Slot : MonoBehaviour
 {
     // 슬롯 별
     protected Item item;
-    private int itemCount;
+    protected int itemCount;
 
     // 아이템 이미지
     [SerializeField]
@@ -25,7 +25,7 @@ public class Slot : MonoBehaviour
 
     // 아이템 개수 or 강화 등급 표기
     [SerializeField]
-    private TextMeshProUGUI text_count;
+    protected TextMeshProUGUI text_count;
 
     public Item Item { get { return item; } }
     public int Count { get { return itemCount; } }
@@ -64,61 +64,12 @@ public class Slot : MonoBehaviour
                 text_count.text = itemCount.ToString();
             }
         }
-
-        // if (item.ItemType > 11)
-        // {
-        //     // 장착 아이템이 아닌 경우 item count 활성화
-        //     text_Count.text = itemCount.ToString();
-        // }
-        // else
-        // {
-        //     // 장착 아이템인 경우 강화 수치 표기
-        //     if (item.ItemName.IndexOf("+") > -1)
-        //     {
-        //         upgradeLevel = int.Parse(item.ItemName.Split(' ')[0].Split('+')[1]);
-        //         text_Count.text = "+" + upgradeLevel;
-
-        //         Color itemCountColor;
-        //         ColorUtility.TryParseHtmlString("#FFFF00FF", out itemCountColor);
-        //         text_Count.color = itemCountColor;
-        //     }
-        //     else
-        //     {
-        //         text_Count.text = "";
-        //     }
-        // }
     }
-
-    // 강화
-    // public void Upgrade()
-    // {
-    //     item = itemManager.Get(item.Id + 1);
-
-    //     // 장착 아이템인 경우 강화 수치 표기
-    //     if (item.ItemName.IndexOf("+") > -1)
-    //     {
-    //         upgradeLevel = int.Parse(item.ItemName.Split(' ')[0].Split('+')[1]);
-    //         text_Count.text = "+" + upgradeLevel;
-    //         Color fontColor;
-    //         ColorUtility.TryParseHtmlString("#FFFF00FF", out fontColor);
-    //         text_Count.color = fontColor;
-    //     }
-    //     else
-    //     {
-    //         text_Count.text = "";
-    //         Color backgroundColor;
-    //         ColorUtility.TryParseHtmlString("#FFFFFFFF", out backgroundColor);
-    //         text_Count.color = backgroundColor;
-    //     }
-    // }
 
     // 아이템 수량 변경
     public void SetSlotCount(int count)
     {
-        Debug.Log(itemCount);
-        Debug.Log(count);
         itemCount += count;
-        Debug.Log(itemCount);
         text_count.text = itemCount.ToString();
     }
 
@@ -147,59 +98,4 @@ public class Slot : MonoBehaviour
             text_count.color = itemCountColor;
         }
     }
-
-    // // 장착
-    // public void Equip()
-    // {
-    //     cv.GetComponent<Inventory>().EquipItemType(item.ItemType, inventoryIndex);
-
-    //     image_EquipImage.gameObject.SetActive(true);
-    //     cv.GetComponent<Inventory>().go_player.GetComponent<Stat>().Equip(item);
-    //     cv.GetComponent<Inventory>().UpdateStatDetail();
-    //     isEquip = true;
-
-    //     SetInventoryBtn();
-    // }
-
-
-
-
-
-    // private void SetInventoryBtn()
-    // {
-    //     string btnText = "";
-    //     if (item.ItemType == 12)
-    //     {
-    //         // 제작 재료 아이템
-    //         HideInventoryBtn();
-    //         return;
-    //     }
-
-    //     if (item.ItemType < 12)
-    //     {
-    //         // 장착 아이템
-    //         if (isEquip)
-    //         {
-    //             btnText = "해제";
-    //         }
-    //         else
-    //         {
-    //             btnText = "장착";
-    //         }
-    //     }
-    //     else if (item.ItemType > 12)
-    //     {
-    //         // 사용 아이템
-    //         btnText = "사용";
-    //     }
-
-    //     go_inventoryBtn.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = btnText;
-    //     go_inventoryBtn.gameObject.SetActive(true);
-    // }
-
-    // private void HideInventoryBtn()
-    // {
-    //     // 장착, 사용 아이템이 아닌 경우
-    //     go_inventoryBtn.gameObject.SetActive(false);
-    // }
 }

@@ -715,11 +715,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1485188352258576462, guid: 69fb41826e3080847829d5a1584b549b, type: 3}
   m_PrefabInstance: {fileID: 1556741186}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1709839666 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1485188352258576463, guid: 69fb41826e3080847829d5a1584b549b, type: 3}
-  m_PrefabInstance: {fileID: 1556741186}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1905050019
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1018,7 +1013,7 @@ MonoBehaviour:
   go_statUI: {fileID: 3388088044518653234}
   textStat: {fileID: 634028081}
   inventory: {fileID: 7115711243465393150}
-  go_shopUI: {fileID: 1709839666}
+  shop: {fileID: 2114847078}
   go_craftUI: {fileID: 1954643730}
   go_reinforceUI: {fileID: 1485188352694349575}
   hpBar: {fileID: 910801094570995444}
@@ -1146,6 +1141,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5802121946960007974, guid: 55342bd24c70c8c4fb1cd89155eb2e8c, type: 3}
   m_PrefabInstance: {fileID: 1905050019}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2114847078 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 29026615, guid: 69fb41826e3080847829d5a1584b549b, type: 3}
+  m_PrefabInstance: {fileID: 1556741186}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a34d70b091299fe4dae16747a07084a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &910801094570995444 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1491761872587368807, guid: ed19d98c0681f694a8f97f6fd5d84c6e, type: 3}
@@ -1196,6 +1202,10 @@ PrefabInstance:
       propertyPath: gameManager
       value: 
       objectReference: {fileID: 742308396}
+    - target: {fileID: 7115711243465393150, guid: 2758d264cf7b4d84ab14230753799ca9, type: 3}
+      propertyPath: go_reinforce
+      value: 
+      objectReference: {fileID: 1485188352694349575}
     - target: {fileID: 8346628639980590914, guid: 2758d264cf7b4d84ab14230753799ca9, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1729,10 +1739,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Reinforce
       objectReference: {fileID: 0}
-    - target: {fileID: 5565042677517750302, guid: eb1792a466f55994a974f4b6920262c2, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5565042677517750303, guid: eb1792a466f55994a974f4b6920262c2, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1820,7 +1826,7 @@ PrefabInstance:
     - target: {fileID: 6460257693046003039, guid: eb1792a466f55994a974f4b6920262c2, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1954890778}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eb1792a466f55994a974f4b6920262c2, type: 3}
 --- !u!224 &7115711243465393138 stripped

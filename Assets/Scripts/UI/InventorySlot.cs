@@ -6,12 +6,15 @@ using UnityEngine.UI;
 
 public class InventorySlot : Slot, IPointerClickHandler
 {
-    private int index;
+    // 인벤토리 슬롯 정보
+    private int index;      // 인벤토리 슬롯 index
+    private int id;         // 인벤토리 슬롯 ID
+    private bool isEquip;   // 슬롯 아이템 장착 여부
+    public bool isSelected; // 슬롯 선택 여부
 
-    private int id;
-    private bool isEquip;
-    public bool isSelected;
-    public int upgradeLevel;
+    // 인벤토리 슬롯 아이템 정보
+    private int level;      // 아이템 강화 성공 횟수, level이 1 이상인 경우 슬롯 하단에 Count 대신 Level 표기
+
     private Inventory inventory;
 
     [SerializeField]
@@ -21,6 +24,7 @@ public class InventorySlot : Slot, IPointerClickHandler
 
     public int Id { get { return id; } }
     public bool IsEquip { get { return isEquip; } }
+    public int Level { get { return level; } }      // 레벨에 따라 강화 확률이 달라짐
 
     // -------------------------------------------------------------
     // 인벤토리 슬롯 생성 및 로드
@@ -30,12 +34,16 @@ public class InventorySlot : Slot, IPointerClickHandler
         // 게임 시작 시 슬롯 생성될 때 부여
         index = slotindex;
         inventory = parentInventory;
+        level = 0;
     }
 
-    public void Load(int slotId, Item loadedItem, int count)
+    public void Load(int slotId, Item loadedItem, int count, int itemLevel = 0)
     {
         id = slotId;
         Set(loadedItem, count);
+        level = itemLevel;
+
+        CheckLevel();
     }
 
     public override void ClearSlot()
@@ -43,6 +51,22 @@ public class InventorySlot : Slot, IPointerClickHandler
         base.ClearSlot();
 
         UnEquip();
+        level = 0;
+    }
+
+    private void CheckLevel()
+    {
+        // level이 1 이상인 경우, 강화 등급 표기
+        if (level == 0 || itemCount > 1)
+        {
+            // level이 없거나, count가 2 이상인 경우
+            return;
+        }
+
+        Color itemCountColor;
+        ColorUtility.TryParseHtmlString("#FFFF00FF", out itemCountColor);
+        text_count.color = itemCountColor;
+        text_count.text = string.Format("+{0}", level);
     }
 
     // -------------------------------------------------------------
@@ -56,72 +80,46 @@ public class InventorySlot : Slot, IPointerClickHandler
             return;
         }
 
-        if (!isSelected)
+        if (inventory.deleteItemMode && isEquip)
         {
-            inventory.SelectSlot(index);
-            Select();
+            // 아이템 삭제 모드 일때, 장착 아이템 선택 시 무시
+            return;
+        }
+
+        if (inventory.reinforceMode)
+        {
+            // 인벤토리가 강화 모드인 경우
+            if (item.Rank > 5)
+            {
+                // 강화 불가능한 등급 (ex. +9, resource data rank: 6)
+                return;
+            }
+
+            if (isEquip)
+            {
+                // 장착한 아이템은 강화 불가능
+                return;
+            }
+
+            if (inventory.scrollType == item.ItemType)
+            {
+                // 선택된 주문서 타입과 현재 슬롯의 아이템 타입이 같아야 함
+                inventory.Reinforce(index, item.Id);     // 강화할 아이템 slot index, item ID 전달
+            }
         }
         else
         {
-            inventory.UnSelectSlot(index);
-            UnSelect();
+            if (!isSelected)
+            {
+                inventory.SelectSlot(index);
+                Select();
+            }
+            else
+            {
+                inventory.UnSelectSlot(index);
+                UnSelect();
+            }   
         }
-
-        // if (cv.GetComponent<Inventory>().reinforceMode)
-        // {
-        //     if (item.Rank > 5)
-        //     {
-        //         // 강화 불가능한 등급 (ex. 9강, resource)
-        //         return;
-        //     }
-
-        //     // 강화 모드인 경우
-        //     int scrollType = cv.GetComponent<Inventory>().scrollType;
-            
-        //     if (scrollType == 15)
-        //     {
-        //         // 무기 강화
-        //         if (!(itemId >= 0 && itemId <= 499))
-        //         {
-        //             // 무기가 아닌 경우
-        //             return;
-        //         }
-        //         cv.GetComponent<Inventory>().Rush(inventoryIndex);
-        //     }
-        //     else if (scrollType == 16)
-        //     {
-        //         // 방어구 강화
-        //         if (!(itemId >= 500 && itemId <= 1299))
-        //         {
-        //             // 방어구가 아닌 경우
-        //             return;
-        //         }
-        //         cv.GetComponent<Inventory>().Rush(inventoryIndex);
-        //     }
-        //     else if (scrollType == 17)
-        //     {
-        //         // 장신구 강화
-        //         if (!(itemId >= 1300 && itemId <= 1600))
-        //         {
-        //             // 장신구가 아닌 경우
-        //             return;
-        //         }
-        //         cv.GetComponent<Inventory>().Rush(inventoryIndex);
-        //     }
-        //     else if (scrollType == 18)
-        //     {
-        //         // 소울스톤 강화
-        //         if (!(itemId >= 1608 && itemId <= 1613))
-        //         {
-        //             // 소울스톤이 아닌 경우
-        //             return;
-        //         }
-
-        //         // temp
-        //     }
-
-        //     return;
-        // }
     }
 
     // -------------------------------------------------------------
@@ -157,5 +155,16 @@ public class InventorySlot : Slot, IPointerClickHandler
 
         image_equipped.gameObject.SetActive(false);
         isEquip = false;
+    }
+
+    // -------------------------------------------------------------
+    // 인벤토리 슬롯 강화 (Inventory.Reinforce() 강화 성공 시)
+    // -------------------------------------------------------------
+    public void Upgrade(Item nextItem)
+    {
+        // nextItem Id: Item.Id + 1, ItemManager를 통해 호출 후 재 할당
+        Set(nextItem);
+        level += 1;
+        CheckLevel();
     }
 }
