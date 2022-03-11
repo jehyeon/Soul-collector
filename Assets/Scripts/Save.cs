@@ -131,4 +131,9 @@ public class SlotSave
         Count = itemCount;
         Level += itemLevel;
     }
+
+    public void SetItemId(int newId)
+    {
+        ItemId = newId;
+    }
 }

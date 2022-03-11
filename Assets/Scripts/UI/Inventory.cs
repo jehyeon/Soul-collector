@@ -109,8 +109,8 @@ public class Inventory : MonoBehaviour
                 int slotIndex = FindItemUsingSlotId(gameManager.SaveManager.Save.Equipped[i]);
                 if (slotIndex != -1)
                 {
-                    slots[slotIndex].Equip();
-                    gameManager.Player.Equip(slots[slotIndex].Item);
+                    slots[slotIndex].Equip();   // equip 체크
+                    gameManager.Player.Equip(slots[slotIndex].Item);    // 스탯 추가
                 }    
             }
         }
@@ -125,8 +125,8 @@ public class Inventory : MonoBehaviour
                 int slotIndex = FindItemUsingSlotId(gameManager.SaveManager.Save.Equipped[i]);
                 if (slotIndex != -1)
                 {
-                    slots[slotIndex].UnEquip();
-                    gameManager.Player.UnEquip(slots[slotIndex].Item);
+                    slots[slotIndex].UnEquip();     // equip 체크 해제
+                    gameManager.Player.UnEquip(slots[slotIndex].Item);  // 스탯 적용
                 }    
             }
         }
@@ -519,6 +519,7 @@ public class Inventory : MonoBehaviour
         {
             // 강화 성공
             slots[slotIndex].Upgrade(gameManager.ItemManager.Get(itemId + 1));
+            gameManager.SaveManager.Save.Slots[slotIndex].SetItemId(itemId + 1);
             gameManager.SaveManager.Save.UpdateItemLevel(slotIndex);
             Debug.Log("강화 성공!");
         }
@@ -532,7 +533,6 @@ public class Inventory : MonoBehaviour
 
         // 강화 주문서 수량 조정
         int scrollIndex = FindItemUsingSlotId(scrollSlotId);
-        Debug.Log(scrollIndex);
         if (TryToUpdateItemCount(scrollIndex))
         {
             // 주문서 아이템이 삭제된 경우
@@ -545,6 +545,7 @@ public class Inventory : MonoBehaviour
         {
             // 스크롤 아이템 혹은 강화 아이템이 삭제된 경우
             SaveAndLoad();
+            deleted = false;
         }
         else
         {

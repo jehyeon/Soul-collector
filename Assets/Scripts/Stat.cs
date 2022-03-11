@@ -102,13 +102,13 @@ public class Stat
     {
         // temp
         return 
-            "치명타 확률: " + _criticalPercent.ToString() + "\n"
-            + "공격속도: " + _attackSpeed.ToString() + "\n"
-            + "최대 데미지: " + _maxDamage.ToString() + "\n"
+            "기본 데미지: " + _defaultDamage.ToString() + "\n"
             + "최소 데미지: " + _minDamage.ToString() + "\n"
-            + "기본 데미지: " + _defaultDamage.ToString() + "\n"
+            + "최대 데미지: " + _maxDamage.ToString() + "\n"
+            + "공격속도: " + _attackSpeed.ToString() + "\n"
             + "공격 정확도: " + _accuracy.ToString() + "\n"
             + "명중률: " + _absoluteAccuracy.ToString() + "\n"
+            + "치명타 확률: " + _criticalPercent.ToString() + "\n"
             + "체력: " + _maxHp.ToString() + "\n"
             + "Hp 자동 회복: " + _hpRecovery.ToString() + "\n"
             + "데미지 감소: " + _damageReduction.ToString() + "\n"

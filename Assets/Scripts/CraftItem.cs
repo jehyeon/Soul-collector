@@ -43,7 +43,7 @@ public class CraftItem : MonoBehaviour, IPointerClickHandler
     public void OnPointerClick(PointerEventData eventData)
     {
         // 기존 선택된 아이템을 unselect
-        go_craft.GetComponent<Craft>().UnSelectCraftItem();
+        // go_craft.GetComponent<Craft>().UnSelectCraftItem();
 
         if (isSelected)
         {
@@ -59,7 +59,7 @@ public class CraftItem : MonoBehaviour, IPointerClickHandler
     {
         isSelected = true;
         go_selectedFrame.SetActive(isSelected);
-        go_craft.GetComponent<Craft>().SelectCraftItem(craftItemIndex);
+        // go_craft.GetComponent<Craft>().SelectCraftItem(craftItemIndex);
     }
 
     public void UnSelect()

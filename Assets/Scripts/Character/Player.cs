@@ -62,6 +62,7 @@ public class Player : ACharacter
     // 플레이어 장비 장착
     public void Equip(Item equipping)
     {
+        Debug.LogFormat("{0} 장착", equipping.ItemName);
         stat.Equip(equipping);
         ui.UpdateStatUI(stat);
         ui.UpdatePlayerHpBar(stat.Hp, stat.MaxHp);
@@ -69,6 +70,7 @@ public class Player : ACharacter
 
     public void UnEquip(Item unEquipping)
     {
+        Debug.LogFormat("{0} 장착 해제", unEquipping.ItemName);
         stat.UnEquip(unEquipping);
         ui.UpdateStatUI(stat);
         ui.UpdatePlayerHpBar(stat.Hp, stat.MaxHp);
