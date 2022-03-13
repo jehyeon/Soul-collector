@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     // 이동, 조작 관련 / 목적지 및 타겟 지정
     private Player player;
-
+    
     private void Start()
     {
         player = GetComponent<Player>();

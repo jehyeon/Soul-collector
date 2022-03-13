@@ -19,6 +19,9 @@ public class Player : ACharacter
     }
     private void Start()
     {
+        // Animator load
+        animator = GetComponentInChildren<Animator>();
+
         // 스탯창 업데이트
         ui.UpdateStatUI(stat);
         

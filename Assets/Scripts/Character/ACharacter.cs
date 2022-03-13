@@ -21,6 +21,11 @@ public class ACharacter : MonoBehaviour
     protected Vector3 destinationPos;
     protected GameObject target;
 
+    // 애니메이터
+    protected Animator animator;    // 하위 클래스에서 할당
+
+    public float rotationSpeed = 2f;
+
     protected virtual void Awake()
     {
         // 스탯 생성 및 Idle state
@@ -81,6 +86,7 @@ public class ACharacter : MonoBehaviour
         if (destinationPos == null || state != State.Move)
         {
             // 목적지가 없거나 Move 상태가 아닌 경우
+            animator.SetBool("isMove", false);
             return;
         }
 
@@ -89,7 +95,7 @@ public class ACharacter : MonoBehaviour
             // 목적지에 도착하면
             // if (target == null)
             // {
-                state = State.Idle;
+            state = State.Idle;
             // }
             // else
             // {
@@ -99,6 +105,13 @@ public class ACharacter : MonoBehaviour
         }
         
         this.transform.position += (destinationPos - this.transform.position).normalized * Time.deltaTime * stat.MoveSpeed;
+        // temp
+        this.transform.rotation = Quaternion.Lerp(
+            this.transform.rotation,
+            Quaternion.LookRotation(destinationPos - this.transform.position),
+            Time.deltaTime * rotationSpeed
+        );
+        animator.SetBool("isMove", true);
     }    
 
     // 공격 관련
