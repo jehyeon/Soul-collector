@@ -32,6 +32,7 @@ public class SaveManager
 
     public void SaveData()
     {
+        Debug.Log("SAVE");
         // obj to json
         JsonWriter writer = new JsonWriter();
         writer.PrettyPrint = true;

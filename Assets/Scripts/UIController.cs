@@ -8,9 +8,7 @@ public class UIController: MonoBehaviour
 {
     // on the canvas
     [SerializeField]
-    private GameObject go_statUI;
-    [SerializeField]
-    private TextMeshProUGUI textStat;
+    private Equipment goEquipmentUI;
 
     [SerializeField]
     private Inventory inventory;
@@ -57,11 +55,11 @@ public class UIController: MonoBehaviour
         {
             if (isActivatedStatUI)
             {
-                CloseStatUI();
+                CloseEquipmentUI();
             }
             else
             {
-                OpenStatUI();
+                OpenEquipmentUI();
             }
         }
 
@@ -103,22 +101,21 @@ public class UIController: MonoBehaviour
     }
 
     // Stat UI
-    public void OpenStatUI()
+    public void OpenEquipmentUI()
     {
-        go_statUI.SetActive(true);
+        goEquipmentUI.Open();
         isActivatedStatUI = true;
     }
 
-    public void CloseStatUI()
+    public void CloseEquipmentUI()
     {
-        go_statUI.SetActive(false);
+        goEquipmentUI.Close();
         isActivatedStatUI = false;
     }
 
     public void UpdateStatUI(Stat characterStat)
     {
-        // 게임 시작, 아이템 장착, 해제
-        textStat.text = characterStat.ToString();
+        goEquipmentUI.UpdateStatText(characterStat);
     }
 
     // Inventory UI
