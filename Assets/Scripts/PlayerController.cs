@@ -14,6 +14,12 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        TouchAction();
+        KeyBoardAction();
+    }
+
+    private void TouchAction()
+    {
         if (Input.GetMouseButtonDown(0) && !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject ())
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -37,6 +43,18 @@ public class PlayerController : MonoBehaviour
                     player.gameManager.GetItem(raycastHit.collider.gameObject);
                 }
             }
+        }
+    }
+
+    private void KeyBoardAction()
+    {
+        float moveX = Input.GetAxis("Horizontal");
+        float moveZ = Input.GetAxis("Vertical");
+        
+        if (moveX != 0 || moveZ != 0)
+        {
+            // 키보드 입력이 있는 경우
+            player.SetDestination(this.transform.position + new Vector3(moveX, 0, moveZ).normalized * 0.25f);
         }
     }
 }

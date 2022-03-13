@@ -24,7 +24,7 @@ public class ACharacter : MonoBehaviour
     // 애니메이터
     protected Animator animator;    // 하위 클래스에서 할당
 
-    public float rotationSpeed = 2f;
+    private float rotationSpeed = 10f;
 
     protected virtual void Awake()
     {
@@ -90,7 +90,7 @@ public class ACharacter : MonoBehaviour
             return;
         }
 
-        if ((destinationPos - this.transform.position).sqrMagnitude <= 0.1f)
+        if ((destinationPos - this.transform.position).sqrMagnitude <= 0.05f)
         {
             // 목적지에 도착하면
             // if (target == null)

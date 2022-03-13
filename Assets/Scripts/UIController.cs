@@ -75,7 +75,7 @@ public class UIController: MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKeyDown(KeyCode.H))
         {
             if (isActivatedShopUI)
             {

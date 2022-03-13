@@ -54,7 +54,7 @@ public class Stat
         _hpRecovery = 5;
         _damageReduction = 0;
         _evasionPercent = 0;
-        _moveSpeed = 10f;
+        _moveSpeed = 5f;
         _attackRange = 1.1f;
     }
 
