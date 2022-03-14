@@ -111,8 +111,8 @@ public class Equipment : MonoBehaviour
     public void UpdateStatText(Stat stat)
     {
         // 임시
-        goAttakStatText.text = stat.ToString();
-        // goDefenseStatText = stat.ToString();
+        goAttakStatText.text = stat.GetAtkStatDes();
+        goDefenseStatText.text = stat.GetDefStatDes();
     }
 
     // -------------------------------------------------------------

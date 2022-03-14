@@ -116,6 +116,28 @@ public class Stat
             + "이동속도: " + _moveSpeed.ToString() + "\n";
     }
 
+    public string GetAtkStatDes()
+    {
+        return 
+            "기본 데미지: " + _defaultDamage.ToString() + "\n"
+            + "최소 데미지: " + _minDamage.ToString() + "\n"
+            + "최대 데미지: " + _maxDamage.ToString() + "\n"
+            + "공격속도: " + _attackSpeed.ToString() + "\n"
+            + "공격 정확도: " + _accuracy.ToString() + "\n"
+            + "명중률: " + _absoluteAccuracy.ToString() + "\n"
+            + "치명타 확률: " + _criticalPercent.ToString() + "\n";
+    }
+
+    public string GetDefStatDes()
+    {
+        return 
+            "체력: " + _maxHp.ToString() + "\n"
+            + "Hp 자동 회복: " + _hpRecovery.ToString() + "\n"
+            + "데미지 감소: " + _damageReduction.ToString() + "\n"
+            + "회피율: " + _evasionPercent.ToString() + "\n"
+            + "이동속도: " + _moveSpeed.ToString() + "\n";
+    }
+
     public void Equip(Item item)
     {
         if (item.ItemType == ItemType.Weapon)
