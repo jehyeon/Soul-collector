@@ -18,6 +18,8 @@ public class UIController: MonoBehaviour
     private GameObject go_craftUI;
     [SerializeField]
     private GameObject go_reinforceUI;
+    [SerializeField]
+    private PopupMessage popupMessage;
 
     private bool isActivatedStatUI;
     private bool isActivatedInventoryUI;
