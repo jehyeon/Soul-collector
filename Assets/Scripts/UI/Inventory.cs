@@ -8,6 +8,8 @@ using TMPro;
 
 public class Inventory : MonoBehaviour
 {
+    private Inventory myInventory;
+
     [SerializeField]
     private GameManager gameManager;
     private UseItemSystem useItemSystem;
@@ -64,12 +66,17 @@ public class Inventory : MonoBehaviour
     
     private void InitInventorySlots()
     {
+        if (myInventory == null)
+        {
+            myInventory = GetComponent<Inventory>();
+        }
+
         // 인벤토리 크기 만큼 슬롯 생성
         for (int i = 0; i < gameManager.SaveManager.Save.InventorySize; i++)
         {
             GameObject inventorySlot = Instantiate(go_inventorySlotPref);
             inventorySlot.transform.SetParent(go_slotParent.transform);
-            inventorySlot.GetComponent<InventorySlot>().Init(i, this.GetComponent<Inventory>());
+            inventorySlot.GetComponent<InventorySlot>().Init(i, myInventory);
         }
 
         // 생성된 슬롯을 slots에 저장
