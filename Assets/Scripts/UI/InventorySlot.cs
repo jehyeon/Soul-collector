@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class InventorySlot : Slot, IPointerClickHandler
+public class InventorySlot : Slot, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
     // 인벤토리 슬롯 정보
     private int index;      // 인벤토리 슬롯 index
@@ -17,8 +17,8 @@ public class InventorySlot : Slot, IPointerClickHandler
 
     private Inventory inventory;
 
-    [SerializeField]
-    private Image image_equipped;
+    // [SerializeField]     // !!! UNUSED
+    // private Image image_equipped;
     [SerializeField]
     private GameObject go_selectedFrame;
 
@@ -50,7 +50,7 @@ public class InventorySlot : Slot, IPointerClickHandler
     {
         base.ClearSlot();
 
-        UnEquip();
+        // UnEquip();   // !!! UNUSED
         level = 0;
     }
 
@@ -70,13 +70,14 @@ public class InventorySlot : Slot, IPointerClickHandler
     }
 
     // -------------------------------------------------------------
-    // 인벤토리 슬롯 터치 이벤트
+    // 인벤토리 슬롯 마우스 이벤트
     // -------------------------------------------------------------
     public void OnPointerClick(PointerEventData eventData)
     {
+        // 마우스 클릭
         if (item == null)
         {
-            // 아이템이 아닌 경우 return
+            // 아이템이 없는 경우 그냥 return
             return;
         }
 
@@ -122,6 +123,24 @@ public class InventorySlot : Slot, IPointerClickHandler
         }
     }
 
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        // 마우스 오버
+        if (item == null)
+        {
+            // 아이템이 없는 경우 그냥 return
+            return;
+        }
+
+        inventory.ShowItemDetail(item, transform.position);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        // 마우스 오버 아웃
+        inventory.CloseItemDetail();
+    }
+
     // -------------------------------------------------------------
     // 인벤토리 슬롯 선택
     // -------------------------------------------------------------
@@ -140,22 +159,23 @@ public class InventorySlot : Slot, IPointerClickHandler
     // -------------------------------------------------------------
     // 인벤토리 슬롯 장착
     // -------------------------------------------------------------
-    public void Equip()
-    {
-        image_equipped.gameObject.SetActive(true);
-        isEquip = true;
-    }
+    // !!! UNUSED 
+    // public void Equip()
+    // {
+    //     image_equipped.gameObject.SetActive(true);
+    //     isEquip = true;
+    // }
 
-    public void UnEquip()
-    {
-        if (!isEquip)
-        {
-            return;
-        }
+    // public void UnEquip()
+    // {
+    //     if (!isEquip)
+    //     {
+    //         return;
+    //     }
 
-        image_equipped.gameObject.SetActive(false);
-        isEquip = false;
-    }
+    //     image_equipped.gameObject.SetActive(false);
+    //     isEquip = false;
+    // }
 
     // -------------------------------------------------------------
     // 인벤토리 슬롯 강화 (Inventory.Reinforce() 강화 성공 시)

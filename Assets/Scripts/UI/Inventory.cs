@@ -126,7 +126,7 @@ public class Inventory : MonoBehaviour
                 int slotIndex = FindItemUsingSlotId(gameManager.SaveManager.Save.Equipped[i]);
                 if (slotIndex != -1)
                 {
-                    slots[slotIndex].UnEquip();     // equip 체크 해제
+                    // slots[slotIndex].UnEquip();     // equip 체크 해제 !!! UNUSED
                     gameManager.Player.UnEquip(slots[slotIndex].Item);  // 스탯 적용
                 }    
             }
@@ -203,7 +203,7 @@ public class Inventory : MonoBehaviour
                 slots[selectedSlotIndex].UnSelect();    // 기존에 선택된 슬롯 선택 해제
             }
             selectedSlotIndex = slotIndex;
-            itemDetail.Open(slots[selectedSlotIndex].Item);
+            // itemDetail.Open(slots[selectedSlotIndex].Item);  // !!! UNUSED
 
             UpdateInventoryActBtn();
         }
@@ -220,7 +220,7 @@ public class Inventory : MonoBehaviour
             selectedSlotIndex = -1;
 
             UpdateInventoryActBtn();
-            itemDetail.Close();     // 선택된 슬롯이 없으므로 detail ui 닫기
+            // itemDetail.Close();     // 선택된 슬롯이 없으므로 detail ui 닫기 // !!! UNUSED
         }
     }
 
@@ -241,7 +241,7 @@ public class Inventory : MonoBehaviour
             }
             selectedSlotIndexList = new List<int>();
             UpdateInventoryActBtn();
-            itemDetail.Close();     // 선택된 슬롯이 없으므로 detail ui 닫기
+            // itemDetail.Close();     // 선택된 슬롯이 없으므로 detail ui 닫기  // !!! UNUSED
             return;
         }
 
@@ -367,7 +367,17 @@ public class Inventory : MonoBehaviour
         UpdateInventoryActBtn();
     }
 
-    
+    // Item detail tooltip
+    public void ShowItemDetail(Item item, Vector3 pos)
+    {
+        itemDetail.Open(item, pos);
+    }
+
+    public void CloseItemDetail()
+    {
+        itemDetail.Close();
+    }
+
     // -------------------------------------------------------------
     // Delete Item
     // -------------------------------------------------------------
@@ -629,7 +639,7 @@ public class Inventory : MonoBehaviour
     {
         this.gameObject.SetActive(false);
         EndDeleteMode();
-        itemDetail.Close();     // Close Item detail UI
+        // itemDetail.Close();     // Close Item detail UI  // !!! UNUSED
         EndDeleteMode();        // 삭제 모드 종료
         CloseReinforceUI();     // Reinforce 모드 종료
     }

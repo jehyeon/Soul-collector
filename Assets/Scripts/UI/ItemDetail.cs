@@ -13,13 +13,22 @@ public class ItemDetail : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI itemDes;
 
-    public void Open(Item selectedItem)
+    public void Open(Item selectedItem, Vector3 position)
     {
+        // 슬롯 정보 업데이트
         slot.Set(selectedItem);
         itemName.text = selectedItem.ItemName;
         itemName.color = selectedItem.FontColor;
         itemDes.text = selectedItem.ToString();
 
+        // 위치 조정
+        position += new Vector3(
+            GetComponent<RectTransform>().rect.width * 0.5f,
+            GetComponent<RectTransform>().rect.height * 0.5f * -1f,
+            0
+        );
+        this.transform.position = position;
+        
         this.gameObject.SetActive(true);
     }
 

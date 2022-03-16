@@ -22,9 +22,9 @@ public class Equipment : MonoBehaviour
 
     // 스탯 정보
     [SerializeField]
-    private TextMeshProUGUI goAttakStatText;
-    [SerializeField]
-    private TextMeshProUGUI goDefenseStatText;
+    private TextMeshProUGUI goStatText;
+    // [SerializeField]
+    // private TextMeshProUGUI goDefenseStatText;
 
     private EquipmentSlot[] slots;
 
@@ -111,8 +111,9 @@ public class Equipment : MonoBehaviour
     public void UpdateStatText(Stat stat)
     {
         // 임시
-        goAttakStatText.text = stat.GetAtkStatDes();
-        goDefenseStatText.text = stat.GetDefStatDes();
+        // goAttakStatText.text = stat.GetAtkStatDes();
+        // goDefenseStatText.text = stat.GetDefStatDes();
+        goStatText.text = stat.ToString();
     }
 
     // -------------------------------------------------------------
