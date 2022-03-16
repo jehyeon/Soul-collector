@@ -11,6 +11,10 @@ public class Shop : MonoBehaviour
     [SerializeField]
     private GameObject pref_shopItem;
 
+    // 아이템 상세 정보
+    [SerializeField]
+    private ItemDetail itemDetail;
+
     private int selectedShopItemId; // 현재 선택된 상점 아이템
 
     private bool isClick;
@@ -33,7 +37,7 @@ public class Shop : MonoBehaviour
             GameObject item = Instantiate(pref_shopItem);
             item.transform.SetParent(this.transform);
             Item shopItem = gameManager.ItemManager.Get((int)data[id]["itemId"]);
-            item.GetComponent<ShopItem>().SetShopItem(shopItem, id, (int)data[id]["price"]);
+            item.GetComponent<ShopItem>().SetShopItem(this.GetComponent<Shop>(), shopItem, id, (int)data[id]["price"]);
         }
     }
 
@@ -109,4 +113,16 @@ public class Shop : MonoBehaviour
         isClick = false;
         clickedTime = 0f;
     }
+    
+    // Item detail tooltip
+    public void ShowItemDetail(Item item, Vector3 pos)
+    {
+        itemDetail.Open(item, pos);
+    }
+
+    public void CloseItemDetail()
+    {
+        itemDetail.Close();
+    }
+
 }
