@@ -625,6 +625,25 @@ public class Inventory : MonoBehaviour
         return -1;
     }
 
+    public int GetItemAmount(int itemId)
+    {
+        if (itemId == 1627)
+        {
+            // gold
+            return gameManager.SaveManager.Save.Gold;
+        }
+        
+        foreach (InventorySlot item in slots)
+        {
+            if (itemId == item.Id)
+            {
+                return item.Count;
+            }
+        }
+
+        return 0;
+    }
+
     // -------------------------------------------------------------
     // Gold
     // -------------------------------------------------------------
