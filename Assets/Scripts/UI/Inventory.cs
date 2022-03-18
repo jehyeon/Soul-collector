@@ -181,6 +181,11 @@ public class Inventory : MonoBehaviour
         if (multiSelectMode)
         {
             selectedSlotIndexList.Add(slotIndex);
+            if (shoppingMode)
+            {
+                UpdateInventoryActBtn();
+                return;
+            }
         }
         else
         {

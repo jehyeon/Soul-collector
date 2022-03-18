@@ -44,12 +44,13 @@ public class ShopItemSlot : Slot, IPointerClickHandler, IPointerEnterHandler, IP
         {
             if (isSelected)
             {
+                shop.UnSelect();
                 UnSelect();
             }
             else
             {
                 // 기존 선택된 아이템을 unselect
-                shop.UnSelect();
+                shop.Select(id);
                 Select();
             }
         }
@@ -77,7 +78,6 @@ public class ShopItemSlot : Slot, IPointerClickHandler, IPointerEnterHandler, IP
     {
         isSelected = true;
         go_selectedFrame.SetActive(true);
-        shop.Select(id);
     }
 
     public void UnSelect()

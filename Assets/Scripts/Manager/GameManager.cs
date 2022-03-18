@@ -62,7 +62,6 @@ public class GameManager : MonoBehaviour
     // -------------------------------------------------------------
     public void SelectSlotOnEquipment()
     {
-        Debug.Log("장착정보 슬롯 클릭");
         // 인벤토리 unselect
         // 다중 모드 종료 + ResetSelect() + InventoryActBtn 업데이트 ("해제")
         inventory.MultiSelectModeOff();
@@ -71,7 +70,6 @@ public class GameManager : MonoBehaviour
 
     public void SelectSlotOnInventory()
     {
-        Debug.Log("인벤토리 슬롯 클릭");
         // 장착 슬롯 unselect
         equipment.UnSelectSlot();
     }

@@ -12,7 +12,9 @@ public class Shop : MonoBehaviour
     private GameObject goShopItemParent;
 
     [SerializeField]
-    private GameObject pref_shopItem;
+    private GameObject goShopItemPref;
+    [SerializeField]
+    private GameObject goBuyBtn;
 
     private int selectedShopItemIndex; // 현재 선택된 상점 아이템
 
@@ -40,7 +42,7 @@ public class Shop : MonoBehaviour
 
         for (int id = 0; id < gameManager.ShopManager.data.Count; id++)
         {
-            GameObject item = Instantiate(pref_shopItem);
+            GameObject item = Instantiate(goShopItemPref);
             item.transform.SetParent(goShopItemParent.transform);
             item.GetComponent<ShopItemSlot>().SetShopItem(
                 myShop, 
@@ -88,7 +90,13 @@ public class Shop : MonoBehaviour
     // -------------------------------------------------------------
     public void Select(int slotIndex)
     {
+        if (selectedShopItemIndex != -1)
+        {
+            // 이미 선택된 다른 슬롯이 있는 경우
+            slots[selectedShopItemIndex].UnSelect();
+        }
         selectedShopItemIndex = slotIndex;
+        goBuyBtn.SetActive(true);
     }
 
     public void UnSelect()
@@ -101,6 +109,7 @@ public class Shop : MonoBehaviour
 
         slots[selectedShopItemIndex].UnSelect();
         selectedShopItemIndex = -1;
+        goBuyBtn.SetActive(false);
     }
 
     // !!!
