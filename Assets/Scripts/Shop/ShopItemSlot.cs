@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 
-public class ShopItem : Slot, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
+public class ShopItemSlot : Slot, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
     // select 된 shopItemId를 shop.cs에서 동기화하고
     // 구입 시 ShopItem[shopItemId]의 id와 price에 접근
@@ -40,16 +40,18 @@ public class ShopItem : Slot, IPointerClickHandler, IPointerEnterHandler, IPoint
     // -------------------------------------------------------------
     public void OnPointerClick(PointerEventData eventData)
     {
-        // 기존 선택된 아이템을 unselect
-        this.transform.parent.gameObject.GetComponent<Shop>().UnSelect();
-        
-        if (isSelected)
+        if (eventData.button == PointerEventData.InputButton.Left)
         {
-            UnSelect();
-        }
-        else
-        {
-            Select();
+            if (isSelected)
+            {
+                UnSelect();
+            }
+            else
+            {
+                // 기존 선택된 아이템을 unselect
+                shop.UnSelect();
+                Select();
+            }
         }
     }
 
@@ -74,13 +76,13 @@ public class ShopItem : Slot, IPointerClickHandler, IPointerEnterHandler, IPoint
     private void Select()
     {
         isSelected = true;
-        go_selectedFrame.SetActive(isSelected);
-        this.transform.parent.gameObject.GetComponent<Shop>().SetSelectedShopItemId(id);
+        go_selectedFrame.SetActive(true);
+        shop.Select(id);
     }
 
     public void UnSelect()
     {
         isSelected = false;
-        go_selectedFrame.SetActive(isSelected);
+        go_selectedFrame.SetActive(false);
     }
 }

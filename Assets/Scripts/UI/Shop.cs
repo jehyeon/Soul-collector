@@ -4,41 +4,53 @@ using UnityEngine;
 
 public class Shop : MonoBehaviour
 {
+    private Shop myShop;
+
+    [SerializeField]
     private GameManager gameManager;
     [SerializeField]
-    private GameObject go_shop;
+    private GameObject goShopItemParent;
 
     [SerializeField]
     private GameObject pref_shopItem;
 
-    // 아이템 상세 정보
-    [SerializeField]
-    private ItemDetail itemDetail;
-
-    private int selectedShopItemId; // 현재 선택된 상점 아이템
+    private int selectedShopItemIndex; // 현재 선택된 상점 아이템
 
     private bool isClick;
     private float clickedTime;
     private float buyingTime;
     // private int count;
 
-    void Awake()
+    private ShopItemSlot[] slots;
+
+    void Start()
     {
-        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
-
-        selectedShopItemId = -1;
+        selectedShopItemIndex = -1;
         clickedTime = 0;
+        myShop = GetComponent<Shop>();
         isClick = false;
+    }
 
-        List<Dictionary<string, object>> data = CSVReader.Read("Shop");
+    public void InitShopItemSlots()
+    {
+        if (myShop == null)
+        {
+            myShop = GetComponent<Shop>();
+        }
 
-        for (int id = 0; id < data.Count; id++)
+        for (int id = 0; id < gameManager.ShopManager.data.Count; id++)
         {
             GameObject item = Instantiate(pref_shopItem);
-            item.transform.SetParent(this.transform);
-            Item shopItem = gameManager.ItemManager.Get((int)data[id]["itemId"]);
-            item.GetComponent<ShopItem>().SetShopItem(this.GetComponent<Shop>(), shopItem, id, (int)data[id]["price"]);
+            item.transform.SetParent(goShopItemParent.transform);
+            item.GetComponent<ShopItemSlot>().SetShopItem(
+                myShop, 
+                gameManager.ItemManager.Get((int)gameManager.ShopManager.data[id]["itemId"]), 
+                id, 
+                (int)gameManager.ShopManager.data[id]["price"]
+            );
         }
+
+        slots = goShopItemParent.GetComponentsInChildren<ShopItemSlot>();
     }
 
     private void Update()
@@ -62,33 +74,36 @@ public class Shop : MonoBehaviour
 
     public void Buy()
     {
-        if (selectedShopItemId == -1)
+        if (selectedShopItemIndex == -1)
         {
             // 아무것도 선택되지 않음
             return;
         }
 
-        ShopItem shopItem = this.transform.GetChild(selectedShopItemId).GetComponent<ShopItem>();
-        gameManager.Inventory.Buy(shopItem.Item, shopItem.Price);
+        gameManager.Inventory.Buy(slots[selectedShopItemIndex].Item, slots[selectedShopItemIndex].Price);
+    }
+
+    // -------------------------------------------------------------
+    // Select
+    // -------------------------------------------------------------
+    public void Select(int slotIndex)
+    {
+        selectedShopItemIndex = slotIndex;
     }
 
     public void UnSelect()
     {
-        if (selectedShopItemId == -1 || this.transform.childCount == 0)
+        if (selectedShopItemIndex == -1)
         {
             // 아무것도 선택되지 않음
             return;
         }
 
-        this.transform.GetChild(selectedShopItemId).GetComponent<ShopItem>().UnSelect();
-        selectedShopItemId = -1;
+        slots[selectedShopItemIndex].UnSelect();
+        selectedShopItemIndex = -1;
     }
 
-    public void SetSelectedShopItemId(int _selectedShopItemId)
-    {
-        selectedShopItemId = _selectedShopItemId;
-    }
-
+    // !!!
     public void ButtonDown()
     {
         isClick = true;
@@ -104,12 +119,12 @@ public class Shop : MonoBehaviour
     // Shop UI
     public void Open()
     {
-        go_shop.SetActive(true);
+        this.gameObject.SetActive(true);
     }
 
     public void Close()
     {
-        go_shop.SetActive(false);
+        this.gameObject.SetActive(false);
         isClick = false;
         clickedTime = 0f;
     }
@@ -117,12 +132,12 @@ public class Shop : MonoBehaviour
     // Item detail tooltip
     public void ShowItemDetail(Item item, Vector3 pos)
     {
-        itemDetail.Open(item, pos);
+        gameManager.UIController.ItemDetail.Open(item, pos);
     }
 
     public void CloseItemDetail()
     {
-        itemDetail.Close();
+        gameManager.UIController.ItemDetail.Close();
     }
 
 }

@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     private SaveManager saveManager;
     private DropManager dropManager;
     private CraftManager craftManager;
+    private ShopManager shopManager;
 
     [SerializeField]
     private Player player;
@@ -18,6 +19,8 @@ public class GameManager : MonoBehaviour
     private Equipment equipment;
     [SerializeField]
     private Craft craft;
+    [SerializeField]
+    private Shop shop;
 
     [SerializeField]
     private UIController uiController;
@@ -26,6 +29,7 @@ public class GameManager : MonoBehaviour
     public SaveManager SaveManager { get { return saveManager; } }
     public DropManager DropManager { get { return dropManager; } }
     public CraftManager CraftManager { get { return craftManager; } }
+    public ShopManager ShopManager { get { return shopManager; } }
     public UIController UIController { get { return uiController; } }
 
     public Inventory Inventory { get { return inventory; } }
@@ -37,6 +41,7 @@ public class GameManager : MonoBehaviour
         saveManager = new SaveManager();
         dropManager = new DropManager();
         craftManager = new CraftManager();
+        shopManager = new ShopManager();
     }
 
     private void Start()
@@ -46,8 +51,9 @@ public class GameManager : MonoBehaviour
         equipment.InitEquipmentSlots();
         LoadEquipInfo();
 
-        // Load Craft Info
+        // Load Shop, Craft Info
         craft.InitCraftItemSlots();
+        shop.InitShopItemSlots();
     }
 
     // -------------------------------------------------------------

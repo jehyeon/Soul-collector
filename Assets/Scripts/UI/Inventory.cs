@@ -63,6 +63,8 @@ public class Inventory : MonoBehaviour
     public ItemType scrollType;  // 선택된 주문서 타입
     public int scrollSlotId;   // 선택된 주문서의 슬롯 ID
 
+    private bool shoppingMode;
+
     // -------------------------------------------------------------
     // Init, Update
     // -------------------------------------------------------------
@@ -283,6 +285,27 @@ public class Inventory : MonoBehaviour
             return;
         }
 
+        if (shoppingMode)
+        {
+            // 상점에서는 아이템 삭제 버튼 비활성화
+            btnDelete.gameObject.SetActive(false);
+            if (selectedSlotIndex == -1 && selectedSlotIndexList.Count == 0)
+            {
+                // 선택된 슬롯이 없는 경우
+                goInventoryActBtn.SetActive(false);
+                textInventoryActBtn.text = "";
+                return;
+            }
+
+            goInventoryActBtn.SetActive(true);
+            textInventoryActBtn.text = "판매";
+            return;
+        }
+        else
+        {
+            btnDelete.gameObject.SetActive(true);
+        }
+
         // 인벤토리 버튼 활성화 및 text 수정
         // 현재 인벤토리 모드 및 아이템 type에 따라 다름
         if (selectedSlotIndex == -1 || multiSelectMode)
@@ -483,12 +506,13 @@ public class Inventory : MonoBehaviour
     {
         if (gameManager.SaveManager.Save.Gold < price)
         {
-            // !!! 돈이 부족하다는 pop_up 띄우기
+            gameManager.PopupMessage("골드가 부족합니다.");
             return;
         }
         // 연속 구매를 해도 1개씩 Buy 호출
         if (isFullInventory())
         {
+            gameManager.PopupMessage("인벤토리에 남은 공간이 없습니다.");
             return;
         }
         // 아이템 추가, 골드 감소, 세이브 저장
@@ -640,9 +664,19 @@ public class Inventory : MonoBehaviour
     // -------------------------------------------------------------
     // UI gameObject (use on UIController.cs)
     // -------------------------------------------------------------
-    public void Open()
+    public void Open(string type = "default")
     {
+        // 인벤토리가 호출된 경로에 따라 mode 설정
+        switch (type)
+        {
+            case "Shop":
+                // !!! 아이템 선택 시 판매 버튼 추가
+                shoppingMode = true;
+                break;
+        }
+
         this.gameObject.SetActive(true);
+        UpdateInventoryActBtn();
     }
 
     public void Close()
@@ -650,5 +684,8 @@ public class Inventory : MonoBehaviour
         this.gameObject.SetActive(false);
         CloseReinforceUI();     // Reinforce 모드 종료
         MultiSelectModeOff();   // 다중 선택 모드 off
+
+        // 모드 
+        shoppingMode = false;
     }
 }
