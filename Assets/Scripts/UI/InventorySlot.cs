@@ -74,52 +74,55 @@ public class InventorySlot : Slot, IPointerClickHandler, IPointerEnterHandler, I
     // -------------------------------------------------------------
     public void OnPointerClick(PointerEventData eventData)
     {
-        // 마우스 클릭
         if (item == null)
         {
             // 아이템이 없는 경우 그냥 return
             return;
         }
 
-        if (inventory.deleteItemMode && isEquip)
+        if (eventData.button == PointerEventData.InputButton.Left)
         {
-            // 아이템 삭제 모드 일때, 장착 아이템 선택 시 무시
-            return;
-        }
+            // 마우스 왼클릭
+            if (inventory.reinforceMode)
+            {
+                // !!!
+                // 인벤토리가 강화 모드인 경우
+                if (item.Rank > 5)
+                {
+                    // 강화 불가능한 등급 (ex. +9, resource data rank: 6)
+                    return;
+                }
 
-        if (inventory.reinforceMode)
-        {
-            // 인벤토리가 강화 모드인 경우
-            if (item.Rank > 5)
-            {
-                // 강화 불가능한 등급 (ex. +9, resource data rank: 6)
-                return;
-            }
+                if (isEquip)
+                {
+                    // 장착한 아이템은 강화 불가능
+                    return;
+                }
 
-            if (isEquip)
-            {
-                // 장착한 아이템은 강화 불가능
-                return;
-            }
-
-            if (inventory.scrollType == item.ItemType)
-            {
-                // 선택된 주문서 타입과 현재 슬롯의 아이템 타입이 같아야 함
-                inventory.Reinforce(index, item.Id);     // 강화할 아이템 slot index, item ID 전달
-            }
-        }
-        else
-        {
-            if (!isSelected)
-            {
-                inventory.SelectSlot(index);
-                Select();
+                if (inventory.scrollType == item.ItemType)
+                {
+                    // 선택된 주문서 타입과 현재 슬롯의 아이템 타입이 같아야 함
+                    inventory.Reinforce(index, item.Id);     // 강화할 아이템 slot index, item ID 전달
+                }
             }
             else
             {
-                inventory.UnSelectSlot(index);
-                UnSelect();
-            }   
+                if (!isSelected)
+                {
+                    inventory.SelectSlot(index);
+                    Select();
+                }
+                else
+                {
+                    inventory.UnSelectSlot(index);
+                    UnSelect();
+                }   
+            }
+        }
+        else if (eventData.button == PointerEventData.InputButton.Right)
+        {
+            // 마우스 우클릭
+            inventory.RightClick(index);
         }
     }
 

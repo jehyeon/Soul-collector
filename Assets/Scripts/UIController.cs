@@ -6,20 +6,23 @@ using TMPro;
 
 public class UIController: MonoBehaviour
 {
-    // on the canvas
+    // UI 조작 관리
     [SerializeField]
-    private Equipment goEquipmentUI;
-
+    private GameObject background;      // 배경
     [SerializeField]
-    private Inventory inventory;
+    private Inventory inventory;        // 인벤토리
     [SerializeField]
-    private Shop shop;
+    private Equipment equiment;         // 장착 정보   
+    [SerializeField]
+    private Shop shop;                  // 상점
     [SerializeField]
     private GameObject go_craftUI;
     [SerializeField]
     private GameObject go_reinforceUI;
     [SerializeField]
     private PopupMessage popupMessage;
+    [SerializeField]
+    private PopupAsk popupAsk;
 
     private bool isActivatedStatUI;
     private bool isActivatedInventoryUI;
@@ -105,30 +108,32 @@ public class UIController: MonoBehaviour
     // Stat UI
     public void OpenEquipmentUI()
     {
-        goEquipmentUI.Open();
+        equiment.Open();
         isActivatedStatUI = true;
     }
 
     public void CloseEquipmentUI()
     {
-        goEquipmentUI.Close();
+        equiment.Close();
         isActivatedStatUI = false;
     }
 
     public void UpdateStatUI(Stat characterStat)
     {
-        goEquipmentUI.UpdateStatText(characterStat);
+        // equiment.UpdateStatText(characterStat);
     }
 
     // Inventory UI
     public void OpenInventoryUI()
     {
+        background.SetActive(true);
         inventory.Open();
         isActivatedInventoryUI = true;
     }
 
     public void CloseInventoryUI()
     {
+        background.SetActive(false);
         inventory.Close();
         isActivatedInventoryUI = false;
 
@@ -188,5 +193,16 @@ public class UIController: MonoBehaviour
         hpBar.value = (float)nowHp / (float)maxHp;
         hpBarText.text = string.Format("{0} / {1}", nowHp, maxHp);
     }
-    
+
+    // -------------------------------------------------------------
+    // 팝업 메시지
+    // -------------------------------------------------------------
+    public void PopupMessage(string message, float time = 1f)
+    {
+        popupMessage.Popup(message, time);
+    }
+    public void PopupAsk(string type, string ask, string leftText, string rightText)
+    {
+        popupAsk.Popup(type, ask, leftText, rightText);
+    }
 }

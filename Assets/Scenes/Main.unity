@@ -6590,7 +6590,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   background: {fileID: 1239254085}
-  inventory: {fileID: 0}
+  inventory: {fileID: 967048246}
   equiment: {fileID: 0}
   shop: {fileID: 0}
   go_craftUI: {fileID: 0}
@@ -6611,7 +6611,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &728805799
 GameObject:
@@ -6775,7 +6775,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1954890775}
   inventory: {fileID: 967048246}
-  equipment: {fileID: 8869732470462545644}
+  equipment: {fileID: 0}
   craft: {fileID: 1933612820}
   uiController: {fileID: 721213162}
 --- !u!4 &742308397
@@ -9271,8 +9271,6 @@ MonoBehaviour:
   goMultiSelectModeOn: {fileID: 1616097025}
   goMultiSelectModeOff: {fileID: 1530149269}
   btnDelete: {fileID: 4994570299874393910}
-  selectedSlotIndex: 0
-  selectedSlotIndexList: 
   deleteItemMode: 0
   reinforceMode: 0
   scrollType: 0
@@ -13603,7 +13601,6 @@ RectTransform:
   - {fileID: 1111845489}
   - {fileID: 89985291}
   - {fileID: 126514054}
-  - {fileID: 1367800768}
   m_Father: {fileID: 145631489}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -14244,81 +14241,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1354441609}
   m_CullTransparentMesh: 0
---- !u!1 &1367800767
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1367800768}
-  - component: {fileID: 1367800770}
-  - component: {fileID: 1367800769}
-  m_Layer: 5
-  m_Name: Dot
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!224 &1367800768
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1367800767}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 90.000275}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1322428866}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 110.54053, y: 11.699322}
-  m_SizeDelta: {x: 20, y: 24}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1367800769
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1367800767}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 9a75923d32717430b834f2afc6328cbd, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &1367800770
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1367800767}
-  m_CullTransparentMesh: 0
 --- !u!1 &1374217523
 GameObject:
   m_ObjectHideFlags: 0
@@ -14424,7 +14346,7 @@ Transform:
   m_Children:
   - {fileID: 897759716}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1381527259
 GameObject:
@@ -21292,6 +21214,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1989787218}
+  - component: {fileID: 1989787219}
   m_Layer: 5
   m_Name: Equipment Panel
   m_TagString: Untagged
@@ -21320,6 +21243,23 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1989787219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1989787217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5dc2e4bf644caee4b872644e155b8db9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 742308396}
+  goEquipmentSlotPref: {fileID: 7097860456583548803, guid: c2bc08ce8e7d84f4480b29c49ee720cc, type: 3}
+  goSlotParent: {fileID: 3776690774292106968}
+  goUnEquipBtn: {fileID: 0}
+  goStatText: {fileID: 3874871061264674148}
 --- !u!1 &1996815257
 GameObject:
   m_ObjectHideFlags: 0
@@ -24332,6 +24272,34 @@ PrefabInstance:
       propertyPath: m_text
       value: "\uC7A5\uCC29"
       objectReference: {fileID: 0}
+    - target: {fileID: 2077438507080512769, guid: cf59e8a099c4dfd49911f97e433d8f1e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2077438507080512769, guid: cf59e8a099c4dfd49911f97e433d8f1e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2077438507080512769, guid: cf59e8a099c4dfd49911f97e433d8f1e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 967048246}
+    - target: {fileID: 2077438507080512769, guid: cf59e8a099c4dfd49911f97e433d8f1e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2077438507080512769, guid: cf59e8a099c4dfd49911f97e433d8f1e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ClickInventoryActBtn
+      objectReference: {fileID: 0}
+    - target: {fileID: 2077438507080512769, guid: cf59e8a099c4dfd49911f97e433d8f1e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Inventory, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2077438507080512769, guid: cf59e8a099c4dfd49911f97e433d8f1e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 2077438507080512798, guid: cf59e8a099c4dfd49911f97e433d8f1e, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -24516,7 +24484,7 @@ PrefabInstance:
     - target: {fileID: 3560122828472401358, guid: 957fbe8ea650f6c4fb213cfbdb844dfb, type: 3}
       propertyPath: goEquipmentUI
       value: 
-      objectReference: {fileID: 8869732470462545644}
+      objectReference: {fileID: 0}
     - target: {fileID: 3560122828472401358, guid: 957fbe8ea650f6c4fb213cfbdb844dfb, type: 3}
       propertyPath: go_reinforceUI
       value: 
@@ -24581,7 +24549,6 @@ GameObject:
   - component: {fileID: 3874871060756482235}
   - component: {fileID: 3874871060756482237}
   - component: {fileID: 3874871060756482234}
-  - component: {fileID: 8869732470462545644}
   m_Layer: 5
   m_Name: Equipment
   m_TagString: Untagged
@@ -25243,7 +25210,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!222 &4994570300562935478
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -27720,23 +27687,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &8869732470462545644
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3874871060756482232}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5dc2e4bf644caee4b872644e155b8db9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameManager: {fileID: 742308396}
-  goEquipmentSlotPref: {fileID: 7097860456583548803, guid: c2bc08ce8e7d84f4480b29c49ee720cc, type: 3}
-  goSlotParent: {fileID: 3776690774292106968}
-  goUnEquipBtn: {fileID: 0}
-  goStatText: {fileID: 3874871061264674148}
 --- !u!224 &9099612153981148947
 RectTransform:
   m_ObjectHideFlags: 0
