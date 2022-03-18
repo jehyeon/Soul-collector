@@ -5,15 +5,16 @@ using TMPro;
 
 public class PopupMessage : MonoBehaviour
 {
+    // 메시지 알림
     [SerializeField]
     private TextMeshProUGUI message;
 
-    public void Popup(string messageText)
+    public void Popup(string messageText, float time = 1f)
     {
-        // 1초 뒤 없어지는 팝업 메시지
+        // 잠시 뒤 없어지는 팝업 메시지
         message.text = messageText;
         this.gameObject.SetActive(true);
-        Invoke("Close", 1f);
+        Invoke("Close", time);
     }
 
     private void Close()

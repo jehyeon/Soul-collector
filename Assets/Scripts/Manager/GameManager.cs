@@ -19,6 +19,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Craft craft;
 
+    [SerializeField]
+    private UIController uiController;
+
     public ItemManager ItemManager { get { return itemManager; } }
     public SaveManager SaveManager { get { return saveManager; } }
     public DropManager DropManager { get { return dropManager; } }
@@ -112,6 +115,29 @@ public class GameManager : MonoBehaviour
                 equipment.EquipItem(item); // view 수정
                 player.Equip(item);   // 스탯 추가
             }
+        }
+    }
+
+    // -------------------------------------------------------------
+    // 팝업 메시지
+    // -------------------------------------------------------------
+    public void PopupMessage(string message, float time = 1f)
+    {
+        uiController.PopupMessage(message, time);
+    }
+
+    public void PopupAsk(string type, string ask, string leftText, string rightText)
+    {
+        uiController.PopupAsk(type, ask, leftText, rightText);
+    }
+
+    public void AnswerAsk(string type)
+    {
+        switch (type)
+        {
+            case "Delete":
+                inventory.Delete();
+                return;
         }
     }
 }

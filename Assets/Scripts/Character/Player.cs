@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Player : ACharacter
 {
-    public GameManager gameManager;
-    private UIController ui;
+    public GameManager gameManager;     // 할당 해줘야 함
+    [SerializeField]
+    private UIController uiController;
     
     public Stat Stat { get { return stat; } }
 
@@ -13,9 +14,7 @@ public class Player : ACharacter
     {
         base.Awake();
 
-        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
-        ui = GetComponent<UIController>();
-        ui.InitPlayerHpBar(stat.Hp);        // 체력바 설정
+        uiController.InitPlayerHpBar(stat.Hp);        // 체력바 설정
     }
     private void Start()
     {
@@ -23,7 +22,7 @@ public class Player : ACharacter
         animator = GetComponentInChildren<Animator>();
 
         // 스탯창 업데이트
-        ui.UpdateStatUI(stat);
+        uiController.UpdateStatUI(stat);
         
         InvokeRepeating("RecoverHp", 10f, 10f);
     }
@@ -35,7 +34,7 @@ public class Player : ACharacter
 
     protected override void UpdatePlayerHpBar()
     {
-        ui.UpdatePlayerHpBar(stat.Hp, stat.MaxHp);
+        uiController.UpdatePlayerHpBar(stat.Hp, stat.MaxHp);
     }
 
     private void RecoverHp()
@@ -47,13 +46,13 @@ public class Player : ACharacter
         }
         
         stat.RecoverHp();
-        ui.UpdatePlayerHpBar(stat.Hp, stat.MaxHp);  // 체력 자동 회복이 된 경우 ui 업데이트
+        uiController.UpdatePlayerHpBar(stat.Hp, stat.MaxHp);  // 체력 자동 회복이 된 경우 ui 업데이트
     }
 
     public void Heal(int amount)
     {
         stat.Heal(amount);
-        ui.UpdatePlayerHpBar(stat.Hp, stat.MaxHp);
+        uiController.UpdatePlayerHpBar(stat.Hp, stat.MaxHp);
     }
 
     // 골드
@@ -67,16 +66,16 @@ public class Player : ACharacter
     {
         Debug.LogFormat("{0} 장착", equipping.ItemName);
         stat.Equip(equipping);
-        ui.UpdateStatUI(stat);
-        ui.UpdatePlayerHpBar(stat.Hp, stat.MaxHp);
+        uiController.UpdateStatUI(stat);
+        uiController.UpdatePlayerHpBar(stat.Hp, stat.MaxHp);
     }
 
     public void UnEquip(Item unEquipping)
     {
         Debug.LogFormat("{0} 장착 해제", unEquipping.ItemName);
         stat.UnEquip(unEquipping);
-        ui.UpdateStatUI(stat);
-        ui.UpdatePlayerHpBar(stat.Hp, stat.MaxHp);
+        uiController.UpdateStatUI(stat);
+        uiController.UpdatePlayerHpBar(stat.Hp, stat.MaxHp);
     }
 
 }
