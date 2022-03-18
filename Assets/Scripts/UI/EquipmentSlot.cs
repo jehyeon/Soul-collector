@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EquipmentSlot : Slot, IPointerClickHandler
+public class EquipmentSlot : Slot, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
     private int index;
     private bool isSelected;
@@ -32,20 +32,47 @@ public class EquipmentSlot : Slot, IPointerClickHandler
     {
         if (item == null)
         {
-            // 아이템이 아닌 경우 return
+            // 장착된 아이템이 없는 경우 return
             return;
         }
 
-        if (!isSelected)
+        if (eventData.button == PointerEventData.InputButton.Left)
         {
-            equipment.SelectSlot(index);
-            Select();
+            // 마우스 왼클릭
+            if (!isSelected)
+            {
+                equipment.SelectSlot(index);
+                Select();
+            }
+            else
+            {
+                equipment.UnSelectSlot();
+                UnSelect();
+            }
         }
-        else
+        else if (eventData.button == PointerEventData.InputButton.Right)
         {
-            equipment.UnSelectSlot();
-            UnSelect();
+            // 마우스 우클릭
+            equipment.UnEquipItem(index);
         }
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        // 마우스 오버
+        if (item == null)
+        {
+            // 아이템이 없는 경우 그냥 return
+            return;
+        }
+
+        equipment.ShowItemDetail(item, transform.position);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        // 마우스 오버 아웃
+        equipment.CloseItemDetail();
     }
 
     // -------------------------------------------------------------

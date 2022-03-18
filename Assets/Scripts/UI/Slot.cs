@@ -53,16 +53,28 @@ public class Slot : MonoBehaviour
         // background, color
         img_background.color = item.BackgroundColor;
 
-        if (text_count != null)
+        // Level or Count (강화 레벨이 있는 아이템은 Count 1로 고정)
+        if (text_count == null)
         {
-            if (itemCount <= 1)
-            {
-                text_count.text = "";
-            }
-            else
-            {
-                text_count.text = itemCount.ToString();
-            }
+            return;
+        }
+
+        if (item.Level > 0)
+        {
+            Color itemLevelColor;
+            ColorUtility.TryParseHtmlString("#FFFF00FF", out itemLevelColor);
+            text_count.color = itemLevelColor;
+            text_count.text = string.Format("+{0}", item.Level);
+            return;
+        }
+
+        if (itemCount <= 1)
+        {
+            text_count.text = "";
+        }
+        else
+        {
+            text_count.text = itemCount.ToString();
         }
     }
 

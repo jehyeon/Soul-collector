@@ -5,7 +5,7 @@ using TMPro;
 
 public class Equipment : MonoBehaviour
 {
-    private int selectedSlotIndex;
+    // 장착 정보 및 Stat UI
 
     [SerializeField]
     private GameManager gameManager;
@@ -27,6 +27,7 @@ public class Equipment : MonoBehaviour
     // private TextMeshProUGUI goDefenseStatText;
 
     private EquipmentSlot[] slots;
+    private int selectedSlotIndex;
 
     // -------------------------------------------------------------
     // Init
@@ -78,7 +79,13 @@ public class Equipment : MonoBehaviour
         slots[selectedSlotIndex].UnEquip();
         UnSelectSlot();
     }
-
+    public void UnEquipItem(int slotIndex)
+    {
+        UnSelectSlot();
+        selectedSlotIndex = slotIndex;
+        gameManager.UnEquip(slots[selectedSlotIndex].Item);
+        slots[selectedSlotIndex].UnEquip();
+    }
     public void UnEquipItem(Item item)
     {
         slots[item.PartNum].UnEquip();
@@ -89,20 +96,36 @@ public class Equipment : MonoBehaviour
     // -------------------------------------------------------------
     public void SelectSlot(int slotIndex)
     {
+        gameManager.SelectSlotOnEquipment();
+        
         if (selectedSlotIndex != -1)
         {
             slots[selectedSlotIndex].UnSelect();    // 기존에 선택된 슬롯 선택 해제
         }
 
         selectedSlotIndex = slotIndex;
-        goUnEquipBtn.SetActive(true);
     }
 
     public void UnSelectSlot()
     {
+        if (selectedSlotIndex == -1)
+        {
+            return;
+        }
         slots[selectedSlotIndex].UnSelect();
         selectedSlotIndex = -1;
-        goUnEquipBtn.SetActive(false);
+        // goUnEquipBtn.SetActive(false);
+    }
+
+    // Item detail tooltip
+    public void ShowItemDetail(Item item, Vector3 pos)
+    {
+        gameManager.UIController.ItemDetail.Open(item, pos);
+    }
+
+    public void CloseItemDetail()
+    {
+        gameManager.UIController.ItemDetail.Close();
     }
 
     // -------------------------------------------------------------
@@ -111,8 +134,6 @@ public class Equipment : MonoBehaviour
     public void UpdateStatText(Stat stat)
     {
         // 임시
-        // goAttakStatText.text = stat.GetAtkStatDes();
-        // goDefenseStatText.text = stat.GetDefStatDes();
         goStatText.text = stat.ToString();
     }
 
@@ -127,7 +148,6 @@ public class Equipment : MonoBehaviour
     public void Close()
     {
         this.gameObject.SetActive(false);
-        goUnEquipBtn.SetActive(false);
         selectedSlotIndex = -1;
     }    
 }

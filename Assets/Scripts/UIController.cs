@@ -12,7 +12,9 @@ public class UIController: MonoBehaviour
     [SerializeField]
     private Inventory inventory;        // 인벤토리
     [SerializeField]
-    private Equipment equiment;         // 장착 정보   
+    private Equipment equiment;         // 장착 정보
+    [SerializeField]
+    private ItemDetail itemDetail;      // 아이템 툴팁
     [SerializeField]
     private Shop shop;                  // 상점
     [SerializeField]
@@ -24,7 +26,6 @@ public class UIController: MonoBehaviour
     [SerializeField]
     private PopupAsk popupAsk;
 
-    private bool isActivatedStatUI;
     private bool isActivatedInventoryUI;
     private bool isActivatedItemUI;
     private bool isActivatedShopUI;
@@ -38,10 +39,10 @@ public class UIController: MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI hpBarText;      // Text Hp
 
+    public ItemDetail ItemDetail { get { return itemDetail; } }
+
     private void Awake()
     {
-        // cv = gameObject.transform.GetChild();
-        isActivatedStatUI = false;
         isActivatedInventoryUI = false;
         isActivatedItemUI = false;
         isActivatedShopUI = false;
@@ -56,20 +57,9 @@ public class UIController: MonoBehaviour
 
     private void KeyBoardAction()
     {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            if (isActivatedStatUI)
-            {
-                CloseEquipmentUI();
-            }
-            else
-            {
-                OpenEquipmentUI();
-            }
-        }
-
         if (Input.GetKeyDown(KeyCode.I))
         {
+            // Inventory & Equipment
             if (isActivatedInventoryUI)
             {
                 CloseInventoryUI();
@@ -105,28 +95,16 @@ public class UIController: MonoBehaviour
         }
     }
 
-    // Stat UI
-    public void OpenEquipmentUI()
-    {
-        equiment.Open();
-        isActivatedStatUI = true;
-    }
-
-    public void CloseEquipmentUI()
-    {
-        equiment.Close();
-        isActivatedStatUI = false;
-    }
-
     public void UpdateStatUI(Stat characterStat)
     {
-        // equiment.UpdateStatText(characterStat);
+        equiment.UpdateStatText(characterStat);
     }
 
-    // Inventory UI
+    // Inventory & Equipment UI
     public void OpenInventoryUI()
     {
         background.SetActive(true);
+        equiment.Open();
         inventory.Open();
         isActivatedInventoryUI = true;
     }
@@ -134,11 +112,9 @@ public class UIController: MonoBehaviour
     public void CloseInventoryUI()
     {
         background.SetActive(false);
+        equiment.Close();
         inventory.Close();
         isActivatedInventoryUI = false;
-
-        // Item detail 및 강화 UI도 닫음
-        CloseReinforceUI();
     }
 
     // Shop UI

@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
     public SaveManager SaveManager { get { return saveManager; } }
     public DropManager DropManager { get { return dropManager; } }
     public CraftManager CraftManager { get { return craftManager; } }
+    public UIController UIController { get { return uiController; } }
 
     public Inventory Inventory { get { return inventory; } }
     public Player Player { get { return player; } }
@@ -50,13 +51,42 @@ public class GameManager : MonoBehaviour
     }
 
     // -------------------------------------------------------------
+    // Equipment, Inventory 아이템 선택, 장착 해제
+    // 슬롯 선택 공유
+    // -------------------------------------------------------------
+    public void SelectSlotOnEquipment()
+    {
+        Debug.Log("장착정보 슬롯 클릭");
+        // 인벤토리 unselect
+        // 다중 모드 종료 + ResetSelect() + InventoryActBtn 업데이트 ("해제")
+        inventory.MultiSelectModeOff();
+        inventory.UpdateInventoryActBtn(true);
+    }
+
+    public void SelectSlotOnInventory()
+    {
+        Debug.Log("인벤토리 슬롯 클릭");
+        // 장착 슬롯 unselect
+        equipment.UnSelectSlot();
+    }
+
+    public void CallUnEquipOnInventory()
+    {
+        // inventory로부터 Unequip 요청
+        // equipment slot이 selected인 경우에만 호출이 가능
+        equipment.UnEquipItem();
+        // 장착 해제 후 InventoryActBtn 업데이트
+        inventory.UpdateInventoryActBtn();
+    }
+
+    // -------------------------------------------------------------
     // 아이템 획득
     // -------------------------------------------------------------
     public void GetItem(GameObject targetObject)
     {
         if (inventory.isFullInventory())
         {
-            InventoryIsFull();
+            PopupMessage("인벤토리에 남은 공간이 없습니다.");
             return;
         }
 
@@ -67,17 +97,11 @@ public class GameManager : MonoBehaviour
     {
         if (inventory.isFullInventory())
         {
-            InventoryIsFull();
+            PopupMessage("인벤토리에 남은 공간이 없습니다.");
             return;
         }
 
         inventory.AcquireItem(itemManager.Get(itemId));
-    }
-
-    private void InventoryIsFull()
-    {
-        // !!!
-        Debug.Log("Inventory is full.");
     }
 
     // -------------------------------------------------------------

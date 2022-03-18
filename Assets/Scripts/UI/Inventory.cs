@@ -36,10 +36,6 @@ public class Inventory : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI textRemainInventorySlotCount;
 
-    // 아이템 툴팁
-    [SerializeField]
-    private ItemDetail itemDetail;
-
     // 아이템 다중 선택 모드
     [SerializeField]
     private GameObject goMultiSelectModeOn;
@@ -120,8 +116,7 @@ public class Inventory : MonoBehaviour
                 slots[i].Load(
                     gameManager.SaveManager.Save.Slots[i].Id, 
                     gameManager.ItemManager.Get(gameManager.SaveManager.Save.Slots[i].ItemId),
-                    gameManager.SaveManager.Save.Slots[i].Count,
-                    gameManager.SaveManager.Save.Slots[i].Level
+                    gameManager.SaveManager.Save.Slots[i].Count
                 );
             }
         }
@@ -171,6 +166,7 @@ public class Inventory : MonoBehaviour
         
         slots[gameManager.SaveManager.Save.LastSlotIndex].Set(item, count);     // only view
         gameManager.SaveManager.Save.AddItem(item.Id, count);
+        UpdateItemSlotCountUI();    // 아이템 슬롯에 새로 추가된 경우 slot count ui 업데이트
     }
 
     // -------------------------------------------------------------
@@ -178,6 +174,8 @@ public class Inventory : MonoBehaviour
     // -------------------------------------------------------------
     public void SelectSlot(int slotIndex)
     {
+        gameManager.SelectSlotOnInventory();
+
         if (multiSelectMode)
         {
             selectedSlotIndexList.Add(slotIndex);
@@ -275,8 +273,16 @@ public class Inventory : MonoBehaviour
     // -------------------------------------------------------------
     // 인벤토리 UI action (Slot, Button)
     // -------------------------------------------------------------
-    private void UpdateInventoryActBtn()
+    public void UpdateInventoryActBtn(bool selectingEquipmentSlot = false)
     {
+        // checkingEquipmentSlot: 장착 정보 슬롯에서 check가 되어 있는 경우 (from gameManager)
+        if (selectingEquipmentSlot)
+        {
+            goInventoryActBtn.SetActive(true);
+            textInventoryActBtn.text = "해제";
+            return;
+        }
+
         // 인벤토리 버튼 활성화 및 text 수정
         // 현재 인벤토리 모드 및 아이템 type에 따라 다름
         if (selectedSlotIndex == -1 || multiSelectMode)
@@ -308,7 +314,9 @@ public class Inventory : MonoBehaviour
     {
         if (selectedSlotIndex == -1)
         {
-            // 선택된 아이템이 없는 경우, 버튼이 활성화되지 않아 호출도 안됨
+            // 선택된 아이템이 없는 경우 버튼 활성화가 되지 않음
+            // Only Equipment slot selected
+            gameManager.CallUnEquipOnInventory();
             return;
         }
 
@@ -348,12 +356,12 @@ public class Inventory : MonoBehaviour
     // Item detail tooltip
     public void ShowItemDetail(Item item, Vector3 pos)
     {
-        itemDetail.Open(item, pos);
+        gameManager.UIController.ItemDetail.Open(item, pos);
     }
 
     public void CloseItemDetail()
     {
-        itemDetail.Close();
+        gameManager.UIController.ItemDetail.Close();
     }
 
     // -------------------------------------------------------------
@@ -513,7 +521,7 @@ public class Inventory : MonoBehaviour
         }
 
         // 강화 확률, 확률 수정 시 아래 percent 코드 수정이 필요함
-        float percent = slots[slotIndex].Level % 2 == 0 
+        float percent = slots[slotIndex].Item.Level % 2 == 0 
             ? .5f
             : .33f;
 
@@ -523,15 +531,14 @@ public class Inventory : MonoBehaviour
             // 강화 성공
             slots[slotIndex].Upgrade(gameManager.ItemManager.Get(itemId + 1));
             gameManager.SaveManager.Save.Slots[slotIndex].SetItemId(itemId + 1);
-            gameManager.SaveManager.Save.UpdateItemLevel(slotIndex);
-            Debug.Log("강화 성공!");
+            Debug.Log("강화 성공!");        // for test
         }
         else
         {
             // 아이템 삭제 (save만 수정)
             gameManager.SaveManager.Save.DeleteSlot(slotIndex);
             deleted = true;
-            Debug.Log("강화 실패ㅠㅠ");
+            Debug.Log("강화 실패ㅠㅠ");     // for test
         }
 
         // 강화 주문서 수량 조정

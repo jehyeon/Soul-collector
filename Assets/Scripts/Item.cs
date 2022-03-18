@@ -21,7 +21,8 @@ public class Item
     private int _imageId;       // 아이템 이미지 ID
     private ItemType _itemType;
     private int _partNum;       // 장비 파츠 넘버
-    private int _rank;          
+    private int _rank;          // 아이템 등급
+    private int _level;         // 강화 레벨
     private string _des;        // description
 
     // for view in slot
@@ -36,6 +37,7 @@ public class Item
     public ItemType ItemType { get { return _itemType; } }
     public int PartNum { get { return _partNum; } }
     public int Rank { get { return _rank; } }
+    public int Level { get { return _level; } }
     public string Des { get { return _des; } }
 
     public Color BackgroundColor { get { return _backgroundColor; } }
@@ -96,7 +98,8 @@ public class Item
         {
             _itemType = ItemType.Use;
         }
-        _rank = (int)data["rank"];
+        _rank = (int)data["rank"] / 10;
+        _level = (int)data["rank"] % 10;    // !!! int 값이 잘 저장되는지 확인해보기
         _itemName = data["itemName"].ToString();
         // !!! move to weaponItem, armorItem
         _defaultDamage = (int)data["defaultDamage"];

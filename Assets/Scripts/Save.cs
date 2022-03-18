@@ -66,11 +66,6 @@ public class Save
         this.AddSlot();
     }
 
-    public void UpdateItemLevel(int slotIndex)
-    {
-        Slots[slotIndex].UpdateLevel();
-    }
-
     public void UpgradeInventorySize()
     {
         // 슬롯 사이즈 추가
@@ -88,14 +83,12 @@ public class SlotSave
     public int Id;
     public int ItemId;
     public int Count;
-    public int Level;
 
     public SlotSave()
     {
         Id = -1;
         ItemId = -1;
         Count = 0;
-        Level = 0;
     }
 
     public SlotSave(int id)
@@ -103,7 +96,6 @@ public class SlotSave
         Id = id;
         ItemId = -1;
         Count = 0;
-        Level = 0;
     }
 
     public SlotSave(int id, int itemId, int count)
@@ -111,25 +103,11 @@ public class SlotSave
         Id = id;
         ItemId = itemId;
         Count = count;
-        Level = 0;
     }
 
     public void UpdateCount(int diff)
     {
         Count += diff;
-    }
-
-    public void UpdateLevel()
-    {
-        Level += 1;
-    }
-    
-    public void Set(int slotId, int itemId, int itemCount, int itemLevel)
-    {
-        Id = slotId;
-        ItemId = itemId;
-        Count = itemCount;
-        Level += itemLevel;
     }
 
     public void SetItemId(int newId)
