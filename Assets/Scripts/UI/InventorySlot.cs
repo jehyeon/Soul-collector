@@ -44,6 +44,12 @@ public class InventorySlot : Slot, IPointerClickHandler, IPointerEnterHandler, I
     // -------------------------------------------------------------
     public void OnPointerClick(PointerEventData eventData)
     {
+        if (inventory.Mode == InventoryMode.NotWork)
+        {
+            // 인벤토리 모드가 NotWork인 경우 클릭 이벤트 비활성화
+            return;
+        }
+
         if (item == null)
         {
             // 아이템이 없는 경우 그냥 return

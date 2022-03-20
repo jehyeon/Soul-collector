@@ -6,6 +6,13 @@ using System.IO;
 using TMPro;
 // using LitJson;
 
+public enum InventoryMode
+{
+    Shop,
+    NotWork,
+    Default    
+}
+
 public class Inventory : MonoBehaviour
 {
     // Manager
@@ -38,6 +45,8 @@ public class Inventory : MonoBehaviour
 
     // 아이템 다중 선택 모드
     [SerializeField]
+    private GameObject goMultiSelectModeUI;
+    [SerializeField]
     private GameObject goMultiSelectModeOn;
     [SerializeField]
     private GameObject goMultiSelectModeOff;
@@ -63,7 +72,8 @@ public class Inventory : MonoBehaviour
     public ItemType scrollType;  // 선택된 주문서 타입
     public int scrollSlotId;   // 선택된 주문서의 슬롯 ID
 
-    private bool shoppingMode;
+    private InventoryMode mode;
+    public InventoryMode Mode { get { return mode; } }
 
     // -------------------------------------------------------------
     // Init, Update
@@ -181,7 +191,7 @@ public class Inventory : MonoBehaviour
         if (multiSelectMode)
         {
             selectedSlotIndexList.Add(slotIndex);
-            if (shoppingMode)
+            if (mode == InventoryMode.Shop)
             {
                 UpdateInventoryActBtn();
                 return;
@@ -290,7 +300,15 @@ public class Inventory : MonoBehaviour
             return;
         }
 
-        if (shoppingMode)
+        if (mode == InventoryMode.NotWork)
+        {
+            // Inventory 버튼 text 갱신 및 삭제, 다중 선택 버튼 deactivate
+            btnDelete.gameObject.SetActive(false);
+            goMultiSelectModeUI.SetActive(false);
+            return;
+        }
+
+        if (mode == InventoryMode.Shop)
         {
             // 상점에서는 아이템 삭제 버튼 비활성화
             btnDelete.gameObject.SetActive(false);
@@ -306,10 +324,9 @@ public class Inventory : MonoBehaviour
             textInventoryActBtn.text = "판매";
             return;
         }
-        else
-        {
-            btnDelete.gameObject.SetActive(true);
-        }
+
+        btnDelete.gameObject.SetActive(true);
+        goMultiSelectModeUI.SetActive(true);
 
         // 인벤토리 버튼 활성화 및 text 수정
         // 현재 인벤토리 모드 및 아이템 type에 따라 다름
@@ -550,17 +567,6 @@ public class Inventory : MonoBehaviour
     // -------------------------------------------------------------
     public void Buy(Item item, int price)
     {
-        if (gameManager.SaveManager.Save.Gold < price)
-        {
-            gameManager.PopupMessage("골드가 부족합니다.");
-            return;
-        }
-        // 연속 구매를 해도 1개씩 Buy 호출
-        if (isFullInventory())
-        {
-            gameManager.PopupMessage("인벤토리에 공간이 부족합니다.");
-            return;
-        }
         // 아이템 추가, 골드 감소, 세이브 저장
         AcquireItem(item);
         UpdateGold(-1 * price);
@@ -723,7 +729,10 @@ public class Inventory : MonoBehaviour
         {
             case "Shop":
                 // !!! 아이템 선택 시 판매 버튼 추가
-                shoppingMode = true;
+                mode = InventoryMode.Shop;
+                break;
+            case "Craft":
+                mode = InventoryMode.NotWork;
                 break;
         }
 
@@ -738,6 +747,6 @@ public class Inventory : MonoBehaviour
         MultiSelectModeOff();   // 다중 선택 모드 off
 
         // 모드 
-        shoppingMode = false;
+        mode = InventoryMode.Default;;
     }
 }

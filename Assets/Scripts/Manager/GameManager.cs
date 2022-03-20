@@ -166,6 +166,9 @@ public class GameManager : MonoBehaviour
             case "Delete":
                 inventory.Delete();
                 return;
+            case "Shop":
+                shop.Buy();
+                return;
             case "Craft":
                 craft.CraftItem();
                 return;

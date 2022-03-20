@@ -18,19 +18,12 @@ public class Shop : MonoBehaviour
 
     private int selectedShopItemIndex; // 현재 선택된 상점 아이템
 
-    private bool isClick;
-    private float clickedTime;
-    private float buyingTime;
-    // private int count;
-
     private ShopItemSlot[] slots;
 
     void Start()
     {
         selectedShopItemIndex = -1;
-        clickedTime = 0;
         myShop = GetComponent<Shop>();
-        isClick = false;
     }
 
     public void InitShopItemSlots()
@@ -55,23 +48,21 @@ public class Shop : MonoBehaviour
         slots = goShopItemParent.GetComponentsInChildren<ShopItemSlot>();
     }
 
-    private void Update()
+    public void ClickBuy()
     {
-        if (isClick)
+        if (gameManager.SaveManager.Save.Gold < slots[selectedShopItemIndex].Price)
         {
-            clickedTime += Time.deltaTime;
-
-            if (clickedTime > 1f)
-            {
-                // 1초 이상 누르고 있으면 0.1초마다 아이템 구입
-                buyingTime += Time.deltaTime;
-                if (buyingTime > .1f)
-                {
-                    Buy();
-                    buyingTime = 0f;
-                }
-            }
+            gameManager.PopupMessage("골드가 부족합니다.");
+            return;
         }
+        
+        if (gameManager.Inventory.isFullInventory())
+        {
+            gameManager.PopupMessage("인벤토리에 공간이 부족합니다.");
+            return;
+        }
+
+        gameManager.PopupAsk("Shop", "아이템을 구매하시겠습니까?", "아니요", "네");
     }
 
     public void Buy()
@@ -106,19 +97,6 @@ public class Shop : MonoBehaviour
         goBuyBtn.SetActive(false);
     }
 
-    // !!!
-    public void ButtonDown()
-    {
-        isClick = true;
-    }
-
-    public void ButtonUp()
-    {
-        isClick = false;
-        clickedTime = 0f;
-        buyingTime = 0f;
-    }
-
     // Shop UI
     public void Open()
     {
@@ -128,8 +106,6 @@ public class Shop : MonoBehaviour
     public void Close()
     {
         this.gameObject.SetActive(false);
-        isClick = false;
-        clickedTime = 0f;
     }
     
     // Item detail tooltip
