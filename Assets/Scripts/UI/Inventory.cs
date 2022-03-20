@@ -126,7 +126,7 @@ public class Inventory : MonoBehaviour
         UpdateItemSlotCountUI();    // 인벤토리 로드 시, 슬롯 수량 UI 업데이트
     }
 
-    private void SaveAndLoad()
+    public void SaveAndLoad()
     {
         // 현재 SaveManager.Save를 저장하고 Inventory 리로드
         gameManager.SaveManager.SaveData();
@@ -431,15 +431,18 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public void Delete(int wantToDeleteItemIndex)
+    public void Delete(int wantToDeleteItemIndex, bool save = true)
     {
         ResetSelectSlot();
 
         gameManager.SaveManager.Save.DeleteSlot(wantToDeleteItemIndex);
-        SaveAndLoad();
+        if (save)
+        {
+            SaveAndLoad();
+        }
     }
 
-    private void Delete(List<int> wantToDeleteItemIndeices)
+    private void Delete(List<int> wantToDeleteItemIndeices, bool save = true)
     {
         ResetSelectSlot();
 
@@ -451,7 +454,10 @@ public class Inventory : MonoBehaviour
             gameManager.SaveManager.Save.DeleteSlot(index - indexDiff);
             indexDiff += 1;
         }
-        SaveAndLoad();
+        if (save)
+        {
+            SaveAndLoad();
+        }
     }
 
     // -------------------------------------------------------------
@@ -471,6 +477,41 @@ public class Inventory : MonoBehaviour
         {
             SetSlotCount(slotIndex, -1);
             gameManager.SaveManager.SaveData();     // 슬롯 수량만 변경되므로 Load 없이 수정 가능
+        }
+    }
+
+    public void UpdateItemCountUsingItemId(int itemId, int count, bool save = true)
+    {
+        foreach(InventorySlot slot in slots)
+        {
+            if (slot.Item == null)
+            {
+                return;
+            }
+
+            if (slot.Item.Id == itemId)
+            {
+                // 수량 확인
+                if (slot.Count + count <= 0)
+                {
+                    if (slot.Count + count < 0)
+                    {
+                        Debug.Log("Error");
+                    }
+
+                    // 수량 업데이트 이후 count가 0 이하가 되는 경우
+                    Delete(slot.Index, false);
+                }
+                else
+                {
+                    SetSlotCount(slot.Index, count);    // save 및 view 모두 수정
+                }
+            }
+        }
+
+        if (save)
+        {
+            SaveAndLoad();
         }
     }
 
@@ -517,7 +558,7 @@ public class Inventory : MonoBehaviour
         // 연속 구매를 해도 1개씩 Buy 호출
         if (isFullInventory())
         {
-            gameManager.PopupMessage("인벤토리에 남은 공간이 없습니다.");
+            gameManager.PopupMessage("인벤토리에 공간이 부족합니다.");
             return;
         }
         // 아이템 추가, 골드 감소, 세이브 저장
@@ -645,12 +686,18 @@ public class Inventory : MonoBehaviour
             // gold
             return gameManager.SaveManager.Save.Gold;
         }
-        
-        foreach (InventorySlot item in slots)
+
+        foreach (InventorySlot slot in slots)
         {
-            if (itemId == item.Id)
+            if (slot.Item == null)
             {
-                return item.Count;
+                // 인벤토리 끝까지 아이템이 없는 경우
+                return 0;
+            }
+
+            if (itemId == slot.Item.Id)
+            {
+                return slot.Count;
             }
         }
 

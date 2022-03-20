@@ -11,11 +11,11 @@ public class Craft : MonoBehaviour
     private Craft myCraft;
 
     [SerializeField]
-    private GameObject goCraftItemList;
+    private GameObject goCraftItemParent;
     [SerializeField]
     private GameObject goCraftMaterialsUI;
     [SerializeField]
-    private GameObject goCraftMaterialList;
+    private GameObject goCraftMaterialParent;
     // Prefabs
     [SerializeField]
     private GameObject prefCraftItem;
@@ -23,10 +23,12 @@ public class Craft : MonoBehaviour
     private GameObject prefCraftMaterial;
     [SerializeField]
     private ObjectPool craftMaterialSlotOP;
+    [SerializeField]
+    private GameObject goCraftBtn;
 
     private int selectCraftItemIndex;
     private CraftItemSlot[] slots;
-
+    private List<CraftMaterial> materials;      // 현재 선택한 제작 아이템 material 정보 (필요 개수, 가지고 있는 개수)
 
     // -------------------------------------------------------------
     // Init
@@ -35,6 +37,7 @@ public class Craft : MonoBehaviour
     {
         selectCraftItemIndex = -1;
         myCraft = GetComponent<Craft>();
+        CloseMaterialUI();
     }
 
     public void InitCraftItemSlots()
@@ -49,7 +52,7 @@ public class Craft : MonoBehaviour
         {
             // 오브젝트 풀링 적용 안함
             GameObject craftItem = Instantiate(prefCraftItem);
-            craftItem.transform.SetParent(goCraftItemList.transform);
+            craftItem.transform.SetParent(goCraftItemParent.transform);
 
             craftItem.GetComponent<CraftItemSlot>().SetCraftItem(
                 myCraft, 
@@ -60,7 +63,7 @@ public class Craft : MonoBehaviour
             );
         }
 
-        slots = goCraftItemList.GetComponentsInChildren<CraftItemSlot>();
+        slots = goCraftItemParent.GetComponentsInChildren<CraftItemSlot>();
     }
 
     // -------------------------------------------------------------
@@ -75,6 +78,7 @@ public class Craft : MonoBehaviour
         
         selectCraftItemIndex = craftItemIndex;
         OpenMaterialUI();
+        goCraftBtn.SetActive(true);
     }
 
     public void UnSelect()
@@ -82,6 +86,7 @@ public class Craft : MonoBehaviour
         // CraftItemSlot에서 호출
         selectCraftItemIndex = -1;
         CloseMaterialUI();
+        goCraftBtn.SetActive(false);
     }
 
     // -------------------------------------------------------------
@@ -102,85 +107,104 @@ public class Craft : MonoBehaviour
 
     private void LoadCraftMeterials(int craftItemIndex)
     {
-        foreach(CraftMaterial material in slots[craftItemIndex].Materials)
+        materials = slots[craftItemIndex].Materials;
+        foreach(CraftMaterial material in materials)
         {
+            // 인벤토리로부터 해당 아이템의 수량을 가져옴
+            int myCount = gameManager.Inventory.GetItemAmount(material.Id);
+            material.SetCount(myCount);
+
+            // Material Slot 설정
             GameObject craftMaterialSlot = craftMaterialSlotOP.Get();
-            craftMaterialSlot.transform.SetParent(goCraftMaterialList.transform);
+            craftMaterialSlot.transform.SetParent(goCraftMaterialParent.transform);
+
             // !!! 느리면 GameObject OP -> CraftMaterialSlot OP로 수정하기
             craftMaterialSlot.GetComponent<CraftMaterialSlot>().SetCraftMaterial(
                 gameManager.ItemManager.Get(material.Id),
                 material,
-                gameManager.Inventory.GetItemAmount(material.Id)
+                myCount
             );
         }
     }
 
     private void ClearCreateMaterials()
     {
-        // foreach(Transform child in goCraftMaterialList.transform)
-        int childCount = goCraftMaterialList.transform.childCount;
+        // foreach(Transform child in goCraftMaterialParent.transform)
+        int childCount = goCraftMaterialParent.transform.childCount;
         for (int i = 0; i < childCount; i++)
         {
-            craftMaterialSlotOP.Return(goCraftMaterialList.transform.GetChild(0).gameObject);
+            craftMaterialSlotOP.Return(goCraftMaterialParent.transform.GetChild(0).gameObject);
         }
     }
 
-    // public void CraftItem()
-    // {
-    //     if (!inventory.CheckEnoughInventory())
-    //     {
-    //         // 인벤토리에 남은 칸이 있는지 확인
-    //         // 인벤토리가 꽉 찼을 때, 동일한 리소스 아이템이 인벤토리에 있어도 제작이 안됨 (P2)
-    //         return;
-    //     }
+    // -------------------------------------------------------------
+    // 아이템 제작
+    // -------------------------------------------------------------
+    public void ClickCraft()
+    {
+        // 제작 버튼 클릭 시
+        if (gameManager.Inventory.isFullInventory())
+        {
+            // 무조건 하나 이상이 비워져 있어야 함
+            gameManager.PopupMessage("인벤토리에 공간이 부족합니다.");
+            return;
+        }
 
-    //     if (selectCraftItemIndex == -1)
-    //     {
-    //         // 선택한 아이템이 없는 경우
-    //         return;
-    //     }
+        if (selectCraftItemIndex == -1)
+        {
+            // 선택한 아이템이 없는 경우 버튼이 활성화 되지도 않음
+            return;
+        }
 
-    //     if (checkMaterials.Count == 0)
-    //     {
-    //         // material 정보가 없는 경우
-    //         return;
-    //     }
+        // notExist: 재료 아이템 수량이 하나라도 부족하면 true
+        bool notExist = materials.Any(material => material.Exist == false);
+        if (notExist)
+        {
+            gameManager.PopupMessage("재료 아이템이 부족합니다.");
+            return;
+        }
 
-    //     var existList = checkMaterials.Select(material => material.Exist);
-    //     // if (existList.Find(exist => exist == false) < 0)
-    //     foreach (bool exist in existList)
-    //     {
-    //         if (exist == false)
-    //         {
-    //             // 재료가 하나라도 부족한 경우
-    //             return;
-    //         }
-    //     }
+        gameManager.PopupAsk("Craft", "아이템을 제작하시겠습니까?", "아니요", "네");
+    }
 
-    //     foreach (CheckMaterial material in checkMaterials)
-    //     {
-    //         if (material.Id == 1627)
-    //         {
-    //             // 재료가 gold인 경우
-    //             inventory.UpdateGold(-1 * material.Count);
-    //             // inventory.Save();
-    //         }
-    //         else
-    //         {
-    //             // 재료 id가 인벤토리에 있으면 수량 제거
-    //             int slotIndex = inventory.FindItemUsingItemId(material.Id);
-    //             if (slotIndex == -1)
-    //             {
-    //                 // 수량 변동이 생긴 경우
-    //                 return;
-    //             }
-    //             inventory.SetItemCount(slotIndex, -1 * material.Count);
-    //         }
-    //     }
-    //     // 현재 아이템만 차감됨 Add Item
-    //     inventory.AcquireItem((int)data[selectCraftItemIndex]["itemId"]);
+    public void CraftItem()
+    {
+        // Ask Yes -> gameManager.craft.CraftItem()으로 호출됨
+        // materials: 현재 선택된 제작 아이템 재료 정보
+        foreach (CraftMaterial material in materials)
+        {
+            if (material.Id == 1627)
+            {
+                // 재료가 gold인 경우
+                gameManager.Inventory.UpdateGold(-1 * material.RequiredNumber);
+            }
+            else
+            {
+                // material id의 아이템을 material required number만큼 차감
+                // 아이템의 존재 여부 및 수량이 충분한지 ClickCraft()에서 확인
+                gameManager.Inventory.UpdateItemCountUsingItemId(material.Id, -1 * material.RequiredNumber, false);
+            }
+        }
 
-    //     // 제작 후 재료 창 reload, 사용한 재료 갱신
-    //     LoadCreateMaterials(selectCraftItemIndex);
-    // }
+        // 제작 아이템 추가
+        gameManager.Inventory.AcquireItem(slots[selectCraftItemIndex].Item);
+        gameManager.Inventory.SaveAndLoad();
+
+        // 제작 후 재료 창 reload, 사용한 재료 갱신
+        ClearCreateMaterials();
+        LoadCraftMeterials(selectCraftItemIndex);
+    }
+
+    // -------------------------------------------------------------
+    // UI gameObject (use on UIController.cs)
+    // -------------------------------------------------------------
+    public void Open()
+    {
+        this.gameObject.SetActive(true);
+    }
+
+    public void Close()
+    {
+        this.gameObject.SetActive(false);
+    }
 }

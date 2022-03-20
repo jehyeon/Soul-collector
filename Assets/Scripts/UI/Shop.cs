@@ -101,12 +101,6 @@ public class Shop : MonoBehaviour
 
     public void UnSelect()
     {
-        if (selectedShopItemIndex == -1)
-        {
-            // 아무것도 선택되지 않음
-            return;
-        }
-
         slots[selectedShopItemIndex].UnSelect();
         selectedShopItemIndex = -1;
         goBuyBtn.SetActive(false);

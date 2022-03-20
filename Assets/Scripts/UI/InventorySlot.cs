@@ -19,6 +19,7 @@ public class InventorySlot : Slot, IPointerClickHandler, IPointerEnterHandler, I
     [SerializeField]
     private GameObject go_selectedFrame;
 
+    public int Index { get { return index; } }
     public int Id { get { return id; } }
     public bool IsEquip { get { return isEquip; } }
 

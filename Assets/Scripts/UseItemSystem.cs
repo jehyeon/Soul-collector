@@ -37,7 +37,7 @@ public class UseItemSystem
                 break;
             case 1622:
                 // 제작 재료 상자
-                // gameManager.Inventory.UpdateItemCountRaw(itemIndex);
+                OpenRandomBox(slotIndex, 3);
                 break;
             case 1623:
                 // 방어구 상자 (1)

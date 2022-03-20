@@ -166,6 +166,9 @@ public class GameManager : MonoBehaviour
             case "Delete":
                 inventory.Delete();
                 return;
+            case "Craft":
+                craft.CraftItem();
+                return;
         }
     }
 }
