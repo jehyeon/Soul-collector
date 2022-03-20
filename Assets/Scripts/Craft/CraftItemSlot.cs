@@ -5,10 +5,8 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 
-public class CraftItemSlot : Slot, IPointerClickHandler
-// , IPointerEnterHandler, IPointerExitHandler
+public class CraftItemSlot : Slot, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField]
     private Craft craft;
 
     [SerializeField]
@@ -55,6 +53,23 @@ public class CraftItemSlot : Slot, IPointerClickHandler
         {
             Select();
         }
+    }
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        // 마우스 오버
+        if (item == null)
+        {
+            // 아이템이 없는 경우 그냥 return
+            return;
+        }
+
+        craft.ShowItemDetail(item, transform.position);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        // 마우스 오버 아웃
+        craft.CloseItemDetail();
     }
 
     private void Select()

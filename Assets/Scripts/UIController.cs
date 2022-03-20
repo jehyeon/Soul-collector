@@ -18,7 +18,7 @@ public class UIController: MonoBehaviour
     [SerializeField]
     private Shop shop;                  // 상점
     [SerializeField]
-    private GameObject go_craftUI;
+    private Craft craft;                // 아이템 제작
     [SerializeField]
     private GameObject go_reinforceUI;
     [SerializeField]
@@ -27,7 +27,7 @@ public class UIController: MonoBehaviour
     private PopupAsk popupAsk;
 
     private bool isActivatedInventoryUI;
-    private bool isActivatedItemUI;
+    private bool isActivatedEquipmentUI;
     private bool isActivatedShopUI;
     private bool isActivatedCraftUI;
     private bool isActivatedReinforceUI;
@@ -44,7 +44,7 @@ public class UIController: MonoBehaviour
     private void Awake()
     {
         isActivatedInventoryUI = false;
-        isActivatedItemUI = false;
+        isActivatedEquipmentUI = false;
         isActivatedShopUI = false;
         isActivatedCraftUI = false;
         isActivatedReinforceUI = false;
@@ -60,17 +60,17 @@ public class UIController: MonoBehaviour
         if (Input.GetKeyDown(KeyCode.I))
         {
             // Inventory & Equipment
-            if (isActivatedInventoryUI)
+            if (isActivatedEquipmentUI)
             {
-                CloseInventoryUI();
+                CloseEquipmentUI();
             }
             else
             {
-                OpenInventoryUI();
+                OpenEquipmentUI();
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.H))
+        if (Input.GetKeyDown(KeyCode.P))
         {
             if (isActivatedShopUI)
             {
@@ -100,49 +100,63 @@ public class UIController: MonoBehaviour
         equiment.UpdateStatText(characterStat);
     }
 
-    // Inventory & Equipment UI
-    public void OpenInventoryUI()
+    // Inventory UI + background
+    public void OpenInventoryUI(string type = "default")
     {
         background.SetActive(true);
-        equiment.Open();
-        inventory.Open();
-        isActivatedInventoryUI = true;
+        inventory.Open(type);
     }
 
     public void CloseInventoryUI()
     {
         background.SetActive(false);
-        equiment.Close();
         inventory.Close();
-        isActivatedInventoryUI = false;
+        itemDetail.Close();
     }
 
-    // Shop UI
+    // Equipment UI + Inventory UI
+    public void OpenEquipmentUI()
+    {
+        isActivatedEquipmentUI = true;
+        OpenInventoryUI();
+        equiment.Open();
+    }
+
+    public void CloseEquipmentUI()
+    {
+        isActivatedEquipmentUI = false;
+        equiment.Close();
+        CloseInventoryUI();
+    }
+
+    // Shop UI + Inventory UI
     public void OpenShopUI()
     {
-        shop.Open();
         isActivatedShopUI = true;
-        OpenInventoryUI();      // 상점 페이지 오픈 시 인벤토리도 오픈
-        inventory.CloseReinforceUI();   // 상점 페이지 오픈 시 강화 모드 취소
+        OpenInventoryUI("Shop");
+        shop.Open();
     }
 
     public void CloseShopUI()
     {
-        shop.Close();
         isActivatedShopUI = false;
+        shop.Close();
+        CloseInventoryUI();
     }
 
     // Craft UI
     public void OpenCraftUI()
     {
-        go_craftUI.SetActive(true);
         isActivatedCraftUI = true;
+        OpenInventoryUI("Craft");
+        craft.Open();
     }
 
     public void CloseCraftUI()
     {
-        go_craftUI.SetActive(false);
         isActivatedCraftUI = false;
+        craft.Close();
+        CloseInventoryUI();
     }
 
     // Reinforce UI

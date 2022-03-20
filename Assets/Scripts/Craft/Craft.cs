@@ -120,6 +120,7 @@ public class Craft : MonoBehaviour
 
             // !!! 느리면 GameObject OP -> CraftMaterialSlot OP로 수정하기
             craftMaterialSlot.GetComponent<CraftMaterialSlot>().SetCraftMaterial(
+                myCraft,
                 gameManager.ItemManager.Get(material.Id),
                 material,
                 myCount
@@ -193,6 +194,19 @@ public class Craft : MonoBehaviour
         // 제작 후 재료 창 reload, 사용한 재료 갱신
         ClearCreateMaterials();
         LoadCraftMeterials(selectCraftItemIndex);
+    }
+
+    // -------------------------------------------------------------
+    // Item detail tooltip
+    // -------------------------------------------------------------
+    public void ShowItemDetail(Item item, Vector3 pos)
+    {
+        gameManager.UIController.ItemDetail.Open(item, pos);
+    }
+
+    public void CloseItemDetail()
+    {
+        gameManager.UIController.ItemDetail.Close();
     }
 
     // -------------------------------------------------------------

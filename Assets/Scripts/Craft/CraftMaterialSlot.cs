@@ -5,8 +5,9 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 
-public class CraftMaterialSlot : Slot
+public class CraftMaterialSlot : Slot, IPointerEnterHandler, IPointerExitHandler
 {
+    private Craft craft;
     private CraftMaterial material;
     private int remain;
 
@@ -19,8 +20,9 @@ public class CraftMaterialSlot : Slot
     private int materialItemId;
     private int requireNumber;
 
-    public void SetCraftMaterial(Item craftMaterialItem, CraftMaterial craftMaterial, int amount)
+    public void SetCraftMaterial(Craft myCraft, Item craftMaterialItem, CraftMaterial craftMaterial, int amount)
     {
+        craft = myCraft;
         Set(craftMaterialItem);
         textItemName.text = item.ItemName;
         textItemName.color = item.FontColor;
@@ -56,5 +58,23 @@ public class CraftMaterialSlot : Slot
         }
 
         textRequireNumberText.text = text1 + " / " + text2;
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        // 마우스 오버
+        if (item == null)
+        {
+            // 아이템이 없는 경우 그냥 return
+            return;
+        }
+
+        craft.ShowItemDetail(item, transform.position);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        // 마우스 오버 아웃
+        craft.CloseItemDetail();
     }
 }
