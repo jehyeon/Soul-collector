@@ -9,6 +9,7 @@ using TMPro;
 public enum InventoryMode
 {
     Shop,
+    Reinforce,
     NotWork,
     Default    
 }
@@ -58,21 +59,13 @@ public class Inventory : MonoBehaviour
     // slots
     private InventorySlot[] slots;
 
-    private bool multiSelectMode;               // 다중 선택 모드
+    public bool multiSelectMode;               // 다중 선택 모드 public for test
 
     // 선택된 slot index
-    private int selectedSlotIndex;              // 선택된 index (multiSelectMode == false)
+    private int selectedSlotIndex = -1;              // 선택된 index (multiSelectMode == false)
     private List<int> selectedSlotIndexList;    // 선택된 index list (multiSelectMode == true)
 
-    // 인벤토리 모드
-    public bool deleteItemMode;
-    public bool reinforceMode;
-
-    // 강화 모드
-    public ItemType scrollType;  // 선택된 주문서 타입
-    public int scrollSlotId;   // 선택된 주문서의 슬롯 ID
-
-    private InventoryMode mode;
+    public InventoryMode mode;  // public for test 
     public InventoryMode Mode { get { return mode; } }
 
     // -------------------------------------------------------------
@@ -83,13 +76,18 @@ public class Inventory : MonoBehaviour
         // save로부터 초기화가 안되는 field 초기화
         selectedSlotIndex = -1;
         selectedSlotIndexList = new List<int>();
-        deleteItemMode = false;
-        reinforceMode = false;
     }
 
     private void Start()
     {
-        MultiSelectModeOff();
+        if (mode == InventoryMode.Reinforce)
+        {
+            MultiSelectModeOn();
+        }
+        else
+        {
+            MultiSelectModeOff();
+        }
         UnEnableDeleteButton();
     }
     
@@ -233,6 +231,20 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    public void UnSelectUsingSlotId(int slotId)
+    {
+        int slotIndex = FindItemUsingSlotId(slotId);
+        if (slotIndex == -1)
+        {
+            // 해당 아이템이 없는 경우 error
+            return;
+        }
+
+        // 해당 슬롯 unselect
+        slots[slotIndex].UnSelect();
+        UnSelectSlot(slotIndex);
+    }
+
     private void ResetSelectSlot()
     {
         if (selectedSlotIndex != -1)
@@ -300,7 +312,7 @@ public class Inventory : MonoBehaviour
             return;
         }
 
-        if (mode == InventoryMode.NotWork)
+        if (mode == InventoryMode.NotWork || mode == InventoryMode.Reinforce)
         {
             // Inventory 버튼 text 갱신 및 삭제, 다중 선택 버튼 deactivate
             btnDelete.gameObject.SetActive(false);
@@ -478,7 +490,7 @@ public class Inventory : MonoBehaviour
     }
 
     // -------------------------------------------------------------
-    // Update Count (ex. Use, Craft)
+    // Update Count (ex. Use, Craft) #Count
     // -------------------------------------------------------------
     public void UpdateItemCount(int slotIndex, int count = 1)
     {
@@ -547,7 +559,7 @@ public class Inventory : MonoBehaviour
         return false;
     }
 
-    private void SetSlotCount(int slotIndex, int count)
+    public void SetSlotCount(int slotIndex, int count)
     {
         // slotIndex의 아이템 개수 수정 (+count)
         gameManager.SaveManager.Save.Slots[slotIndex].UpdateCount(count);   // save 데이터 수정 (별도로 save.SaveData()해야 저장이 됨)
@@ -576,80 +588,137 @@ public class Inventory : MonoBehaviour
     // -------------------------------------------------------------
     // 아이템 강화
     // -------------------------------------------------------------
-    public void StartReinforceMode(int slotIndex, ItemType itemType)
+    public bool AddItemToReinforceSlot(Item wantToReinforceItem, int slotId, int count = 1)
     {
-        reinforceMode = true;
-        // 사용한 주문서 정보
-        scrollSlotId = gameManager.SaveManager.Save.Slots[slotIndex].Id;
-        scrollType = itemType;
-
-        OpenReinforceUI();
-        ResetSelectSlot();
+        // 강화 슬롯 아이템 추가
+        return gameManager.Reinforce.Add(wantToReinforceItem, slotId, count);   
     }
 
-    public void Reinforce(int slotIndex, int itemId)
+    public void RemoveItemToReinforceSlot(int slotId, int itemId)
     {
-        bool deleted = false;
-        if (!reinforceMode || scrollType == ItemType.None || scrollSlotId == -1)
+        //  강화 슬롯 아이템 삭제
+        gameManager.Reinforce.RemoveFromInventory(slotId, itemId);
+    }
+
+    public bool CheckItemForReinforce(Item item)
+    {
+        if (item.Level == 9)
         {
-            // 강화 모드가 아닌 경우 취소
-            return;
+            // 강화 최대 등급인 경우 강화 불가능
+            return false;
         }
-
-        // 강화 확률, 확률 수정 시 아래 percent 코드 수정이 필요함
-        float percent = slots[slotIndex].Item.Level % 2 == 0 
-            ? .5f
-            : .33f;
-
-        // 아이템 강화 시도
-        if (Random.value < percent)
+        
+        // 해당 아이템을 강화할 수 있는 지 확인
+        if (gameManager.Reinforce.ScrollType == ScrollType.None)
         {
-            // 강화 성공
-            slots[slotIndex].Upgrade(gameManager.ItemManager.Get(itemId + 1));
-            gameManager.SaveManager.Save.Slots[slotIndex].SetItemId(itemId + 1);
-            Debug.Log("강화 성공!");        // for test
+            // 기존에 설정된 ScrollType이 없는 경우
+            if (item.ItemType == ItemType.Weapon)
+            {
+                // 무기 아이템인 경우
+                gameManager.Reinforce.SetScrollType(ScrollType.Weapon);
+                return true;
+            }
+            else if (item.ItemType == ItemType.Armor)
+            {
+                // 방어구 아이템인 경우
+                gameManager.Reinforce.SetScrollType(ScrollType.Armor);
+                return true;
+            }
+            else if(item.ItemType == ItemType.Use)
+            {
+                // 사용 아이템인 경우
+                if (item.Id == 1615)
+                {
+                    // 무기 강화 주문서
+                    gameManager.Reinforce.SetScrollType(ScrollType.Weapon);
+                    return true;
+                }
+                else if (item.Id == 1616)
+                {
+                    // 방어구 강화 주문서
+                    gameManager.Reinforce.SetScrollType(ScrollType.Armor);
+                    return true;
+                }
+                // !!! 소울 스톤 강화는 나중에 추가하기
+            }
+            else
+            {
+                // 그 외 아이템은 강화 불가능
+                return false;
+            }
+        }
+        else if (gameManager.Reinforce.ScrollType == ScrollType.Weapon)
+        {
+            // 무기 강화 중인 경우
+            if (item.ItemType == ItemType.Weapon || item.Id == 1615)
+            {
+                // 무기만 선택 가능
+                return true;
+            }
+
+            return false;
+        }
+        else if (gameManager.Reinforce.ScrollType == ScrollType.Armor)
+        {
+            // 방어구 강화 중인 경우
+            if (item.ItemType == ItemType.Armor || item.Id == 1616)
+            {
+                // 방어구만 선택 가능
+                return true;
+            }
+            return false;
+        }
+        // !!! 소울 스톤 강화는 나중에 추가하기
+        
+        return false;
+    }
+
+    public void SuccessReinforce(int slotId, Item newItem)
+    {
+        // 강화 성공
+        // +1 아이템으로 교체
+        int slotIndex = FindItemUsingSlotId(slotId);
+        // slots[slotIndex].Upgrade(newItem);
+        gameManager.SaveManager.Save.Slots[slotIndex].SetItemId(newItem.Id);
+    }
+
+    public void FailReinforce(int slotId)
+    {
+        // 강화 실패
+        int slotIndex = FindItemUsingSlotId(slotId);
+        gameManager.SaveManager.Save.DeleteSlot(slotIndex);
+    }
+
+    public void UpdateScrollItem(int scrollSlotId, int useCount)
+    {
+        // 강화에 사용되는 scroll 아이템 수량 조절 및 삭제
+        int slotIndex = FindItemUsingSlotId(scrollSlotId);
+        if (slots[slotIndex].Count > useCount)
+        {
+            // 사용 하는 양보다 스크롤 양이 더 많은 경우
+            SetSlotCount(slotIndex, -1 * useCount);
         }
         else
         {
-            // 아이템 삭제 (save만 수정)
             gameManager.SaveManager.Save.DeleteSlot(slotIndex);
-            deleted = true;
-            Debug.Log("강화 실패ㅠㅠ");     // for test
-        }
-
-        // 강화 주문서 수량 조정
-        int scrollIndex = FindItemUsingSlotId(scrollSlotId);
-        if (TryToUpdateItemCount(scrollIndex))
-        {
-            // 주문서 아이템이 삭제된 경우
-            deleted = true;
-            gameManager.SaveManager.Save.DeleteSlot(scrollIndex);   // 스크롤 아이템 삭제 (save만 수정)
-            CloseReinforceUI();     // 강화 모드 종료
-        }
-
-        if (deleted)
-        {
-            // 스크롤 아이템 혹은 강화 아이템이 삭제된 경우
-            SaveAndLoad();
-            deleted = false;
-        }
-        else
-        {
-            // Save 저장, Load 없이 인벤토리와 save 동기화 되어있어야 함
-            gameManager.SaveManager.SaveData();
         }
     }
 
-    public void OpenReinforceUI()
+    public void DoneReinforce(List<int> remainItemIds)
     {
-        // go_reinforce.SetActive(true);
-    }
-    public void CloseReinforceUI()
-    {
-        // go_reinforce.SetActive(false);
-        reinforceMode = false;
-        scrollSlotId = -1;
-        scrollType = ItemType.None;
+        // 강화가 모두 끝난 경우
+        SaveAndLoad();      // SaveManager.Save 기준으로 인벤토리 리로드
+
+        // 선택한 슬롯 초기화 후 다시 선택
+        ResetSelectSlot();
+
+        foreach (int id in remainItemIds)
+        {
+            // !!! 인벤토리 용량이 커지면 레이턴시가 생길듯
+            int slotIndex = FindItemUsingSlotId(id);
+            slots[slotIndex].Select();     // view
+            selectedSlotIndexList.Add(slotIndex);
+        }
     }
 
     // -------------------------------------------------------------
@@ -734,6 +803,10 @@ public class Inventory : MonoBehaviour
             case "Craft":
                 mode = InventoryMode.NotWork;
                 break;
+            case "Reinforce":
+                mode = InventoryMode.Reinforce;
+                MultiSelectModeOn();
+                break;
         }
 
         this.gameObject.SetActive(true);
@@ -743,10 +816,9 @@ public class Inventory : MonoBehaviour
     public void Close()
     {
         this.gameObject.SetActive(false);
-        CloseReinforceUI();     // Reinforce 모드 종료
         MultiSelectModeOff();   // 다중 선택 모드 off
 
         // 모드 
-        mode = InventoryMode.Default;;
+        mode = InventoryMode.Default;
     }
 }

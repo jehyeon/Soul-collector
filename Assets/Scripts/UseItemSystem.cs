@@ -19,11 +19,11 @@ public class UseItemSystem
         {
             case 1615:
                 // 무기 강화 주문서
-                gameManager.Inventory.StartReinforceMode(slotIndex, ItemType.Weapon);
+                // gameManager.Inventory.StartReinforceMode(slotIndex, ItemType.Weapon);
                 break;
             case 1616:
                 // 방어구 강화 주문서
-                gameManager.Inventory.StartReinforceMode(slotIndex, ItemType.Armor);
+                // gameManager.Inventory.StartReinforceMode(slotIndex, ItemType.Armor);
                 break;
             case 1620:
                 // 체력 포션

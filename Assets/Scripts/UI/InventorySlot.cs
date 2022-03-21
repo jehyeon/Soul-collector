@@ -44,6 +44,7 @@ public class InventorySlot : Slot, IPointerClickHandler, IPointerEnterHandler, I
     // -------------------------------------------------------------
     public void OnPointerClick(PointerEventData eventData)
     {
+        // 마우스 왼클릭
         if (inventory.Mode == InventoryMode.NotWork)
         {
             // 인벤토리 모드가 NotWork인 경우 클릭 이벤트 비활성화
@@ -58,45 +59,47 @@ public class InventorySlot : Slot, IPointerClickHandler, IPointerEnterHandler, I
 
         if (eventData.button == PointerEventData.InputButton.Left)
         {
-            // 마우스 왼클릭
-            if (inventory.reinforceMode)
+            if (!isSelected)
             {
-                // !!!
-                // 인벤토리가 강화 모드인 경우
-                if (item.Rank > 5)
+                
+                if (inventory.Mode == InventoryMode.Reinforce)
                 {
-                    // 강화 불가능한 등급 (ex. +9, resource data rank: 6)
-                    return;
+                    // 강화 모드인 경우 reinforce slot에 추가
+                    if (inventory.CheckItemForReinforce(item))
+                    {
+                        // 강화 아이템의 종류가 같은지 확인
+                        if (inventory.AddItemToReinforceSlot(item, id, itemCount))
+                        {
+                            // 강화 슬롯이 부족하면 select 안됨
+                            inventory.SelectSlot(index);
+                            Select();
+                        }
+                    }
                 }
-
-                if (isEquip)
-                {
-                    // 장착한 아이템은 강화 불가능
-                    return;
-                }
-
-                if (inventory.scrollType == item.ItemType)
-                {
-                    // 선택된 주문서 타입과 현재 슬롯의 아이템 타입이 같아야 함
-                    inventory.Reinforce(index, item.Id);     // 강화할 아이템 slot index, item ID 전달
-                }
-            }
-            else
-            {
-                if (!isSelected)
+                else
                 {
                     inventory.SelectSlot(index);
                     Select();
                 }
-                else
+            }
+            else
+            {
+                inventory.UnSelectSlot(index);
+                UnSelect();
+                if (inventory.Mode == InventoryMode.Reinforce)
                 {
-                    inventory.UnSelectSlot(index);
-                    UnSelect();
-                }   
+                    // 강화 모드인 경우 reinforce slot에서 삭제
+                    inventory.RemoveItemToReinforceSlot(id, Item.Id);
+                }
             }
         }
         else if (eventData.button == PointerEventData.InputButton.Right)
         {
+            if (inventory.Mode == InventoryMode.Shop)
+            {
+                // 상점 모드에서는 우클릭 기능 제한
+                return;
+            }
             // 마우스 우클릭
             inventory.RightClick(index);
         }
@@ -123,7 +126,7 @@ public class InventorySlot : Slot, IPointerClickHandler, IPointerEnterHandler, I
     // -------------------------------------------------------------
     // 인벤토리 슬롯 선택
     // -------------------------------------------------------------
-    private void Select()
+    public void Select()
     {
         isSelected = true;
         go_selectedFrame.SetActive(true);

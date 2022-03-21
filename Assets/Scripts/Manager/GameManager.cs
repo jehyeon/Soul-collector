@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour
     private Craft craft;
     [SerializeField]
     private Shop shop;
+    [SerializeField]
+    private Reinforce reinforce;
 
     [SerializeField]
     private UIController uiController;
@@ -33,6 +35,7 @@ public class GameManager : MonoBehaviour
     public UIController UIController { get { return uiController; } }
 
     public Inventory Inventory { get { return inventory; } }
+    public Reinforce Reinforce { get { return reinforce; } }
     public Player Player { get { return player; } }
 
     private void Awake()
@@ -171,6 +174,9 @@ public class GameManager : MonoBehaviour
                 return;
             case "Craft":
                 craft.CraftItem();
+                return;
+            case "Reinforce":
+                reinforce.ReinforceItems();
                 return;
         }
     }
