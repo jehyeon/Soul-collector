@@ -36,6 +36,7 @@ public class PlayerController : MonoBehaviour
                 if (raycastHit.collider.CompareTag("Enemy"))
                 {
                     player.SetTarget(raycastHit.collider.gameObject);
+                    player.SetDestination(raycastHit.collider.gameObject.transform.position);
                 }
 
                 if (raycastHit.collider.CompareTag("Item"))

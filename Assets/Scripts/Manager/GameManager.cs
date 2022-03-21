@@ -53,6 +53,7 @@ public class GameManager : MonoBehaviour
         Inventory.StartInventory();
         equipment.InitEquipmentSlots();
         LoadEquipInfo();
+        player.Heal(99999);     // 세이브에 현재 체력 정보는 저장하지 않음 -> 최대 체력 스폰
 
         // Load Shop, Craft Info
         craft.InitCraftItemSlots();

@@ -13,13 +13,13 @@ public class Player : ACharacter
     protected override void Awake()
     {
         base.Awake();
-
         uiController.InitPlayerHpBar(stat.Hp);        // 체력바 설정
     }
     private void Start()
     {
         // Animator load
         animator = GetComponentInChildren<Animator>();
+        attackAnimSpeed = 1.4f;
 
         // 스탯창 업데이트
         uiController.UpdateStatUI(stat);

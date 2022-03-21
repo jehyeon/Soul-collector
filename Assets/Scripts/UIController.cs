@@ -14,13 +14,13 @@ public class UIController: MonoBehaviour
     [SerializeField]
     private Equipment equiment;         // 장착 정보
     [SerializeField]
+    private Reinforce reinforce;        // 장비 강화
+    [SerializeField]
     private ItemDetail itemDetail;      // 아이템 툴팁
     [SerializeField]
     private Shop shop;                  // 상점
     [SerializeField]
     private Craft craft;                // 아이템 제작
-    [SerializeField]
-    private GameObject go_reinforceUI;
     [SerializeField]
     private PopupMessage popupMessage;
     [SerializeField]
@@ -67,6 +67,19 @@ public class UIController: MonoBehaviour
             else
             {
                 OpenEquipmentUI();
+            }
+        }
+        
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            // Inventory & Equipment
+            if (isActivatedReinforceUI)
+            {
+                CloseReinforceUI();
+            }
+            else
+            {
+                OpenReinforceUI();
             }
         }
 
@@ -162,14 +175,16 @@ public class UIController: MonoBehaviour
     // Reinforce UI
     public void OpenReinforceUI()
     {
-        inventory.OpenReinforceUI();
         isActivatedReinforceUI = true;
+        OpenInventoryUI("Reinforce");
+        reinforce.Open();
     }
 
     public void CloseReinforceUI()
     {
-        inventory.CloseReinforceUI();
         isActivatedReinforceUI = false;
+        reinforce.Close();
+        CloseInventoryUI();
     }
 
     // 플레이어 체력바

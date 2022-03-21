@@ -55,7 +55,7 @@ public class Stat
         _damageReduction = 0;
         _evasionPercent = 0;
         _moveSpeed = 5f;
-        _attackRange = 1.1f;
+        _attackRange = 2f;
     }
 
     public void DecreaseHp(int damage)
@@ -156,7 +156,7 @@ public class Stat
             _hpRecovery += item.HpRecovery;
             _evasionPercent += item.EvasionPercent;
             _criticalPercent += item.CriticalPercent;
-            _moveSpeed += item.MoveSpeed;
+            _moveSpeed += item.MoveSpeed * .05f;
 
             if (_hp > _maxHp)
             {
@@ -183,7 +183,7 @@ public class Stat
             _hpRecovery -= item.HpRecovery;
             _evasionPercent -= item.EvasionPercent;
             _criticalPercent -= item.CriticalPercent;
-            _moveSpeed -= item.MoveSpeed;
+            _moveSpeed -= item.MoveSpeed * 0.05f;
         }
 
         Heal(0);    // 장비 착용 해제 후 hp가 maxHp 넘는 경우 maxHp가 되도록 고정

@@ -147,7 +147,6 @@ public class Inventory : MonoBehaviour
         UpdateGold(0);                  // Save 기준으로 Gold Text 업데이트
         InitInventorySlots();           // 인벤토리 크기에 맞게 Slot 생성
         LoadInventory();                // Save 기준으로 인벤토리 정보 로드
-        gameManager.Player.Heal(99999); // 세이브에 현재 체력 정보는 저장하지 않음 -> 최대 체력 스폰
         useItemSystem = new UseItemSystem(gameManager); // 아이템 사용 기능 호출
     }
 
