@@ -43,7 +43,7 @@ public class Stat
     {
         // 초기값
         _criticalPercent = 0;
-        _attackSpeed = 1;
+        _attackSpeed = 1f;
         _maxDamage = 0;
         _minDamage = 0;
         _defaultDamage = 1;
@@ -146,7 +146,7 @@ public class Stat
             _maxDamage += item.MaxDamage;
             _minDamage += item.MinDamage;
             _defaultDamage += item.DefaultDamage;
-            _attackSpeed = (_attackSpeed * 100f - item.AttackSpeed) / 100f;
+            _attackSpeed += item.AttackSpeed * .01f;
         }
         else if (item.ItemType == ItemType.Armor)
         {
@@ -173,7 +173,7 @@ public class Stat
             _maxDamage -= item.MaxDamage;
             _minDamage -= item.MinDamage;
             _defaultDamage -= item.DefaultDamage;
-            _attackSpeed = (_attackSpeed * 100f + item.AttackSpeed) / 100f;
+            _attackSpeed -= item.AttackSpeed * .01f;
         }
         else if (item.ItemType == ItemType.Armor)
         {

@@ -127,8 +127,8 @@ public class ACharacter : MonoBehaviour
     protected IEnumerator Attack()
     {
         canAttack = false;
-        float animationSpeed = 1 / stat.AttackSpeed;                    // !!! 무기별 애니메이션 속도가 다를경우 offset이 필요할 수 있음
-        float actualAttackSpeed = attackAnimSpeed * stat.AttackSpeed;
+        float actualAttackSpeed = 1 / stat.AttackSpeed;
+        float animationSpeed = attackAnimSpeed / actualAttackSpeed;      // !!! 무기별 애니메이션 속도가 다를경우 offset이 필요할 수 있음
         StartCoroutine("StartAttackCoolTime", actualAttackSpeed);       // 공격 쿨타임 계산
         animator.SetFloat("AttackSpeed", animationSpeed);               // 애니메이션 공격 속도 설정
         animator.SetTrigger("isAttack");
