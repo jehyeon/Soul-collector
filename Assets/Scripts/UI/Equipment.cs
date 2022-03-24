@@ -148,6 +148,10 @@ public class Equipment : MonoBehaviour
     public void Close()
     {
         this.gameObject.SetActive(false);
-        selectedSlotIndex = -1;
+        if (selectedSlotIndex != -1)
+        {
+            slots[selectedSlotIndex].UnEquip();
+            selectedSlotIndex = -1;
+        }
     }    
 }
