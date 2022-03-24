@@ -13,29 +13,35 @@ public enum State
 
 public class ACharacter : MonoBehaviour
 {
+    // 스탯 정보 및 현재 상태
     protected Stat stat;
-    // protected State state;
     public State state;
     protected bool canAttack;   // 공격 쿨타임
 
     // 목적지 및 타겟
     protected Vector3 destinationPos;
     protected GameObject target;
-    protected Vector3 targetDir;      // 타겟 방향 벡터
+    protected Vector3 targetDir;        // 타겟 방향 벡터
+    protected float targetDistance;     // 타겟과의 거리
+
     // 애니메이터
-    protected Animator animator;    // 하위 클래스에서 할당
+    protected Animator animator;
 
     private float rotationSpeed = 10f;
 
     // 공격속도
     protected float attackAnimSpeed;    // 하위 클래스에서 할당해야함
     
+    public GameObject Target { get { return target; } }
+
     protected virtual void Awake()
     {
         // 스탯 생성 및 Idle state
         stat = new Stat();
         state = State.Idle;
         canAttack = true;
+
+        animator = GetComponentInChildren<Animator>();
     }
 
     // -------------------------------------------------------------
@@ -86,22 +92,25 @@ public class ACharacter : MonoBehaviour
     {
         // 타겟 지정
         target = gameObject;
-        InvokeRepeating("CheckTargetInAttackRange", .1f, .1f);  // 타겟이 지정되면 일정 주기마다 동작
+        InvokeRepeating("CheckTargetInfo", 1f, .1f);  // 타겟이 지정되면 일정 주기마다 동작
     }
 
-    private void CheckTargetInAttackRange()
+    private void CheckTargetInfo()
     {
         // 타겟이 attackRange 안에 있는지 확인
         if (target == null)
         {
-            // 타겟이 없어지면 공격 범위 확인 중지
+            // 타겟이 없어지면 취소
             CancelInvoke("CheckTargetInAttackRange");
             return;
         }
 
-        targetDir = target.transform.position - this.transform.position;    // 방향 벡터 갱신
+        // 타겟 방향 벡터 및 거리 계산
+        targetDir = target.transform.position - this.transform.position;
         targetDir.y = 0f;
-        if (targetDir.sqrMagnitude < Mathf.Pow(stat.AttackRange, 2))
+        targetDistance = targetDir.sqrMagnitude;
+
+        if (targetDistance < Mathf.Pow(stat.AttackRange, 2))
         {
             // 공격 범위 안에 들어온 경우
             if (Vector3.Angle(targetDir, this.transform.forward) < 5)
@@ -159,8 +168,6 @@ public class ACharacter : MonoBehaviour
         return Random.Range(stat.MinDamage, stat.MaxDamage + 1) + stat.DefaultDamage;
     }
 
-
-
     // 피격 관련
     protected void Attacked(int damage)
     {
@@ -183,10 +190,8 @@ public class ACharacter : MonoBehaviour
         // Player에서 재 선언
     }
 
-    public virtual void Die()
+    protected virtual void Die()
     {
-        // Die action
-        Debug.Log("Die!");
-        Destroy(this.gameObject);
+        // 하위 클래스에서 재 선언
     }
 }

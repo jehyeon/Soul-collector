@@ -18,7 +18,6 @@ public class Player : ACharacter
     private void Start()
     {
         // Animator load
-        animator = GetComponentInChildren<Animator>();
         attackAnimSpeed = 1.4f;
 
         // 스탯창 업데이트
