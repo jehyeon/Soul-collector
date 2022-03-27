@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player : ACharacter
 {
     public GameManager gameManager;     // 할당 해줘야 함
+    private PlayerController playerController;
     [SerializeField]
     private UIController uiController;
     
@@ -17,6 +18,8 @@ public class Player : ACharacter
     }
     private void Start()
     {
+        playerController = GetComponent<PlayerController>();
+
         // Animator load
         attackAnimSpeed = 1.4f;
 
@@ -28,7 +31,25 @@ public class Player : ACharacter
 
     void Update()
     {
-        Move();     // state가 Move면 destinationPos로 이동
+        Move();             // state가 Move면 destinationPos로 이동
+        CheckTarget();      // stat.AttackRange 안에 target이 들어오는 경우 공격
+    }
+
+
+    // -------------------------------------------------------------
+    // Override
+    // -------------------------------------------------------------
+    protected override void MoveDone()
+    {
+        // 이동이 끝난 뒤 move target disable
+        playerController.ClearMoveTarget();
+    }
+
+    protected override void TargetDone()
+    {
+        // CheckTarget에서 target이 null일 경우
+        // attack target disable
+        playerController.ClearAttackTarget();
     }
 
     protected override void UpdatePlayerHpBar()

@@ -6,6 +6,11 @@ public class PlayerController : MonoBehaviour
 {
     // 이동, 조작 관련 / 목적지 및 타겟 지정
     private Player player;
+
+    [SerializeField]
+    private GameObject moveTarget;
+    [SerializeField]
+    private GameObject attackTarget;
     
     private void Start()
     {
@@ -29,7 +34,8 @@ public class PlayerController : MonoBehaviour
                 // 땅 클릭하면 그 위치로 이동
                 if (raycastHit.collider.CompareTag("Ground"))
                 {
-                    player.SetDestination(raycastHit.point + new Vector3(0, 1, 0));
+                    player.SetDestination(raycastHit.point);
+                    MoveTarget(raycastHit.point);
                 }
 
                 // 적 클릭하면 target 설정
@@ -37,6 +43,8 @@ public class PlayerController : MonoBehaviour
                 {
                     player.SetTarget(raycastHit.collider.gameObject);
                     player.SetDestination(raycastHit.collider.gameObject.transform.position);
+                    AttackTarget(raycastHit.collider.gameObject.transform.position);
+                    ClearMoveTarget();
                 }
 
                 if (raycastHit.collider.CompareTag("Item"))
@@ -56,6 +64,36 @@ public class PlayerController : MonoBehaviour
         {
             // 키보드 입력이 있는 경우
             player.SetDestination(this.transform.position + new Vector3(moveX, 0, moveZ).normalized * 0.25f);
+            ClearMoveTarget();  // 키보드 이동 시 이동 타겟 클리어
         }
     }
+
+    private void MoveTarget(Vector3 point)
+    {
+        moveTarget.SetActive(true);
+        moveTarget.transform.position = point;
+    }
+
+    private void AttackTarget(Vector3 point)
+    {
+        ClearMoveTarget();
+        attackTarget.SetActive(true);
+        attackTarget.transform.position = point;
+    }
+
+    public void ClearMoveTarget()
+    {
+        moveTarget.SetActive(false);
+    }
+
+    public void ClearAttackTarget()
+    {
+        attackTarget.SetActive(false);
+    }
+    
+    // private void ClearTarget()
+    // {
+    //     ClearMoveTarget();
+    //     ClearAttackTarget();
+    // }
 }
