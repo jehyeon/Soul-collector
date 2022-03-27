@@ -21,8 +21,6 @@ public class PortalSystem : MonoBehaviour
 
             if (portal.Id >= 0)
             {
-                Debug.Log(portal.Id);
-                Debug.Log(portalPairOne[portal.Id] == null);
                 if (portalPairOne[portal.Id] == null)
                 {
                     // 한쪽 포탈만 연결됨

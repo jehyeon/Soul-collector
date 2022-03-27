@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
                 {
                     player.SetTarget(raycastHit.collider.gameObject);
                     player.SetDestination(raycastHit.collider.gameObject.transform.position);
-                    AttackTarget(raycastHit.collider.gameObject.transform.position);
+                    AttackTarget(raycastHit.collider.gameObject.transform);
                     ClearMoveTarget();
                 }
 
@@ -74,11 +74,12 @@ public class PlayerController : MonoBehaviour
         moveTarget.transform.position = point;
     }
 
-    private void AttackTarget(Vector3 point)
+    private void AttackTarget(Transform transform)
     {
         ClearMoveTarget();
         attackTarget.SetActive(true);
-        attackTarget.transform.position = point;
+        attackTarget.transform.parent = transform;
+        attackTarget.transform.localPosition = Vector3.zero;
     }
 
     public void ClearMoveTarget()
