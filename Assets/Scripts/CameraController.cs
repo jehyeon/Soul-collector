@@ -62,7 +62,8 @@ public class CameraController : MonoBehaviour
             player.transform.position,
             new Vector3(0, cameraOffset, cameraOffset * -1),
             out hit,
-            new Vector3(0, cameraOffset, cameraOffset * -1).magnitude)
+            new Vector3(0, cameraOffset, cameraOffset * -1).magnitude,
+            1 << 6)
         )
         {
             // 카메라가 벽에 닿는 경우, 충돌 지점으로 옮김
