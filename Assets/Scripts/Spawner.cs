@@ -21,7 +21,10 @@ public class Spawner : MonoBehaviour
 
     [SerializeField]
     private float spawnCycle;
+    [SerializeField]
+    private int maxEnemyCount;
 
+    [SerializeField]
     private int remainEnemyCount;       // 남은 enemy 숫자
 
     public EnemyObjectPool ObjectPool { get { return enemyObjectPool; } }
@@ -41,25 +44,30 @@ public class Spawner : MonoBehaviour
 
     public void Spawn()
     {
+        if (remainEnemyCount >= maxEnemyCount)
+        {
+            // Enemy 생성 제한
+            return;
+        }
+
         if (spawnPosition.CanSpawn)
         {
             // CheckSpawnPosition에서 미리 스폰 위치에 충돌이 있는지 확인 후 호출
             Enemy enemy = enemyObjectPool.Get();
             enemy.transform.position = spawnPosition.transform.position;
+            // 랜덤 회전
+            enemy.transform.rotation = Quaternion.Euler(new Vector3(0f, Random.Range(0f, 360f), 0f));
 
-            if (enemy.Target == null || enemy.ParentSpawner == null)
-            {
-                enemy.SetParentSpawner(this);
-                // enemy는 player를 항상 타겟으로 지정
-                enemy.SetTarget(gameManager.Player.gameObject);
-            }
+            enemy.Set(this, gameManager.Player.gameObject);
 
             remainEnemyCount += 1;
         }
     }
 
-    public void Die()
+    public void Die(Enemy enemy)
     {
+        enemy.Reset();
+        ObjectPool.Return(enemy);
         remainEnemyCount -= 1;
     }
 }

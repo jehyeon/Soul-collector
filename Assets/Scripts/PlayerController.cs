@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     private List<Collider> enemies;
 
     private float findEnemyRange = 15f;
+    private int maxTargetLength = 5;
 
     private void Start()
     {
@@ -131,11 +132,17 @@ public class PlayerController : MonoBehaviour
                     orderby (this.transform.position - enemy.transform.position).sqrMagnitude
                     select enemy;
         enemies = query.ToList();
+
         if (enemies.Count == 0)
         {
             // 주변에 enemy가 없는 경우 기존 타겟 해제
             player.SetTarget(null);
             ClearAttackTarget();
+        }
+        else if (enemies.Count > maxTargetLength)
+        {
+            // 타겟 list 크기 한정
+            enemies = enemies.GetRange(0, maxTargetLength);
         }
     }
 

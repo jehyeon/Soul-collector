@@ -79,14 +79,17 @@ public class ACharacter : MonoBehaviour
         }
         
         // Rotate
-        this.transform.rotation = Quaternion.Lerp(
-            this.transform.rotation,
-            Quaternion.LookRotation(
-                new Vector3(destinationPos.x, 0f, destinationPos.z) 
-                - new Vector3(this.transform.position.x, 0f, this.transform.position.z)
-            ),
-            Time.deltaTime * rotationSpeed
-        );
+        Vector3 look = new Vector3(destinationPos.x, 0f, destinationPos.z) 
+            - new Vector3(this.transform.position.x, 0f, this.transform.position.z);
+
+        if (look.sqrMagnitude > float.Epsilon)
+        {
+            this.transform.rotation = Quaternion.Lerp(
+                this.transform.rotation,
+                Quaternion.LookRotation(look),
+                Time.deltaTime * rotationSpeed
+            );
+        }
 
         // Move
         destinationDir = destinationPos - this.transform.position;      // 목적지 방향 벡터
@@ -116,6 +119,10 @@ public class ACharacter : MonoBehaviour
     {
         // 타겟 지정
         target = gameObject;
+        if (gameObject == null)
+        {
+            StopCoroutine("Attack");
+        }
     }
 
     public void CheckTarget()
@@ -149,7 +156,11 @@ public class ACharacter : MonoBehaviour
                 {
                     state = State.Attack;
                     // 공격 쿨타임이 돌면
-                    StartCoroutine("Attack");
+                    float actualAttackSpeed = 1 / stat.AttackSpeed;
+                    float animationSpeed = attackAnimSpeed / actualAttackSpeed;      // !!! 무기별 애니메이션 속도가 다를경우 offset이 필요할 수 있음
+                    animator.SetFloat("AttackSpeed", animationSpeed);               // 애니메이션 공격 속도 설정
+                    animator.SetTrigger("isAttack");
+                    StartCoroutine("Attack", actualAttackSpeed);
                 }
 
                 return;
@@ -157,7 +168,7 @@ public class ACharacter : MonoBehaviour
             else
             {
                 // 공격 사거리 안에 있는데도, 바라보고 있지 않는 경우
-                state = State.Move;
+                SetDestination(target.transform.position);
             }
         }
     }
@@ -167,17 +178,17 @@ public class ACharacter : MonoBehaviour
         // for player
     }
 
-    protected IEnumerator Attack()
+    protected IEnumerator Attack(float actualAttackSpeed)
     {
         canAttack = false;
-        float actualAttackSpeed = 1 / stat.AttackSpeed;
-        float animationSpeed = attackAnimSpeed / actualAttackSpeed;      // !!! 무기별 애니메이션 속도가 다를경우 offset이 필요할 수 있음
         StartCoroutine("StartAttackCoolTime", actualAttackSpeed);       // 공격 쿨타임 계산
-        animator.SetFloat("AttackSpeed", animationSpeed);               // 애니메이션 공격 속도 설정
-        animator.SetTrigger("isAttack");
         yield return new WaitForSeconds(actualAttackSpeed * 0.5f);      // 공격 애니메이션 실행한지 50% 지나면
-        target.GetComponent<ACharacter>().Attacked(CalculateDamage());  // 데미지 계산
-        yield return new WaitForSeconds(actualAttackSpeed * 0.5f);
+        bool isDie = target.GetComponent<ACharacter>().Attacked(CalculateDamage());  // 데미지 계산
+        if (isDie)
+        {
+            // taget이 죽은 경우
+            SetTarget(null);
+        }
         state = State.Idle;     // 공격 코루틴이 끝날 때 state 변경
         yield break;
     }
@@ -206,7 +217,7 @@ public class ACharacter : MonoBehaviour
     }
 
     // 피격 관련
-    protected void Attacked(int damage)
+    protected bool Attacked(int damage)
     {
         // 최종 데미지 - 데미지 리덕션 = 받는 데미지
         int damageResult = (damage - stat.DamageReduction) > 0
@@ -214,14 +225,16 @@ public class ACharacter : MonoBehaviour
             : 0;
 
         stat.DecreaseHp(damageResult);
-        Debug.LogFormat("{0}가 {1} 데미지를 입음 -> 남은 체력 {2}", this.name, damageResult, stat.Hp);
+        // Debug.LogFormat("{0}가 {1} 데미지를 입음 -> 남은 체력 {2}", this.name, damageResult, stat.Hp);
 
         UpdatePlayerHpBar();
         
         if (stat.Hp < 1)
         {
             Die();
+            return true;
         }
+        return false;
     }
 
     protected virtual void UpdatePlayerHpBar()

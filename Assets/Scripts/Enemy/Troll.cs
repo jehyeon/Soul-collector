@@ -25,15 +25,8 @@ public class Troll : Enemy
             maxHp, damageReduction, 
             attackSpeed, moveSpeed, attackRange
         );
-
-        // Real attack animation speed: 2.6f;
-
-        // 초기화
-        startPos = this.transform.position;                     // 임시
-        // SetTarget(spawner.GameManager.Player.gameObject);       // 임시
-        SetTarget(GameObject.Find("Player"));
     }
-
+    
     private void Update()
     {
         CheckTarget();
@@ -52,5 +45,11 @@ public class Troll : Enemy
 
             attackAnimSpeed = tempAnimAttackSpeed;
         }
+    }
+
+    public override void Reset()
+    {
+        base.Reset();
+        Start();
     }
 }

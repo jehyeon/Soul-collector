@@ -21,7 +21,7 @@ public class CheckSpawnPosition : MonoBehaviour
 
     void Start()
     {
-        spawnCall = false;
+        spawnCall = true;
         areaCollider = GetComponent<CapsuleCollider>();
         // this.gameObject.SetActive(false);
     }

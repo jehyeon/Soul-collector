@@ -9,15 +9,18 @@ public class Enemy : ACharacter
     protected Vector3 startPos;
 
     private int findRange = 5;      // 플레이어 감지 범위 (default)
-    private int backRange = 20;     // 스폰 위치로부터의 제한 거리 (default)
+    private int backRange = 15;     // 스폰 위치로부터의 제한 거리 (default)
 
     private bool isWakeUp = false;
 
     public Spawner ParentSpawner { get { return spawner; } }
 
-    public void SetParentSpawner(Spawner parentSpawner)
+    public void Set(Spawner parentSpawner, GameObject target)
     {
+        stat.Heal(99999);
         spawner = parentSpawner;
+        startPos = this.transform.position;
+        SetTarget(target);
     }
 
     protected void FindNearByPlayer()
@@ -64,11 +67,12 @@ public class Enemy : ACharacter
     {
         // gameObject.GetComponent<DropItems>().DropItem();
         // gameObject.GetComponent<DropItems>().DropGold();
-        spawner.ObjectPool.Return(this);
+        spawner.Die(this);
     }
 
-    protected virtual void Reset()
+    public virtual void Reset()
     {
-        // 재할당
+        isWakeUp = false;
+        // Debug.LogError("Reset: 자식 클래스에서 오버라이드 되지 않음");
     }
 }
