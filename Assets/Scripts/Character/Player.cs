@@ -57,6 +57,9 @@ public class Player : ACharacter
         uiController.UpdatePlayerHpBar(stat.Hp, stat.MaxHp);
     }
 
+    // -------------------------------------------------------------
+    // 체력 회복 (스탯 변화)
+    // -------------------------------------------------------------
     private void RecoverHp()
     {
         if (stat.Hp >= stat.MaxHp)
@@ -75,7 +78,9 @@ public class Player : ACharacter
         uiController.UpdatePlayerHpBar(stat.Hp, stat.MaxHp);
     }
 
-    // 골드
+    // -------------------------------------------------------------
+    // Inventory 장착 (스탯 변화)
+    // -------------------------------------------------------------
     public void GetGold(int droppedGold)
     {
         // cv.GetComponent<Inventory>().UpdateGold(droppedGold);
@@ -98,4 +103,16 @@ public class Player : ACharacter
         uiController.UpdatePlayerHpBar(stat.Hp, stat.MaxHp);
     }
 
+    // -------------------------------------------------------------
+    // Act
+    // -------------------------------------------------------------
+    public void MoveToTarget()
+    {
+        if (target == null)
+        {
+            return;
+        }
+
+        SetDestination(target.transform.position);
+    }
 }
