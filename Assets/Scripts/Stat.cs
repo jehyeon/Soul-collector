@@ -41,7 +41,7 @@ public class Stat
 
     public Stat()
     {
-        // 초기값
+        // 플레이어 초기값
         _criticalPercent = 0;
         _attackSpeed = 1f;
         _maxDamage = 0;
@@ -56,6 +56,23 @@ public class Stat
         _evasionPercent = 0;
         _moveSpeed = 5f;
         _attackRange = 2f;
+    }
+
+    public void SetEnemyStat(
+        int minDamage, int maxDamage, int defaultDamage, 
+        int maxHp, int damageReduction, 
+        float attackSpeed, float moveSpeed, float attackRange)
+    {
+        // 몹 스탯 Set에 사용
+        _minDamage = minDamage;
+        _maxDamage = maxDamage;
+        _defaultDamage = defaultDamage;
+        _maxHp = maxHp;
+        _hp = maxHp;    // 현재 체력은 최대 체력과 동일
+        _damageReduction = damageReduction;
+        _attackSpeed = attackSpeed;
+        _moveSpeed = moveSpeed;
+        _attackRange = attackRange;
     }
 
     public void DecreaseHp(int damage)

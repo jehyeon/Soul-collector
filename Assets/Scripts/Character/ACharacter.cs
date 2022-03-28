@@ -47,24 +47,53 @@ public class ACharacter : MonoBehaviour
     // -------------------------------------------------------------
     // 이동
     // -------------------------------------------------------------
-    public void SetDestination(Vector3 position)
+    public void SetDestination(Vector3 position, bool isBack = false)
     {
         destinationPos = position;
-        state = State.Move;
+        if (isBack)
+        {
+            if (state != State.Back)
+            {
+                state = State.Back;
+            }
+        }
+        else
+        {
+            if (state != State.Move)
+            {
+                state = State.Move;
+            }
+        }
+        StopCoroutine("Attack");    // 공격 중이면 캔슬
     }
 
     protected void Move()
     {
         // Update에서 항시 동작
 
-        if (destinationPos == null || state != State.Move)
+        if (destinationPos == null || (state != State.Move && state != State.Back))
         {
-            // 목적지가 없거나 Move 상태가 아닌 경우
+            // 목적지가 없거나 상태가 Move 혹은 Back이 아닌 경우
             animator.SetBool("isMove", false);
             return;
         }
+        
+        // Rotate
+        this.transform.rotation = Quaternion.Lerp(
+            this.transform.rotation,
+            Quaternion.LookRotation(
+                new Vector3(destinationPos.x, 0f, destinationPos.z) 
+                - new Vector3(this.transform.position.x, 0f, this.transform.position.z)
+            ),
+            Time.deltaTime * rotationSpeed
+        );
 
+        // Move
         destinationDir = destinationPos - this.transform.position;      // 목적지 방향 벡터
+        this.transform.position += destinationDir.normalized * Time.deltaTime * stat.MoveSpeed;
+
+        animator.SetFloat("MoveSpeed", stat.MoveSpeed * .2f);   // Animation speed = actual speed * 5
+        animator.SetBool("isMove", true);
 
         if (destinationDir.sqrMagnitude <= 0.05f)
         {
@@ -74,20 +103,6 @@ public class ACharacter : MonoBehaviour
             MoveDone();
             return;
         }
-        
-        this.transform.position += destinationDir.normalized * Time.deltaTime * stat.MoveSpeed;
-        
-        // y축만 회전
-        this.transform.rotation = Quaternion.Lerp(
-            this.transform.rotation,
-            Quaternion.LookRotation(
-                new Vector3(destinationPos.x, 0f, destinationPos.z) 
-                - new Vector3(this.transform.position.x, 0f, this.transform.position.z)
-            ),
-            Time.deltaTime * rotationSpeed
-        );
-        animator.SetFloat("MoveSpeed", stat.MoveSpeed * .2f);   // Animation speed = actual speed * 5
-        animator.SetBool("isMove", true);
     }    
 
     protected virtual void MoveDone()
@@ -113,6 +128,12 @@ public class ACharacter : MonoBehaviour
             return;
         }
 
+        if (state == State.Back)
+        {
+            // 돌아가는 상태면 타겟 정보 계산 안함
+            return;
+        }
+
         // 타겟 방향 벡터 및 거리 계산
         targetDir = target.transform.position - this.transform.position;
         targetDir.y = 0f;
@@ -129,8 +150,9 @@ public class ACharacter : MonoBehaviour
                     state = State.Attack;
                     // 공격 쿨타임이 돌면
                     StartCoroutine("Attack");
-                    Debug.Log("야호");
                 }
+
+                return;
             }
             else
             {
@@ -155,6 +177,8 @@ public class ACharacter : MonoBehaviour
         animator.SetTrigger("isAttack");
         yield return new WaitForSeconds(actualAttackSpeed * 0.5f);      // 공격 애니메이션 실행한지 50% 지나면
         target.GetComponent<ACharacter>().Attacked(CalculateDamage());  // 데미지 계산
+        yield return new WaitForSeconds(actualAttackSpeed * 0.5f);
+        state = State.Idle;     // 공격 코루틴이 끝날 때 state 변경
         yield break;
     }
 
@@ -190,6 +214,7 @@ public class ACharacter : MonoBehaviour
             : 0;
 
         stat.DecreaseHp(damageResult);
+        Debug.LogFormat("{0}가 {1} 데미지를 입음 -> 남은 체력 {2}", this.name, damageResult, stat.Hp);
 
         UpdatePlayerHpBar();
         

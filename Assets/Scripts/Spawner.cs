@@ -25,6 +25,8 @@ public class Spawner : MonoBehaviour
     private int remainEnemyCount;       // 남은 enemy 숫자
 
     public EnemyObjectPool ObjectPool { get { return enemyObjectPool; } }
+
+    public GameManager GameManager { get { return gameManager; } }
     
     // Start is called before the first frame update
     private void Start()
@@ -50,7 +52,6 @@ public class Spawner : MonoBehaviour
                 enemy.SetParentSpawner(this);
                 // enemy는 player를 항상 타겟으로 지정
                 enemy.SetTarget(gameManager.Player.gameObject);
-                enemy.Start();
             }
 
             remainEnemyCount += 1;
