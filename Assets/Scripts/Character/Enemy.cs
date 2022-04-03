@@ -6,6 +6,7 @@ public class Enemy : ACharacter
 {
     private Spawner spawner;
     private int enemyId;
+    protected int dropId;           // 자식 클래스에서 재 할당
     protected Vector3 startPos;
 
     private int findRange = 5;      // 플레이어 감지 범위 (default)
@@ -14,6 +15,7 @@ public class Enemy : ACharacter
     private bool isWakeUp = false;
 
     public Spawner ParentSpawner { get { return spawner; } }
+    public int DropId { get { return dropId; } }
 
     public void Set(Spawner parentSpawner, GameObject target)
     {
@@ -65,8 +67,6 @@ public class Enemy : ACharacter
 
     protected override void Die()
     {
-        // gameObject.GetComponent<DropItems>().DropItem();
-        // gameObject.GetComponent<DropItems>().DropGold();
         spawner.Die(this);
     }
 

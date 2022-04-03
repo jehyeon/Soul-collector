@@ -26,6 +26,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     private UIController uiController;
+    [SerializeField]
+    private DropSystem dropSystem;
 
     public ItemManager ItemManager { get { return itemManager; } }
     public SaveManager SaveManager { get { return saveManager; } }
@@ -90,15 +92,18 @@ public class GameManager : MonoBehaviour
     // -------------------------------------------------------------
     // 아이템 획득
     // -------------------------------------------------------------
-    public void GetItem(GameObject targetObject)
+    public bool GetItemCheckInventory(int itemId)
     {
+        // auto save
         if (inventory.isFullInventory())
         {
             PopupMessage("인벤토리에 남은 공간이 없습니다.");
-            return;
+            return false;
         }
 
-        inventory.AcquireItem(itemManager.Get(targetObject.GetComponent<DroppedItem>().Id));
+        inventory.AcquireItem(itemManager.Get(itemId));
+        saveManager.SaveData();
+        return true;
     }
 
     public void GetItem(int itemId)
@@ -110,6 +115,21 @@ public class GameManager : MonoBehaviour
         }
 
         inventory.AcquireItem(itemManager.Get(itemId));
+    }
+
+    public void Drop(int dropId, Vector3 pos)
+    {
+        // 골드 업데이트
+        inventory.UpdateGold(dropManager.RandomGold(dropId));
+        saveManager.SaveData();
+        
+        int itemId = dropManager.RandomItem(dropId);
+        if (itemId == -1)
+        {
+            // 아이템 드롭 없음
+            return;
+        }
+        dropSystem.DropItem(itemId, pos);
     }
 
     // -------------------------------------------------------------

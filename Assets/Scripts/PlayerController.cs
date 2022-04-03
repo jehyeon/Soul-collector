@@ -39,7 +39,6 @@ public class PlayerController : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject ())
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
             if (Physics.Raycast(ray, out RaycastHit raycastHit))
             {
                 // 땅 클릭하면 그 위치로 이동
@@ -60,7 +59,12 @@ public class PlayerController : MonoBehaviour
 
                 if (raycastHit.collider.CompareTag("Item"))
                 {
-                    player.gameManager.GetItem(raycastHit.collider.gameObject);
+                    DroppedItem dropped = raycastHit.collider.GetComponent<DroppedItem>();
+                    if (player.gameManager.GetItemCheckInventory(dropped.Id))
+                    {
+                        // 인벤토리에 빈 슬롯이 있는 경우
+                        dropped.Return();   // 아이템 return
+                    }
                 }
             }
         }

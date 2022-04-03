@@ -81,11 +81,6 @@ public class Player : ACharacter
     // -------------------------------------------------------------
     // Inventory 장착 (스탯 변화)
     // -------------------------------------------------------------
-    public void GetGold(int droppedGold)
-    {
-        // cv.GetComponent<Inventory>().UpdateGold(droppedGold);
-    }
-
     // 플레이어 장비 장착
     public void Equip(Item equipping)
     {

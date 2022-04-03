@@ -25,6 +25,9 @@ public class Troll : Enemy
             maxHp, damageReduction, 
             attackSpeed, moveSpeed, attackRange
         );
+
+        // Drop table Id
+        dropId = 0;
     }
     
     private void Update()

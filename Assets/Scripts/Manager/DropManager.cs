@@ -18,13 +18,11 @@ public class DropManager
         
         float percent = 0f;
         float rand = Random.value;
-
         // data[dropItemId]["drop"]: 확률 오름차순 정렬
         string[] itemList = itemListString.Split('/');
         for (int i = 0; i < itemList.Length; i++)
         {
             string[] item = itemList[i].Split('|');
-
             percent += (float)System.Convert.ToDouble(item[1]);
             if (rand < percent)
             {
@@ -33,5 +31,10 @@ public class DropManager
         }
 
         return -1; // 마지막 percent가 1 이상이므로 -1 리턴 시 버그
+    }
+
+    public int RandomGold(int dropId)
+    {
+        return Random.Range((int)data[dropId]["minGold"], (int)data[dropId]["maxGold"] + 1);
     }
 }
