@@ -3675,7 +3675,7 @@ MonoBehaviour:
   minDamage: 0
   maxDamage: 0
   defaultDamage: 45
-  maxHp: 20
+  maxHp: 50
   damageReduction: 0
   attackSpeed: 0.66
   moveSpeed: 2

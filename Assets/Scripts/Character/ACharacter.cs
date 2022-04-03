@@ -34,6 +34,9 @@ public class ACharacter : MonoBehaviour
     
     public GameObject Target { get { return target; } }
 
+    // 데미지 text
+    private DamageTextSystem damageTextSystem;
+
     protected virtual void Awake()
     {
         // 스탯 생성 및 Idle state
@@ -229,6 +232,12 @@ public class ACharacter : MonoBehaviour
 
         UpdatePlayerHpBar();
         
+        if (damageTextSystem == null)
+        {
+            damageTextSystem = GameObject.Find("Damage Text System").GetComponent<DamageTextSystem>();
+        }
+        damageTextSystem.FloatDamageText(damage, this.transform.position);
+
         if (stat.Hp < 1)
         {
             Die();
