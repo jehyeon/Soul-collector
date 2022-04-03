@@ -5,7 +5,7 @@ using UnityEngine;
 public class DamageTextSystem : MonoBehaviour
 {
     [SerializeField]
-    private Canvas canvas;
+    private GameObject damageTextParent;
     [SerializeField]
     private ObjectPool damageTextOP;
 
@@ -19,7 +19,7 @@ public class DamageTextSystem : MonoBehaviour
     public void FloatDamageText(int finalDamage, Vector3 pos)
     {
         GameObject damageText = damageTextOP.Get();
-        damageText.transform.SetParent(canvas.transform);
+        damageText.transform.SetParent(damageTextParent.transform);
         damageText.GetComponent<DamageText>().Set(damageTextOP, finalDamage, pos + offset, dir, alphaSpeed);
     }
 }

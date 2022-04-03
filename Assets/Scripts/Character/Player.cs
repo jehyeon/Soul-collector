@@ -52,7 +52,7 @@ public class Player : ACharacter
         playerController.ClearAttackTarget();
     }
 
-    protected override void UpdatePlayerHpBar()
+    protected override void UpdateHpBar()
     {
         uiController.UpdatePlayerHpBar(stat.Hp, stat.MaxHp);
     }

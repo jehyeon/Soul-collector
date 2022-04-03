@@ -230,7 +230,7 @@ public class ACharacter : MonoBehaviour
         stat.DecreaseHp(damageResult);
         // Debug.LogFormat("{0}가 {1} 데미지를 입음 -> 남은 체력 {2}", this.name, damageResult, stat.Hp);
 
-        UpdatePlayerHpBar();
+        UpdateHpBar();
         
         if (damageTextSystem == null)
         {
@@ -246,14 +246,13 @@ public class ACharacter : MonoBehaviour
         return false;
     }
 
-    protected virtual void UpdatePlayerHpBar()
+    protected virtual void UpdateHpBar()
     {
-        // Player에서 재 선언
+        // 하위 클래스에서 재 선언
     }
 
     protected virtual void Die()
     {
         // 하위 클래스에서 재 선언
     }
-
 }

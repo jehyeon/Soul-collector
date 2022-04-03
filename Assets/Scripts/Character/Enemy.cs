@@ -17,6 +17,9 @@ public class Enemy : ACharacter
     public Spawner ParentSpawner { get { return spawner; } }
     public int DropId { get { return dropId; } }
 
+    // Hp bar
+    private EnemyHpBar hpBar;
+
     public void Set(Spawner parentSpawner, GameObject target)
     {
         stat.Heal(99999);
@@ -52,21 +55,34 @@ public class Enemy : ACharacter
     {
         // startPos에서 멀어지면 최대 체력이 되고 처음 위치로 돌아감
         Vector3 outDistance = this.transform.position - startPos;
+
+        if (outDistance.sqrMagnitude > Mathf.Pow(backRange, 2) && state != State.Back)
+        {
+            // 돌아가는 상태가 아닌데 시작 지점에서 멀어진 경우
+            SetDestination(startPos, true);     // state 변경 및 시작 위치로 이동 state = Back
+            isWakeUp = false;
+        }
+
         if (state == State.Back)
         {
             // 돌아가는 상태
-            stat.Heal(10);     // 호출 주기마다 10씩 체력 회복
-        }
-        else if (outDistance.sqrMagnitude > Mathf.Pow(backRange, 2))
-        {
-            // 돌아가는 상태가 아닌데 시작 지점에서 멀어진 경우
-            SetDestination(startPos, true);     // state 변경 및 시작 위치로 이동
-            isWakeUp = false;
+            stat.Heal(1);     // 호출 주기마다 1씩 체력 회복
+            UpdateHpBar();
+
+            if (outDistance.sqrMagnitude < 0.05f)
+            {
+                // 시작 지점으로 돌아오면
+                state = State.Idle;
+                hpBar.Return();
+                hpBar = null;
+            }
         }
     }
 
     protected override void Die()
     {
+        hpBar.Return();
+        hpBar = null;
         spawner.Die(this);
     }
 
@@ -74,5 +90,18 @@ public class Enemy : ACharacter
     {
         isWakeUp = false;
         // Debug.LogError("Reset: 자식 클래스에서 오버라이드 되지 않음");
+    }
+
+    protected override void UpdateHpBar()
+    {
+        if (hpBar == null)
+        {
+            // init
+            hpBar = spawner.GameManager.EnemyHpBarSystem.InitHpBar();
+            hpBar.SetTransform(this.transform);
+        }
+
+        // update
+        hpBar.UpdateHpBar((float)stat.Hp / stat.MaxHp);
     }
 }

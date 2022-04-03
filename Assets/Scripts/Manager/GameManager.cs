@@ -28,6 +28,8 @@ public class GameManager : MonoBehaviour
     private UIController uiController;
     [SerializeField]
     private DropSystem dropSystem;
+    [SerializeField]
+    private EnemyHpBarSystem enemyHpBarSystem;
 
     public ItemManager ItemManager { get { return itemManager; } }
     public SaveManager SaveManager { get { return saveManager; } }
@@ -39,6 +41,7 @@ public class GameManager : MonoBehaviour
     public Inventory Inventory { get { return inventory; } }
     public Reinforce Reinforce { get { return reinforce; } }
     public Player Player { get { return player; } }
+    public EnemyHpBarSystem EnemyHpBarSystem { get { return enemyHpBarSystem; } }
 
     private void Awake()
     {
