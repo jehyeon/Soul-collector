@@ -22,13 +22,21 @@ public class DungeonGenerator : MonoBehaviour
 
     [SerializeField]
     private GameObject roomPref;
+    [SerializeField]
+    private GameObject wallPref;
+    [SerializeField]
+    private GameObject doorPref;
     private List<DungeonRoom> rooms;            // 모든 방 리스트
     private Stack<DungeonRoom> visitedRooms;
+    private List<GameObject> walls;
+    private List<GameObject> doors;
     private void Awake()
     {
         roomCount = 0;
         rooms = new List<DungeonRoom>();
         visitedRooms = new Stack<DungeonRoom>();
+        walls = new List<GameObject>();
+        doors = new List<GameObject>();
     }
 
     private void Start()
@@ -137,5 +145,99 @@ public class DungeonGenerator : MonoBehaviour
                 }
             }
         }
+    }
+
+    // 벽 생성
+    public void GenerateWalls()
+    {
+        float roomRadius = roomWidth / 2f;
+        foreach(DungeonRoom room in rooms)
+        {
+            foreach(RoomDirect direct in room.EmptyDirects)
+            {
+                // 인접한 방이 없는 곳에 벽 생성
+                GameObject wall = Instantiate(wallPref);
+                Vector3 offset = Vector3.zero;
+
+                switch (direct)
+                {
+                    case RoomDirect.Top:
+                        offset += new Vector3(0f, 0f, roomRadius);
+                        break;
+                    case RoomDirect.Right:
+                        offset += new Vector3(roomRadius, 0f, 0f);
+                        wall.transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, 90f));
+                        break;
+                    case RoomDirect.Down:
+                        offset += new Vector3(0f, 0f, -1 * roomRadius);
+                        break;
+                    case RoomDirect.Left:
+                        offset += new Vector3(-1 * roomRadius, 0f, 0f);
+                        wall.transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, 90f));
+                        break;
+                }
+
+                wall.transform.position = new Vector3(
+                    room.X * roomWidth,
+                    wall.transform.position.y,
+                    room.Y * roomWidth
+                ) + offset;
+
+                walls.Add(wall);
+            }
+
+            foreach(RoomDirect direct in room.ExistDirects)
+            {
+                // 인접한 방이 있는 곳에 문 생성
+                GameObject door = Instantiate(doorPref);
+                Vector3 offset = Vector3.zero;
+
+                switch (direct)
+                {
+                    case RoomDirect.Top:
+                        offset += new Vector3(0f, 0f, roomRadius);
+                        room.Top.ExistDirects.Remove(RoomDirect.Down);
+                        break;
+                    case RoomDirect.Right:
+                        offset += new Vector3(roomRadius, 0f, 0f);
+                        door.transform.rotation = Quaternion.Euler(new Vector3(0f, 90f, 0f));
+                        room.Right.ExistDirects.Remove(RoomDirect.Left);
+                        break;
+                    case RoomDirect.Down:
+                        offset += new Vector3(0f, 0f, -1 * roomRadius);
+                        room.Down.ExistDirects.Remove(RoomDirect.Top);
+                        break;
+                    case RoomDirect.Left:
+                        offset += new Vector3(-1 * roomRadius, 0f, 0f);
+                        door.transform.rotation = Quaternion.Euler(new Vector3(0f, 90f, 0f));
+                        room.Left.ExistDirects.Remove(RoomDirect.Right);
+                        break;
+                }
+
+                door.transform.position = new Vector3(
+                    room.X * roomWidth,
+                    door.transform.position.y,
+                    room.Y * roomWidth
+                ) + offset;
+
+                doors.Add(door);
+            }
+        }
+    }
+
+    // 모든 벽 제거
+    public void ClearWalls()
+    {
+        for (int i = 0; i < walls.Count; i++)
+        {
+            Destroy(walls[i]);
+        }
+        walls.Clear();
+
+        for (int i = 0; i < doors.Count; i++)
+        {
+            Destroy(doors[i]);
+        }
+        doors.Clear();
     }
 }

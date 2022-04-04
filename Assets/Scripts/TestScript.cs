@@ -28,10 +28,12 @@ public class TestScript : MonoBehaviour
     public void GenerateDungeon()
     {
         generator.Generate();
+        generator.GenerateWalls();
     }
 
     public void ClearDungeon()
     {
         generator.Clear();
+        generator.ClearWalls();
     }
 }

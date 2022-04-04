@@ -8,6 +8,7 @@ public class DungeonRoom
     private int _y;      // 세로 축
 
     private List<RoomDirect> emptyDirects;
+    private List<RoomDirect> existDirects;
     private DungeonRoom top;        // y - 1 room
     private DungeonRoom right;      // x + 1 room
     private DungeonRoom down;       // y + 1 room
@@ -18,6 +19,11 @@ public class DungeonRoom
     public int X { get { return _x; } set { _x = value; } }
     public int Y { get { return _y; } set { _y = value; } }
     public List<RoomDirect> EmptyDirects { get { return emptyDirects; } }
+    public List<RoomDirect> ExistDirects { get { return existDirects; } }
+    public DungeonRoom Top { get { return top; } }
+    public DungeonRoom Right { get { return right; } }
+    public DungeonRoom Down { get { return down; } }
+    public DungeonRoom Left { get { return left; } }
 
     public GameObject RoomObject { get { return roomObject; } }
 
@@ -29,6 +35,7 @@ public class DungeonRoom
         _x = 0;
         _y = 0;
         emptyDirects = new List<RoomDirect>() { RoomDirect.Top, RoomDirect.Right, RoomDirect.Down, RoomDirect.Left };
+        existDirects = new List<RoomDirect>();
     }
 
     public DungeonRoom(int x, int y)
@@ -36,6 +43,7 @@ public class DungeonRoom
         _x = x;
         _y = y;
         emptyDirects = new List<RoomDirect>() { RoomDirect.Top, RoomDirect.Right, RoomDirect.Down, RoomDirect.Left };
+        existDirects = new List<RoomDirect>();
     }
 
     public void UpdateCoorinate(RoomDirect direct)
@@ -90,18 +98,22 @@ public class DungeonRoom
             case RoomDirect.Top:
                 top = room;
                 emptyDirects.Remove(RoomDirect.Top);
+                existDirects.Add(RoomDirect.Top);
                 break;
             case RoomDirect.Right:
                 right = room;
                 emptyDirects.Remove(RoomDirect.Right);
+                existDirects.Add(RoomDirect.Right);
                 break;
             case RoomDirect.Down:
                 down = room;
                 emptyDirects.Remove(RoomDirect.Down);
+                existDirects.Add(RoomDirect.Down);
                 break;
             case RoomDirect.Left:
                 left = room;
                 emptyDirects.Remove(RoomDirect.Left);
+                existDirects.Add(RoomDirect.Left);
                 break;
         }
     }
