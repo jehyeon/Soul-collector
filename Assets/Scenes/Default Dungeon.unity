@@ -169,7 +169,9 @@ MonoBehaviour:
   roomWidth: 20
   maxRoomCount: 50
   roomCount: 0
-  roomPref: {fileID: 7628950411572442699, guid: fb8454bd2264e094a91cd8093a22b6d6, type: 3}
+  groundPref: {fileID: 7628950411572442699, guid: 25a10059c0d70784db540af399a7dd4d, type: 3}
+  wallPref: {fileID: 7080784804252766624, guid: 7066855014b636d499d78dcec4098398, type: 3}
+  doorPref: {fileID: 7770467958435844727, guid: 1a16bfc22cd2b8644abc1a717bbb5252, type: 3}
 --- !u!1 &859344902
 GameObject:
   m_ObjectHideFlags: 0

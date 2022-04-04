@@ -21,7 +21,7 @@ public class DungeonGenerator : MonoBehaviour
     private int roomCount;
 
     [SerializeField]
-    private GameObject roomPref;
+    private GameObject groundPref;
     [SerializeField]
     private GameObject wallPref;
     [SerializeField]
@@ -51,7 +51,7 @@ public class DungeonGenerator : MonoBehaviour
         DungeonRoom selectRoom = new DungeonRoom();       // 시작 방 생성
         rooms.Add(selectRoom);
         visitedRooms.Push(selectRoom);
-        GameObject initRoomObj = Instantiate(roomPref, this.transform.position, Quaternion.identity);
+        GameObject initRoomObj = Instantiate(groundPref, this.transform.position, Quaternion.identity);
         initRoomObj.name = roomCount.ToString();
         selectRoom.SetRoomObject(initRoomObj);
         roomCount += 1;
@@ -76,10 +76,10 @@ public class DungeonGenerator : MonoBehaviour
                 // newRoom에 인접한 기존 room이 있으면 서로 연결
                 ConnectNearRoom(newRoom);
 
-                // Room 좌표 위치에 roomPref 생성
+                // Room 좌표 위치에 groundPref 생성
                 Vector3 roomPos = new Vector3(newRoom.X, 0f, newRoom.Y) * roomWidth;
-                // newRoom.SetRoomObject(Instantiate(roomPref, roomPos, Quaternion.identity));
-                GameObject newRoomObj = Instantiate(roomPref, roomPos, Quaternion.identity);
+                // newRoom.SetRoomObject(Instantiate(groundPref, roomPos, Quaternion.identity));
+                GameObject newRoomObj = Instantiate(groundPref, roomPos, Quaternion.identity);
                 newRoomObj.name = roomCount.ToString();
                 newRoom.SetRoomObject(newRoomObj);
 
@@ -166,14 +166,15 @@ public class DungeonGenerator : MonoBehaviour
                         break;
                     case RoomDirect.Right:
                         offset += new Vector3(roomRadius, 0f, 0f);
-                        wall.transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, 90f));
+                        wall.transform.rotation = Quaternion.Euler(new Vector3(0f, 180f, 0f));
                         break;
                     case RoomDirect.Down:
                         offset += new Vector3(0f, 0f, -1 * roomRadius);
+                        wall.transform.rotation = Quaternion.Euler(new Vector3(0f, -90f, 0f));
                         break;
                     case RoomDirect.Left:
                         offset += new Vector3(-1 * roomRadius, 0f, 0f);
-                        wall.transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, 90f));
+                        wall.transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, 0f));
                         break;
                 }
 
@@ -186,42 +187,42 @@ public class DungeonGenerator : MonoBehaviour
                 walls.Add(wall);
             }
 
-            foreach(RoomDirect direct in room.ExistDirects)
-            {
-                // 인접한 방이 있는 곳에 문 생성
-                GameObject door = Instantiate(doorPref);
-                Vector3 offset = Vector3.zero;
+            // foreach(RoomDirect direct in room.ExistDirects)
+            // {
+            //     // 인접한 방이 있는 곳에 문 생성
+            //     GameObject door = Instantiate(doorPref);
+            //     Vector3 offset = Vector3.zero;
 
-                switch (direct)
-                {
-                    case RoomDirect.Top:
-                        offset += new Vector3(0f, 0f, roomRadius);
-                        room.Top.ExistDirects.Remove(RoomDirect.Down);
-                        break;
-                    case RoomDirect.Right:
-                        offset += new Vector3(roomRadius, 0f, 0f);
-                        door.transform.rotation = Quaternion.Euler(new Vector3(0f, 90f, 0f));
-                        room.Right.ExistDirects.Remove(RoomDirect.Left);
-                        break;
-                    case RoomDirect.Down:
-                        offset += new Vector3(0f, 0f, -1 * roomRadius);
-                        room.Down.ExistDirects.Remove(RoomDirect.Top);
-                        break;
-                    case RoomDirect.Left:
-                        offset += new Vector3(-1 * roomRadius, 0f, 0f);
-                        door.transform.rotation = Quaternion.Euler(new Vector3(0f, 90f, 0f));
-                        room.Left.ExistDirects.Remove(RoomDirect.Right);
-                        break;
-                }
+            //     switch (direct)
+            //     {
+            //         case RoomDirect.Top:
+            //             offset += new Vector3(0f, 0f, roomRadius);
+            //             room.Top.ExistDirects.Remove(RoomDirect.Down);
+            //             break;
+            //         case RoomDirect.Right:
+            //             offset += new Vector3(roomRadius, 0f, 0f);
+            //             // door.transform.rotation = Quaternion.Euler(new Vector3(0f, 90f, 0f));
+            //             room.Right.ExistDirects.Remove(RoomDirect.Left);
+            //             break;
+            //         case RoomDirect.Down:
+            //             offset += new Vector3(0f, 0f, -1 * roomRadius);
+            //             room.Down.ExistDirects.Remove(RoomDirect.Top);
+            //             break;
+            //         case RoomDirect.Left:
+            //             offset += new Vector3(-1 * roomRadius, 0f, 0f);
+            //             // door.transform.rotation = Quaternion.Euler(new Vector3(0f, 90f, 0f));
+            //             room.Left.ExistDirects.Remove(RoomDirect.Right);
+            //             break;
+            //     }
 
-                door.transform.position = new Vector3(
-                    room.X * roomWidth,
-                    door.transform.position.y,
-                    room.Y * roomWidth
-                ) + offset;
+            //     door.transform.position = new Vector3(
+            //         room.X * roomWidth,
+            //         door.transform.position.y,
+            //         room.Y * roomWidth
+            //     ) + offset;
 
-                doors.Add(door);
-            }
+            //     doors.Add(door);
+            // }
         }
     }
 
