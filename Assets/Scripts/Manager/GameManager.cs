@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -26,9 +27,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     private UIController uiController;
-    [SerializeField]
     private DropSystem dropSystem;
-    [SerializeField]
     private EnemyHpBarSystem enemyHpBarSystem;
 
     public ItemManager ItemManager { get { return itemManager; } }
@@ -63,6 +62,33 @@ public class GameManager : MonoBehaviour
         // Load Shop, Craft Info
         craft.InitCraftItemSlots();
         shop.InitShopItemSlots();
+    }
+
+    // -------------------------------------------------------------
+    // 씬 이동
+    // -------------------------------------------------------------
+    private void GoViliage()
+    {
+        SceneManager.LoadScene("Main");
+        PlayerReset();
+    }
+
+    private void GoDungeon()
+    {
+        SceneManager.LoadScene("Default Dungeon");
+        PlayerReset();
+    }
+
+    private void GoNextFloor()
+    {
+        // 씬 리로드
+        // 다음층으로 던전 생성
+        PlayerReset();
+    }
+
+    private void PlayerReset()
+    {
+        player.transform.position = Vector3.zero;
     }
 
     // -------------------------------------------------------------
@@ -131,6 +157,11 @@ public class GameManager : MonoBehaviour
         {
             // 아이템 드롭 없음
             return;
+        }
+
+        if (dropSystem == null)
+        {
+            dropSystem = GameObject.Find("Drop System").GetComponent<DropSystem>();
         }
         dropSystem.DropItem(itemId, pos);
     }
@@ -201,6 +232,15 @@ public class GameManager : MonoBehaviour
                 return;
             case "Reinforce":
                 reinforce.ReinforceItems();
+                return;
+            case "GoDungeon":
+                GoDungeon();
+                return;
+            case "GoViliage":
+                GoViliage();
+                return;
+            case "GoNextFloor":
+                GoNextFloor();
                 return;
         }
     }

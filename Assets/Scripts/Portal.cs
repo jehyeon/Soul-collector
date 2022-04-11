@@ -4,43 +4,64 @@ using UnityEngine;
 
 public class Portal : MonoBehaviour
 {
-    private bool disableMode;
+    // private bool disableMode;
+    private GameManager gameManager;
 
     [SerializeField]
     private int portalId;
 
-    private Portal anotherPortal;
+    // private Portal anotherPortal;
 
     public int Id { get { return portalId; } }
 
-    public void SetAnotherPortal(Portal another)
-    {
-        anotherPortal = another;
-        disableMode = false;
-    }
+    // public void SetAnotherPortal(Portal another)
+    // {
+    //     anotherPortal = another;
+    //     disableMode = false;
+    // }
 
-    public void Disable()
-    {
-        disableMode = true;
-    }
+    // public void Disable()
+    // {
+    //     disableMode = true;
+    // }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && !disableMode)
+        // if (other.CompareTag("Player") && !disableMode)
+        // {
+        //     // Player가 포탈에 들어오면
+        //     // !!! 사운드, effect, 딜레이 추가하기
+        //     anotherPortal.Disable();    // 반대 포탈 disable
+        //     other.transform.position = anotherPortal.transform.position;    // 반대 포탈 위치로 이동
+        // }
+        if (other.CompareTag("Player"))
         {
-            // Player가 포탈에 들어오면
-            // !!! 사운드, effect, 딜레이 추가하기
-            anotherPortal.Disable();    // 반대 포탈 disable
-            other.transform.position = anotherPortal.transform.position;    // 반대 포탈 위치로 이동
+            if (gameManager == null)
+            {
+                gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+            }
+            if (portalId == 0)
+            {
+                // viliage에서 포탈에 들어가면
+                gameManager.PopupAsk("GoDungeon", "던전으로 이동하시겠습니까?", "아니요", "네");
+            }
+            else if (portalId == 1)
+            {
+                gameManager.PopupAsk("GoViliage", "마을로 이동하시겠습니까?", "아니요", "네");
+            }
+            else
+            {
+                gameManager.PopupAsk("GoNextFloor", "다음 층으로 이동하시겠습니까?", "아니요", "네");
+            }
         }
     }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            // 플레이어가 포탈에서 나가면 다시 활성화
-            disableMode = false;
-        }    
-    }
+    // private void OnTriggerExit(Collider other)
+    // {
+    //     if (other.CompareTag("Player"))
+    //     {
+    //         // 플레이어가 포탈에서 나가면 다시 활성화
+    //         disableMode = false;
+    //     }    
+    // }
 }

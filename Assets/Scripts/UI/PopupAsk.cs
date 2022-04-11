@@ -29,6 +29,8 @@ public class PopupAsk : MonoBehaviour
 
         type = askType;
         this.gameObject.SetActive(true);
+
+        Time.timeScale = 0;
     }
 
     private void Close()
@@ -37,6 +39,7 @@ public class PopupAsk : MonoBehaviour
         textLeftBtn.text = "";
         textRightBtn.text = "";
         type = "";
+        Time.timeScale = 1;
 
         this.gameObject.SetActive(false);
     }
