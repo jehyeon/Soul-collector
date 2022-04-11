@@ -26,6 +26,11 @@ public class UIController: MonoBehaviour
     [SerializeField]
     private PopupAsk popupAsk;
 
+    [SerializeField]
+    private GameObject damageTextParent;
+    [SerializeField]
+    private GameObject enemyHpBarParent;
+
     private bool isActivatedInventoryUI;
     private bool isActivatedEquipmentUI;
     private bool isActivatedShopUI;
@@ -40,9 +45,12 @@ public class UIController: MonoBehaviour
     private TextMeshProUGUI hpBarText;      // Text Hp
 
     public ItemDetail ItemDetail { get { return itemDetail; } }
+    public GameObject DamageTextParent { get { return damageTextParent; } }
+    public GameObject EnemyHpBarParent {  get { return enemyHpBarParent; } }
 
     private void Awake()
     {
+        DontDestroyOnLoad(this.gameObject);
         isActivatedInventoryUI = false;
         isActivatedEquipmentUI = false;
         isActivatedShopUI = false;
@@ -70,42 +78,42 @@ public class UIController: MonoBehaviour
             }
         }
         
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            // Inventory & Equipment
-            if (isActivatedReinforceUI)
-            {
-                CloseReinforceUI();
-            }
-            else
-            {
-                OpenReinforceUI();
-            }
-        }
+        // if (Input.GetKeyDown(KeyCode.O))
+        // {
+        //     // Inventory & Equipment
+        //     if (isActivatedReinforceUI)
+        //     {
+        //         CloseReinforceUI();
+        //     }
+        //     else
+        //     {
+        //         OpenReinforceUI();
+        //     }
+        // }
 
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            if (isActivatedShopUI)
-            {
-                CloseShopUI();
-            }
-            else
-            {
-                OpenShopUI();
-            }
-        }
+        // if (Input.GetKeyDown(KeyCode.P))
+        // {
+        //     if (isActivatedShopUI)
+        //     {
+        //         CloseShopUI();
+        //     }
+        //     else
+        //     {
+        //         OpenShopUI();
+        //     }
+        // }
 
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            if (isActivatedCraftUI)
-            {
-                CloseCraftUI();
-            }
-            else
-            {
-                OpenCraftUI();
-            }
-        }
+        // if (Input.GetKeyDown(KeyCode.C))
+        // {
+        //     if (isActivatedCraftUI)
+        //     {
+        //         CloseCraftUI();
+        //     }
+        //     else
+        //     {
+        //         OpenCraftUI();
+        //     }
+        // }
     }
 
     public void UpdateStatUI(Stat characterStat)

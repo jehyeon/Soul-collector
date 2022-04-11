@@ -17,6 +17,11 @@ public class MouseController : MonoBehaviour
 
     private CursorType cursorType;
 
+    private void Awake()
+    {
+        DontDestroyOnLoad(this.gameObject);
+    }
+    
     private void Start()
     {
         ChangeDefaultCursor();

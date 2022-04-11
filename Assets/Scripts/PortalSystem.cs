@@ -30,8 +30,8 @@ public class PortalSystem : MonoBehaviour
                 {
                     // 양쪽 포탈 모두 등록된 경우 -> 서로 연결
                     portalPairTwo[portal.Id] = portal;
-                    portalPairOne[portal.Id].SetAnotherPortal(portalPairTwo[portal.Id]);
-                    portalPairTwo[portal.Id].SetAnotherPortal(portalPairOne[portal.Id]);
+                    // portalPairOne[portal.Id].SetAnotherPortal(portalPairTwo[portal.Id]);
+                    // portalPairTwo[portal.Id].SetAnotherPortal(portalPairOne[portal.Id]);
                 }
             }
             else

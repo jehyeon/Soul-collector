@@ -12,12 +12,8 @@ public enum RoomDirect
 
 public class DungeonGenerator : MonoBehaviour
 {
-    [SerializeField]
     private float roomWidth;
-    [SerializeField]
     private int maxRoomCount;
-
-    [SerializeField]
     private int roomCount;
 
     [SerializeField]
@@ -32,22 +28,24 @@ public class DungeonGenerator : MonoBehaviour
     private List<GameObject> doors;
     private void Awake()
     {
+        // default
+        maxRoomCount = 50;
         roomCount = 0;
+        roomWidth = 20f;
         rooms = new List<DungeonRoom>();
         visitedRooms = new Stack<DungeonRoom>();
         walls = new List<GameObject>();
         doors = new List<GameObject>();
     }
 
-    private void Start()
-    {
-    }
-
     // -------------------------------------------------------------
     // 던전 생성, 초기화
     // -------------------------------------------------------------
-    public void Generate()
+    public void Generate(int maxCount = 50)
     {
+        roomCount = 0;
+        maxRoomCount = maxCount;
+
         DungeonRoom selectRoom = new DungeonRoom();       // 시작 방 생성
         rooms.Add(selectRoom);
         visitedRooms.Push(selectRoom);
