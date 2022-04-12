@@ -7,11 +7,8 @@ public class Spawner : MonoBehaviour
     [SerializeField]
     private GameManager gameManager;
 
+    private float roomWidth;
     // 스폰 범위 (spawner 위치 기준)
-    [SerializeField]
-    private float halfRow;
-    [SerializeField]
-    private float halfColumn;
 
     [SerializeField]
     private EnemyObjectPool enemyObjectPool;
@@ -19,27 +16,45 @@ public class Spawner : MonoBehaviour
     [SerializeField]
     private CheckSpawnPosition spawnPosition;
 
-    [SerializeField]
     private float spawnCycle;
-    [SerializeField]
     private int maxEnemyCount;
 
-    [SerializeField]
     private int remainEnemyCount;       // 남은 enemy 숫자
-
-    public EnemyObjectPool ObjectPool { get { return enemyObjectPool; } }
 
     public GameManager GameManager { get { return gameManager; } }
     
-    // Start is called before the first frame update
-    private void Start()
+    // -------------------------------------------------------------
+    // Init
+    // -------------------------------------------------------------
+    private void Awake()
     {
         remainEnemyCount = 0;
+    }
 
+    private void Run()
+    {
         // 스폰 위치에 반경 설정 후 위치 찾기 시작
-        spawnPosition.SetRange(this, halfRow, halfColumn);
-        spawnPosition.FindSpawnPosition();
-        InvokeRepeating("Spawn", 0, spawnCycle);
+        spawnPosition.SetRange(this, roomWidth);
+
+        InitSpawn();
+    }
+
+    public void Set(GameManager gm, float _roomWidth, int maxCount, float cycle)
+    {
+        gameManager = gm;
+        roomWidth = _roomWidth;
+        spawnCycle = cycle;
+        maxEnemyCount = maxCount;
+
+        Run();
+    }
+
+    private void InitSpawn()
+    {
+        for (int i = 0; i < maxEnemyCount; i++)
+        {
+            Spawn();
+        }
     }
 
     public void Spawn()
@@ -68,7 +83,9 @@ public class Spawner : MonoBehaviour
     {
         gameManager.Drop(enemy.DropId, enemy.transform.position);
         enemy.Reset();
-        ObjectPool.Return(enemy);
+        enemyObjectPool.Return(enemy);
         remainEnemyCount -= 1;
+
+        Invoke("Spawn", spawnCycle);        // spawnCycle 이후 리스폰
     }
 }

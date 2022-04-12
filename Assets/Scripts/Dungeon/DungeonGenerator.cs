@@ -17,6 +17,9 @@ public class DungeonGenerator : MonoBehaviour
     private int roomCount;
 
     [SerializeField]
+    private GameObject roomParent;
+
+    [SerializeField]
     private GameObject groundPref;
     [SerializeField]
     private GameObject wallPref;
@@ -26,6 +29,9 @@ public class DungeonGenerator : MonoBehaviour
     private Stack<DungeonRoom> visitedRooms;
     private List<GameObject> walls;
     private List<GameObject> doors;
+
+    public List<DungeonRoom> Rooms { get { return rooms; } }
+    
     private void Awake()
     {
         // default
@@ -78,6 +84,7 @@ public class DungeonGenerator : MonoBehaviour
                 Vector3 roomPos = new Vector3(newRoom.X, 0f, newRoom.Y) * roomWidth;
                 // newRoom.SetRoomObject(Instantiate(groundPref, roomPos, Quaternion.identity));
                 GameObject newRoomObj = Instantiate(groundPref, roomPos, Quaternion.identity);
+                newRoomObj.transform.parent = roomParent.transform;
                 newRoomObj.name = roomCount.ToString();
                 newRoom.SetRoomObject(newRoomObj);
 
@@ -155,6 +162,7 @@ public class DungeonGenerator : MonoBehaviour
             {
                 // 인접한 방이 없는 곳에 벽 생성
                 GameObject wall = Instantiate(wallPref);
+                wall.transform.parent = roomParent.transform;
                 Vector3 offset = Vector3.zero;
 
                 switch (direct)

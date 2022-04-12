@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class CheckSpawnPosition : MonoBehaviour
 {
-    private float halfRow;
-    private float halfColumn;
+    private float halfRoomWidth;
 
     private CapsuleCollider areaCollider;
 
@@ -26,13 +25,13 @@ public class CheckSpawnPosition : MonoBehaviour
         // this.gameObject.SetActive(false);
     }
 
-    public void FindSpawnPosition()
+    private void FindSpawnPosition()
     {
         spawnCall = true;
         this.transform.position = new Vector3(
-            spawner.transform.position.x + Random.Range(-1 * halfRow, halfRow + 1), 
+            spawner.transform.position.x + Random.Range(-1 * halfRoomWidth, halfRoomWidth + 1), 
             spawner.transform.position.y,
-            spawner.transform.position.z + Random.Range(-1 * halfColumn, halfColumn + 1)
+            spawner.transform.position.z + Random.Range(-1 * halfRoomWidth, halfRoomWidth + 1)
         );
         this.gameObject.SetActive(true);
 
@@ -46,12 +45,14 @@ public class CheckSpawnPosition : MonoBehaviour
         this.gameObject.SetActive(false);
     }
 
-    public void SetRange(Spawner parentSpawner, float _halfRow, float _halfColumn)
+    public void SetRange(Spawner parentSpawner, float roomWidth)
     {
+        // room width 범위 내에 스폰 위치 선정
         spawner = parentSpawner;
         this.transform.position = spawner.transform.position;
-        halfRow = _halfRow;
-        halfColumn = _halfColumn;
+        halfRoomWidth = roomWidth / 2f;
+
+        FindSpawnPosition();
     }
 
     private void CheckNoColliders()

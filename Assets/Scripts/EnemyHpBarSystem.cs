@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class EnemyHpBarSystem : MonoBehaviour
 {
-    [SerializeField]
     private GameObject hpBarParent;
     [SerializeField]
     private ObjectPool EnemyHpBarOP;
@@ -14,6 +13,10 @@ public class EnemyHpBarSystem : MonoBehaviour
         EnemyHpBar hpBar = EnemyHpBarOP.Get().GetComponent<EnemyHpBar>();
         // parent system(this) 및 object(enemy) 설정
         hpBar.SetParentSystem(this);
+        if (hpBarParent == null)
+        {
+            hpBarParent = GameObject.Find("UI Controller").GetComponent<UIController>().EnemyHpBarParent;
+        }
         hpBar.transform.SetParent(hpBarParent.transform);
         return hpBar;
     }

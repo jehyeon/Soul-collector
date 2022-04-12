@@ -31,6 +31,12 @@ public class UIController: MonoBehaviour
     [SerializeField]
     private GameObject enemyHpBarParent;
 
+    // for dungeon
+    [SerializeField]
+    private GameObject floorFrame;
+    [SerializeField]
+    private TextMeshProUGUI floorText;
+
     private bool isActivatedInventoryUI;
     private bool isActivatedEquipmentUI;
     private bool isActivatedShopUI;
@@ -205,6 +211,19 @@ public class UIController: MonoBehaviour
     {
         hpBar.value = (float)nowHp / (float)maxHp;
         hpBarText.text = string.Format("{0} / {1}", nowHp, maxHp);
+    }
+
+    // -------------------------------------------------------------
+    // Dungeon floor
+    // -------------------------------------------------------------
+    public void ActivateFloorText(int floor)
+    {
+        floorText.text = string.Format("{0}F", floor);
+        floorFrame.SetActive(true);
+    }
+    public void DeActivateFloorText()
+    {
+        floorFrame.SetActive(false);
     }
 
     // -------------------------------------------------------------

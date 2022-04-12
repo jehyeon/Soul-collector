@@ -97,7 +97,7 @@ public class Enemy : ACharacter
         if (hpBar == null)
         {
             // init
-            hpBar = spawner.GameManager.EnemyHpBarSystem.InitHpBar();
+            hpBar = spawner.GameManager.InitHpBar();
             hpBar.SetTransform(this.transform);
         }
 

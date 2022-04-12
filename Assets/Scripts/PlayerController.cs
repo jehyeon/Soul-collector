@@ -8,9 +8,14 @@ public class PlayerController : MonoBehaviour
     // 이동, 조작 관련 / 목적지 및 타겟 지정
     private Player player;
 
+    // Target Marker
     [SerializeField]
+    private GameObject targetParnet;
+    [SerializeField]
+    private GameObject moveTargetPref;
+    [SerializeField]
+    private GameObject attackTargetPref;
     private GameObject moveTarget;
-    [SerializeField]
     private GameObject attackTarget;
     
     [SerializeField]
@@ -100,12 +105,22 @@ public class PlayerController : MonoBehaviour
     // -------------------------------------------------------------
     private void MoveTarget(Vector3 point)
     {
+        if (moveTarget == null)
+        {
+            moveTarget = Instantiate(moveTargetPref);
+            moveTarget.transform.parent = targetParnet.transform;
+        }
+
         moveTarget.SetActive(true);
         moveTarget.transform.position = point;
     }
 
     private void AttackTarget(Transform transform)
     {
+        if (attackTarget == null)
+        {
+            attackTarget = Instantiate(attackTargetPref);
+        }
         ClearMoveTarget();
         attackTarget.SetActive(true);
         attackTarget.transform.parent = transform;
@@ -114,11 +129,21 @@ public class PlayerController : MonoBehaviour
 
     public void ClearMoveTarget()
     {
+        if (moveTarget == null)
+        {
+            moveTarget = Instantiate(moveTargetPref);
+            moveTarget.transform.parent = targetParnet.transform;
+        }
         moveTarget.SetActive(false);
     }
 
     public void ClearAttackTarget()
     {
+        if (attackTarget == null)
+        {
+            attackTarget = Instantiate(attackTargetPref);
+        }
+        attackTarget.transform.parent = targetParnet.transform;
         attackTarget.SetActive(false);
     }
     

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Portal : MonoBehaviour
 {
-    // private bool disableMode;
+    private bool disableMode;
     private GameManager gameManager;
 
     [SerializeField]
@@ -24,16 +24,20 @@ public class Portal : MonoBehaviour
     // {
     //     disableMode = true;
     // }
+    public void Set(int id, bool disable = false)
+    {
+        portalId = id;
+        disableMode = disable;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
-        // if (other.CompareTag("Player") && !disableMode)
-        // {
-        //     // Player가 포탈에 들어오면
-        //     // !!! 사운드, effect, 딜레이 추가하기
-        //     anotherPortal.Disable();    // 반대 포탈 disable
-        //     other.transform.position = anotherPortal.transform.position;    // 반대 포탈 위치로 이동
-        // }
+        if (disableMode)
+        {
+            // disableMode 일 때는 동작 안함
+            return;
+        }
+
         if (other.CompareTag("Player"))
         {
             if (gameManager == null)
@@ -56,12 +60,12 @@ public class Portal : MonoBehaviour
         }
     }
 
-    // private void OnTriggerExit(Collider other)
-    // {
-    //     if (other.CompareTag("Player"))
-    //     {
-    //         // 플레이어가 포탈에서 나가면 다시 활성화
-    //         disableMode = false;
-    //     }    
-    // }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            // 플레이어가 포탈에서 나가면 활성화
+            disableMode = false;
+        }    
+    }
 }

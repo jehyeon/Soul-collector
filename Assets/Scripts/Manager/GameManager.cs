@@ -11,6 +11,9 @@ public class GameManager : MonoBehaviour
     private CraftManager craftManager;
     private ShopManager shopManager;
 
+    private int floor;
+    public int Floor { get { return floor; } }
+
     [SerializeField]
     private Player player;
 
@@ -40,7 +43,6 @@ public class GameManager : MonoBehaviour
     public Inventory Inventory { get { return inventory; } }
     public Reinforce Reinforce { get { return reinforce; } }
     public Player Player { get { return player; } }
-    public EnemyHpBarSystem EnemyHpBarSystem { get { return enemyHpBarSystem; } }
 
     private void Awake()
     {
@@ -71,19 +73,31 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene("Main");
         PlayerReset();
+
+        // 던전 Floor UI
+        floor = 0;
+        uiController.DeActivateFloorText();
     }
 
     private void GoDungeon()
     {
         SceneManager.LoadScene("Default Dungeon");
         PlayerReset();
+
+        // 던전 Floor UI
+        floor = 1;
+        uiController.ActivateFloorText(1);
     }
 
     private void GoNextFloor()
     {
-        // 씬 리로드
         // 다음층으로 던전 생성
+        SceneManager.LoadScene("Default Dungeon");      // 씬 리로드
         PlayerReset();
+
+        // 던전 Floor UI
+        floor += 1;
+        uiController.ActivateFloorText(floor);
     }
 
     private void PlayerReset()
@@ -202,6 +216,20 @@ public class GameManager : MonoBehaviour
                 player.Equip(item);   // 스탯 추가
             }
         }
+    }
+
+    // -------------------------------------------------------------
+    // 체력바 System
+    // -------------------------------------------------------------
+    public EnemyHpBar InitHpBar()
+    {
+        // In Default Dungeon scene
+        if (enemyHpBarSystem == null)
+        {
+            enemyHpBarSystem = GameObject.Find("Enemy HP Bar System").GetComponent<EnemyHpBarSystem>();
+        }
+
+        return enemyHpBarSystem.InitHpBar();
     }
 
     // -------------------------------------------------------------
