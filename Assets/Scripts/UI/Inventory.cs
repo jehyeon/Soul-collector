@@ -201,7 +201,6 @@ public class Inventory : MonoBehaviour
                 slots[selectedSlotIndex].UnSelect();    // 기존에 선택된 슬롯 선택 해제
             }
             selectedSlotIndex = slotIndex;
-            // itemDetail.Open(slots[selectedSlotIndex].Item);  // !!! UNUSED
 
             UpdateInventoryActBtn();
         }
@@ -392,7 +391,9 @@ public class Inventory : MonoBehaviour
             // 착용 장비인 경우
             gameManager.SaveManager.Save.DeleteSlot(selectedSlotIndex); // 아이템 삭제 (저장 X)
             gameManager.Equip(slots[selectedSlotIndex].Item);   // 장착 후 저장
-            
+
+            gameManager.UIController.PlayEquipSound(slots[selectedSlotIndex].Item.ItemType);
+
             ResetSelectSlot();
             LoadInventory();
         }
@@ -412,12 +413,12 @@ public class Inventory : MonoBehaviour
     // Item detail tooltip
     public void ShowItemDetail(Item item, Vector3 pos)
     {
-        gameManager.UIController.ItemDetail.Open(item, pos);
+        gameManager.UIController.OpenItemDetail(item, pos);
     }
 
     public void CloseItemDetail()
     {
-        gameManager.UIController.ItemDetail.Close();
+        gameManager.UIController.CloseItemDetail();
     }
 
     // -------------------------------------------------------------

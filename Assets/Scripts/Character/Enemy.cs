@@ -17,6 +17,9 @@ public class Enemy : ACharacter
     public Spawner ParentSpawner { get { return spawner; } }
     public int DropId { get { return dropId; } }
 
+    [SerializeField]
+    protected EnemyEffectSound sound;
+
     // Hp bar
     private EnemyHpBar hpBar;
 
@@ -103,5 +106,10 @@ public class Enemy : ACharacter
 
         // update
         hpBar.UpdateHpBar((float)stat.Hp / stat.MaxHp);
+    }
+
+    protected override void PlayAttackedSound()
+    {
+        sound.PlayAttackedSound();
     }
 }

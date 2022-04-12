@@ -8,6 +8,8 @@ public class PlayerEffectSound : MonoBehaviour
     private AudioSource footstepSound;
     [SerializeField]
     private AudioSource attackSound;
+    [SerializeField]
+    private AudioSource stabSound;
 
     public void PlayFootstepSound()
     {
@@ -17,5 +19,6 @@ public class PlayerEffectSound : MonoBehaviour
     public void PlayattackSound()
     {
         attackSound.Play();
+        stabSound.Play();
     }
 }

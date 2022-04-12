@@ -31,6 +31,9 @@ public class UIController: MonoBehaviour
     [SerializeField]
     private GameObject enemyHpBarParent;
 
+    // Sound
+    private UIEffectSound sound;
+
     // for dungeon
     [SerializeField]
     private GameObject floorFrame;
@@ -62,6 +65,8 @@ public class UIController: MonoBehaviour
         isActivatedShopUI = false;
         isActivatedCraftUI = false;
         isActivatedReinforceUI = false;
+
+        sound = GetComponent<UIEffectSound>();
     }
     
     private void Update()
@@ -84,42 +89,42 @@ public class UIController: MonoBehaviour
             }
         }
         
-        // if (Input.GetKeyDown(KeyCode.O))
-        // {
-        //     // Inventory & Equipment
-        //     if (isActivatedReinforceUI)
-        //     {
-        //         CloseReinforceUI();
-        //     }
-        //     else
-        //     {
-        //         OpenReinforceUI();
-        //     }
-        // }
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            // Inventory & Equipment
+            if (isActivatedReinforceUI)
+            {
+                CloseReinforceUI();
+            }
+            else
+            {
+                OpenReinforceUI();
+            }
+        }
 
-        // if (Input.GetKeyDown(KeyCode.P))
-        // {
-        //     if (isActivatedShopUI)
-        //     {
-        //         CloseShopUI();
-        //     }
-        //     else
-        //     {
-        //         OpenShopUI();
-        //     }
-        // }
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            if (isActivatedShopUI)
+            {
+                CloseShopUI();
+            }
+            else
+            {
+                OpenShopUI();
+            }
+        }
 
-        // if (Input.GetKeyDown(KeyCode.C))
-        // {
-        //     if (isActivatedCraftUI)
-        //     {
-        //         CloseCraftUI();
-        //     }
-        //     else
-        //     {
-        //         OpenCraftUI();
-        //     }
-        // }
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            if (isActivatedCraftUI)
+            {
+                CloseCraftUI();
+            }
+            else
+            {
+                OpenCraftUI();
+            }
+        }
     }
 
     public void UpdateStatUI(Stat characterStat)
@@ -147,6 +152,8 @@ public class UIController: MonoBehaviour
         isActivatedEquipmentUI = true;
         OpenInventoryUI();
         equiment.Open();
+
+        sound.PlayOpenInventorySound();
     }
 
     public void CloseEquipmentUI()
@@ -154,6 +161,8 @@ public class UIController: MonoBehaviour
         isActivatedEquipmentUI = false;
         equiment.Close();
         CloseInventoryUI();
+
+        sound.PlayOpenInventorySound();
     }
 
     // Shop UI + Inventory UI
@@ -201,6 +210,17 @@ public class UIController: MonoBehaviour
         CloseInventoryUI();
     }
 
+    // Item Detail
+    public void OpenItemDetail(Item item, Vector3 pos)
+    {
+        itemDetail.Open(item, pos);
+        sound.PlaySelectItemSound();
+    }
+    public void CloseItemDetail()
+    {
+        itemDetail.Close();
+    }
+
     // 플레이어 체력바
     public void InitPlayerHpBar(int maxHp)
     {
@@ -211,6 +231,22 @@ public class UIController: MonoBehaviour
     {
         hpBar.value = (float)nowHp / (float)maxHp;
         hpBarText.text = string.Format("{0} / {1}", nowHp, maxHp);
+    }
+
+    // -------------------------------------------------------------
+    // Sound
+    // -------------------------------------------------------------
+    public void PlayEquipSound(ItemType itemType)
+    {
+        switch (itemType)
+        {
+            case ItemType.Weapon:
+                sound.PlayEquipSwordSound();
+                break;
+            case ItemType.Armor:
+                sound.PlayEquipMetalArmorSound();
+                break;
+        }
     }
 
     // -------------------------------------------------------------

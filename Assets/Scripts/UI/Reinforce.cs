@@ -317,11 +317,11 @@ public class Reinforce : MonoBehaviour
     // Item detail tooltip
     public void ShowItemDetail(Item item, Vector3 pos)
     {
-        gameManager.UIController.ItemDetail.Open(item, pos);
+        gameManager.UIController.OpenItemDetail(item, pos);
     }
 
     public void CloseItemDetail()
     {
-        gameManager.UIController.ItemDetail.Close();
+        gameManager.UIController.CloseItemDetail();
     }
 }
