@@ -181,7 +181,7 @@ public class ACharacter : MonoBehaviour
         // for player
     }
 
-    protected IEnumerator Attack(float actualAttackSpeed)
+    protected virtual IEnumerator Attack(float actualAttackSpeed)
     {
         canAttack = false;
         StartCoroutine("StartAttackCoolTime", actualAttackSpeed);       // 공격 쿨타임 계산
@@ -220,7 +220,7 @@ public class ACharacter : MonoBehaviour
     }
 
     // 피격 관련
-    protected bool Attacked(int damage)
+    public bool Attacked(int damage)
     {
         // 최종 데미지 - 데미지 리덕션 = 받는 데미지
         int damageResult = (damage - stat.DamageReduction) > 0

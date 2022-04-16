@@ -21,15 +21,22 @@ public class UIController: MonoBehaviour
     private Shop shop;                  // 상점
     [SerializeField]
     private Craft craft;                // 아이템 제작
+
+    // 팝업 메시지
     [SerializeField]
     private PopupMessage popupMessage;
     [SerializeField]
     private PopupAsk popupAsk;
 
+    // 몬스터 체력바 및 데미지 표기
     [SerializeField]
     private GameObject damageTextParent;
     [SerializeField]
     private GameObject enemyHpBarParent;
+
+    // 버프
+    [SerializeField]
+    private GameObject buffParent;
 
     // Sound
     private UIEffectSound sound;
@@ -56,6 +63,7 @@ public class UIController: MonoBehaviour
     public ItemDetail ItemDetail { get { return itemDetail; } }
     public GameObject DamageTextParent { get { return damageTextParent; } }
     public GameObject EnemyHpBarParent {  get { return enemyHpBarParent; } }
+    public GameObject BuffParent { get { return buffParent; } }
 
     private void Awake()
     {

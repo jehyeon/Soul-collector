@@ -34,7 +34,7 @@ public class Stat
     public int MaxHp { get { return _maxHp; } }
     public int Hp { get { return _hp; } set { _hp = value; } }
     public int HpRecovery { get { return _hpRecovery; } }
-    public int DamageReduction { get { return _damageReduction; } }
+    public int DamageReduction { get { return _damageReduction; } set { _damageReduction = value; } }
     public int EvasionPercent { get { return _evasionPercent;  } }
     public float MoveSpeed { get { return _moveSpeed; } }
     public float AttackRange { get { return _attackRange; } }
