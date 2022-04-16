@@ -9,7 +9,10 @@ public class Player : ACharacter
     [SerializeField]
     private UIController uiController;
     
+    private Skill[] skill;
+
     public Stat Stat { get { return stat; } }
+    public Skill[] Skill { get { return skill; } }
 
     protected override void Awake()
     {
@@ -57,6 +60,22 @@ public class Player : ACharacter
         uiController.UpdatePlayerHpBar(stat.Hp, stat.MaxHp);
     }
 
+    // 공격
+    protected override IEnumerator Attack(float actualAttackSpeed)
+    {
+        canAttack = false;
+        StartCoroutine("StartAttackCoolTime", actualAttackSpeed);       // 공격 쿨타임 계산
+        yield return new WaitForSeconds(actualAttackSpeed * 0.5f);      // 공격 애니메이션 실행한지 50% 지나면
+        bool isDie = target.GetComponent<ACharacter>().Attacked(CalculateDamage());  // 데미지 계산
+        if (isDie)
+        {
+            // taget이 죽은 경우
+            SetTarget(null);
+        }
+        state = State.Idle;     // 공격 코루틴이 끝날 때 state 변경
+        yield break;
+    }
+
     // -------------------------------------------------------------
     // 체력 회복 (스탯 변화)
     // -------------------------------------------------------------
@@ -96,6 +115,22 @@ public class Player : ACharacter
         stat.UnEquip(unEquipping);
         uiController.UpdateStatUI(stat);
         uiController.UpdatePlayerHpBar(stat.Hp, stat.MaxHp);
+    }
+
+    // -------------------------------------------------------------
+    // Skill 활성화
+    // -------------------------------------------------------------
+    public void ActivateSkill(Skill skill)
+    {
+        switch (skill.Type)
+        {
+            case SkillType.Passive:
+                break;
+            case SkillType.Active:
+                break;
+            case SkillType.PercentPassive:
+                break;
+        }
     }
 
     // -------------------------------------------------------------

@@ -8,6 +8,7 @@ public class Save
 {
     // json to obj를 위해 save는 모두 public으로 선언
     public int Gold;              // Gold 정보
+    public List<int> Skill;
     public int LastSlotIndex;     // 아이템이 있는 마지막 슬롯 index
     public int LastSlotId;        // 다음 슬롯의 id
     public int InventorySize;     // 인벤토리 사이즈
@@ -21,6 +22,7 @@ public class Save
         LastSlotIndex = 0;
         LastSlotId = 0;
         Equipped = new List<int> {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
+        Skill = new List<int>();
         Slots = new List<SlotSave>();
         InventorySize = 60;
         for (int i = 0; i < InventorySize; i++)

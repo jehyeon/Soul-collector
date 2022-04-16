@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     private Player player;
+    [SerializeField]
+    private SkillSystem skillSystem;
 
     [SerializeField]
     private Inventory inventory;
@@ -60,6 +62,10 @@ public class GameManager : MonoBehaviour
         equipment.InitEquipmentSlots();
         LoadEquipInfo();
         player.Heal(99999);     // 세이브에 현재 체력 정보는 저장하지 않음 -> 최대 체력 스폰
+
+        // Load Skill info
+        skillSystem.InitSkillSystem();
+        LoadSkillInfo();
 
         // Load Shop, Craft Info
         craft.InitCraftItemSlots();
@@ -216,6 +222,14 @@ public class GameManager : MonoBehaviour
                 player.Equip(item);   // 스탯 추가
             }
         }
+    }
+
+    // -------------------------------------------------------------
+    // 스킬
+    // -------------------------------------------------------------
+    private void LoadSkillInfo()
+    {
+        skillSystem.Activate(saveManager.Save.Skill);
     }
 
     // -------------------------------------------------------------
