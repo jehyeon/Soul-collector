@@ -46,16 +46,16 @@ public class EnemyObjectPool : MonoBehaviour
         }
 
         Enemy enemy = this.poolingObjectQueue.Dequeue();
-        enemy.transform.SetParent(null);
-        enemy.gameObject.SetActive(true);
+        // enemy.transform.SetParent(null);
+        // enemy.gameObject.SetActive(true);
 
         return enemy;
     }
 
     public void Return(Enemy enemy)
     {
-        enemy.gameObject.SetActive(false);
-        enemy.transform.SetParent(this.transform);
+        // enemy.gameObject.SetActive(false);
+        // enemy.transform.SetParent(this.transform);
         this.poolingObjectQueue.Enqueue(enemy);
     }
 }

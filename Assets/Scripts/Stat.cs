@@ -114,6 +114,14 @@ public class Stat
             _hp = _maxHp;
         }
     }
+
+    public void Heal(bool maxHeal)
+    {
+        if (maxHeal)
+        {
+            _hp = _maxHp;
+        }
+    }
     
     public override string ToString()
     {

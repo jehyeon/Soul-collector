@@ -18,7 +18,9 @@ public class Troll : Enemy
 
     private void Start()
     {
-        attackAnimSpeed = 2.76f;        // 공격 애니메이션 속도
+        // attackAnimSpeed = 2.76f;        // 공격 애니메이션 속도
+        startPos = this.transform.position; 
+        
         // 스탯 설정
         stat.SetEnemyStat(
             minDamage, maxDamage, defaultDamage, 
@@ -28,31 +30,35 @@ public class Troll : Enemy
 
         // Drop table Id
         dropId = 0;
+        
+        // Sync agent
+        agent.speed = stat.MoveSpeed;
+        animator.SetFloat("MoveSpeed", stat.MoveSpeed * .2f);   // Animation speed = actual speed * 5
     }
     
-    private void Update()
-    {
-        CheckTarget();
-        FindNearByPlayer();
-        Move();
-        Back();
+    // private void Update()
+    // {
+    //     CheckTarget();
+    //     FindNearByPlayer();
+    //     Move();
+    //     Back();
         
-        // for test
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            stat.SetEnemyStat(
-                minDamage, maxDamage, defaultDamage, 
-                maxHp, damageReduction, 
-                attackSpeed, moveSpeed, attackRange
-            );
+    //     // for test
+    //     if (Input.GetKeyDown(KeyCode.Q))
+    //     {
+    //         stat.SetEnemyStat(
+    //             minDamage, maxDamage, defaultDamage, 
+    //             maxHp, damageReduction, 
+    //             attackSpeed, moveSpeed, attackRange
+    //         );
 
-            attackAnimSpeed = tempAnimAttackSpeed;
-        }
-    }
+    //         attackAnimSpeed = tempAnimAttackSpeed;
+    //     }
+    // }
 
-    public override void Reset()
-    {
-        base.Reset();
-        Start();
-    }
+    // public override void Reset()
+    // {
+    //     base.Reset();
+    //     Start();
+    // }
 }

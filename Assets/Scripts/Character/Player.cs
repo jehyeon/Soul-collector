@@ -47,6 +47,7 @@ public class Player : ACharacter
         // 스탯 변화시 호출
         agent.speed = stat.MoveSpeed;
         animator.SetFloat("MoveSpeed", stat.MoveSpeed * .2f);   // Animation speed = actual speed * 5
+        // !!! 공격 사거리만큼 stop 설정
     }
 
     // Check
@@ -131,13 +132,6 @@ public class Player : ACharacter
     {
 
     }
-    // void Update()
-    // {
-    //     Move();             // state가 Move면 destinationPos로 이동
-    //     CheckTarget();      // stat.AttackRange 안에 target이 들어오는 경우 공격
-    // }
-
-
 
     // -------------------------------------------------------------
     // Override
