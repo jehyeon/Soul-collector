@@ -50,7 +50,7 @@ public class Player : ACharacter
         // 스탯 변화시 호출
         agent.speed = stat.MoveSpeed;
         animator.SetFloat("MoveSpeed", stat.MoveSpeed * .2f);   // Animation speed = actual speed * 5
-        animator.SetFloat("AttackSpeed", attackAnimSpeed / stat.AttackSpeed);
+        animator.SetFloat("AttackSpeed", attackAnimSpeed / (1f / stat.AttackSpeed));
     }
 
     // Check
@@ -75,12 +75,7 @@ public class Player : ACharacter
         agent.isStopped = false;
         agent.SetDestination(destination);
 
-        StopCoroutine("Attack");    // 공격 중이면 코루틴 중지
-    }
-
-    public void SetTarget(GameObject enemy)
-    {
-        target = enemy;
+        StopCoroutine("Attack");    // 이동 중이면 코루틴 중지
     }
 
     private void StopMove()
@@ -90,6 +85,7 @@ public class Player : ACharacter
         agent.velocity = Vector3.zero;
         animator.SetBool("isMove", false);
     }
+
     private void AgainMove()
     {
         agent.isStopped = false;
@@ -198,7 +194,7 @@ public class Player : ACharacter
         animator.SetTrigger("isAttack");
         Invoke("AttackCooltime", 1f / stat.AttackSpeed);     // 공격 쿨타임
         yield return new WaitForSeconds(1f / stat.AttackSpeed * 0.5f);      // 공격 애니메이션 실행한지 50% 지나면
-        bool isDie = target.GetComponent<ACharacter>().Attacked(stat.CalculateDamage());  // 데미지 계산
+        bool isDie = target.GetComponent<ACharacter>().Attacked(stat.CalculateAttackDamage());  // 데미지 계산
         if (isDie)
         {
             // taget이 죽은 경우
@@ -214,7 +210,15 @@ public class Player : ACharacter
 
     public override bool Attacked(int damage)
     {
-        gameManager.UIController.UpdatePlayerHpBar(stat.Hp, stat.MaxHp);
+        stat.TakeDamage(damage);    // 받은 피해 적용 (방어도 계산)
+        gameManager.UIController.UpdatePlayerHpBar(stat.Hp, stat.MaxHp);    // view 업데이트
+
+        if (damageTextSystem == null)
+        {
+            damageTextSystem = GameObject.Find("Damage Text System").GetComponent<DamageTextSystem>();
+        }
+        damageTextSystem.FloatDamageText(damage, this.transform.position);
+
         return false;
     }
 

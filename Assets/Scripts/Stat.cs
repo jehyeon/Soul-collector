@@ -101,7 +101,7 @@ public class Stat
     }
 
     // 공격 관련 메소드
-    public int CalculateDamage()
+    public int CalculateAttackDamage()
     {
         // 최소 데미지 ~ 최대 데미지 + 기본 데미지
         if (this._criticalPercent > 0)
@@ -139,6 +139,16 @@ public class Stat
         {
             _hp = _maxHp;
         }
+    }
+
+    public int CalculateTakenDamage(int damage)
+    {
+        return (damage - this._damageReduction) > 0 ? damage - this._damageReduction : 0;
+    }
+
+    public void TakeDamage(int damage)
+    {
+        DecreaseHp(CalculateTakenDamage(damage));
     }
     
     public override string ToString()
