@@ -1,6 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public enum RoomDirect
 {
@@ -93,6 +93,13 @@ public class DungeonGenerator : MonoBehaviour
                 visitedRooms.Push(selectRoom);
                 roomCount += 1;
             }
+        }
+
+        NavMeshSurface[] surfaces = roomParent.GetComponentsInChildren<NavMeshSurface>();
+        foreach (NavMeshSurface surface in surfaces)
+        {
+            surface.BuildNavMesh();
+            break;
         }
     }
 

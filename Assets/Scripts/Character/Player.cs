@@ -1,83 +1,235 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
+
+enum PlayerState
+{
+    Idle,
+    Move,
+    Attack,
+    Die
+}
 
 public class Player : ACharacter
 {
-    public GameManager gameManager;     // 할당 해줘야 함
+    public GameManager gameManager;
     private PlayerController playerController;
-    [SerializeField]
-    private UIController uiController;
+
+    private Vector3 destinationPos;
     
+    [SerializeField]    // !!! for test
+    private PlayerState state;
     private Skill[] skill;
 
     public Stat Stat { get { return stat; } }
     public Skill[] Skill { get { return skill; } }
 
-    protected override void Awake()
+    // -------------------------------------------------------------
+    // Init
+    // -------------------------------------------------------------
+    private void Awake()
     {
-        base.Awake();
-        uiController.InitPlayerHpBar(stat.Hp);        // 체력바 설정
-    }
-    private void Start()
-    {
-        playerController = GetComponent<PlayerController>();
-
-        // Animator load
+        // ACharacter
+        stat = new Stat();
+        animator = GetComponentInChildren<Animator>();
+        agent = GetComponent<NavMeshAgent>();
         attackAnimSpeed = 1.4f;
+        canAttack = true;
+        SyncStat();
 
-        // 스탯창 업데이트
-        uiController.UpdateStatUI(stat);
-        
+        // Player
+        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+        gameManager.UIController.InitPlayerHpBar(stat.Hp);
+
+        playerController = GetComponent<PlayerController>();
         InvokeRepeating("RecoverHp", 10f, 10f);
     }
 
-    void Update()
+    private void SyncStat()
     {
-        Move();             // state가 Move면 destinationPos로 이동
-        CheckTarget();      // stat.AttackRange 안에 target이 들어오는 경우 공격
+        // 스탯 변화시 호출
+        agent.speed = stat.MoveSpeed;
+        animator.SetFloat("MoveSpeed", stat.MoveSpeed * .2f);   // Animation speed = actual speed * 5
+        animator.SetFloat("AttackSpeed", attackAnimSpeed / (1f / stat.AttackSpeed));
     }
 
+    // Check
+    private void Update()
+    {
+        CheckState();
+    }
 
     // -------------------------------------------------------------
-    // Override
+    // 이동, 타겟 지정
     // -------------------------------------------------------------
-    protected override void MoveDone()
+    public void Move(Vector3 destination, bool isKeyboard = false)
     {
-        // 이동이 끝난 뒤 move target disable
-        playerController.ClearMoveTarget();
+        // PlayerController에서 호출
+        if (!isKeyboard)
+        {
+            agent.velocity = Vector3.zero;  // 방향 전환 시 기존 velocity 영향 X
+        }
+
+        destinationPos = destination;
+        MoveMode();
+        agent.isStopped = false;
+        agent.SetDestination(destination);
+
+        StopCoroutine("Attack");    // 이동 중이면 코루틴 중지
     }
 
-    protected override void TargetDone()
+    private void StopMove()
     {
-        // CheckTarget에서 target이 null일 경우
-        // attack target disable
-        playerController.ClearAttackTarget();
+        // attacking일 때 정지 시 사용
+        agent.isStopped = true;
+        agent.velocity = Vector3.zero;
+        animator.SetBool("isMove", false);
     }
 
-    protected override void UpdateHpBar()
+    private void AgainMove()
     {
-        uiController.UpdatePlayerHpBar(stat.Hp, stat.MaxHp);
+        agent.isStopped = false;
+        animator.SetBool("isMove", true);
     }
 
-    // 공격
-    protected override IEnumerator Attack(float actualAttackSpeed)
+    // -------------------------------------------------------------
+    // State 전환
+    // -------------------------------------------------------------
+    private void CheckState()
+    {
+        if (state == PlayerState.Attack)
+        {
+            if (target == null)
+            {
+                // 타겟이 없어지면 Idle 모드
+                IdleMode();
+                return;
+            }
+
+            targetDir = target.transform.position - this.transform.position;
+
+            // 공격 상태이면 target의 위치로 이동
+            agent.SetDestination(target.transform.position);
+
+            if (targetDir.sqrMagnitude <= Mathf.Pow(stat.AttackRange, 2))
+            {
+                // 공격 범위 안에 들어오면 공격
+                ReadyToAttack();
+            }
+            else
+            {
+                AgainMove();
+            }
+
+            return;
+        }
+
+        if (state == PlayerState.Move)
+        {
+            agent.SetDestination(destinationPos);
+
+            if ((destinationPos - this.transform.position).sqrMagnitude <= 0.1f)
+            {
+                // 이동 상태에서 목적지에 도착하면
+                IdleMode();
+                playerController.ClearMoveTarget(); // 타겟 마크 제거
+            }
+        }
+    }
+
+    private void IdleMode()
+    {
+        state = PlayerState.Idle;
+        animator.SetBool("isMove", false);
+    }
+
+    private void MoveMode()
+    {
+        state = PlayerState.Move;
+        animator.SetBool("isMove", true);
+    }
+
+    private void AttackMode()
+    {
+        state = PlayerState.Attack;
+        animator.SetBool("isMove", true);
+    }
+
+    // -------------------------------------------------------------
+    // 공격, 피격
+    // -------------------------------------------------------------
+    public void AttackTarget()
+    {
+        // 지정된 타겟을 공격
+        if (target == null)
+        {
+            // 타겟이 없는 경우
+            return;
+        }
+
+        AttackMode();
+    }
+
+    private void ReadyToAttack()
+    {
+        StopMove();
+
+        // 타겟을 바라보고 있지 않은 경우
+        if (Vector3.Angle(target.transform.position - this.transform.position, this.transform.forward) > 5)
+        {
+            // 전방 10도(5 * 2) 밖에 있는 경우
+            Rotate(targetDir);
+        }
+
+        if (canAttack)
+        {
+            StartCoroutine("Attack");
+        }
+    }
+
+    // // 공격
+    protected override IEnumerator Attack()
     {
         canAttack = false;
-        StartCoroutine("StartAttackCoolTime", actualAttackSpeed);       // 공격 쿨타임 계산
-        yield return new WaitForSeconds(actualAttackSpeed * 0.5f);      // 공격 애니메이션 실행한지 50% 지나면
-        bool isDie = target.GetComponent<ACharacter>().Attacked(CalculateDamage());  // 데미지 계산
+        animator.SetTrigger("isAttack");
+        Invoke("AttackCooltime", 1f / stat.AttackSpeed);     // 공격 쿨타임
+        yield return new WaitForSeconds(1f / stat.AttackSpeed * 0.5f);      // 공격 애니메이션 실행한지 50% 지나면
+        bool isDie = target.GetComponent<ACharacter>().Attacked(stat.CalculateAttackDamage());  // 데미지 계산
         if (isDie)
         {
             // taget이 죽은 경우
             SetTarget(null);
         }
-        state = State.Idle;     // 공격 코루틴이 끝날 때 state 변경
         yield break;
     }
 
+    private void AttackCooltime()
+    {
+        canAttack = true;
+    }
+
+    public override bool Attacked(int damage)
+    {
+        stat.TakeDamage(damage);    // 받은 피해 적용 (방어도 계산)
+        gameManager.UIController.UpdatePlayerHpBar(stat.Hp, stat.MaxHp);    // view 업데이트
+
+        if (damageTextSystem == null)
+        {
+            damageTextSystem = GameObject.Find("Damage Text System").GetComponent<DamageTextSystem>();
+        }
+        damageTextSystem.FloatDamageText(damage, this.transform.position);
+
+        return false;
+    }
+
+    protected override void Die()
+    {
+        Time.timeScale = 0;
+        gameManager.PopupMessage("플레이어 사망", 60f);
+    }
+
     // -------------------------------------------------------------
-    // 체력 회복 (스탯 변화)
+    // 체력 회복
     // -------------------------------------------------------------
     private void RecoverHp()
     {
@@ -88,33 +240,39 @@ public class Player : ACharacter
         }
         
         stat.RecoverHp();
-        uiController.UpdatePlayerHpBar(stat.Hp, stat.MaxHp);  // 체력 자동 회복이 된 경우 ui 업데이트
+        // 체력 자동 회복이 된 경우 ui 업데이트
+        gameManager.UIController.UpdatePlayerHpBar(stat.Hp, stat.MaxHp);
     }
 
     public void Heal(int amount)
     {
         stat.Heal(amount);
-        uiController.UpdatePlayerHpBar(stat.Hp, stat.MaxHp);
+        gameManager.UIController.UpdatePlayerHpBar(stat.Hp, stat.MaxHp);
     }
 
     // -------------------------------------------------------------
     // Inventory 장착 (스탯 변화)
     // -------------------------------------------------------------
-    // 플레이어 장비 장착
     public void Equip(Item equipping)
     {
-        Debug.LogFormat("{0} 장착", equipping.ItemName); // !!! for test
+        // 스탯 수정
         stat.Equip(equipping);
-        uiController.UpdateStatUI(stat);
-        uiController.UpdatePlayerHpBar(stat.Hp, stat.MaxHp);
+        SyncStat();
+
+        // view 수정
+        gameManager.UIController.UpdateStatUI(stat);
+        gameManager.UIController.UpdatePlayerHpBar(stat.Hp, stat.MaxHp);
     }
 
     public void UnEquip(Item unEquipping)
     {
-        Debug.LogFormat("{0} 장착 해제", unEquipping.ItemName); // !!! for test
+        // 스탯 수정
         stat.UnEquip(unEquipping);
-        uiController.UpdateStatUI(stat);
-        uiController.UpdatePlayerHpBar(stat.Hp, stat.MaxHp);
+        SyncStat();
+
+        // view 수정
+        gameManager.UIController.UpdateStatUI(stat);
+        gameManager.UIController.UpdatePlayerHpBar(stat.Hp, stat.MaxHp);
     }
 
     // -------------------------------------------------------------
@@ -131,18 +289,5 @@ public class Player : ACharacter
             case SkillType.PercentPassive:
                 break;
         }
-    }
-
-    // -------------------------------------------------------------
-    // Act
-    // -------------------------------------------------------------
-    public void MoveToTarget()
-    {
-        if (target == null)
-        {
-            return;
-        }
-
-        SetDestination(target.transform.position);
     }
 }

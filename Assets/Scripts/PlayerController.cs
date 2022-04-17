@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour
                 // 땅 클릭하면 그 위치로 이동
                 if (raycastHit.collider.CompareTag("Ground"))
                 {
-                    player.SetDestination(raycastHit.point);
+                    player.Move(raycastHit.point);
                     MoveTarget(raycastHit.point);
                 }
 
@@ -57,7 +57,8 @@ public class PlayerController : MonoBehaviour
                 if (raycastHit.collider.CompareTag("Enemy"))
                 {
                     player.SetTarget(raycastHit.collider.gameObject);
-                    player.SetDestination(raycastHit.collider.gameObject.transform.position);
+                    player.AttackTarget();
+                    // player.SetDestination(raycastHit.collider.gameObject.transform.position);
                     AttackTarget(raycastHit.collider.gameObject.transform);
                     ClearMoveTarget();
                 }
@@ -83,14 +84,14 @@ public class PlayerController : MonoBehaviour
         if (moveX != 0 || moveZ != 0)
         {
             // 키보드 입력이 있는 경우
-            player.SetDestination(this.transform.position + new Vector3(moveX, 0, moveZ).normalized * 0.25f);
+            player.Move(this.transform.position + new Vector3(moveX, 0, moveZ).normalized, true);
             ClearMoveTarget();  // 키보드 이동 시 이동 타겟 클리어
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
             // 타겟 방향으로 이동
-            player.MoveToTarget();
+            player.AttackTarget();
         }
 
         if (Input.GetKeyDown(KeyCode.Tab))
@@ -105,6 +106,7 @@ public class PlayerController : MonoBehaviour
     // -------------------------------------------------------------
     private void MoveTarget(Vector3 point)
     {
+        Debug.Log("타겟 마크 생성");
         if (moveTarget == null)
         {
             moveTarget = Instantiate(moveTargetPref);
@@ -165,7 +167,7 @@ public class PlayerController : MonoBehaviour
         if (enemies.Count == 0)
         {
             // 주변에 enemy가 없는 경우 기존 타겟 해제
-            player.SetTarget(null);
+            // player.SetTarget(null);
             ClearAttackTarget();
         }
         else if (enemies.Count > maxTargetLength)

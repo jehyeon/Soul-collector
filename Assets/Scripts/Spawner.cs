@@ -82,7 +82,7 @@ public class Spawner : MonoBehaviour
     public void Die(Enemy enemy)
     {
         gameManager.Drop(enemy.DropId, enemy.transform.position);
-        enemy.Reset();
+        // enemy.Reset();
         enemyObjectPool.Return(enemy);
         remainEnemyCount -= 1;
 

@@ -1,6 +1,13 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
+
+enum EnemyState
+{
+    Idle,
+    Attack,
+    Back
+}
 
 public class Enemy : ACharacter
 {
@@ -8,11 +15,12 @@ public class Enemy : ACharacter
     private int enemyId;
     protected int dropId;           // 자식 클래스에서 재 할당
     protected Vector3 startPos;
+    protected Vector3 startPosDir;
 
-    private int findRange = 5;      // 플레이어 감지 범위 (default)
-    private int backRange = 15;     // 스폰 위치로부터의 제한 거리 (default)
-
-    private bool isWakeUp = false;
+    private EnemyState state;
+    private int findRange;      // 플레이어 감지 범위 (default)
+    private int backRange;      // 스폰 위치로부터의 제한 거리 (default)
+    private float wakeUpDelay;  // wake up 시 딜레이
 
     public Spawner ParentSpawner { get { return spawner; } }
     public int DropId { get { return dropId; } }
@@ -23,6 +31,28 @@ public class Enemy : ACharacter
     // Hp bar
     private EnemyHpBar hpBar;
 
+    // -------------------------------------------------------------
+    // Init
+    // -------------------------------------------------------------
+    protected virtual void Awake()
+    {
+        // ACharacter
+        stat = new Stat();
+        animator = GetComponent<Animator>();
+        agent = GetComponent<NavMeshAgent>();
+        canAttack = true;
+
+        // Enemy
+        findRange = 5;
+        backRange = 15;
+        wakeUpDelay = 2f;
+    }
+
+    private void Update()
+    {
+        FindNearByPlayer();
+    }
+
     public void Set(Spawner parentSpawner, GameObject target)
     {
         stat.Heal(99999);
@@ -31,55 +61,163 @@ public class Enemy : ACharacter
         SetTarget(target);
     }
 
-    protected void FindNearByPlayer()
+    // -------------------------------------------------------------
+    // State 전환
+    // -------------------------------------------------------------
+    private void FindNearByPlayer()
     {
-        if (state == State.Attack || state == State.Back)
+        if (target == null)
         {
-            // 공격 중이거나 되돌아가는 상태일 때에는 타겟을 찾지 않음
-            return;
-        }
-        
-        if (!isWakeUp && targetDir.sqrMagnitude < Mathf.Pow(findRange, 2))
-        {
-            // isWakeUp: false 일 때 findRange 안에만 들어오면 움직이기 시작
-            isWakeUp = true;
-            SetDestination(target.transform.position);
-            return;
+            // 타겟이 지정 안된 경우 (error)
+            Debug.Log("스포너로부터 생성된 enemy가 아닙니다.");
+            target = GameObject.Find("Player");
         }
 
-        if (isWakeUp && targetDir.sqrMagnitude > Mathf.Pow(stat.AttackRange, 2))
+        targetDir = target.transform.position - this.transform.position;
+        startPosDir = startPos - this.transform.position;
+
+        if (state == EnemyState.Back)
         {
-            // isWakeUp: true인 경우 공격 사거리 밖일 때만 플레이어에게 이동
-            SetDestination(target.transform.position);
+            // 시작 위치로 돌아가는 중일 때
+            if (agent.remainingDistance < 0.2f)
+            {
+                // 목적지에 도착한 경우
+                IdleMode();
+            }
+            else
+            {
+                // 경로 재 검색
+                agent.SetDestination(startPos);
+            }
+        }
+
+        if (state == EnemyState.Idle)
+        {
+            if (targetDir.sqrMagnitude < Mathf.Pow(findRange, 2))
+            {
+                // 플레이어를 찾기 전
+
+                // StartCoroutine(AttackMode()); // !!! temp
+                state = EnemyState.Attack;
+                animator.SetBool("isMove", true);
+            }
+        }
+
+        if (state == EnemyState.Attack)
+        {
+            agent.SetDestination(target.transform.position);
+
+            if (targetDir.sqrMagnitude <= Mathf.Pow(stat.AttackRange, 2))
+            {
+                // 공격 범위 안에 들어오면 공격
+                ReadyToAttack();
+            }
+            else
+            {
+                AgainMove();
+                StopCoroutine("Attack");    // 이동 중이면 코루틴 중지
+            }
+
+            if (startPosDir.sqrMagnitude > Mathf.Pow(backRange, 2))
+            {
+                // 스폰 위치로부터 멀리 떨어지면 돌아감
+                BackMode();
+            }
         }
     }
 
-    protected void Back()
+    private IEnumerator AttackMode()
     {
-        // startPos에서 멀어지면 최대 체력이 되고 처음 위치로 돌아감
-        Vector3 outDistance = this.transform.position - startPos;
+        // animator.SetTrigger("FindTarget");
+        // -> !!! 느낌표 ui 추가
+        yield return new WaitForSeconds(wakeUpDelay);
+        state = EnemyState.Attack;
+        animator.SetBool("isMove", true);
+        // agent.SetDestination(target.transform.position);
+    }
 
-        if (outDistance.sqrMagnitude > Mathf.Pow(backRange, 2) && state != State.Back)
+    private void BackMode()
+    {
+        state = EnemyState.Back;
+        stat.Heal(true);
+        // agent.SetDestination(startPos);
+    }
+
+    private void IdleMode()
+    {
+        state = EnemyState.Idle;
+        animator.SetBool("isMove", false);
+    }
+
+    private void StopMove()
+    {
+        // attacking일 때 정지 시 사용
+        agent.isStopped = true;
+        agent.velocity = Vector3.zero;
+        animator.SetBool("isMove", false);
+    }
+
+    private void AgainMove()
+    {
+        agent.isStopped = false;
+        animator.SetBool("isMove", true);
+    }
+
+    // -------------------------------------------------------------
+    // 공격, 피격
+    // -------------------------------------------------------------
+    private void ReadyToAttack()
+    {
+        StopMove();
+
+        // 타겟을 바라보고 있지 않은 경우
+        if (Vector3.Angle(target.transform.position - this.transform.position, this.transform.forward) > 5)
         {
-            // 돌아가는 상태가 아닌데 시작 지점에서 멀어진 경우
-            SetDestination(startPos, true);     // state 변경 및 시작 위치로 이동 state = Back
-            isWakeUp = false;
+            // 전방 10도(5 * 2) 밖에 있는 경우
+            Rotate(targetDir);
         }
 
-        if (state == State.Back)
+        if (canAttack)
         {
-            // 돌아가는 상태
-            stat.Heal(1);     // 호출 주기마다 1씩 체력 회복
-            UpdateHpBar();
-
-            if (outDistance.sqrMagnitude < 0.05f)
-            {
-                // 시작 지점으로 돌아오면
-                state = State.Idle;
-                hpBar.Return();
-                hpBar = null;
-            }
+            StartCoroutine("Attack");
         }
+    }
+
+    protected override IEnumerator Attack()
+    {
+        canAttack = false;
+        animator.SetTrigger("isAttack");
+        Invoke("AttackCooltime", 1f / stat.AttackSpeed);     // 공격 쿨타임
+        yield return new WaitForSeconds(1f / stat.AttackSpeed * 0.5f);      // 공격 애니메이션 실행한지 50% 지나면
+        target.GetComponent<ACharacter>().Attacked(stat.CalculateAttackDamage());  // 데미지 계산
+        yield break;
+    }
+
+    private void AttackCooltime()
+    {
+        canAttack = true;
+    }
+
+    public override bool Attacked(int damage)
+    {
+        stat.TakeDamage(damage);
+
+
+        sound.PlayAttackedSound();
+        
+        if (damageTextSystem == null)
+        {
+            damageTextSystem = GameObject.Find("Damage Text System").GetComponent<DamageTextSystem>();
+        }
+        damageTextSystem.FloatDamageText(damage, this.transform.position);
+
+        if (stat.Hp < 1)
+        {
+            Die();
+            return true;
+        }
+
+        return false;
     }
 
     protected override void Die()
@@ -89,13 +227,7 @@ public class Enemy : ACharacter
         spawner.Die(this);
     }
 
-    public virtual void Reset()
-    {
-        isWakeUp = false;
-        // Debug.LogError("Reset: 자식 클래스에서 오버라이드 되지 않음");
-    }
-
-    protected override void UpdateHpBar()
+    protected void UpdateHpBar()
     {
         if (hpBar == null)
         {
@@ -106,10 +238,5 @@ public class Enemy : ACharacter
 
         // update
         hpBar.UpdateHpBar((float)stat.Hp / stat.MaxHp);
-    }
-
-    protected override void PlayAttackedSound()
-    {
-        sound.PlayAttackedSound();
     }
 }

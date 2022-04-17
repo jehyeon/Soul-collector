@@ -100,7 +100,25 @@ public class Stat
         // !!! 공격 범위 추가하기
     }
 
-    // 방어
+    // 공격 관련 메소드
+    public int CalculateAttackDamage()
+    {
+        // 최소 데미지 ~ 최대 데미지 + 기본 데미지
+        if (this._criticalPercent > 0)
+        {
+            float rand = Random.value;
+
+            if (rand < this._criticalPercent * 0.01f)
+            {
+                // cri effect 추가해야 함
+                return _maxDamage + _defaultDamage;
+            }
+        }
+
+        return Random.Range(_minDamage, _maxDamage + 1) + _defaultDamage;
+    }
+
+    // 방어 관련 메소드
     public void RecoverHp()
     {
         Heal(_hpRecovery);
@@ -113,6 +131,24 @@ public class Stat
         {
             _hp = _maxHp;
         }
+    }
+
+    public void Heal(bool maxHeal)
+    {
+        if (maxHeal)
+        {
+            _hp = _maxHp;
+        }
+    }
+
+    public int CalculateTakenDamage(int damage)
+    {
+        return (damage - this._damageReduction) > 0 ? damage - this._damageReduction : 0;
+    }
+
+    public void TakeDamage(int damage)
+    {
+        DecreaseHp(CalculateTakenDamage(damage));
     }
     
     public override string ToString()

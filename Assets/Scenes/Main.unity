@@ -122,7 +122,7 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: dc0be86d733c2a14d8aa614d574d395c, type: 2}
 --- !u!4 &10886781 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1114970510067243222, guid: 82f65879806b2f74dbf50ceee930c467, type: 3}
@@ -947,6 +947,10 @@ PrefabInstance:
       value: Medieval_Foliage_Fern_Large
       objectReference: {fileID: 0}
     - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 88
       objectReference: {fileID: 0}
@@ -1161,6 +1165,10 @@ PrefabInstance:
     - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
       propertyPath: m_Name
       value: Medieval_Foliage_Fern_SideSml_A
+      objectReference: {fileID: 0}
+    - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -1647,6 +1655,10 @@ PrefabInstance:
       value: Medieval_Foliage_Fern_SideSml_A
       objectReference: {fileID: 0}
     - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 88
       objectReference: {fileID: 0}
@@ -1992,6 +2004,10 @@ PrefabInstance:
       value: Medieval_Foliage_Fern_SideSml_A
       objectReference: {fileID: 0}
     - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 88
       objectReference: {fileID: 0}
@@ -2056,6 +2072,10 @@ PrefabInstance:
     - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
       propertyPath: m_Name
       value: Medieval_Foliage_Fern_Large
+      objectReference: {fileID: 0}
+    - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -3420,6 +3440,10 @@ PrefabInstance:
       value: Medieval_Foliage_Fern_Med
       objectReference: {fileID: 0}
     - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 88
       objectReference: {fileID: 0}
@@ -3748,6 +3772,10 @@ PrefabInstance:
     - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
       propertyPath: m_Name
       value: Medieval_Foliage_Fern_SideSml_A
+      objectReference: {fileID: 0}
+    - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -4479,6 +4507,10 @@ PrefabInstance:
       value: Medieval_Foliage_Fern_Large
       objectReference: {fileID: 0}
     - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 88
       objectReference: {fileID: 0}
@@ -4712,8 +4744,16 @@ PrefabInstance:
     m_TransformParent: {fileID: 1221507944}
     m_Modifications:
     - target: {fileID: 2246853887398828660, guid: 80eb87f91dd603547b9f65dca1e4cec9, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2246853887398828660, guid: 80eb87f91dd603547b9f65dca1e4cec9, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 2451197566198403591, guid: 80eb87f91dd603547b9f65dca1e4cec9, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2451197566198403591, guid: 80eb87f91dd603547b9f65dca1e4cec9, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -4764,12 +4804,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4200185418724986729, guid: 80eb87f91dd603547b9f65dca1e4cec9, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4200185418724986729, guid: 80eb87f91dd603547b9f65dca1e4cec9, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 27
       objectReference: {fileID: 0}
     - target: {fileID: 7554300523426066815, guid: 80eb87f91dd603547b9f65dca1e4cec9, type: 3}
       propertyPath: m_Name
       value: Medieval_Assembly_Rock_B
+      objectReference: {fileID: 0}
+    - target: {fileID: 7554300523426066815, guid: 80eb87f91dd603547b9f65dca1e4cec9, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7554300523426066815, guid: 80eb87f91dd603547b9f65dca1e4cec9, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -4798,7 +4846,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &263686806
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5074,6 +5122,10 @@ PrefabInstance:
       value: Medieval_Foliage_Fern_SideSml_A
       objectReference: {fileID: 0}
     - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 88
       objectReference: {fileID: 0}
@@ -5252,6 +5304,10 @@ PrefabInstance:
     - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
       propertyPath: m_Name
       value: Medieval_Foliage_Fern_Med
+      objectReference: {fileID: 0}
+    - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -5490,6 +5546,10 @@ PrefabInstance:
     - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
       propertyPath: m_Name
       value: Medieval_Foliage_Fern_SideSml_A
+      objectReference: {fileID: 0}
+    - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -13714,6 +13774,10 @@ PrefabInstance:
       value: Medieval_Foliage_Fern_Large
       objectReference: {fileID: 0}
     - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 88
       objectReference: {fileID: 0}
@@ -13768,6 +13832,52 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8602107324436743586, guid: 46bd459707cb67b4284300f902385c6c, type: 3}
   m_PrefabInstance: {fileID: 620840261}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &377528741 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6175502181469211763, guid: db72df50bbb555a43900bdc3ec5da828, type: 3}
+  m_PrefabInstance: {fileID: 2052382075}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &377528743
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 377528741}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &380152282
 GameObject:
   m_ObjectHideFlags: 0
@@ -14635,6 +14745,10 @@ PrefabInstance:
       value: Medieval_Foliage_Fern_Large
       objectReference: {fileID: 0}
     - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 88
       objectReference: {fileID: 0}
@@ -15106,6 +15220,10 @@ PrefabInstance:
       value: Medieval_Foliage_Fern_Med
       objectReference: {fileID: 0}
     - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 88
       objectReference: {fileID: 0}
@@ -15131,6 +15249,10 @@ PrefabInstance:
     - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
       propertyPath: m_Name
       value: Medieval_Foliage_Fern_SideSml_A
+      objectReference: {fileID: 0}
+    - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -15345,6 +15467,10 @@ PrefabInstance:
       value: Medieval_Foliage_Fern_Large
       objectReference: {fileID: 0}
     - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 88
       objectReference: {fileID: 0}
@@ -15528,6 +15654,10 @@ PrefabInstance:
       value: Medieval_Foliage_Fern_SideSml_A
       objectReference: {fileID: 0}
     - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 88
       objectReference: {fileID: 0}
@@ -15582,6 +15712,63 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3592939279913386749, guid: 85e88d8b062772348be014b114ab3230, type: 3}
   m_PrefabInstance: {fileID: 2108661054}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &503120233
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1292922899381388474, guid: 62b1496b72a1fc74fbfcd3475db8a0bb, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1292922899381388474, guid: 62b1496b72a1fc74fbfcd3475db8a0bb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -13.681963
+      objectReference: {fileID: 0}
+    - target: {fileID: 1292922899381388474, guid: 62b1496b72a1fc74fbfcd3475db8a0bb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.0000019073486
+      objectReference: {fileID: 0}
+    - target: {fileID: 1292922899381388474, guid: 62b1496b72a1fc74fbfcd3475db8a0bb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.05855751
+      objectReference: {fileID: 0}
+    - target: {fileID: 1292922899381388474, guid: 62b1496b72a1fc74fbfcd3475db8a0bb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1292922899381388474, guid: 62b1496b72a1fc74fbfcd3475db8a0bb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1292922899381388474, guid: 62b1496b72a1fc74fbfcd3475db8a0bb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1292922899381388474, guid: 62b1496b72a1fc74fbfcd3475db8a0bb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1292922899381388474, guid: 62b1496b72a1fc74fbfcd3475db8a0bb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1292922899381388474, guid: 62b1496b72a1fc74fbfcd3475db8a0bb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1292922899381388474, guid: 62b1496b72a1fc74fbfcd3475db8a0bb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1295643219707451346, guid: 62b1496b72a1fc74fbfcd3475db8a0bb, type: 3}
+      propertyPath: m_Name
+      value: Troll
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 62b1496b72a1fc74fbfcd3475db8a0bb, type: 3}
 --- !u!1 &503324436
 GameObject:
   m_ObjectHideFlags: 0
@@ -15625,8 +15812,16 @@ PrefabInstance:
     m_TransformParent: {fileID: 1221507944}
     m_Modifications:
     - target: {fileID: 663354530589930110, guid: db72df50bbb555a43900bdc3ec5da828, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 663354530589930110, guid: db72df50bbb555a43900bdc3ec5da828, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4384627020439615861, guid: db72df50bbb555a43900bdc3ec5da828, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4384627020439615861, guid: db72df50bbb555a43900bdc3ec5da828, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -15637,8 +15832,16 @@ PrefabInstance:
       value: Medieval_Assembly_Rock_C
       objectReference: {fileID: 0}
     - target: {fileID: 6175502181469211763, guid: db72df50bbb555a43900bdc3ec5da828, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6175502181469211763, guid: db72df50bbb555a43900bdc3ec5da828, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8596512388768797811, guid: db72df50bbb555a43900bdc3ec5da828, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8596512388768797811, guid: db72df50bbb555a43900bdc3ec5da828, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -15726,7 +15929,7 @@ Transform:
   - {fileID: 666467324}
   - {fileID: 1100230933}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &513748202
 PrefabInstance:
@@ -15878,6 +16081,52 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9b87b29cd9b46b2459d7dd35154e4f19, type: 3}
+--- !u!1 &515107817 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6175502181469211763, guid: db72df50bbb555a43900bdc3ec5da828, type: 3}
+  m_PrefabInstance: {fileID: 1572174392}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &515107819
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 515107817}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1001 &517269322
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16180,6 +16429,10 @@ PrefabInstance:
       value: Medieval_Foliage_Fern_Med
       objectReference: {fileID: 0}
     - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 88
       objectReference: {fileID: 0}
@@ -16195,6 +16448,10 @@ PrefabInstance:
     - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
       propertyPath: m_Name
       value: Medieval_Foliage_Fern_SideSml_A
+      objectReference: {fileID: 0}
+    - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -28616,6 +28873,10 @@ PrefabInstance:
       value: Medieval_Foliage_Fern_SideSml_A
       objectReference: {fileID: 0}
     - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 88
       objectReference: {fileID: 0}
@@ -28876,6 +29137,10 @@ PrefabInstance:
       value: Medieval_Foliage_Fern_Med
       objectReference: {fileID: 0}
     - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 88
       objectReference: {fileID: 0}
@@ -28891,6 +29156,10 @@ PrefabInstance:
     - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
       propertyPath: m_Name
       value: Medieval_Foliage_Fern_Large
+      objectReference: {fileID: 0}
+    - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -29360,6 +29629,10 @@ PrefabInstance:
       value: Medieval_Foliage_Fern_Med
       objectReference: {fileID: 0}
     - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 88
       objectReference: {fileID: 0}
@@ -29413,7 +29686,7 @@ GameObject:
   m_Name: Outline fences (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &633344831
@@ -29946,8 +30219,8 @@ RectTransform:
   m_Father: {fileID: 973959975}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -30100,7 +30373,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -30295,6 +30568,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 660885786}
   m_CullTransparentMesh: 1
+--- !u!1 &661210067 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7554300523426066815, guid: 80eb87f91dd603547b9f65dca1e4cec9, type: 3}
+  m_PrefabInstance: {fileID: 259423584}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &661210069
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 661210067}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &666467323
 GameObject:
   m_ObjectHideFlags: 0
@@ -30816,6 +31135,52 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 85e88d8b062772348be014b114ab3230, type: 3}
+--- !u!1 &690877791 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6175502181469211763, guid: db72df50bbb555a43900bdc3ec5da828, type: 3}
+  m_PrefabInstance: {fileID: 1964191789}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &690877793
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 690877791}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1001 &695798022
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -31950,6 +32315,52 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7260a100792e91b449d4e981564a6886, type: 3}
+--- !u!1 &730650839 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9104057904607299443, guid: 82f65879806b2f74dbf50ceee930c467, type: 3}
+  m_PrefabInstance: {fileID: 1311377753}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &730650841
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 730650839}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1001 &734543637
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -32188,6 +32599,10 @@ PrefabInstance:
     - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
       propertyPath: m_Name
       value: Medieval_Foliage_Fern_Large
+      objectReference: {fileID: 0}
+    - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -32534,6 +32949,10 @@ PrefabInstance:
       value: Medieval_Foliage_Fern_Med
       objectReference: {fileID: 0}
     - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 88
       objectReference: {fileID: 0}
@@ -32759,8 +33178,16 @@ PrefabInstance:
     m_TransformParent: {fileID: 1221507944}
     m_Modifications:
     - target: {fileID: 663354530589930110, guid: db72df50bbb555a43900bdc3ec5da828, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 663354530589930110, guid: db72df50bbb555a43900bdc3ec5da828, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4384627020439615861, guid: db72df50bbb555a43900bdc3ec5da828, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4384627020439615861, guid: db72df50bbb555a43900bdc3ec5da828, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -32771,8 +33198,16 @@ PrefabInstance:
       value: Medieval_Assembly_Rock_C
       objectReference: {fileID: 0}
     - target: {fileID: 6175502181469211763, guid: db72df50bbb555a43900bdc3ec5da828, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6175502181469211763, guid: db72df50bbb555a43900bdc3ec5da828, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8596512388768797811, guid: db72df50bbb555a43900bdc3ec5da828, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8596512388768797811, guid: db72df50bbb555a43900bdc3ec5da828, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -33353,6 +33788,10 @@ PrefabInstance:
       value: Medieval_Foliage_Fern_SideSml_A
       objectReference: {fileID: 0}
     - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 88
       objectReference: {fileID: 0}
@@ -33412,6 +33851,10 @@ PrefabInstance:
     - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
       propertyPath: m_Name
       value: Medieval_Foliage_Fern_SideSml_A
+      objectReference: {fileID: 0}
+    - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -33764,6 +34207,10 @@ PrefabInstance:
       value: Medieval_Foliage_Fern_Med
       objectReference: {fileID: 0}
     - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 88
       objectReference: {fileID: 0}
@@ -33779,6 +34226,10 @@ PrefabInstance:
     - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
       propertyPath: m_Name
       value: Medieval_Foliage_Fern_Large
+      objectReference: {fileID: 0}
+    - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -33845,6 +34296,10 @@ PrefabInstance:
     - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
       propertyPath: m_Name
       value: Medieval_Foliage_Fern_Large
+      objectReference: {fileID: 0}
+    - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -34230,6 +34685,10 @@ PrefabInstance:
       value: Medieval_Foliage_Fern_Large
       objectReference: {fileID: 0}
     - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 88
       objectReference: {fileID: 0}
@@ -34600,8 +35059,16 @@ PrefabInstance:
     m_TransformParent: {fileID: 1221507944}
     m_Modifications:
     - target: {fileID: 663354530589930110, guid: db72df50bbb555a43900bdc3ec5da828, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 663354530589930110, guid: db72df50bbb555a43900bdc3ec5da828, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4384627020439615861, guid: db72df50bbb555a43900bdc3ec5da828, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4384627020439615861, guid: db72df50bbb555a43900bdc3ec5da828, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -34612,8 +35079,16 @@ PrefabInstance:
       value: Medieval_Assembly_Rock_C
       objectReference: {fileID: 0}
     - target: {fileID: 6175502181469211763, guid: db72df50bbb555a43900bdc3ec5da828, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6175502181469211763, guid: db72df50bbb555a43900bdc3ec5da828, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8596512388768797811, guid: db72df50bbb555a43900bdc3ec5da828, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8596512388768797811, guid: db72df50bbb555a43900bdc3ec5da828, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -35004,7 +35479,7 @@ GameObject:
   m_Name: Outline fences (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &886883548
@@ -35468,6 +35943,10 @@ PrefabInstance:
       value: Medieval_Foliage_Fern_SideSml_A
       objectReference: {fileID: 0}
     - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 88
       objectReference: {fileID: 0}
@@ -35735,6 +36214,10 @@ PrefabInstance:
       value: Medieval_Foliage_Fern_Med
       objectReference: {fileID: 0}
     - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 88
       objectReference: {fileID: 0}
@@ -35929,6 +36412,10 @@ PrefabInstance:
     - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
       propertyPath: m_Name
       value: Medieval_Foliage_Fern_SideSml_A
+      objectReference: {fileID: 0}
+    - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -40051,6 +40538,10 @@ PrefabInstance:
       value: Medieval_Foliage_Fern_Med
       objectReference: {fileID: 0}
     - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 88
       objectReference: {fileID: 0}
@@ -40557,6 +41048,10 @@ PrefabInstance:
       value: Medieval_Foliage_Fern_Med
       objectReference: {fileID: 0}
     - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 88
       objectReference: {fileID: 0}
@@ -40733,6 +41228,10 @@ PrefabInstance:
       value: Medieval_Foliage_Fern_Large
       objectReference: {fileID: 0}
     - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 88
       objectReference: {fileID: 0}
@@ -40792,6 +41291,10 @@ PrefabInstance:
     - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
       propertyPath: m_Name
       value: Medieval_Foliage_Fern_SideSml_A
+      objectReference: {fileID: 0}
+    - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -41223,6 +41726,10 @@ PrefabInstance:
       value: Medieval_Foliage_Fern_Med
       objectReference: {fileID: 0}
     - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 88
       objectReference: {fileID: 0}
@@ -41243,6 +41750,10 @@ PrefabInstance:
     - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
       propertyPath: m_Name
       value: Medieval_Foliage_Fern_Large
+      objectReference: {fileID: 0}
+    - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -41392,6 +41903,10 @@ PrefabInstance:
     - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
       propertyPath: m_Name
       value: Medieval_Foliage_Fern_Large
+      objectReference: {fileID: 0}
+    - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -47013,7 +47528,7 @@ GameObject:
   m_Name: etc
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &1033968823
@@ -47934,6 +48449,10 @@ PrefabInstance:
       value: Medieval_Foliage_Fern_SideSml_A
       objectReference: {fileID: 0}
     - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 88
       objectReference: {fileID: 0}
@@ -48003,6 +48522,10 @@ PrefabInstance:
     - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
       propertyPath: m_Name
       value: Medieval_Foliage_Fern_Large
+      objectReference: {fileID: 0}
+    - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -48388,7 +48911,7 @@ Transform:
   - {fileID: 1841172510}
   - {fileID: 1033968823}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1092042077 stripped
 Transform:
@@ -48522,6 +49045,10 @@ PrefabInstance:
     - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
       propertyPath: m_Name
       value: Medieval_Foliage_Fern_Med
+      objectReference: {fileID: 0}
+    - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -49340,6 +49867,10 @@ PrefabInstance:
       value: Medieval_Foliage_Fern_SideSml_A
       objectReference: {fileID: 0}
     - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 88
       objectReference: {fileID: 0}
@@ -49601,7 +50132,7 @@ Transform:
   m_LocalScale: {x: 0.5, y: 5, z: 15}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1130638284
 PrefabInstance:
@@ -54442,6 +54973,10 @@ PrefabInstance:
       value: Medieval_Foliage_Fern_SideSml_A
       objectReference: {fileID: 0}
     - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 88
       objectReference: {fileID: 0}
@@ -54623,6 +55158,10 @@ PrefabInstance:
     - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
       propertyPath: m_Name
       value: Medieval_Foliage_Fern_Large
+      objectReference: {fileID: 0}
+    - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -54928,6 +55467,10 @@ PrefabInstance:
       value: Medieval_Foliage_Fern_Med
       objectReference: {fileID: 0}
     - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 88
       objectReference: {fileID: 0}
@@ -55199,6 +55742,10 @@ PrefabInstance:
     - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
       propertyPath: m_Name
       value: Medieval_Foliage_Fern_SideSml_A
+      objectReference: {fileID: 0}
+    - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -55666,6 +56213,10 @@ PrefabInstance:
       value: Medieval_Foliage_Fern_SideSml_A
       objectReference: {fileID: 0}
     - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 88
       objectReference: {fileID: 0}
@@ -55792,6 +56343,52 @@ Transform:
   m_Father: {fileID: 1090371464}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1223697024 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6175502181469211763, guid: db72df50bbb555a43900bdc3ec5da828, type: 3}
+  m_PrefabInstance: {fileID: 503706529}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &1223697026
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1223697024}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &1227038168
 GameObject:
   m_ObjectHideFlags: 0
@@ -56545,7 +57142,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 37.529003, y: -105.93101, z: 26.846}
 --- !u!1 &1266643698
 GameObject:
@@ -56656,6 +57253,10 @@ PrefabInstance:
     - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
       propertyPath: m_Name
       value: Medieval_Foliage_Fern_SideSml_A
+      objectReference: {fileID: 0}
+    - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -57304,6 +57905,10 @@ PrefabInstance:
       value: Medieval_Foliage_Fern_Large
       objectReference: {fileID: 0}
     - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 88
       objectReference: {fileID: 0}
@@ -57407,6 +58012,10 @@ PrefabInstance:
     - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
       propertyPath: m_Name
       value: Medieval_Foliage_Fern_Med
+      objectReference: {fileID: 0}
+    - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -57729,6 +58338,10 @@ PrefabInstance:
       value: Medieval_Foliage_Fern_Med
       objectReference: {fileID: 0}
     - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 88
       objectReference: {fileID: 0}
@@ -57873,6 +58486,10 @@ PrefabInstance:
       value: Medieval_Foliage_Fern_Med
       objectReference: {fileID: 0}
     - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 88
       objectReference: {fileID: 0}
@@ -57885,6 +58502,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1221507944}
     m_Modifications:
+    - target: {fileID: 541417041483959533, guid: 82f65879806b2f74dbf50ceee930c467, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 541417041483959533, guid: 82f65879806b2f74dbf50ceee930c467, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 25
@@ -57934,8 +58555,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2237409334400084423, guid: 82f65879806b2f74dbf50ceee930c467, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2237409334400084423, guid: 82f65879806b2f74dbf50ceee930c467, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 27
+      objectReference: {fileID: 0}
+    - target: {fileID: 6193599564359590460, guid: 82f65879806b2f74dbf50ceee930c467, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6193599564359590460, guid: 82f65879806b2f74dbf50ceee930c467, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -57944,6 +58573,10 @@ PrefabInstance:
     - target: {fileID: 9104057904607299443, guid: 82f65879806b2f74dbf50ceee930c467, type: 3}
       propertyPath: m_Name
       value: Medieval_Assembly_Rock_A
+      objectReference: {fileID: 0}
+    - target: {fileID: 9104057904607299443, guid: 82f65879806b2f74dbf50ceee930c467, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9104057904607299443, guid: 82f65879806b2f74dbf50ceee930c467, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -63302,6 +63935,10 @@ PrefabInstance:
       value: Medieval_Foliage_Fern_SideSml_A
       objectReference: {fileID: 0}
     - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 88
       objectReference: {fileID: 0}
@@ -63561,6 +64198,10 @@ PrefabInstance:
       value: Medieval_Foliage_Fern_Med
       objectReference: {fileID: 0}
     - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 88
       objectReference: {fileID: 0}
@@ -63791,6 +64432,10 @@ PrefabInstance:
     - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
       propertyPath: m_Name
       value: Medieval_Foliage_Fern_Med
+      objectReference: {fileID: 0}
+    - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -64537,6 +65182,10 @@ PrefabInstance:
       value: Medieval_Foliage_Fern_Large
       objectReference: {fileID: 0}
     - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 88
       objectReference: {fileID: 0}
@@ -65050,6 +65699,10 @@ PrefabInstance:
     - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
       propertyPath: m_Name
       value: Medieval_Foliage_Fern_Med
+      objectReference: {fileID: 0}
+    - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -66324,6 +66977,10 @@ PrefabInstance:
       value: Medieval_Foliage_Fern_Med
       objectReference: {fileID: 0}
     - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 88
       objectReference: {fileID: 0}
@@ -66546,6 +67203,10 @@ PrefabInstance:
     - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
       propertyPath: m_Name
       value: Medieval_Foliage_Fern_Large
+      objectReference: {fileID: 0}
+    - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -66778,6 +67439,10 @@ PrefabInstance:
       value: Medieval_Foliage_Fern_SideSml_A
       objectReference: {fileID: 0}
     - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 88
       objectReference: {fileID: 0}
@@ -66910,6 +67575,10 @@ PrefabInstance:
     - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
       propertyPath: m_Name
       value: Medieval_Foliage_Fern_Large
+      objectReference: {fileID: 0}
+    - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -67154,6 +67823,10 @@ PrefabInstance:
     - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
       propertyPath: m_Name
       value: Medieval_Foliage_Fern_SideSml_A
+      objectReference: {fileID: 0}
+    - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -67699,6 +68372,10 @@ PrefabInstance:
       value: Medieval_Foliage_Fern_SideSml_A
       objectReference: {fileID: 0}
     - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 88
       objectReference: {fileID: 0}
@@ -68070,8 +68747,16 @@ PrefabInstance:
     m_TransformParent: {fileID: 1221507944}
     m_Modifications:
     - target: {fileID: 663354530589930110, guid: db72df50bbb555a43900bdc3ec5da828, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 663354530589930110, guid: db72df50bbb555a43900bdc3ec5da828, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4384627020439615861, guid: db72df50bbb555a43900bdc3ec5da828, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4384627020439615861, guid: db72df50bbb555a43900bdc3ec5da828, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -68082,8 +68767,16 @@ PrefabInstance:
       value: Medieval_Assembly_Rock_C
       objectReference: {fileID: 0}
     - target: {fileID: 6175502181469211763, guid: db72df50bbb555a43900bdc3ec5da828, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6175502181469211763, guid: db72df50bbb555a43900bdc3ec5da828, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8596512388768797811, guid: db72df50bbb555a43900bdc3ec5da828, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8596512388768797811, guid: db72df50bbb555a43900bdc3ec5da828, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -68460,6 +69153,10 @@ PrefabInstance:
     - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
       propertyPath: m_Name
       value: Medieval_Foliage_Fern_Large
+      objectReference: {fileID: 0}
+    - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -68970,6 +69667,10 @@ PrefabInstance:
       value: Medieval_Foliage_Fern_Large
       objectReference: {fileID: 0}
     - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 88
       objectReference: {fileID: 0}
@@ -69291,6 +69992,10 @@ PrefabInstance:
       value: Medieval_Foliage_Fern_SideSml_A
       objectReference: {fileID: 0}
     - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 88
       objectReference: {fileID: 0}
@@ -69429,7 +70134,7 @@ GameObject:
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 4294967263
   m_IsActive: 1
 --- !u!154 &1631773255
 TerrainCollider:
@@ -69638,6 +70343,10 @@ PrefabInstance:
     - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
       propertyPath: m_Name
       value: Medieval_Foliage_Fern_SideSml_A
+      objectReference: {fileID: 0}
+    - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -69908,6 +70617,10 @@ PrefabInstance:
     - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
       propertyPath: m_Name
       value: Medieval_Foliage_Fern_Med
+      objectReference: {fileID: 0}
+    - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -70203,6 +70916,10 @@ PrefabInstance:
       value: Medieval_Foliage_Fern_Med
       objectReference: {fileID: 0}
     - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 88
       objectReference: {fileID: 0}
@@ -70298,7 +71015,7 @@ GameObject:
   m_Name: Outline fences
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &1670933978
@@ -70557,6 +71274,10 @@ PrefabInstance:
     - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
       propertyPath: m_Name
       value: Medieval_Foliage_Fern_Large
+      objectReference: {fileID: 0}
+    - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -70876,6 +71597,10 @@ PrefabInstance:
       value: Medieval_Foliage_Fern_Large
       objectReference: {fileID: 0}
     - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 88
       objectReference: {fileID: 0}
@@ -71146,6 +71871,10 @@ PrefabInstance:
     - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
       propertyPath: m_Name
       value: Medieval_Foliage_Fern_SideSml_A
+      objectReference: {fileID: 0}
+    - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -71690,6 +72419,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1752109558}
   m_CullTransparentMesh: 1
+--- !u!1 &1752312880 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6175502181469211763, guid: db72df50bbb555a43900bdc3ec5da828, type: 3}
+  m_PrefabInstance: {fileID: 875905605}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &1752312882
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1752312880}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!4 &1755322821 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9221551935384528149, guid: db72df50bbb555a43900bdc3ec5da828, type: 3}
@@ -71829,6 +72604,10 @@ PrefabInstance:
       value: Medieval_Foliage_Fern_Med
       objectReference: {fileID: 0}
     - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 88
       objectReference: {fileID: 0}
@@ -71943,6 +72722,10 @@ PrefabInstance:
     - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
       propertyPath: m_Name
       value: Medieval_Foliage_Fern_Large
+      objectReference: {fileID: 0}
+    - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -72470,6 +73253,10 @@ PrefabInstance:
       value: Medieval_Foliage_Fern_Med
       objectReference: {fileID: 0}
     - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 88
       objectReference: {fileID: 0}
@@ -72485,6 +73272,10 @@ PrefabInstance:
     - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
       propertyPath: m_Name
       value: Medieval_Foliage_Fern_Large
+      objectReference: {fileID: 0}
+    - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -72759,6 +73550,10 @@ PrefabInstance:
       value: Medieval_Foliage_Fern_SideSml_A
       objectReference: {fileID: 0}
     - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 88
       objectReference: {fileID: 0}
@@ -72992,6 +73787,10 @@ PrefabInstance:
     - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
       propertyPath: m_Name
       value: Medieval_Foliage_Fern_Med
+      objectReference: {fileID: 0}
+    - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -73274,6 +74073,10 @@ PrefabInstance:
     - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
       propertyPath: m_Name
       value: Medieval_Foliage_Fern_Large
+      objectReference: {fileID: 0}
+    - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -73741,6 +74544,10 @@ PrefabInstance:
       value: Medieval_Foliage_Fern_Med
       objectReference: {fileID: 0}
     - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 88
       objectReference: {fileID: 0}
@@ -73928,6 +74735,10 @@ PrefabInstance:
     - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
       propertyPath: m_Name
       value: Medieval_Foliage_Fern_SideSml_A
+      objectReference: {fileID: 0}
+    - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -74205,6 +75016,10 @@ PrefabInstance:
     - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
       propertyPath: m_Name
       value: Medieval_Foliage_Fern_Med
+      objectReference: {fileID: 0}
+    - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -75153,6 +75968,10 @@ PrefabInstance:
       value: Medieval_Foliage_Fern_Large
       objectReference: {fileID: 0}
     - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 88
       objectReference: {fileID: 0}
@@ -75866,6 +76685,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21f1ded2e21ad8347ba2b1b31d534402, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!195 &1954890777
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1954890770}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 100
+  avoidancePriority: 50
+  m_AngularSpeed: 1000
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &1956278756
 GameObject:
   m_ObjectHideFlags: 0
@@ -75922,8 +76763,16 @@ PrefabInstance:
     m_TransformParent: {fileID: 1221507944}
     m_Modifications:
     - target: {fileID: 663354530589930110, guid: db72df50bbb555a43900bdc3ec5da828, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 663354530589930110, guid: db72df50bbb555a43900bdc3ec5da828, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4384627020439615861, guid: db72df50bbb555a43900bdc3ec5da828, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4384627020439615861, guid: db72df50bbb555a43900bdc3ec5da828, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -75934,8 +76783,16 @@ PrefabInstance:
       value: Medieval_Assembly_Rock_C
       objectReference: {fileID: 0}
     - target: {fileID: 6175502181469211763, guid: db72df50bbb555a43900bdc3ec5da828, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6175502181469211763, guid: db72df50bbb555a43900bdc3ec5da828, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8596512388768797811, guid: db72df50bbb555a43900bdc3ec5da828, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8596512388768797811, guid: db72df50bbb555a43900bdc3ec5da828, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -76048,6 +76905,10 @@ PrefabInstance:
       value: Medieval_Foliage_Fern_Med
       objectReference: {fileID: 0}
     - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 88
       objectReference: {fileID: 0}
@@ -76141,6 +77002,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 1221507944}
     m_Modifications:
     - target: {fileID: 541417041483959533, guid: 82f65879806b2f74dbf50ceee930c467, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 541417041483959533, guid: 82f65879806b2f74dbf50ceee930c467, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 25
       objectReference: {fileID: 0}
@@ -76189,8 +77054,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2237409334400084423, guid: 82f65879806b2f74dbf50ceee930c467, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2237409334400084423, guid: 82f65879806b2f74dbf50ceee930c467, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 27
+      objectReference: {fileID: 0}
+    - target: {fileID: 6193599564359590460, guid: 82f65879806b2f74dbf50ceee930c467, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6193599564359590460, guid: 82f65879806b2f74dbf50ceee930c467, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -76199,6 +77072,10 @@ PrefabInstance:
     - target: {fileID: 9104057904607299443, guid: 82f65879806b2f74dbf50ceee930c467, type: 3}
       propertyPath: m_Name
       value: Medieval_Assembly_Rock_A
+      objectReference: {fileID: 0}
+    - target: {fileID: 9104057904607299443, guid: 82f65879806b2f74dbf50ceee930c467, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9104057904607299443, guid: 82f65879806b2f74dbf50ceee930c467, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -76383,6 +77260,10 @@ PrefabInstance:
     - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
       propertyPath: m_Name
       value: Medieval_Foliage_Fern_Med
+      objectReference: {fileID: 0}
+    - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -76713,7 +77594,7 @@ GameObject:
   m_Name: Outline fences (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &2000937718
@@ -76742,6 +77623,10 @@ PrefabInstance:
     - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
       propertyPath: m_Name
       value: Medieval_Foliage_Fern_Large
+      objectReference: {fileID: 0}
+    - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -76925,6 +77810,10 @@ PrefabInstance:
     - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
       propertyPath: m_Name
       value: Medieval_Foliage_Fern_Med
+      objectReference: {fileID: 0}
+    - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -77272,6 +78161,10 @@ PrefabInstance:
       value: Medieval_Foliage_Fern_SideSml_A
       objectReference: {fileID: 0}
     - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 618385741968748525, guid: 8c5a0d00a6b2d3d418e7c09b8c1742fd, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 88
       objectReference: {fileID: 0}
@@ -77598,6 +78491,10 @@ PrefabInstance:
       value: Medieval_Foliage_Fern_Med
       objectReference: {fileID: 0}
     - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 88
       objectReference: {fileID: 0}
@@ -77696,8 +78593,16 @@ PrefabInstance:
     m_TransformParent: {fileID: 1221507944}
     m_Modifications:
     - target: {fileID: 663354530589930110, guid: db72df50bbb555a43900bdc3ec5da828, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 663354530589930110, guid: db72df50bbb555a43900bdc3ec5da828, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4384627020439615861, guid: db72df50bbb555a43900bdc3ec5da828, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4384627020439615861, guid: db72df50bbb555a43900bdc3ec5da828, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -77708,8 +78613,16 @@ PrefabInstance:
       value: Medieval_Assembly_Rock_C
       objectReference: {fileID: 0}
     - target: {fileID: 6175502181469211763, guid: db72df50bbb555a43900bdc3ec5da828, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6175502181469211763, guid: db72df50bbb555a43900bdc3ec5da828, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8596512388768797811, guid: db72df50bbb555a43900bdc3ec5da828, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8596512388768797811, guid: db72df50bbb555a43900bdc3ec5da828, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -77817,6 +78730,10 @@ PrefabInstance:
       value: Medieval_Foliage_Fern_Med
       objectReference: {fileID: 0}
     - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 88
       objectReference: {fileID: 0}
@@ -77881,6 +78798,10 @@ PrefabInstance:
     - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
       propertyPath: m_Name
       value: Medieval_Foliage_Fern_Med
+      objectReference: {fileID: 0}
+    - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -78157,6 +79078,10 @@ PrefabInstance:
       value: Medieval_Foliage_Fern_Large
       objectReference: {fileID: 0}
     - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 88
       objectReference: {fileID: 0}
@@ -78300,6 +79225,52 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8602107324436743586, guid: 46bd459707cb67b4284300f902385c6c, type: 3}
   m_PrefabInstance: {fileID: 2078440664}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2079053100 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6175502181469211763, guid: db72df50bbb555a43900bdc3ec5da828, type: 3}
+  m_PrefabInstance: {fileID: 782298049}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &2079053102
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2079053100}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!4 &2080199827 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8801589038867150782, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
@@ -78359,6 +79330,10 @@ PrefabInstance:
     - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
       propertyPath: m_Name
       value: Medieval_Foliage_Fern_Med
+      objectReference: {fileID: 0}
+    - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -78699,6 +79674,52 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 85e88d8b062772348be014b114ab3230, type: 3}
+--- !u!1 &2094612495 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9104057904607299443, guid: 82f65879806b2f74dbf50ceee930c467, type: 3}
+  m_PrefabInstance: {fileID: 1974897149}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &2094612497
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2094612495}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!4 &2099578496 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8801589038867150782, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
@@ -78938,6 +79959,10 @@ PrefabInstance:
     - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
       propertyPath: m_Name
       value: Medieval_Foliage_Fern_Med
+      objectReference: {fileID: 0}
+    - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -79226,6 +80251,10 @@ PrefabInstance:
     - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
       propertyPath: m_Name
       value: Medieval_Foliage_Fern_Med
+      objectReference: {fileID: 0}
+    - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -79837,6 +80866,10 @@ PrefabInstance:
       value: Medieval_Foliage_Fern_Med
       objectReference: {fileID: 0}
     - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1797809344238368142, guid: b8ce63e776d248d48942d393065ea1e5, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 88
       objectReference: {fileID: 0}
@@ -80140,6 +81173,10 @@ PrefabInstance:
     - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
       propertyPath: m_Name
       value: Medieval_Foliage_Fern_Large
+      objectReference: {fileID: 0}
+    - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -80730,6 +81767,10 @@ PrefabInstance:
     - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
       propertyPath: m_Name
       value: Medieval_Foliage_Fern_Large
+      objectReference: {fileID: 0}
+    - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6953003461778646454, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -81900,11 +82941,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1491761871795138715, guid: ed19d98c0681f694a8f97f6fd5d84c6e, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1491761871795138715, guid: ed19d98c0681f694a8f97f6fd5d84c6e, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1491761872587368804, guid: ed19d98c0681f694a8f97f6fd5d84c6e, type: 3}
       propertyPath: m_Pivot.x
@@ -81996,7 +83037,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1491761872587368805, guid: ed19d98c0681f694a8f97f6fd5d84c6e, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ed19d98c0681f694a8f97f6fd5d84c6e, type: 3}
@@ -83324,7 +84365,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8802760108006271295, guid: 880d8813305d24941baf9a642ecab6ca, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 36
+      value: 4.7
       objectReference: {fileID: 0}
     - target: {fileID: 8802760108006271295, guid: 880d8813305d24941baf9a642ecab6ca, type: 3}
       propertyPath: m_LocalPosition.y
@@ -83332,7 +84373,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8802760108006271295, guid: 880d8813305d24941baf9a642ecab6ca, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 8802760108006271295, guid: 880d8813305d24941baf9a642ecab6ca, type: 3}
       propertyPath: m_LocalRotation.w
