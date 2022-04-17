@@ -56,12 +56,11 @@ public class Enemy : ACharacter
     // -------------------------------------------------------------
     private void FindNearByPlayer()
     {
-        Debug.Log(state);
         if (target == null)
         {
             // 타겟이 지정 안된 경우 (error)
             Debug.Log("스포너로부터 생성된 enemy가 아닙니다.");
-            target = GameObject.Find("Player").GetComponent<ACharacter>();
+            target = GameObject.Find("Player");
         }
 
         if (state == EnemyState.Back)
@@ -129,14 +128,15 @@ public class Enemy : ACharacter
     // -------------------------------------------------------------
     // 공격, 피격
     // -------------------------------------------------------------
-    protected override void Attack()
+    protected override IEnumerator Attack()
     {
-
+        yield break;
     }
 
-    public override void Attacked()
+    public override bool Attacked(int damage)
     {
-
+        Debug.Log("공격받음!");
+        return false;
     }
 
     protected override void Die()
@@ -144,7 +144,8 @@ public class Enemy : ACharacter
     //     hpBar.Return();
     //     hpBar = null;
     //     spawner.Die(this);
-    }    
+    }
+    
     // public void Set(Spawner parentSpawner, GameObject target)
     // {
     //     stat.Heal(99999);

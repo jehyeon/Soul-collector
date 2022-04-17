@@ -49,15 +49,16 @@ public class PlayerController : MonoBehaviour
                 // 땅 클릭하면 그 위치로 이동
                 if (raycastHit.collider.CompareTag("Ground"))
                 {
-                    player.SetDestination(raycastHit.point);
+                    player.Move(raycastHit.point);
                     MoveTarget(raycastHit.point);
                 }
 
                 // 적 클릭하면 target 설정
                 if (raycastHit.collider.CompareTag("Enemy"))
                 {
-                    // player.SetTarget(raycastHit.collider.gameObject);
-                    player.SetDestination(raycastHit.collider.gameObject.transform.position);
+                    player.SetTarget(raycastHit.collider.gameObject);
+                    player.AttackTarget();
+                    // player.SetDestination(raycastHit.collider.gameObject.transform.position);
                     AttackTarget(raycastHit.collider.gameObject.transform);
                     ClearMoveTarget();
                 }
@@ -83,14 +84,14 @@ public class PlayerController : MonoBehaviour
         if (moveX != 0 || moveZ != 0)
         {
             // 키보드 입력이 있는 경우
-            player.SetDestination(this.transform.position + new Vector3(moveX, 0, moveZ).normalized, true);
+            player.Move(this.transform.position + new Vector3(moveX, 0, moveZ).normalized, true);
             ClearMoveTarget();  // 키보드 이동 시 이동 타겟 클리어
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
             // 타겟 방향으로 이동
-            // player.MoveToTarget();
+            player.AttackTarget();
         }
 
         if (Input.GetKeyDown(KeyCode.Tab))
@@ -105,6 +106,7 @@ public class PlayerController : MonoBehaviour
     // -------------------------------------------------------------
     private void MoveTarget(Vector3 point)
     {
+        Debug.Log("타겟 마크 생성");
         if (moveTarget == null)
         {
             moveTarget = Instantiate(moveTargetPref);
@@ -191,7 +193,7 @@ public class PlayerController : MonoBehaviour
             if (enemies.Count > 0)
             {
                 // 근처 enemy가 있을 때 가장 가까운 enemy를 target으로 설정
-                // player.SetTarget(enemies[0].gameObject);
+                player.SetTarget(enemies[0].gameObject);
                 AttackTarget(enemies[0].transform);
             }
         }
@@ -202,12 +204,12 @@ public class PlayerController : MonoBehaviour
                 if (System.Object.ReferenceEquals(enemies[0].gameObject, player.Target.gameObject))
                 {
                     // 주변 Enemy가 Target 밖에 없는 경우
-                    // player.SetTarget(null);
+                    player.SetTarget(null);
                     ClearAttackTarget();
                 }
                 else
                 {
-                    // player.SetTarget(enemies[0].gameObject);
+                    player.SetTarget(enemies[0].gameObject);
                     AttackTarget(enemies[0].transform);
                 }
             }
@@ -218,13 +220,13 @@ public class PlayerController : MonoBehaviour
                 if (index + 1 >= enemies.Count)
                 {
                     // 마지막 index의 enemy가 타겟인 경우
-                    // player.SetTarget(enemies[0].gameObject);
+                    player.SetTarget(enemies[0].gameObject);
                     AttackTarget(enemies[0].transform);
                 }
                 else
                 {
                     // 다음 index 타겟으로 설정
-                    // player.SetTarget(enemies[index + 1].gameObject);
+                    player.SetTarget(enemies[index + 1].gameObject);
                     AttackTarget(enemies[index + 1].transform);
                 }
             }

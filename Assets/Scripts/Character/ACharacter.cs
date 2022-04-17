@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -6,64 +7,25 @@ public abstract class ACharacter : MonoBehaviour
     protected Stat stat;
     protected Animator animator;
     protected NavMeshAgent agent;
-    protected ACharacter target;
+    protected GameObject target;
+    protected Vector3 targetDir;
+    protected float attackAnimSpeed;    // 공격 애니메이션 속도
+    protected bool canAttack;           // 공격 쿨타임
     
-    public ACharacter Target { get { return Target; } }
+    public GameObject Target { get { return target; } }
 
-    protected abstract void Attack();
-    public abstract void Attacked();
+    protected abstract IEnumerator Attack();
+    public abstract bool Attacked(int damage);
     protected abstract void Die();
+
+    protected void Rotate(Vector3 dir)
+    {
+        this.transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * 5f);
+    }
 }
-
-// --------------------------------------
-// using System.Collections;
-// using System.Collections.Generic;
-// using UnityEngine;
-
-// public enum State
-// {
-//     Idle,
-//     Die,
-//     Attack,
-//     Move,
-//     Back    // for only Enemy
-// }
-
-// public class ACharacter : MonoBehaviour
-// {
-//     // 스탯 정보 및 현재 상태
-//     protected Stat stat;
-//     public State state;
-//     protected bool canAttack;   // 공격 쿨타임
-
-//     // 목적지 및 타겟
-//     protected Vector3 destinationPos;
-//     protected Vector3 destinationDir;
-//     protected GameObject target;
-//     protected Vector3 targetDir;
-
-//     // 애니메이터
-//     protected Animator animator;
-
-//     private float rotationSpeed = 10f;
-
-//     // 공격속도
-//     protected float attackAnimSpeed;    // 하위 클래스에서 할당해야함
     
-//     public GameObject Target { get { return target; } }
-
 //     // 데미지 text
 //     private DamageTextSystem damageTextSystem;
-
-//     protected virtual void Awake()
-//     {
-//         // 스탯 생성 및 Idle state
-//         stat = new Stat();
-//         state = State.Idle;
-//         canAttack = true;
-
-//         animator = GetComponentInChildren<Animator>();
-//     }
 
 //     // -------------------------------------------------------------
 //     // 이동
@@ -168,24 +130,7 @@ public abstract class ACharacter : MonoBehaviour
 
 //         if (targetDir.sqrMagnitude < Mathf.Pow(stat.AttackRange, 2))
 //         {
-//             // 공격 범위 안에 들어온 경우
-//             if (Vector3.Angle(targetDir, this.transform.forward) < 5)
-//             {
-//                 // 전방 10도(5 * 2)에 있는 경우
-//                 // target과 가까워져도 바라보고 있지 않으면 state.Move를 유지해서 전방을 바라보게 됨
-//                 if (canAttack)
-//                 {
-//                     state = State.Attack;
-//                     // 공격 쿨타임이 돌면
-//                     float actualAttackSpeed = 1 / stat.AttackSpeed;
-//                     float animationSpeed = attackAnimSpeed / actualAttackSpeed;      // !!! 무기별 애니메이션 속도가 다를경우 offset이 필요할 수 있음
-//                     animator.SetFloat("AttackSpeed", animationSpeed);               // 애니메이션 공격 속도 설정
-//                     animator.SetTrigger("isAttack");
-//                     StartCoroutine("Attack", actualAttackSpeed);
-//                 }
-
-//                 return;
-//             }
+//             
 //             else
 //             {
 //                 // 공격 사거리 안에 있는데도, 바라보고 있지 않는 경우
@@ -194,10 +139,6 @@ public abstract class ACharacter : MonoBehaviour
 //         }
 //     }
 
-//     protected virtual void TargetDone()
-//     {
-//         // for player
-//     }
 
 //     protected virtual IEnumerator Attack(float actualAttackSpeed)
 //     {
@@ -220,22 +161,6 @@ public abstract class ACharacter : MonoBehaviour
 //         canAttack = true;
 //     }
 
-//     protected int CalculateDamage()
-//     {
-//         // 최소 데미지 ~ 최대 데미지 + 기본 데미지
-//         if (stat.CriticalPercent > 0)
-//         {
-//             float rand = Random.value;
-
-//             if (rand < stat.CriticalPercent * 0.01f)
-//             {
-//                 // cri effect 추가해야 함
-//                 return stat.MaxDamage + stat.DefaultDamage;
-//             }
-//         }
-
-//         return Random.Range(stat.MinDamage, stat.MaxDamage + 1) + stat.DefaultDamage;
-//     }
 
 //     // 피격 관련
 //     public bool Attacked(int damage)
@@ -263,9 +188,3 @@ public abstract class ACharacter : MonoBehaviour
 //         }
 //         return false;
 //     }
-
-//     // 하위 클래스에서 재 선언
-//     protected virtual void PlayAttackedSound() {}
-//     protected virtual void UpdateHpBar() {}
-//     protected virtual void Die() {}
-// }
