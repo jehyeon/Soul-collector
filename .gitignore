@@ -7,6 +7,10 @@ save.json
 Assets/Scripts/Test
 
 Imports/
+
+# server db
+/server/database.sqlite
+
 # Created by https://www.toptal.com/developers/gitignore/api/unity
 # Edit at https://www.toptal.com/developers/gitignore?templates=unity
 
