@@ -1,7 +1,13 @@
 import sqlite3
+import os.path
+from time import time
+import sys
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+dbPath = os.path.join(BASE_DIR, 'database.sqlite')
 
 def connectToDB():
-    return sqlite3.connect('database.sqlite')
+    return sqlite3.connect(dbPath)
 
 ### Search
 # Users
@@ -12,11 +18,12 @@ def getUsers():
         conn.row_factory = sqlite3.Row
         cur = conn.cursor()
         cur.execute('SELECT * FROM users')
-        rows = cur.fetchall
+        rows = cur.fetchall()
 
         for row in rows:
             user = {}
-            users['id'] = row['id']
+            user['id'] = row['id']
+            user['lastLogin'] = row['lastLogin']
             users.append(user)
     
     except:
@@ -30,10 +37,11 @@ def getUserById(userId):
         conn = connectToDB()
         conn.row_factory = sqlite3.Row
         cur = conn.cursor()
-        cur.execute('SELECT * FROM users WHERE id = ?', userId)
+        cur.execute('SELECT * FROM users WHERE id = ?', (userId,))
         row = cur.fetchone()
 
         user['id'] = row['id']
+        user['lastLogin'] = row['lastLogin']
 
     except:
         user = {}
@@ -41,7 +49,7 @@ def getUserById(userId):
     return user
 
 # Auction
-def getAuctionItems(filter = None):
+def getAuction(filter = None):
     auctionItems = []
     try:
         conn = connectToDB
@@ -83,8 +91,8 @@ def getPushById(userId):
         conn = connectToDB()
         conn.row_factory = sqlite3.Row
         cur = conn.cursor()
-        cur.execute('SELECT * FROM push WHERE userId = ?', userId)
-        rows = cur.fetchall
+        cur.execute('SELECT * FROM push WHERE userId = ?', (userId,))
+        rows = cur.fetchall()
 
         for row in rows:
             push = {}
@@ -112,11 +120,9 @@ def insertUser(user):
     try:
         conn = connectToDB()
         cur = conn.cursor()
-        cur.execute('''
-            INSERT INTO users (id) VALUES (?)
-        ''', user['id'])
+        cur.execute("INSERT INTO users (id, lastLogin) VALUES (?, ?)",(user['id'], str(int(time()))))
         conn.commit()
-        insertedUser = getUserById(cur.lastrowid)
+        insertedUser = getUserById(user['id'])
 
     except:
         conn().rollback()

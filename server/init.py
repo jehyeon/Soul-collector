@@ -1,6 +1,9 @@
 import sqlite3
 import os
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+dbPath = os.path.join(BASE_DIR, 'database.sqlite')
+
 def main():
     print('Reset? (say "Yes")')
     reset = input('=> ')
@@ -8,15 +11,16 @@ def main():
     if not reset == 'Yes':
         pass
     
-    os.remove('./database.sqlite')
+    os.remove(dbPath)
 
-    conn = sqlite3.connect('database.sqlite')
+    conn = sqlite3.connect(dbPath)
     
     # Make users table
     conn.execute(
         '''
         CREATE TABLE users (
             id TEXT,
+            lastLogin TEXT,
             PRIMARY KEY(id)
         )
         '''
