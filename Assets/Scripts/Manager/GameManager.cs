@@ -32,6 +32,10 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     private UIController uiController;
+
+    [SerializeField]
+    private ApiManager apiManager;
+
     private DropSystem dropSystem;
     private EnemyHpBarSystem enemyHpBarSystem;
 
@@ -57,6 +61,11 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        // !!! 유저 정보를 서버에서 체크 해야함
+        // saveManager.Save.UserId -> DB에 있으면 lastLogin 업데이트
+        apiManager.CheckUser(saveManager.Save.UserId);
+        // -> DB에 없으면 saveManager 새로 생성
+
         // Load Inventory, Equip info, gold
         Inventory.StartInventory();
         equipment.InitEquipmentSlots();

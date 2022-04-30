@@ -7,6 +7,7 @@ using System.Linq;
 public class Save
 {
     // json to obj를 위해 save는 모두 public으로 선언
+    public string UserId;
     public int Gold;              // Gold 정보
     public List<int> Skill;
     public int LastSlotIndex;     // 아이템이 있는 마지막 슬롯 index
@@ -18,6 +19,7 @@ public class Save
     // Methods
     public Save()
     {
+        UserId = System.Guid.NewGuid().ToString();
         Gold = 9999999;     // !!! for test
         LastSlotIndex = 0;
         LastSlotId = 0;

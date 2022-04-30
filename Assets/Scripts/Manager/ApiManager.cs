@@ -2,45 +2,67 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using LitJson;
 
-public class TempUser
+public class UserForAPI
 {
+    public int id;
     public string userId;
 }
-public class AuctionTest : MonoBehaviour
-{
-    private string URL = "http://127.0.0.1:5000";
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            CreateUserId();
-        }
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            StartCoroutine(GetUsers());
-        }
-    
-    }
+public class ApiManager : MonoBehaviour
+{
+    private string URL = "http://127.0.0.1:5000";       // TEMP
 
     // Users
-    IEnumerator GetUsers()
+    public void CheckUser(string userId)
     {
-        UnityWebRequest www = UnityWebRequest.Get(URL + "/api/users");
+        StartCoroutine(CheckUserById(userId, returnValue => 
+        {
+            if (returnValue == "error")
+            {
+                Debug.LogError("server error");
+                return;
+            }
+
+            UserForAPI userInfo = JsonMapper.ToObject<UserForAPI>(returnValue);
+            if (userInfo.id == 0)
+            {
+                // 유저 정보 생성
+                TempUser user = new TempUser
+                {
+                    userId = userId
+                };
+
+                StartCoroutine(Post(URL + "/api/users/create", JsonUtility.ToJson(user)));
+
+                // !!! 생성 확인 미구현
+            }
+            // else
+            // {
+            //     Debug.Log("유저 정보 있음!");
+            //     // lastLogin 업데이트
+            // }
+        }));
+    }
+
+    IEnumerator CheckUserById(string userId, System.Action<string> callback = null)
+    {
+        UnityWebRequest www = UnityWebRequest.Get(URL + "/api/users/" + userId);
         yield return www.SendWebRequest();
 
         if (www.result != UnityWebRequest.Result.Success)
         {
             Debug.Log(www.error);
+            callback.Invoke("error");
         }
         else
         {
-            Debug.Log(www.downloadHandler.text);
+            callback.Invoke(www.downloadHandler.text);
         }
     }
 
-    private void CreateUserId()
+    private void CreateUser()
     {
         // Dictionary<string, string> data = new Dictionary<string, string>();
         // string userId = System.Guid.NewGuid().ToString();
@@ -48,13 +70,14 @@ public class AuctionTest : MonoBehaviour
         // List<IMultipartFormSection> form = new List<IMultipartFormSection>();
         // form.Add(new MultipartFormDataSection(string.Format("id={0}", System.Guid.NewGuid().ToString())));
 
-        TempUser user = new TempUser
+        UserForAPI user = new UserForAPI
         {
             userId = System.Guid.NewGuid().ToString()
         };
 
         StartCoroutine(Post(URL + "/api/users/create", JsonUtility.ToJson(user)));
     }
+
 
     IEnumerator Post(string url, string jsonString)
     {
@@ -65,20 +88,5 @@ public class AuctionTest : MonoBehaviour
         request.SetRequestHeader("Content-Type", "application/json");
 
         yield return request.SendWebRequest();
-
-        Debug.Log("Status Code: " + request.responseCode);
-        Debug.Log(request.downloadHandler.text);
-        // UnityWebRequest www = UnityWebRequest.Post(url, form);
-        // yield return www.SendWebRequest();
-
-        // if (www.result != UnityWebRequest.Result.Success)
-        // {
-        //     Debug.Log(www.error);
-        // }
     }
-
-    // Auction
-    // private void 
-
-    // Pushes
 }

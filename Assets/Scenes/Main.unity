@@ -32570,6 +32570,7 @@ MonoBehaviour:
   shop: {fileID: 101489071}
   reinforce: {fileID: 1403873982}
   uiController: {fileID: 721213162}
+  apiManager: {fileID: 1206702071}
 --- !u!4 &742308397
 Transform:
   m_ObjectHideFlags: 0
@@ -56011,6 +56012,49 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1203297126}
   m_CullTransparentMesh: 0
+--- !u!1 &1206702069
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1206702070}
+  - component: {fileID: 1206702071}
+  m_Layer: 0
+  m_Name: Api Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1206702070
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1206702069}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1397497993}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1206702071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1206702069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4cafee66f2998946a2b9c8562833422, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1209529908
 GameObject:
   m_ObjectHideFlags: 0
@@ -65745,6 +65789,7 @@ Transform:
   - {fileID: 527888220}
   - {fileID: 1954890774}
   - {fileID: 963194228}
+  - {fileID: 1206702070}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

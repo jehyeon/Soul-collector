@@ -11,17 +11,21 @@ def main():
     if not reset == 'Yes':
         pass
     
-    os.remove(dbPath)
+    try:
+        os.remove(dbPath)
+    except:
+        pass
 
     conn = sqlite3.connect(dbPath)
-    
+
+    conn.execute('PRAGMA foreign_keys=ON')
     # Make users table
     conn.execute(
         '''
         CREATE TABLE users (
-            id TEXT,
-            lastLogin TEXT,
-            PRIMARY KEY(id)
+            id INTEGER PRIMARY KEY,
+            userId TEXT NOT NULL,
+            lastLogin INTEGER NOT NULL
         )
         '''
     )
@@ -30,13 +34,14 @@ def main():
     conn.execute(
         '''
         CREATE TABLE auction (
-            userId TEXT,
-            itemId INTEGER,
-            price INTEGER,
-            time TEXT,
-            rank INTEGER,
-            type INTEGER,
-            FOREIGN KEY (userId) REFERENCES users (id)
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            userId TEXT NOT NULL,
+            itemId INTEGER NOT NULL,
+            price INTEGER NOT NULL,
+            time INTEGER NOT NULL,
+            rank TEXT NOT NULL,
+            type INTEGER NOT NULL,
+            FOREIGN KEY(userId) REFERENCES users (userId)
         )
         '''
     )
@@ -44,10 +49,11 @@ def main():
     conn.execute(
         '''
         CREATE TABLE push (
-            userId TEXT,
-            itemId INTEGER,
-            time TEXT,
-            FOREIGN KEY (userId) REFERENCES users (id)
+            userId TEXT NOT NULL,
+            itemId INTEGER NOT NULL,
+            message TEXT,
+            time INTEGER NOT NULL,
+            FOREIGN KEY(userId) REFERENCES users (userId)
         )
         '''
     )
