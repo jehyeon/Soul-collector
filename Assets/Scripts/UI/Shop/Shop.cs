@@ -118,5 +118,4 @@ public class Shop : MonoBehaviour
     {
         gameManager.UIController.CloseItemDetail();
     }
-
 }

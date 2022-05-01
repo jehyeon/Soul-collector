@@ -21,6 +21,8 @@ public class UIController: MonoBehaviour
     private Shop shop;                  // 상점
     [SerializeField]
     private Craft craft;                // 아이템 제작
+    [SerializeField]
+    private Auction auction;            // 경매장
 
     // 팝업 메시지
     [SerializeField]
@@ -52,6 +54,7 @@ public class UIController: MonoBehaviour
     private bool isActivatedShopUI;
     private bool isActivatedCraftUI;
     private bool isActivatedReinforceUI;
+    private bool isActivatedAuctionUI;
 
     // 플레이어 체력바
     [SerializeField]
@@ -73,6 +76,7 @@ public class UIController: MonoBehaviour
         isActivatedShopUI = false;
         isActivatedCraftUI = false;
         isActivatedReinforceUI = false;
+        isActivatedAuctionUI = false;
 
         sound = GetComponent<UIEffectSound>();
     }
@@ -84,6 +88,20 @@ public class UIController: MonoBehaviour
 
     private void KeyBoardAction()
     {
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            Debug.Log("Press U");
+            // Inventory & Equipment
+            if (isActivatedAuctionUI)
+            {
+                CloseAuctionUI();
+            }
+            else
+            {
+                OpenAuctionUI();
+            }
+        }
+
         if (Input.GetKeyDown(KeyCode.I))
         {
             // Inventory & Equipment
@@ -185,6 +203,21 @@ public class UIController: MonoBehaviour
     {
         isActivatedShopUI = false;
         shop.Close();
+        CloseInventoryUI();
+    }
+
+    // Auction UI + Inventory UI
+    public void OpenAuctionUI()
+    {
+        isActivatedAuctionUI = true;
+        OpenInventoryUI("Auction");
+        auction.Open();
+    }
+
+    public void CloseAuctionUI()
+    {
+        isActivatedAuctionUI = false;
+        auction.Close();
         CloseInventoryUI();
     }
 

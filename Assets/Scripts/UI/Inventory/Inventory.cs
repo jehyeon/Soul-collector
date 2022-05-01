@@ -10,6 +10,7 @@ public enum InventoryMode
 {
     Shop,
     Reinforce,
+    Auction,
     NotWork,
     Default    
 }
@@ -310,7 +311,8 @@ public class Inventory : MonoBehaviour
             return;
         }
 
-        if (mode == InventoryMode.NotWork || mode == InventoryMode.Reinforce)
+        if (mode == InventoryMode.NotWork || mode == InventoryMode.Reinforce
+            || mode == InventoryMode.Auction)
         {
             // Inventory 버튼 text 갱신 및 삭제, 다중 선택 버튼 deactivate
             btnDelete.gameObject.SetActive(false);
@@ -806,6 +808,9 @@ public class Inventory : MonoBehaviour
             case "Reinforce":
                 mode = InventoryMode.Reinforce;
                 MultiSelectModeOn();
+                break;
+            case "Auction":
+                mode = InventoryMode.Auction;
                 break;
         }
 
