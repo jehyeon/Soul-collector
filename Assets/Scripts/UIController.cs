@@ -90,7 +90,6 @@ public class UIController: MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.U))
         {
-            Debug.Log("Press U");
             // Inventory & Equipment
             if (isActivatedAuctionUI)
             {

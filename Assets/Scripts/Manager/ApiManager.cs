@@ -10,8 +10,26 @@ public class UserForAPI
     public string userId;
 }
 
+public class AuctionItemForAPI
+{
+    public AuctionItem[] result;
+}
+
+public class AuctionItem
+{
+    public string userId;
+    public int itemId;
+    public int price;
+    public string rank;
+    public string type;
+    public int time;
+}
+
 public class ApiManager : MonoBehaviour
 {
+    [SerializeField]
+    private GameManager gameManager;
+
     private string URL = "http://127.0.0.1:5000";       // TEMP
 
     // Users
@@ -78,6 +96,40 @@ public class ApiManager : MonoBehaviour
         StartCoroutine(Post(URL + "/api/users/create", JsonUtility.ToJson(user)));
     }
 
+    // Auction
+    public void GetAuctionItemList()
+    {
+        // gameManager.RequestAuctionItemList()에서 호출
+
+        StartCoroutine(GetAuction(returnValue => 
+        {
+            if (returnValue == "error")
+            {
+                Debug.LogError("server error");
+                return;
+            }
+
+            AuctionItemForAPI auctionItemList = JsonMapper.ToObject<AuctionItemForAPI>("{\"result\": " + returnValue + "}");
+            
+            gameManager.ResponseAuctionItemList(auctionItemList);
+        }));
+    }
+
+    IEnumerator GetAuction(System.Action<string> callback = null)
+    {
+        UnityWebRequest www = UnityWebRequest.Get(URL + "/api/auction");
+        yield return www.SendWebRequest();
+
+        if (www.result != UnityWebRequest.Result.Success)
+        {
+            Debug.Log(www.error);
+            callback.Invoke("error");
+        }
+        else
+        {
+            callback.Invoke(www.downloadHandler.text);
+        }
+    }
 
     IEnumerator Post(string url, string jsonString)
     {

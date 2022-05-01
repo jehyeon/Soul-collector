@@ -29,6 +29,8 @@ public class GameManager : MonoBehaviour
     private Shop shop;
     [SerializeField]
     private Reinforce reinforce;
+    [SerializeField]
+    private Auction auction;
 
     [SerializeField]
     private UIController uiController;
@@ -231,6 +233,19 @@ public class GameManager : MonoBehaviour
                 player.Equip(item);   // 스탯 추가
             }
         }
+    }
+
+    // -------------------------------------------------------------
+    // 경매장
+    // -------------------------------------------------------------
+    public void RequestAuctionItemList()
+    {
+        apiManager.GetAuctionItemList();
+    }
+
+    public void ResponseAuctionItemList(AuctionItemForAPI auctionItemList)
+    {
+        auction.LoadAuctionItemList(auctionItemList);
     }
 
     // -------------------------------------------------------------

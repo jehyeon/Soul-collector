@@ -26,15 +26,35 @@ public class Auction : MonoBehaviour
 
     private AuctionItemSlot[] slots;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     // -------------------------------------------------------------
     // 경매장 아이템 로드
     // -------------------------------------------------------------
+    public void LoadAuctionItemList(AuctionItemForAPI auctionItemList)
+    {
+        // AuctionItemForAPI에 대한 정의는 ApiManager.cs에 있음
+
+        if (myAuction == null)
+        {
+            myAuction = GetComponent<Auction>();
+        }
+
+        int auctionItemIndex = 0;
+        foreach(AuctionItem item in auctionItemList.result)
+        {
+            GameObject auctionItem = Instantiate(goAuctionItemPref);    // !!! Object pool로 수정하기
+            auctionItem.transform.SetParent(goAuctionBuyList.transform);
+            auctionItem.GetComponent<AuctionItemSlot>().SetAuctionItem(
+                myAuction,
+                auctionItemIndex,
+                gameManager.ItemManager.Get(item.itemId),
+                item.price
+            );
+            
+            auctionItemIndex += 1;
+        }
+
+        slots = goAuctionBuyList.GetComponentsInChildren<AuctionItemSlot>();
+    }
 
     // -------------------------------------------------------------
     // Select
@@ -47,14 +67,14 @@ public class Auction : MonoBehaviour
             slots[selectedAuctionItemIndex].UnSelect();
         }
         selectedAuctionItemIndex = slotIndex;
-        goBuyBtn.SetActive(true);
+        // goBuyBtn.SetActive(true);
     }
 
     public void UnSelect()
     {
         slots[selectedAuctionItemIndex].UnSelect();
         selectedAuctionItemIndex = -1;
-        goBuyBtn.SetActive(false);
+        // goBuyBtn.SetActive(false);
     }
     
     // -------------------------------------------------------------
@@ -63,6 +83,9 @@ public class Auction : MonoBehaviour
     public void Open()
     {
         this.gameObject.SetActive(true);
+        // !!! 경매장 오픈 시 gameManager를 통해 아이템 리스트를 요청
+        // 이후 gameManager에서 Action.LoadAuctionItemList를 호출
+        gameManager.RequestAuctionItemList();
     }
 
     public void Close()

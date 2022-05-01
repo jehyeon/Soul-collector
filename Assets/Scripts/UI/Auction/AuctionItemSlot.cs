@@ -11,16 +11,46 @@ public class AuctionItemSlot : Slot, IPointerClickHandler, IPointerEnterHandler,
 
     private bool isSelected;
 
-    // Start is called before the first frame update
-    void Start()
+    private int index;
+    private int price;
+
+    
+    [SerializeField]
+    private TextMeshProUGUI textItemPrice;
+    [SerializeField]
+    private TextMeshProUGUI textItemName;
+
+    [SerializeField]
+    private GameObject go_selectedFrame;
+
+    // -------------------------------------------------------------
+    // Init
+    // -------------------------------------------------------------
+    public void SetAuctionItem(Auction parentAuction, int auctionItemIndex, Item itemFromItemManager, int itemPrice)
     {
+        auction = parentAuction;
+        Set(itemFromItemManager);
+
+        index = auctionItemIndex;
+        price = itemPrice;
         
+        textItemName.text = itemFromItemManager.ItemName;
+        textItemPrice.text = string.Format("{0:#,###}", price).ToString();
     }
 
-    // Update is called once per frame
-    void Update()
+    // -------------------------------------------------------------
+    // Select
+    // -------------------------------------------------------------
+    private void Select()
     {
-        
+        isSelected = true;
+        go_selectedFrame.SetActive(true);
+    }
+
+    public void UnSelect()
+    {
+        isSelected = false;
+        go_selectedFrame.SetActive(false);
     }
 
     // -------------------------------------------------------------
@@ -38,7 +68,7 @@ public class AuctionItemSlot : Slot, IPointerClickHandler, IPointerEnterHandler,
             else
             {
                 // 기존 선택된 아이템을 unselect
-                auction.Select(id);
+                auction.Select(index);
                 Select();
             }
         }
