@@ -25,6 +25,18 @@ public class AuctionItem
     public int time;
 }
 
+public class PushForAPI
+{
+    public PushItem[] result;
+}
+
+public class PushItem
+{
+    public int itemId;
+    public string message;
+    public int time;
+}
+
 public class ApiManager : MonoBehaviour
 {
     [SerializeField]
@@ -32,7 +44,9 @@ public class ApiManager : MonoBehaviour
 
     private string URL = "http://127.0.0.1:5000";       // TEMP
 
+    // -------------------------------------------------------------
     // Users
+    // -------------------------------------------------------------
     public void CheckUser(string userId)
     {
         StartCoroutine(CheckUserById(userId, returnValue => 
@@ -96,7 +110,9 @@ public class ApiManager : MonoBehaviour
         StartCoroutine(Post(URL + "/api/users/create", JsonUtility.ToJson(user)));
     }
 
+    // -------------------------------------------------------------
     // Auction
+    // -------------------------------------------------------------
     public void GetAuctionItemList()
     {
         // gameManager.RequestAuctionItemList()에서 호출
@@ -118,6 +134,42 @@ public class ApiManager : MonoBehaviour
     IEnumerator GetAuction(System.Action<string> callback = null)
     {
         UnityWebRequest www = UnityWebRequest.Get(URL + "/api/auction");
+        yield return www.SendWebRequest();
+
+        if (www.result != UnityWebRequest.Result.Success)
+        {
+            Debug.Log(www.error);
+            callback.Invoke("error");
+        }
+        else
+        {
+            callback.Invoke(www.downloadHandler.text);
+        }
+    }
+
+    // -------------------------------------------------------------
+    // Push
+    // -------------------------------------------------------------
+    public void GetPushList(string userId)
+    {
+        // gameManager.RequestPushList()에서 호출
+        StartCoroutine(GetPush(userId, returnValue =>
+        {
+            if (returnValue == "error")
+            {
+                Debug.LogError("server error");
+                return;
+            }
+
+            PushForAPI auctionItemList = JsonMapper.ToObject<PushForAPI>("{\"result\": " + returnValue + "}");
+            
+            gameManager.ResponsePushList(auctionItemList);
+        }));
+    }
+
+    IEnumerator GetPush(string userId, System.Action<string> callback = null)
+    {
+        UnityWebRequest www = UnityWebRequest.Get(URL + "/api/push/" + userId);
         yield return www.SendWebRequest();
 
         if (www.result != UnityWebRequest.Result.Success)

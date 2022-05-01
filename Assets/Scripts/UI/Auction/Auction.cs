@@ -102,5 +102,5 @@ public class Auction : MonoBehaviour
     public void CloseItemDetail()
     {
         gameManager.UIController.CloseItemDetail();
-    }    
+    }
 }

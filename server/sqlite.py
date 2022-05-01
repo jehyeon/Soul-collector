@@ -125,7 +125,7 @@ def insertItemToAuction(data):
 
 # Pushes
 def getPushById(userId):
-    needToUpdate = False
+    # needToUpdate = False
     pushes = []
     try:
         conn = connectToDB()
@@ -138,6 +138,7 @@ def getPushById(userId):
             push = {}
             push['userId'] = row['userId']
             push['itemId'] = row['itemId']
+            push['message'] = row['message']
             # 수령기간이 끝난 아이템이 있는 경우
             # if row['time'] > !!!:
             #   needToUpdate = True
@@ -148,10 +149,29 @@ def getPushById(userId):
     except:
         pushes = []
 
-    return {
-        'pushes': pushes,
-        'needToUpdate': needToUpdate
-    }
+    # return {
+    #     'pushes': pushes,
+    #     'needToUpdate': needToUpdate
+    # }
+    return pushes
+
+def insertPush(data):
+    insertedItemId = {}
+    try:
+        conn = connectToDB()
+        cur = conn.cursor()
+        cur.execute("INSERT INTO push (userId, itemId, message, time) VALUES (?, ?, ?, ?)"
+            , (data['userId'], data['itemId'], data['message'], int(time())))
+        insertedItemId['id'] = cur.lastrowid
+        conn.commit()
+    
+    except:
+        conn().rollback()
+
+    finally:
+        conn.close()
+
+    return insertedItemId
 
 def deleteTimeoutItemInAuction():
     pass

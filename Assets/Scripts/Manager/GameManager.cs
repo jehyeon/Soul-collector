@@ -31,6 +31,8 @@ public class GameManager : MonoBehaviour
     private Reinforce reinforce;
     [SerializeField]
     private Auction auction;
+    [SerializeField]
+    private Push push;
 
     [SerializeField]
     private UIController uiController;
@@ -246,6 +248,19 @@ public class GameManager : MonoBehaviour
     public void ResponseAuctionItemList(AuctionItemForAPI auctionItemList)
     {
         auction.LoadAuctionItemList(auctionItemList);
+    }
+
+    // -------------------------------------------------------------
+    // 경매장
+    // -------------------------------------------------------------
+    public void RequestPushList()
+    {
+        apiManager.GetPushList(saveManager.Save.UserId);
+    }
+
+    public void ResponsePushList(PushForAPI pushes)
+    {
+        push.LoadPushList(pushes);
     }
 
     // -------------------------------------------------------------

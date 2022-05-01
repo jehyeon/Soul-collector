@@ -49,6 +49,7 @@ def main():
     conn.execute(
         '''
         CREATE TABLE push (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
             userId TEXT NOT NULL,
             itemId INTEGER NOT NULL,
             message TEXT,

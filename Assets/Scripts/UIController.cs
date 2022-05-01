@@ -23,6 +23,8 @@ public class UIController: MonoBehaviour
     private Craft craft;                // 아이템 제작
     [SerializeField]
     private Auction auction;            // 경매장
+    [SerializeField]
+    private Push push;                  // 푸시
 
     // 팝업 메시지
     [SerializeField]
@@ -55,6 +57,7 @@ public class UIController: MonoBehaviour
     private bool isActivatedCraftUI;
     private bool isActivatedReinforceUI;
     private bool isActivatedAuctionUI;
+    private bool isActivatedPushUI;
 
     // 플레이어 체력바
     [SerializeField]
@@ -88,6 +91,19 @@ public class UIController: MonoBehaviour
 
     private void KeyBoardAction()
     {
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            // Inventory & Equipment
+            if (isActivatedPushUI)
+            {
+                ClosePushUI();
+            }
+            else
+            {
+                OpenPushUI();
+            }
+        }
+
         if (Input.GetKeyDown(KeyCode.U))
         {
             // Inventory & Equipment
@@ -218,6 +234,21 @@ public class UIController: MonoBehaviour
         isActivatedAuctionUI = false;
         auction.Close();
         CloseInventoryUI();
+    }
+
+    // Push UI
+    public void OpenPushUI()
+    {
+        isActivatedPushUI = true;
+        background.SetActive(true);
+        push.Open();
+    }
+
+    public void ClosePushUI()
+    {
+        isActivatedPushUI = false;
+        background.SetActive(false);
+        push.Close();
     }
 
     // Craft UI
