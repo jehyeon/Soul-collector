@@ -24,7 +24,7 @@ def main():
         '''
         CREATE TABLE users (
             id INTEGER PRIMARY KEY,
-            userId TEXT NOT NULL,
+            userId TEXT NOT NULL UNIQUE,
             lastLogin INTEGER NOT NULL
         )
         '''
