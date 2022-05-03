@@ -106,7 +106,6 @@ public class PlayerController : MonoBehaviour
     // -------------------------------------------------------------
     private void MoveTarget(Vector3 point)
     {
-        Debug.Log("타겟 마크 생성");
         if (moveTarget == null)
         {
             moveTarget = Instantiate(moveTargetPref);
