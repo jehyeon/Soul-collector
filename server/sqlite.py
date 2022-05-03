@@ -163,6 +163,7 @@ def getPushById(userId):
             push['userId'] = row['userId']
             push['itemId'] = row['itemId']
             push['message'] = row['message']
+            push['gold'] = row['gold']
             # 수령기간이 끝난 아이템이 있는 경우
             # if row['time'] > !!!:
             #   needToUpdate = True
@@ -184,8 +185,8 @@ def insertPush(data):
     try:
         conn = connectToDB()
         cur = conn.cursor()
-        cur.execute("INSERT INTO push (userId, itemId, message, time) VALUES (?, ?, ?, ?)"
-            , (data['userId'], data['itemId'], data['message'], int(time())))
+        cur.execute("INSERT INTO push (userId, itemId, message, time, gold) VALUES (?, ?, ?, ?, ?)"
+            , (data['userId'], data['itemId'], data['message'], int(time()), data['gold']))
         insertedItemId['id'] = cur.lastrowid
         conn.commit()
     

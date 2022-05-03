@@ -54,6 +54,7 @@ def main():
             itemId INTEGER NOT NULL,
             message TEXT,
             time INTEGER NOT NULL,
+            gold INTEGER NOT NULL,
             FOREIGN KEY(userId) REFERENCES users (userId)
         )
         '''

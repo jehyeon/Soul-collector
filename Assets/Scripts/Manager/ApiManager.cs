@@ -34,9 +34,11 @@ public class PushForAPI
 public class PushItem
 {
     public int id;
+    public string userId;
     public int itemId;
     public string message;
     public int time;
+    public int gold;
 }
 
 public class ApiManager : MonoBehaviour
@@ -149,6 +151,17 @@ public class ApiManager : MonoBehaviour
         }
     }
 
+    public void DeleteAuctionItem(string _userId, int _auctionId)
+    {
+        
+        AuctionItem data = new AuctionItem
+        {
+            userId = _userId,
+            id = _auctionId
+        };
+
+        StartCoroutine(Post(URL + "/api/auction/delete", JsonUtility.ToJson(data)));
+    }
     // -------------------------------------------------------------
     // Push
     // -------------------------------------------------------------
@@ -185,6 +198,19 @@ public class ApiManager : MonoBehaviour
         }
     }
 
+    public void AddPush(string _userId, int _itemId, string _message, int _gold = 0)
+    {
+        PushItem data = new PushItem
+        {
+            userId = _userId,
+            itemId = _itemId,
+            message = _message,
+            gold = _gold
+        };
+
+        StartCoroutine(Post(URL + "/api/push/add", JsonUtility.ToJson(data)));
+    }
+    
     IEnumerator Post(string url, string jsonString)
     {
         var request = new UnityWebRequest(url, "POST");

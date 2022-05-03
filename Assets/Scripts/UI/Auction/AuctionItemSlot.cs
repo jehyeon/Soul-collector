@@ -13,7 +13,10 @@ public class AuctionItemSlot : Slot, IPointerClickHandler, IPointerEnterHandler,
 
     private int index;
 
+    public int Index { get { return index; } }
+
     private AuctionItem datas;  // in ApiManager.cs
+    public AuctionItem Datas { get { return datas; } }
 
     [SerializeField]
     private TextMeshProUGUI textItemPrice;
@@ -26,7 +29,7 @@ public class AuctionItemSlot : Slot, IPointerClickHandler, IPointerEnterHandler,
     // -------------------------------------------------------------
     // Init
     // -------------------------------------------------------------
-    public void SetAuctionItem(Auction parentAuction, int auctionItemIndex, Item itemFromItemManager, AuctionItem fromServer)
+    public void SetAuctionItem(Auction parentAuction, int auctionItemIndex, Item itemFromItemManager, AuctionItem fromServer, bool isMyItem = false)
     {
         auction = parentAuction;
         Set(itemFromItemManager);

@@ -250,8 +250,24 @@ public class GameManager : MonoBehaviour
         auction.LoadAuctionItemList(auctionItemList);
     }
 
+    private void buyAuction()
+    {
+        // 골드 감소
+        inventory.UpdateGold(-1 * auction.SelectedAuctionItem.price);
+        saveManager.SaveData();
+
+        // auction api에서 삭제
+        apiManager.DeleteAuctionItem(auction.SelectedAuctionItem.userId, auction.SelectedAuctionItem.id);
+
+        // push api에 추가
+        // 구매자에게 아이템 전송
+        apiManager.AddPush(saveManager.Save.UserId, auction.SelectedAuctionItem.itemId, "경매장에서 구입한 아이템입니다.");
+        // 판매자에게 gold 전송
+        apiManager.AddPush(auction.SelectedAuctionItem.userId, 1627, "아이템 판매 대금입니다.", auction.SelectedAuctionItem.price);
+    }
+
     // -------------------------------------------------------------
-    // 경매장
+    // 푸시
     // -------------------------------------------------------------
     public void RequestPushList()
     {
@@ -313,6 +329,10 @@ public class GameManager : MonoBehaviour
                 return;
             case "Reinforce":
                 reinforce.ReinforceItems();
+                return;
+            case "BuyAuction":
+                buyAuction();
+                auction.BuyDone();
                 return;
             case "GoDungeon":
                 GoDungeon();
