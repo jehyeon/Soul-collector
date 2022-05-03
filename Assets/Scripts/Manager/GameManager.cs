@@ -263,7 +263,13 @@ public class GameManager : MonoBehaviour
         // 구매자에게 아이템 전송
         apiManager.AddPush(saveManager.Save.UserId, auction.SelectedAuctionItem.itemId, "경매장에서 구입한 아이템입니다.");
         // 판매자에게 gold 전송
-        apiManager.AddPush(auction.SelectedAuctionItem.userId, 1627, "아이템 판매 대금입니다.", auction.SelectedAuctionItem.price);
+        apiManager.AddPush
+        (
+            auction.SelectedAuctionItem.userId, 
+            1627, 
+            string.Format("아이템 판매 대금입니다.\n판매 금액: {0}", auction.SelectedAuctionItem.price), 
+            auction.SelectedAuctionItem.price
+        );
     }
 
     // -------------------------------------------------------------
@@ -277,6 +283,11 @@ public class GameManager : MonoBehaviour
     public void ResponsePushList(PushForAPI pushes)
     {
         push.LoadPushList(pushes);
+    }
+
+    public void ReceivePush()
+    {
+        apiManager.DeletePush(saveManager.Save.UserId, push.SelectedPushId);
     }
 
     // -------------------------------------------------------------

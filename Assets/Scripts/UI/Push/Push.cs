@@ -7,7 +7,9 @@ public class Push : MonoBehaviour
 {
     private Push myPush;
     private int selectedPushItemIndex;
+    private int selectedPushId;
     private PushItemSlot[] slots;
+    public int SelectedPushId { get { return selectedPushId; } }
 
     [SerializeField]
     private GameManager gameManager;
@@ -44,13 +46,55 @@ public class Push : MonoBehaviour
                 myPush,
                 pushItemList,
                 gameManager.ItemManager.Get(item.itemId),
-                item.message
+                item
             );
             
             pushItemList += 1;
         }
 
         slots = goPushList.GetComponentsInChildren<PushItemSlot>();
+    }
+
+    private void ClearPushList()
+    {
+        // !!! 임시
+        for (int i = 0; i < slots.Length; i++)
+        {
+            Destroy(slots[i].gameObject);
+        }
+
+        slots = null;
+    }
+
+    // -------------------------------------------------------------
+    // 아이템 수령
+    // -------------------------------------------------------------
+    public void ReceivePush()
+    {
+        if (selectedPushItemIndex == -1)
+        {
+            return;
+        }
+
+        if (slots[selectedPushItemIndex].PushItem.itemId == 1627)
+        {
+            // gold인 경우
+            gameManager.Inventory.UpdateGold(slots[selectedPushItemIndex].PushItem.gold);
+            gameManager.SaveManager.SaveData();
+
+            gameManager.ReceivePush();
+            slots[selectedPushItemIndex].gameObject.SetActive(false);
+            UnSelect();
+        }
+        else
+        {
+            if (gameManager.GetItemCheckInventory(slots[selectedPushItemIndex].PushItem.itemId))
+            {
+                gameManager.ReceivePush();
+                slots[selectedPushItemIndex].gameObject.SetActive(false);
+                UnSelect();
+            }
+        }
     }
 
     // -------------------------------------------------------------
@@ -64,15 +108,21 @@ public class Push : MonoBehaviour
             slots[selectedPushItemIndex].UnSelect();
         }
         selectedPushItemIndex = slotIndex;
-        OpenPushDetail(slots[selectedPushItemIndex].Item, slots[selectedPushItemIndex].Message);
-        // goBuyBtn.SetActive(true);
+        selectedPushId = slots[selectedPushItemIndex].PushItem.id;
+        OpenPushDetail(slots[selectedPushItemIndex].Item, slots[selectedPushItemIndex].PushItem.message);
     }
 
     public void UnSelect()
     {
+        if (selectedPushItemIndex == -1)
+        {
+            return;
+        }
+
         slots[selectedPushItemIndex].UnSelect();
         selectedPushItemIndex = -1;
-        // goBuyBtn.SetActive(false);
+        selectedPushId = -1;
+        ClosePushDetail();
     }
 
     // -------------------------------------------------------------
@@ -89,6 +139,7 @@ public class Push : MonoBehaviour
     public void Close()
     {
         this.gameObject.SetActive(false);
+        ClearPushList();
     }
 
     private void OpenPushDetail(Item pushItem, string message)

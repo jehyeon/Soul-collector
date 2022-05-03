@@ -211,6 +211,17 @@ public class ApiManager : MonoBehaviour
         StartCoroutine(Post(URL + "/api/push/add", JsonUtility.ToJson(data)));
     }
     
+    public void DeletePush(string _userId, int _pushId)
+    {
+        PushItem data = new PushItem
+        {
+            userId = _userId,
+            id = _pushId
+        };
+
+        StartCoroutine(Post(URL + "/api/push/delete", JsonUtility.ToJson(data)));
+    }
+
     IEnumerator Post(string url, string jsonString)
     {
         var request = new UnityWebRequest(url, "POST");

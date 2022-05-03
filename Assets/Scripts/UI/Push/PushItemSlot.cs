@@ -9,27 +9,27 @@ public class PushItemSlot : Slot, IPointerClickHandler, IPointerEnterHandler, IP
 {
     private Push push;
     private int index;
-    private string pushMessage;
     private bool isSelected;
+
+    private PushItem pushItem;
+    public PushItem PushItem { get { return pushItem; } }
 
     [SerializeField]
     private GameObject go_selectedFrame;
     [SerializeField]
     private TextMeshProUGUI goPushMessage;
 
-    public string Message { get { return pushMessage; } }
-
     // -------------------------------------------------------------
     // Init
     // -------------------------------------------------------------
-    public void SetPushItem(Push parentPush, int pushItemIndex, Item itemFromItemManager, string message)
+    public void SetPushItem(Push parentPush, int pushItemIndex, Item itemFromItemManager, PushItem fromServer)
     {
         push = parentPush;
         Set(itemFromItemManager);
 
         index = pushItemIndex;
-        goPushMessage.text = message;
-        pushMessage = message;
+        pushItem = fromServer;
+        goPushMessage.text = pushItem.message;
     }
 
     // -------------------------------------------------------------
