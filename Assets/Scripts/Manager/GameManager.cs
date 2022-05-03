@@ -250,7 +250,7 @@ public class GameManager : MonoBehaviour
         auction.LoadAuctionItemList(auctionItemList);
     }
 
-    private void buyAuction()
+    private void BuyAuction()
     {
         // 골드 감소
         inventory.UpdateGold(-1 * auction.SelectedAuctionItem.price);
@@ -270,6 +270,32 @@ public class GameManager : MonoBehaviour
             string.Format("아이템 판매 대금입니다.\n판매 금액: {0}", auction.SelectedAuctionItem.price), 
             auction.SelectedAuctionItem.price
         );
+    }
+
+    public void AddItemToAuction(int _price)
+    {
+        // auction reload
+        AuctionItem auctionItem = new AuctionItem
+        {
+            userId = saveManager.Save.UserId,
+            itemId = inventory.Slots[inventory.SelectedSlotIndex].Item.Id,
+            rank = "common",
+            type = "weapon",
+            price = _price
+        };
+        auction.AddItemToAuction(auctionItem);
+
+        // 경매장에 아이템 추가
+        apiManager.AddItemToAuction(auctionItem.userId, auctionItem.itemId, auctionItem.price);
+        
+        // 인벤토리 아이템 삭제
+        inventory.Delete();  // 선택한 아이템 삭제 및 save and load
+    }
+
+    public void CancelToSell()
+    {
+        apiManager.DeleteAuctionItem(saveManager.Save.UserId, auction.SelectedAuctionItem.id);
+        apiManager.AddPush(saveManager.Save.UserId, auction.SelectedAuctionItem.itemId, "경매장 등록을 취소한 아이템입니다.");
     }
 
     // -------------------------------------------------------------
@@ -325,6 +351,11 @@ public class GameManager : MonoBehaviour
         uiController.PopupAsk(type, ask, leftText, rightText);
     }
 
+    public void PopupSetCount(string type, string message, string leftText, string rightText)
+    {
+        uiController.PopupSetCount(type, message, leftText, rightText);
+    }
+
     public void AnswerAsk(string type)
     {
         switch (type)
@@ -342,7 +373,7 @@ public class GameManager : MonoBehaviour
                 reinforce.ReinforceItems();
                 return;
             case "BuyAuction":
-                buyAuction();
+                BuyAuction();
                 auction.BuyDone();
                 return;
             case "GoDungeon":
@@ -353,6 +384,16 @@ public class GameManager : MonoBehaviour
                 return;
             case "GoNextFloor":
                 GoNextFloor();
+                return;
+        }
+    }
+
+    public void AnswerCount(string type, int count)
+    {
+        switch (type)
+        {
+            case "Auction":
+                AddItemToAuction(count);
                 return;
         }
     }

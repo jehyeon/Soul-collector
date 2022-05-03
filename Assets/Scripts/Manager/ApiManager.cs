@@ -151,6 +151,21 @@ public class ApiManager : MonoBehaviour
         }
     }
 
+    public void AddItemToAuction(string _userId, int _itemId, int _price)
+    {
+        // !!! 임시로 rank, type 고정
+        AuctionItem data = new AuctionItem
+        {
+            userId = _userId,
+            itemId = _itemId,
+            rank = "common",
+            type = "weapon",
+            price = _price
+        };
+        
+        StartCoroutine(Post(URL + "/api/auction/add", JsonUtility.ToJson(data)));
+    }
+
     public void DeleteAuctionItem(string _userId, int _auctionId)
     {
         

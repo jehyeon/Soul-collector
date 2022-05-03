@@ -25,8 +25,6 @@ public class Auction : MonoBehaviour
     [SerializeField]
     private GameObject goBuyBtn;
     [SerializeField]
-    private GameObject goSellBtn;
-    [SerializeField]
     private GameObject goCancelToSellBtn;
 
     private int selectedAuctionItemIndex;   // 현재 선택된 경매장 아이템
@@ -74,7 +72,8 @@ public class Auction : MonoBehaviour
                 myAuction,
                 auctionItemIndex,
                 gameManager.ItemManager.Get(item.itemId),
-                item
+                item,
+                item.userId == gameManager.SaveManager.Save.UserId
             );
             
             auctionItemIndex += 1;
@@ -84,7 +83,7 @@ public class Auction : MonoBehaviour
         sellSlots = goAuctionSellList.GetComponentsInChildren<AuctionItemSlot>();
     }
 
-    private void ClearAuctionList()
+    public void ClearAuctionList()
     {
         // !!! 임시
         for (int i = 0; i < buySlots.Length; i++)
@@ -98,9 +97,42 @@ public class Auction : MonoBehaviour
         buySlots = null;
         sellSlots = null;
     }
+    // -------------------------------------------------------------
+    // 경매장 아이템 추가
+    // -------------------------------------------------------------
+    public void AddItemToAuction(AuctionItem item)
+    {
+        // slot index를 최신으로 바꾸기 위함
+        buySlots = goAuctionBuyList.GetComponentsInChildren<AuctionItemSlot>();
+        sellSlots = goAuctionSellList.GetComponentsInChildren<AuctionItemSlot>();
+
+        GameObject auctionItemToBuy = Instantiate(goAuctionItemPref);    // !!! Object pool로 수정하기
+        auctionItemToBuy.transform.SetParent(goAuctionBuyList.transform);
+        auctionItemToBuy.GetComponent<AuctionItemSlot>().SetAuctionItem(
+            myAuction,
+            buySlots.Length,
+            gameManager.ItemManager.Get(item.itemId),
+            item,
+            true
+        );
+
+        GameObject auctionItemToSell = Instantiate(goAuctionItemPref);    // !!! Object pool로 수정하기
+        auctionItemToSell.transform.SetParent(goAuctionSellList.transform);
+        auctionItemToSell.GetComponent<AuctionItemSlot>().SetAuctionItem(
+            myAuction,
+            sellSlots.Length,
+            gameManager.ItemManager.Get(item.itemId),
+            item,
+            true
+        );
+
+        // not good
+        buySlots = goAuctionBuyList.GetComponentsInChildren<AuctionItemSlot>();
+        sellSlots = goAuctionSellList.GetComponentsInChildren<AuctionItemSlot>();
+    }
 
     // -------------------------------------------------------------
-    // 아이템 구매, 판매
+    // 아이템 구매, 판매 취소
     // -------------------------------------------------------------
     public void Buy()
     {
@@ -128,13 +160,31 @@ public class Auction : MonoBehaviour
         UnSelect();
     }
 
-    public void Sell()
+    public void CancleToSell()
     {
         // AuctionMode.Sell일 때만 호출 가능
         if (selectedAuctionItemIndex == -1)
         {
             return;
         }
+        Debug.Log(SelectedAuctionItem.id);
+        Debug.Log(SelectedAuctionItem.userId);
+        Debug.Log(SelectedAuctionItem.itemId);
+        gameManager.CancelToSell();
+
+        foreach(AuctionItemSlot item in buySlots)
+        {
+            // 구매 목록에서 지우기
+            if (item.Datas.id == sellSlots[selectedAuctionItemIndex].Datas.id)
+            {
+                item.gameObject.SetActive(false);
+                continue;
+            }
+        }
+
+        // 판매 목록에서 지우기
+        sellSlots[selectedAuctionItemIndex].gameObject.SetActive(false);
+        UnSelect();
     }
 
     // -------------------------------------------------------------
@@ -159,7 +209,21 @@ public class Auction : MonoBehaviour
         }
         selectedAuctionItemIndex = slotIndex;
         selectedAuctionItem = slots[selectedAuctionItemIndex].Datas;
-        // goBuyBtn.SetActive(true);
+        if (!slots[selectedAuctionItemIndex].IsMyItem && mode == AuctionMode.Buy)
+        {
+            // 구매 모드일 때, 내 등록 아이템이 아닌 경우
+            goBuyBtn.SetActive(true);
+        }
+        else if (slots[selectedAuctionItemIndex].IsMyItem && mode == AuctionMode.Sell)
+        {
+            // 판매 모드 일 때, 내 등록 아이템인 경우
+            goCancelToSellBtn.SetActive(true);
+        }
+        else
+        {
+            goBuyBtn.SetActive(false);
+            goCancelToSellBtn.SetActive(false);
+        }
     }
 
     public void UnSelect()
@@ -181,7 +245,8 @@ public class Auction : MonoBehaviour
 
         slots[selectedAuctionItemIndex].UnSelect();
         selectedAuctionItemIndex = -1;
-        // goBuyBtn.SetActive(false);
+        goBuyBtn.SetActive(false);
+        goCancelToSellBtn.SetActive(false);
     }
     
     // -------------------------------------------------------------
@@ -225,6 +290,7 @@ public class Auction : MonoBehaviour
         // 이후 gameManager에서 Action.LoadAuctionItemList를 호출
         gameManager.RequestAuctionItemList();
         SelectMode(AuctionMode.Buy);
+        GetComponent<UITab>().Open(0);
     }
 
     public void Close()

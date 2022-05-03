@@ -10,10 +10,12 @@ public class AuctionItemSlot : Slot, IPointerClickHandler, IPointerEnterHandler,
     private Auction auction;
 
     private bool isSelected;
+    private bool isMyItem;
 
     private int index;
 
     public int Index { get { return index; } }
+    public bool IsMyItem { get { return isMyItem; } }
 
     private AuctionItem datas;  // in ApiManager.cs
     public AuctionItem Datas { get { return datas; } }
@@ -25,11 +27,13 @@ public class AuctionItemSlot : Slot, IPointerClickHandler, IPointerEnterHandler,
 
     [SerializeField]
     private GameObject go_selectedFrame;
+    [SerializeField]
+    private GameObject myItemSyntax;
 
     // -------------------------------------------------------------
     // Init
     // -------------------------------------------------------------
-    public void SetAuctionItem(Auction parentAuction, int auctionItemIndex, Item itemFromItemManager, AuctionItem fromServer, bool isMyItem = false)
+    public void SetAuctionItem(Auction parentAuction, int auctionItemIndex, Item itemFromItemManager, AuctionItem fromServer, bool _isMyItem = false)
     {
         auction = parentAuction;
         Set(itemFromItemManager);
@@ -39,6 +43,11 @@ public class AuctionItemSlot : Slot, IPointerClickHandler, IPointerEnterHandler,
         
         textItemName.text = itemFromItemManager.ItemName;
         textItemPrice.text = string.Format("{0:#,###}", datas.price).ToString();
+        if (_isMyItem)
+        {
+            myItemSyntax.SetActive(true);
+            isMyItem = true;
+        }
     }
 
     // -------------------------------------------------------------
@@ -66,7 +75,6 @@ public class AuctionItemSlot : Slot, IPointerClickHandler, IPointerEnterHandler,
             if (isSelected)
             {
                 auction.UnSelect();
-                UnSelect();
             }
             else
             {

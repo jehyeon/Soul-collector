@@ -50,6 +50,10 @@ public class PopupSetCount : MonoBehaviour
 
     public void ClickRight()
     {
+        if (inputCount.text == "" || int.Parse(inputCount.text) == 0)
+        {
+            return;
+        }
         gameManager.AnswerCount(type, int.Parse(inputCount.text));
         Close();
     }

@@ -59,12 +59,14 @@ public class Inventory : MonoBehaviour
 
     // slots
     private InventorySlot[] slots;
+    public InventorySlot[] Slots { get { return slots; } }
 
     public bool multiSelectMode;               // 다중 선택 모드 public for test
 
     // 선택된 slot index
     private int selectedSlotIndex = -1;              // 선택된 index (multiSelectMode == false)
     private List<int> selectedSlotIndexList;    // 선택된 index list (multiSelectMode == true)
+    public int SelectedSlotIndex { get { return selectedSlotIndex; } }
 
     public InventoryMode mode;  // public for test 
     public InventoryMode Mode { get { return mode; } }
@@ -311,12 +313,38 @@ public class Inventory : MonoBehaviour
             return;
         }
 
-        if (mode == InventoryMode.NotWork || mode == InventoryMode.Reinforce
-            || mode == InventoryMode.Auction)
+        if (mode == InventoryMode.NotWork || mode == InventoryMode.Reinforce)
         {
             // Inventory 버튼 text 갱신 및 삭제, 다중 선택 버튼 deactivate
             btnDelete.gameObject.SetActive(false);
             goMultiSelectModeUI.SetActive(false);
+            return;
+        }
+
+        if (mode == InventoryMode.Auction)
+        {
+            // Inventory 버튼 text 갱신 및 삭제, 다중 선택 버튼 deactivate
+            btnDelete.gameObject.SetActive(false);
+            goMultiSelectModeUI.SetActive(false);
+            if (selectedSlotIndex != -1)
+            {
+                Debug.Log(slots[selectedSlotIndex].Count);
+                if (slots[selectedSlotIndex].Count > 1)
+                {
+                    // !!! 아이템 여러개 판매는 일단 미지원
+                    goInventoryActBtn.SetActive(false);
+                    textInventoryActBtn.text = "";
+                    return;
+                }
+                // 선택된 아이템이 있는 경우
+                goInventoryActBtn.SetActive(true);
+                textInventoryActBtn.text = "판매";
+            }
+            else
+            {
+                goInventoryActBtn.SetActive(false);
+                textInventoryActBtn.text = "";
+            }
             return;
         }
 
@@ -374,6 +402,13 @@ public class Inventory : MonoBehaviour
             // 선택된 아이템이 없는 경우 버튼 활성화가 되지 않음
             // Only Equipment slot selected
             gameManager.CallUnEquipOnInventory();
+            return;
+        }
+
+        if (mode == InventoryMode.Auction)
+        {
+            // 경매장에서 판매 버튼 클릭 시
+            gameManager.PopupSetCount("Auction", "판매 가격을 설정해주세요.", "취소", "확인");
             return;
         }
 
