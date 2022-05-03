@@ -33,7 +33,8 @@ def AddItemToAuction():
 
 @app.route('/api/auction/delete', methods=['POST'])
 def DeleteItemFromAuction():
-    pass
+    data = request.get_json()
+    return jsonify(sqlite.deleteItemFromAuction(data))
 
 # Push
 @app.route('/api/push/<userId>')
@@ -44,6 +45,11 @@ def getPush(userId):
 def AddPush():
     data = request.get_json()
     return jsonify(sqlite.insertPush(data))
+
+@app.route('/api/push/delete', methods=['POST'])
+def DeletePush():
+    data = request.get_json()
+    return jsonify(sqlite.deletePush(data))
 
 # Manage
 @app.route('/manage/push')

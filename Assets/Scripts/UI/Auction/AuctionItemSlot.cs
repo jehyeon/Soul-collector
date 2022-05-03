@@ -12,9 +12,9 @@ public class AuctionItemSlot : Slot, IPointerClickHandler, IPointerEnterHandler,
     private bool isSelected;
 
     private int index;
-    private int price;
 
-    
+    private AuctionItem datas;  // in ApiManager.cs
+
     [SerializeField]
     private TextMeshProUGUI textItemPrice;
     [SerializeField]
@@ -26,16 +26,16 @@ public class AuctionItemSlot : Slot, IPointerClickHandler, IPointerEnterHandler,
     // -------------------------------------------------------------
     // Init
     // -------------------------------------------------------------
-    public void SetAuctionItem(Auction parentAuction, int auctionItemIndex, Item itemFromItemManager, int itemPrice)
+    public void SetAuctionItem(Auction parentAuction, int auctionItemIndex, Item itemFromItemManager, AuctionItem fromServer)
     {
         auction = parentAuction;
         Set(itemFromItemManager);
 
         index = auctionItemIndex;
-        price = itemPrice;
+        datas = fromServer;
         
         textItemName.text = itemFromItemManager.ItemName;
-        textItemPrice.text = string.Format("{0:#,###}", price).ToString();
+        textItemPrice.text = string.Format("{0:#,###}", datas.price).ToString();
     }
 
     // -------------------------------------------------------------

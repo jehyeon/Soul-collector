@@ -17,6 +17,7 @@ public class AuctionItemForAPI
 
 public class AuctionItem
 {
+    public int id;
     public string userId;
     public int itemId;
     public int price;
@@ -32,6 +33,7 @@ public class PushForAPI
 
 public class PushItem
 {
+    public int id;
     public int itemId;
     public string message;
     public int time;

@@ -47,7 +47,7 @@ public class Auction : MonoBehaviour
                 myAuction,
                 auctionItemIndex,
                 gameManager.ItemManager.Get(item.itemId),
-                item.price
+                item
             );
             
             auctionItemIndex += 1;

@@ -82,6 +82,7 @@ def getAuction(filter = None):
 
             for row in rows:
                 auctionItem = {}
+                auctionItem['id'] = row['id']
                 auctionItem['userId'] = row['userId']
                 auctionItem['itemId'] = row['itemId']
                 auctionItem['price'] = row['price']
@@ -123,6 +124,28 @@ def insertItemToAuction(data):
 
     return insertedItemId
 
+def deleteTimeoutItemInAuction():
+    pass
+
+def deleteItemFromAuction(data):
+    deletedItem = {}
+    try:
+        conn = connectToDB()
+        cur = conn.cursor()
+        cur.execute("DELETE FROM auction WHERE userId = ? AND id = ?"
+            , (data['userId'], data['id']))
+        deletedItem['id'] = data['id']
+        deletedItem['userId'] = data['userId']
+        conn.commit()
+    
+    except:
+        conn().rollback()
+
+    finally:
+        conn.close()
+
+    return deletedItem
+
 # Pushes
 def getPushById(userId):
     # needToUpdate = False
@@ -136,6 +159,7 @@ def getPushById(userId):
 
         for row in rows:
             push = {}
+            push['id'] = row['id']
             push['userId'] = row['userId']
             push['itemId'] = row['itemId']
             push['message'] = row['message']
@@ -173,9 +197,24 @@ def insertPush(data):
 
     return insertedItemId
 
-def deleteTimeoutItemInAuction():
-    pass
+def deletePush(data):
+    deleteItemId = {}
+    try:
+        conn = connectToDB()
+        cur = conn.cursor()
+        cur.execute("Delete FROM push WHERE userId = ? AND id = ?"
+            , (data['userId'], data['id']))
+        deleteItemId['id'] = data['id']
+        deleteItemId['userId'] = data['userId']
+        conn.commit()
+    
+    except:
+        conn().rollback()
 
-# Pushes
+    finally:
+        conn.close()
+
+    return deleteItemId
+
 def deleteTimeoutPushes(userId):
     pass
