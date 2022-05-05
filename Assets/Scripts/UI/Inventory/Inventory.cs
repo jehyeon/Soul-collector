@@ -408,7 +408,7 @@ public class Inventory : MonoBehaviour
         if (mode == InventoryMode.Auction)
         {
             // 경매장에서 판매 버튼 클릭 시
-            gameManager.PopupSetCount("Auction", "판매 가격을 설정해주세요.", "취소", "확인");
+            gameManager.PopupSetCount("Auction", "판매 가격을 설정해주세요.", "취소", "확인", 9999999);
             return;
         }
 
@@ -614,11 +614,15 @@ public class Inventory : MonoBehaviour
     // -------------------------------------------------------------
     // 아이템 구매 (Decrease gold + Add item)
     // -------------------------------------------------------------
-    public void Buy(Item item, int price)
+    public void Buy(Item item, int price, int count = 1)
     {
-        // 아이템 추가, 골드 감소, 세이브 저장
-        AcquireItem(item);
-        UpdateGold(-1 * price);
+        for (int i = 0; i < count; i++)
+        {
+            // 아이템 추가, 골드 감소
+            AcquireItem(item);
+            UpdateGold(-1 * price);
+        }
+        // Save
         gameManager.SaveManager.SaveData();
     }
 
@@ -770,6 +774,11 @@ public class Inventory : MonoBehaviour
         }
         
         return false;
+    }
+
+    public int GetRemainInventory()
+    {
+        return gameManager.SaveManager.Save.InventorySize - gameManager.SaveManager.Save.LastSlotIndex;
     }
 
     private int FindItemUsingSlotId(int slotId)

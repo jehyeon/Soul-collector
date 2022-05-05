@@ -346,8 +346,8 @@ public class UIController: MonoBehaviour
     {
         popupAsk.Popup(type, ask, leftText, rightText);
     }
-    public void PopupSetCount(string type, string message, string leftText, string rightText)
+    public void PopupSetCount(string type, string message, string leftText, string rightText, int maxCount, int defaultCount)
     {
-        popupSetCount.Popup(type, message, leftText, rightText);
+        popupSetCount.Popup(type, message, leftText, rightText, maxCount, defaultCount);
     }
 }

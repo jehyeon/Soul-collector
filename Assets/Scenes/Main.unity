@@ -78231,6 +78231,34 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1975117035}
     m_Modifications:
+    - target: {fileID: 5819699446037702779, guid: 87962c3e207372a4cbff7322c933833a, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5819699446037702779, guid: 87962c3e207372a4cbff7322c933833a, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5819699446037702779, guid: 87962c3e207372a4cbff7322c933833a, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1819603322}
+    - target: {fileID: 5819699446037702779, guid: 87962c3e207372a4cbff7322c933833a, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5819699446037702779, guid: 87962c3e207372a4cbff7322c933833a, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: CheckInputCount
+      objectReference: {fileID: 0}
+    - target: {fileID: 5819699446037702779, guid: 87962c3e207372a4cbff7322c933833a, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PopupSetCount, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5819699446037702779, guid: 87962c3e207372a4cbff7322c933833a, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 8068394715484388700, guid: 87962c3e207372a4cbff7322c933833a, type: 3}
       propertyPath: gameManager
       value: 

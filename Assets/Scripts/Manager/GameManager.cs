@@ -351,9 +351,9 @@ public class GameManager : MonoBehaviour
         uiController.PopupAsk(type, ask, leftText, rightText);
     }
 
-    public void PopupSetCount(string type, string message, string leftText, string rightText)
+    public void PopupSetCount(string type, string message, string leftText, string rightText, int maxCount, int defaultCount = 1)
     {
-        uiController.PopupSetCount(type, message, leftText, rightText);
+        uiController.PopupSetCount(type, message, leftText, rightText, maxCount, defaultCount);
     }
 
     public void AnswerAsk(string type)
@@ -362,9 +362,6 @@ public class GameManager : MonoBehaviour
         {
             case "Delete":
                 inventory.Delete();
-                return;
-            case "Shop":
-                shop.Buy();
                 return;
             case "Craft":
                 craft.CraftItem();
@@ -394,6 +391,9 @@ public class GameManager : MonoBehaviour
         {
             case "Auction":
                 AddItemToAuction(count);
+                return;
+            case "Shop":
+                shop.Buy(count);
                 return;
         }
     }

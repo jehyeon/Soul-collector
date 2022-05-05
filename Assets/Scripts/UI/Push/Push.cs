@@ -140,6 +140,7 @@ public class Push : MonoBehaviour
     {
         this.gameObject.SetActive(false);
         ClearPushList();
+        ClosePushDetail();
     }
 
     private void OpenPushDetail(Item pushItem, string message)

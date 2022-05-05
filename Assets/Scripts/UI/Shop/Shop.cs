@@ -50,22 +50,29 @@ public class Shop : MonoBehaviour
 
     public void ClickBuy()
     {
+        // 1개도 구입 못하는 경우
         if (gameManager.SaveManager.Save.Gold < slots[selectedShopItemIndex].Price)
         {
             gameManager.PopupMessage("골드가 부족합니다.");
             return;
         }
-        
+
         if (gameManager.Inventory.isFullInventory())
         {
             gameManager.PopupMessage("인벤토리에 공간이 부족합니다.");
             return;
         }
 
-        gameManager.PopupAsk("Shop", "아이템을 구매하시겠습니까?", "아니요", "네");
+        int maxCount = slots[selectedShopItemIndex].Item.ItemType == ItemType.Use || slots[selectedShopItemIndex].Item.ItemType == ItemType.Material
+            ? 999
+            : gameManager.Inventory.GetRemainInventory();
+
+        // gameManager.PopupAsk("Shop", "아이템을 구매하시겠습니까?", "아니요", "네");
+        gameManager.PopupSetCount("Shop", "구매할 아이템의 수량을 입력해주세요,", "취소", "구매"
+            , maxCount, 1);
     }
 
-    public void Buy()
+    public void Buy(int count = 1)
     {
         if (selectedShopItemIndex == -1)
         {
@@ -73,7 +80,13 @@ public class Shop : MonoBehaviour
             return;
         }
 
-        gameManager.Inventory.Buy(slots[selectedShopItemIndex].Item, slots[selectedShopItemIndex].Price);
+        // 인벤토리 남은 공간 이상의 수량 구입이 불가능
+        if (gameManager.SaveManager.Save.Gold < slots[selectedShopItemIndex].Price * count)
+        {
+            gameManager.PopupMessage("골드가 부족합니다.");
+            return;
+        }
+        gameManager.Inventory.Buy(slots[selectedShopItemIndex].Item, slots[selectedShopItemIndex].Price, count);
     }
 
     // -------------------------------------------------------------
