@@ -99,7 +99,7 @@ public class DungeonGenerator : MonoBehaviour
         foreach (NavMeshSurface surface in surfaces)
         {
             surface.BuildNavMesh();
-            break;
+            break;  // 첫번째 surface만 build 하면 해결됨
         }
     }
 

@@ -53,7 +53,7 @@ public class Enemy : ACharacter
         FindNearByPlayer();
     }
 
-    public void Set(Spawner parentSpawner, GameObject target)
+    public void Set(Spawner parentSpawner, GameObject target, Vector3 pos)
     {
         stat.Heal(99999);
         spawner = parentSpawner;
@@ -78,6 +78,8 @@ public class Enemy : ACharacter
 
         if (state == EnemyState.Back)
         {
+            animator.SetBool("isMove", true);
+            stat.Heal(true);
             // 시작 위치로 돌아가는 중일 때
             if (agent.remainingDistance < 0.2f)
             {
@@ -89,10 +91,16 @@ public class Enemy : ACharacter
                 // 경로 재 검색
                 agent.SetDestination(startPos);
             }
+            return;
         }
 
         if (state == EnemyState.Idle)
         {
+            if ((this.transform.position - startPos).sqrMagnitude > 1)
+            {
+                // Idle state인데 이상한 곳에 있는 경우
+                this.transform.position = startPos;
+            }
             if (targetDir.sqrMagnitude < Mathf.Pow(findRange, 2))
             {
                 // 플레이어를 찾기 전
@@ -140,6 +148,7 @@ public class Enemy : ACharacter
     {
         state = EnemyState.Back;
         stat.Heal(true);
+        UpdateHpBar();
         // agent.SetDestination(startPos);
     }
 
@@ -187,6 +196,7 @@ public class Enemy : ACharacter
     {
         canAttack = false;
         animator.SetTrigger("isAttack");
+        animator.SetFloat("AttackSpeed", attackAnimSpeed / (1f / stat.AttackSpeed));
         Invoke("AttackCooltime", 1f / stat.AttackSpeed);     // 공격 쿨타임
         yield return new WaitForSeconds(1f / stat.AttackSpeed * 0.5f);      // 공격 애니메이션 실행한지 50% 지나면
         target.GetComponent<ACharacter>().Attacked(stat.CalculateAttackDamage());  // 데미지 계산
@@ -205,6 +215,7 @@ public class Enemy : ACharacter
 
         sound.PlayAttackedSound();
         
+        UpdateHpBar();
         if (damageTextSystem == null)
         {
             damageTextSystem = GameObject.Find("Damage Text System").GetComponent<DamageTextSystem>();

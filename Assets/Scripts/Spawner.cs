@@ -70,10 +70,11 @@ public class Spawner : MonoBehaviour
             // CheckSpawnPosition에서 미리 스폰 위치에 충돌이 있는지 확인 후 호출
             Enemy enemy = enemyObjectPool.Get();
             enemy.transform.position = spawnPosition.transform.position;
+            enemy.gameObject.name = this.gameObject.name;
             // 랜덤 회전
             enemy.transform.rotation = Quaternion.Euler(new Vector3(0f, Random.Range(0f, 360f), 0f));
 
-            enemy.Set(this, gameManager.Player.gameObject);
+            enemy.Set(this, gameManager.Player.gameObject, spawnPosition.transform.position);
 
             remainEnemyCount += 1;
         }

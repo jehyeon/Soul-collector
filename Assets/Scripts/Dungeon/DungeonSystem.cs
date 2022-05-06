@@ -49,7 +49,7 @@ public class DungeonSystem : MonoBehaviour
         CreatePortal(0, false);
         CreatePortal(1, true);
 
-        CreateSpawners(.5f);
+        CreateSpawners(1f);
     }
 
     // -------------------------------------------------------------
@@ -115,8 +115,8 @@ public class DungeonSystem : MonoBehaviour
                     ),
                     Quaternion.identity
                 );
+                spawnerObject.name = i.ToString();
                 spawnerObject.transform.parent = spawnerParent.transform;
-
                 spawnerObject.GetComponent<Spawner>().Set(gameManager, roomWidth, 1, 15f);
             }
         }
