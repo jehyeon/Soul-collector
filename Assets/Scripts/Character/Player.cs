@@ -7,6 +7,7 @@ enum PlayerState
     Idle,
     Move,
     Attack,
+    Drop,
     Die
 }
 
@@ -92,6 +93,13 @@ public class Player : ACharacter
         animator.SetBool("isMove", true);
     }
 
+    public void MoveToItem(GameObject item)
+    {
+        DropMode();
+        SetTarget(item);
+        agent.SetDestination(target.transform.position);
+    }
+
     // -------------------------------------------------------------
     // State 전환
     // -------------------------------------------------------------
@@ -124,6 +132,33 @@ public class Player : ACharacter
             return;
         }
 
+        if (state == PlayerState.Drop)
+        {
+            if (target == null)
+            {
+                // 타겟이 없어지면 Idle 모드
+                IdleMode();
+                return;
+            }
+            
+            targetDir = target.transform.position - this.transform.position;
+            
+            if (targetDir.sqrMagnitude <= Mathf.Pow(playerController.GetItemRange, 2))
+            {
+                DroppedItem item = target.GetComponent<DroppedItem>();
+                if (gameManager.GetItemCheckInventory(item.Id))
+                {
+                    // 인벤토리에 빈 슬롯이 있는 경우
+                    item.Return();   // 아이템 return
+                    playerController.ClearMoveCursor();
+                }
+
+                IdleMode();
+            }
+            
+            return;
+        }
+
         if (state == PlayerState.Move)
         {
             agent.SetDestination(destinationPos);
@@ -132,7 +167,7 @@ public class Player : ACharacter
             {
                 // 이동 상태에서 목적지에 도착하면
                 IdleMode();
-                playerController.ClearMoveTarget(); // 타겟 마크 제거
+                playerController.ClearMoveCursor(); // 타겟 마크 제거
             }
         }
     }
@@ -140,6 +175,7 @@ public class Player : ACharacter
     private void IdleMode()
     {
         state = PlayerState.Idle;
+        StopMove();
         animator.SetBool("isMove", false);
     }
 
@@ -152,6 +188,12 @@ public class Player : ACharacter
     private void AttackMode()
     {
         state = PlayerState.Attack;
+        animator.SetBool("isMove", true);
+    }
+
+    private void DropMode()
+    {
+        state = PlayerState.Drop;
         animator.SetBool("isMove", true);
     }
 
@@ -168,6 +210,11 @@ public class Player : ACharacter
         }
 
         AttackMode();
+    }
+    public void AttackTarget(GameObject target)
+    {
+        SetTarget(target);
+        AttackTarget();
     }
 
     private void ReadyToAttack()
