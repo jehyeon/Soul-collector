@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 5576586397940181922}
   - component: {fileID: 5576586397940181924}
   - component: {fileID: 5576586397940181925}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Box Drop
   m_TagString: Item
   m_Icon: {fileID: 0}

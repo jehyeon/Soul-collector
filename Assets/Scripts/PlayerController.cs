@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
 {
     // 이동, 조작 관련 / 목적지 및 타겟 지정
     private Player player;
+    private AutoHunt auto;
 
     // Target Marker
     [SerializeField]
@@ -21,14 +22,20 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private List<Collider> enemies;
 
+    public List<Collider> CloseEnemies;
+
     private float getItemRange = 2f;
     public float GetItemRange { get { return getItemRange; } }
     private float findEnemyRange = 15f;
     private int maxTargetLength = 5;
 
+    // 자동 사냥 모드
+    private bool isAuto;
+
     private void Start()
     {
         player = GetComponent<Player>();
+        isAuto = false;
         InvokeRepeating("FindNearbyEnemy", 0f, 1f);     // 1초 마다 주변 enemy 갱신
     }
 
@@ -97,12 +104,24 @@ public class PlayerController : MonoBehaviour
             // 타겟 전환
             ChangeTarget();
         }
+
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            if (isAuto)
+            {
+                StopAutoHunt();
+            }
+            else
+            {
+                StartAutoHunt();
+            }
+        }
     }
 
     // -------------------------------------------------------------
     // 타겟
     // -------------------------------------------------------------
-    private void ActivateMoveCursor(Vector3 point)
+    public void ActivateMoveCursor(Vector3 point)
     {
         if (moveTarget == null)
         {
@@ -114,7 +133,7 @@ public class PlayerController : MonoBehaviour
         moveTarget.transform.position = point;
     }
 
-    private void ActivateAttackCursor(Transform transform)
+    public void ActivateAttackCursor(Transform transform)
     {
         if (attackTarget == null)
         {
@@ -222,5 +241,24 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
+    }
+
+    // -------------------------------------------------------------
+    // 자동 사냥 모드 지원
+    // -------------------------------------------------------------
+    private void StartAutoHunt()
+    {
+        this.gameObject.AddComponent<AutoHunt>();   
+        auto = GetComponent<AutoHunt>();
+        isAuto = true;
+    }
+
+    private void StopAutoHunt()
+    {
+        Destroy(GetComponent<AutoHunt>());
+        auto = null;
+        isAuto = false;
+        player.SetTarget(null);
+        player.StopMove();
     }
 }

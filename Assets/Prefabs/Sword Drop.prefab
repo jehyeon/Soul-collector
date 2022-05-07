@@ -335,7 +335,7 @@ GameObject:
   - component: {fileID: 566938502666121900}
   - component: {fileID: 3471171994703151961}
   - component: {fileID: 4066533228142141787}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sword Drop
   m_TagString: Item
   m_Icon: {fileID: 0}

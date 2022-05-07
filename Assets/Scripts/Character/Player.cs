@@ -79,7 +79,7 @@ public class Player : ACharacter
         StopCoroutine("Attack");    // 이동 중이면 코루틴 중지
     }
 
-    private void StopMove()
+    public void StopMove()
     {
         // attacking일 때 정지 시 사용
         agent.isStopped = true;
