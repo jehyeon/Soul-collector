@@ -322,6 +322,11 @@ public class UIController: MonoBehaviour
         }
     }
 
+    public void PlayGetItemSound()
+    {
+        sound.PlayGetItemSound();
+    }
+
     // -------------------------------------------------------------
     // Dungeon floor
     // -------------------------------------------------------------

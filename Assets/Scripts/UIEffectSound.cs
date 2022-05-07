@@ -24,6 +24,8 @@ public class UIEffectSound : MonoBehaviour
     private AudioSource equipMetalSound;
     [SerializeField]
     private AudioSource equipJewelSound;
+    [SerializeField]
+    private AudioSource getItemSound;
 
     public void PlayOpenInventorySound()
     {
@@ -43,5 +45,10 @@ public class UIEffectSound : MonoBehaviour
     public void PlayEquipMetalArmorSound()
     {
         equipMetalSound.Play();
+    }
+
+    public void PlayGetItemSound()
+    {
+        getItemSound.Play();
     }
 }

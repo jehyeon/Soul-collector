@@ -151,6 +151,7 @@ public class Player : ACharacter
                     // 인벤토리에 빈 슬롯이 있는 경우
                     item.Return();   // 아이템 return
                     playerController.ClearMoveCursor();
+                    gameManager.UIController.PlayGetItemSound();
                 }
 
                 IdleMode();

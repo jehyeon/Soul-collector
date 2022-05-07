@@ -40,8 +40,7 @@ public class AutoHunt : MonoBehaviour
                     return;
                 }
 
-                // 아이템을 먹으면
-                autoMode = AutoHuntMode.Find;
+                Invoke("StartFind", 0.5f);
             }
             else if (autoMode == AutoHuntMode.HuntEnemy)
             {
@@ -51,7 +50,7 @@ public class AutoHunt : MonoBehaviour
                     return;
                 }
 
-                autoMode = AutoHuntMode.Find;
+                Invoke("StartFind", 0.5f);
             }
             
             // 자동 사냥 모드를 끄려면 AutoHunt Component를 제거
@@ -71,6 +70,11 @@ public class AutoHunt : MonoBehaviour
         {
             HuntEnemy();
         }
+    }
+
+    private void StartFind()
+    {
+        autoMode = AutoHuntMode.Find;
     }
 
     private void FindNearbyObject()
