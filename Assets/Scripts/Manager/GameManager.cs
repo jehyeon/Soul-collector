@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     private CraftManager craftManager;
     private ShopManager shopManager;
 
+    private EnemySystem enemySystem;
+
     private int floor;
     public int Floor { get { return floor; } }
 
@@ -121,6 +123,21 @@ public class GameManager : MonoBehaviour
     private void PlayerReset()
     {
         player.transform.position = Vector3.zero;
+    }
+
+    // -------------------------------------------------------------
+    // Dungeon
+    // -------------------------------------------------------------
+    public GameObject[] GetEnemyObjects()
+    {
+        if (enemySystem == null)
+        {
+            enemySystem = GameObject.Find("EnemySystem").GetComponent<EnemySystem>();
+        }
+
+        Debug.Log(enemySystem);
+        Debug.Log(enemySystem.GetEnemyObjects(floor));
+        return enemySystem.GetEnemyObjects(floor);
     }
 
     // -------------------------------------------------------------

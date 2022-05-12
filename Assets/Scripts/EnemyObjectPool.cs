@@ -6,7 +6,7 @@ public class EnemyObjectPool : MonoBehaviour
 {
     // public static ObjectPool Instance;
     [SerializeField]
-    private GameObject poolingObjectPref;
+    private GameObject[] poolingObjectPref;
     [SerializeField]
     private int _count = 0;
     [SerializeField]
@@ -14,14 +14,19 @@ public class EnemyObjectPool : MonoBehaviour
 
     Queue<Enemy> poolingObjectQueue = new Queue<Enemy>();
 
-    private void Awake()
-    {
-        // Instance = this;
+    // private void Awake()
+    // {
+    //     // Instance = this;
 
-        Init(_count);
+    //     Init(_count);
+    // }
+
+    public void Set(GameObject[] enemyPrefs)
+    {
+        poolingObjectPref = enemyPrefs;
     }
 
-    private void Init(int count)
+    public void Init(int count)
     {
         for (int i = 0; i < count; i++)
         {
@@ -31,7 +36,7 @@ public class EnemyObjectPool : MonoBehaviour
 
     private Enemy CreateObject()
     {
-        GameObject enemyObject = Instantiate(poolingObjectPref);
+        GameObject enemyObject = Instantiate(poolingObjectPref[Random.Range(0, poolingObjectPref.Length)]);
         enemyObject.SetActive(false);
         enemyObject.transform.SetParent(this.transform);
 

@@ -45,6 +45,7 @@ public class Spawner : MonoBehaviour
         roomWidth = _roomWidth;
         spawnCycle = cycle;
         maxEnemyCount = maxCount;
+        enemyObjectPool.Set(gm.GetEnemyObjects());
 
         Run();
     }
