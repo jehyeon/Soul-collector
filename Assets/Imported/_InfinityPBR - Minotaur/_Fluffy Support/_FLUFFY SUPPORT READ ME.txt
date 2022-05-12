@@ -1,0 +1,8 @@
+**********************************************************************************
+For discussion & support, join the Discord: https://discord.com/invite/cmZY2tH
+Be sure to sign up for the mailing list at https://infinitypbr.com
+**********************************************************************************
+
+FLUFFY can be found here: https://assetstore.unity.com/packages/tools/modeling/fluffy-grooming-tool-193828?aid=1100lxWw
+
+It is an amazing Fur & Hair grooming tool from Daniel Zeller, and the .unitypackage files here are pre-sets for getting Fluffy working with the Minotaur!
