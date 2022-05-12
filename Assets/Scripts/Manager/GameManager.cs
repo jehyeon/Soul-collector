@@ -196,7 +196,7 @@ public class GameManager : MonoBehaviour
         {
             dropSystem = GameObject.Find("Drop System").GetComponent<DropSystem>();
         }
-        dropSystem.DropItem(itemId, pos);
+        dropSystem.DropItem(itemManager.Get(itemId), pos);
     }
 
     // -------------------------------------------------------------

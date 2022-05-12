@@ -12,11 +12,11 @@ public class DropSystem : MonoBehaviour
     public ObjectPool SwordOP { get { return swordOP; } }
     public ObjectPool BoxOP { get { return boxOP; } }
 
-    public void DropItem(int itemId, Vector3 position)
+    public void DropItem(Item item, Vector3 position)
     {
         // 장비 아이템인 경우 아이템 타입에 맞게 외형 변경
         GameObject itemObject;
-        if (itemId < 1600)
+        if (item.Id < 1600)
         {
             // !!! sword 프리팹으로 고정
             itemObject = swordOP.Get();
@@ -27,7 +27,7 @@ public class DropSystem : MonoBehaviour
             itemObject = boxOP.Get();
         }
 
-        itemObject.GetComponent<DroppedItem>().Set(this, itemId);
+        itemObject.GetComponent<DroppedItem>().Set(this, item);
         itemObject.transform.position = position;
         // 랜덤 회전
         itemObject.transform.rotation = Quaternion.Euler(new Vector3(0f, Random.Range(0f, 360f), 0f));

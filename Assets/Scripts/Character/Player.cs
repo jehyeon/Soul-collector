@@ -147,7 +147,7 @@ public class Player : ACharacter
             if (targetDir.sqrMagnitude <= Mathf.Pow(playerController.GetItemRange, 2))
             {
                 DroppedItem item = target.GetComponent<DroppedItem>();
-                if (gameManager.GetItemCheckInventory(item.Id))
+                if (gameManager.GetItemCheckInventory(item.Item.Id))
                 {
                     // 인벤토리에 빈 슬롯이 있는 경우
                     item.Return();   // 아이템 return
