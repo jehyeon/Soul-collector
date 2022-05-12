@@ -26,13 +26,12 @@ public class DungeonSystem : MonoBehaviour
 
     public int Floor { get { return floor; } }
 
-    private void Awake()
-    {
-        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
-    }
-
     private void Start()
     {
+        if (gameManager == null)
+        {
+            gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+        }
         floor = gameManager.Floor;
         Load();
     }

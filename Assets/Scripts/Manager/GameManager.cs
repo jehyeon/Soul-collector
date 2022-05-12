@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -90,7 +89,7 @@ public class GameManager : MonoBehaviour
     // -------------------------------------------------------------
     private void GoViliage()
     {
-        SceneManager.LoadScene("Main");
+        LoadingSceneManager.LoadScene("Main");
         PlayerReset();
 
         // 던전 Floor UI
@@ -100,7 +99,7 @@ public class GameManager : MonoBehaviour
 
     private void GoDungeon()
     {
-        SceneManager.LoadScene("Default Dungeon");
+        LoadingSceneManager.LoadScene("Default Dungeon");
         PlayerReset();
 
         // 던전 Floor UI
@@ -111,7 +110,7 @@ public class GameManager : MonoBehaviour
     private void GoNextFloor()
     {
         // 다음층으로 던전 생성
-        SceneManager.LoadScene("Default Dungeon");      // 씬 리로드
+        LoadingSceneManager.LoadScene("Default Dungeon");   // 씬 리로드
         PlayerReset();
 
         // 던전 Floor UI
