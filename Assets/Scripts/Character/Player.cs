@@ -141,6 +141,7 @@ public class Player : ACharacter
                 return;
             }
             
+            AgainMove();
             targetDir = target.transform.position - this.transform.position;
             
             if (targetDir.sqrMagnitude <= Mathf.Pow(playerController.GetItemRange, 2))
@@ -258,14 +259,14 @@ public class Player : ACharacter
 
     public override bool Attacked(int damage)
     {
-        stat.TakeDamage(damage);    // 받은 피해 적용 (방어도 계산)
+        int real = stat.TakeDamage(damage);    // 받은 피해 적용 (방어도 계산)
         gameManager.UIController.UpdatePlayerHpBar(stat.Hp, stat.MaxHp);    // view 업데이트
 
         if (damageTextSystem == null)
         {
             damageTextSystem = GameObject.Find("Damage Text System").GetComponent<DamageTextSystem>();
         }
-        damageTextSystem.FloatDamageText(damage, this.transform.position);
+        damageTextSystem.FloatDamageText(real, this.transform.position);
 
         return false;
     }

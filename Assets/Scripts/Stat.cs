@@ -146,9 +146,11 @@ public class Stat
         return (damage - this._damageReduction) > 0 ? damage - this._damageReduction : 0;
     }
 
-    public void TakeDamage(int damage)
+    public int TakeDamage(int damage)
     {
-        DecreaseHp(CalculateTakenDamage(damage));
+        int real = CalculateTakenDamage(damage);
+        DecreaseHp(real);
+        return real;
     }
     
     public override string ToString()

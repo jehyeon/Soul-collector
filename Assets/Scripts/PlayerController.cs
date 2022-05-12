@@ -52,6 +52,11 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject ())
         {
+            if (isAuto)
+            {
+                // 자동 사냥 중이면 자동 사냥 종료
+                StopAutoHunt();
+            }
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit raycastHit))
             {
@@ -83,6 +88,29 @@ public class PlayerController : MonoBehaviour
 
     private void KeyBoardAction()
     {
+        // 자동 사냥 모드
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            if (isAuto)
+            {
+                StopAutoHunt();
+            }
+            else
+            {
+                StartAutoHunt();
+            }
+
+            return;
+        }
+
+        if (isAuto && Input.anyKeyDown)
+        {
+            // 자동 사냥 중일 때 키보드 입력이 생기면 자동 사냥 종료
+            StopAutoHunt();
+
+            return;
+        }
+
         float moveX = Input.GetAxis("Horizontal");
         float moveZ = Input.GetAxis("Vertical");
         
@@ -103,18 +131,6 @@ public class PlayerController : MonoBehaviour
         {
             // 타겟 전환
             ChangeTarget();
-        }
-
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            if (isAuto)
-            {
-                StopAutoHunt();
-            }
-            else
-            {
-                StartAutoHunt();
-            }
         }
     }
 
@@ -248,17 +264,39 @@ public class PlayerController : MonoBehaviour
     // -------------------------------------------------------------
     private void StartAutoHunt()
     {
+        // 이동 및 타겟, 커서 초기화
+        ClearAttackCursor();
+        ClearMoveCursor();
+        player.SetTarget(null);
+        player.StopMove();
+
+        // 적 타겟 검색 종료 AutoHunt에서 처리함
+        CancelInvoke("FindNearbyEnemy");
+    
+        // AutoHunt 추가
+        isAuto = true;
         this.gameObject.AddComponent<AutoHunt>();   
         auto = GetComponent<AutoHunt>();
-        isAuto = true;
+
+        player.gameManager.PopupMessage("자동사냥 중입니다.\n아무 키를 누르면 종료 됩니다.", float.PositiveInfinity);
     }
 
     private void StopAutoHunt()
     {
-        Destroy(GetComponent<AutoHunt>());
-        auto = null;
-        isAuto = false;
+        // 이동 및 타겟, 커서 초기화
+        ClearAttackCursor();
+        ClearMoveCursor();
         player.SetTarget(null);
         player.StopMove();
+
+        // AutoHunt 삭제
+        isAuto = false;
+        Destroy(GetComponent<AutoHunt>());
+        auto = null;
+
+        // 주변 적 타겟 검색 재 시작
+        InvokeRepeating("FindNearbyEnemy", 0f, 1f);
+
+        player.gameManager.PopupMessageClose();
     }
 }

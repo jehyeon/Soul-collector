@@ -17,7 +17,7 @@ public class PopupMessage : MonoBehaviour
         Invoke("Close", time);
     }
 
-    private void Close()
+    public void Close()
     {
         this.gameObject.SetActive(false);
     }

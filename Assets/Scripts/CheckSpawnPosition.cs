@@ -50,7 +50,7 @@ public class CheckSpawnPosition : MonoBehaviour
         // room width 범위 내에 스폰 위치 선정
         spawner = parentSpawner;
         this.transform.position = spawner.transform.position;
-        halfRoomWidth = roomWidth / 2f;
+        halfRoomWidth = roomWidth / 2.2f;   // 벽에 스폰되는 경우 방지하고자 2f가 아닌 2.2f로 수정
 
         FindSpawnPosition();
     }

@@ -345,6 +345,10 @@ public class GameManager : MonoBehaviour
     {
         uiController.PopupMessage(message, time);
     }
+    public void PopupMessageClose()
+    {
+        uiController.PopupMessageClose();
+    }
 
     public void PopupAsk(string type, string ask, string leftText, string rightText)
     {

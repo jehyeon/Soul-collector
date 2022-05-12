@@ -347,6 +347,12 @@ public class UIController: MonoBehaviour
     {
         popupMessage.Popup(message, time);
     }
+
+    public void PopupMessageClose()
+    {
+        popupMessage.Close();
+    }
+
     public void PopupAsk(string type, string ask, string leftText, string rightText)
     {
         popupAsk.Popup(type, ask, leftText, rightText);

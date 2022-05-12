@@ -210,8 +210,7 @@ public class Enemy : ACharacter
 
     public override bool Attacked(int damage)
     {
-        stat.TakeDamage(damage);
-
+        int real = stat.TakeDamage(damage);
 
         sound.PlayAttackedSound();
         
@@ -220,7 +219,7 @@ public class Enemy : ACharacter
         {
             damageTextSystem = GameObject.Find("Damage Text System").GetComponent<DamageTextSystem>();
         }
-        damageTextSystem.FloatDamageText(damage, this.transform.position);
+        damageTextSystem.FloatDamageText(real, this.transform.position);
 
         if (stat.Hp < 1)
         {
