@@ -77395,6 +77395,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 721213162}
+    - target: {fileID: 2970149852709158324, guid: 7c197d5b80af466449948b70da543a34, type: 3}
+      propertyPath: m_ChildAlignment
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 2970149852709158325, guid: 7c197d5b80af466449948b70da543a34, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0

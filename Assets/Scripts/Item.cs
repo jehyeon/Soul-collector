@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public enum ItemType
 {
@@ -73,10 +74,16 @@ public class Item
     private float _moveSpeed;
     public float MoveSpeed { get { return _moveSpeed; } }
     
+    private string MyDictionaryToJson(Dictionary<string, object> dict)
+    {
+        var entries = dict.Select(d =>
+            string.Format("\"{0}\": [{1}]", d.Key, string.Join(",", d.Value)));
+        return "{" + string.Join(",", entries) + "}";
+    }
+
     public Item(int itemId, Dictionary<string, object> data)
     {
         rawData = data;
-        
         _id = itemId;
 
         // 아이템 테이블로부터 가져온 정보
@@ -101,17 +108,39 @@ public class Item
         _rank = (int)data["rank"] / 10;
         _level = (int)data["rank"] % 10;    // !!! int 값이 잘 저장되는지 확인해보기
         _itemName = data["itemName"].ToString();
-        // !!! move to weaponItem, armorItem
-        _defaultDamage = (int)data["defaultDamage"];
-        _maxDamage = (int)data["maxDamage"];
-        _minDamage = (int)data["minDamage"];
-        _attackSpeed = (int)data["attackSpeed"];
-        _damageReduction = (int)data["damageReduction"];
-        _evasionPercent = (int)data["evasionPercent"];
-        _maxHp = (int)data["maxHp"];
-        _hpRecovery = (int)data["hpRecovery"];
-        _moveSpeed = (int)data["moveSpeed"];
-        _criticalPercent = (int)data["criticalPercent"];
+
+        // Optional
+        _defaultDamage = data["defaultDamage"].ToString() != string.Empty
+            ? (int)data["defaultDamage"]
+            : 0;
+        _maxDamage = data["maxDamage"].ToString() != string.Empty
+            ? (int)data["maxDamage"]
+            : 0;
+        _minDamage = data["minDamage"].ToString() != string.Empty
+            ? (int)data["minDamage"]
+            : 0;
+        _attackSpeed = data["attackSpeed"].ToString() != string.Empty
+            ? (int)data["attackSpeed"]
+            : 0;
+        _damageReduction = data["damageReduction"].ToString() != string.Empty
+            ? (int)data["damageReduction"]
+            : 0;
+        _evasionPercent = data["evasionPercent"].ToString() != string.Empty
+            ? (int)data["evasionPercent"]
+            : 0;
+        _maxHp = data["maxHp"].ToString() != string.Empty
+            ? (int)data["maxHp"]
+            : 0;
+        _hpRecovery = data["hpRecovery"].ToString() != string.Empty
+            ? (int)data["hpRecovery"]
+            : 0;
+        _moveSpeed = data["moveSpeed"].ToString() != string.Empty
+            ? (int)data["moveSpeed"]
+            : 0;
+        _criticalPercent = data["criticalPercent"].ToString() != string.Empty
+            ? (int)data["criticalPercent"]
+            : 0;
+
         _des = data["des"].ToString();
 
         // 아이템 이미지

@@ -13,7 +13,7 @@ public class CraftMaterial
     public CraftMaterial(int gold)
     {
         // gold
-        id = 1627;
+        id = 0;
         requiredNumber = gold;
         count = 0;
     }
