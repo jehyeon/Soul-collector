@@ -81,7 +81,7 @@ public class Push : MonoBehaviour
             return;
         }
 
-        if (slots[selectedPushItemIndex].PushItem.itemId == 1627)
+        if (slots[selectedPushItemIndex].PushItem.itemId == 0)
         {
             // gold인 경우
             gameManager.Inventory.UpdateGold(slots[selectedPushItemIndex].PushItem.gold);

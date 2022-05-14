@@ -165,30 +165,58 @@ public class Craft : MonoBehaviour
             return;
         }
 
-        gameManager.PopupAsk("Craft", "아이템을 제작하시겠습니까?", "아니요", "네");
+        // gameManager.PopupAsk("Craft", "아이템을 제작하시겠습니까?", "아니요", "네");
+        int maxCount = slots[selectCraftItemIndex].Item.ItemType == ItemType.Use || slots[selectCraftItemIndex].Item.ItemType == ItemType.Material
+            ? 999
+            : gameManager.Inventory.GetRemainInventory();
+
+        gameManager.PopupSetCount("Craft", "제작할 아이템의 수량을 입력해주세요,", "취소", "구매"
+            , maxCount, 1);
     }
 
-    public void CraftItem()
+    public void CraftItem(int count = 1)
     {
-        // Ask Yes -> gameManager.craft.CraftItem()으로 호출됨
+        bool lastCheck = false;
+        if (count > 1)
+        {
+            // count가 1개 이상인 경우 다시 수량 체크
+            foreach (CraftMaterial material in materials)
+            {
+                if (material.Count < material.RequiredNumber * count)
+                {
+                    lastCheck = true;
+                    break;
+                }
+            }
+        }
+
+        if (lastCheck)
+        {
+            gameManager.PopupMessage("재료 아이템이 부족합니다.");
+            return;
+        }
+
         // materials: 현재 선택된 제작 아이템 재료 정보
         foreach (CraftMaterial material in materials)
         {
-            if (material.Id == 1627)
+            if (material.Id == 0)
             {
                 // 재료가 gold인 경우
-                gameManager.Inventory.UpdateGold(-1 * material.RequiredNumber);
+                gameManager.Inventory.UpdateGold(-1 * material.RequiredNumber * count);
             }
             else
             {
                 // material id의 아이템을 material required number만큼 차감
                 // 아이템의 존재 여부 및 수량이 충분한지 ClickCraft()에서 확인
-                gameManager.Inventory.UpdateItemCountUsingItemId(material.Id, -1 * material.RequiredNumber, false);
+                gameManager.Inventory.UpdateItemCountUsingItemId(material.Id, -1 * material.RequiredNumber * count, false);
             }
         }
 
         // 제작 아이템 추가
-        gameManager.Inventory.AcquireItem(slots[selectCraftItemIndex].Item);
+        for (int i = 0; i < count; i++)
+        {
+            gameManager.Inventory.AcquireItem(slots[selectCraftItemIndex].Item);
+        }
         gameManager.Inventory.SaveAndLoad();
 
         // 제작 후 재료 창 reload, 사용한 재료 갱신

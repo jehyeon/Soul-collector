@@ -282,7 +282,7 @@ public class GameManager : MonoBehaviour
         apiManager.AddPush
         (
             auction.SelectedAuctionItem.userId, 
-            1627, 
+            0, 
             string.Format("아이템 판매 대금입니다.\n판매 금액: {0}", auction.SelectedAuctionItem.price), 
             auction.SelectedAuctionItem.price
         );
@@ -383,9 +383,9 @@ public class GameManager : MonoBehaviour
             case "Delete":
                 inventory.Delete();
                 return;
-            case "Craft":
-                craft.CraftItem();
-                return;
+            // case "Craft":
+            //     craft.CraftItem();
+            //     return;
             case "Reinforce":
                 reinforce.ReinforceItems();
                 return;
@@ -414,6 +414,9 @@ public class GameManager : MonoBehaviour
                 return;
             case "Shop":
                 shop.Buy(count);
+                return;
+            case "Craft":
+                craft.CraftItem(count);
                 return;
         }
     }

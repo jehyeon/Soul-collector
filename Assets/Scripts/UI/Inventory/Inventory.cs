@@ -807,7 +807,7 @@ public class Inventory : MonoBehaviour
 
     public int GetItemAmount(int itemId)
     {
-        if (itemId == 1627)
+        if (itemId == 0)
         {
             // gold
             return gameManager.SaveManager.Save.Gold;
