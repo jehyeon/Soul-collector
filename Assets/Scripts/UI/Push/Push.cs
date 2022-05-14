@@ -57,6 +57,11 @@ public class Push : MonoBehaviour
 
     private void ClearPushList()
     {
+        if (slots == null)
+        {
+            return;
+        }
+        
         // !!! 임시
         for (int i = 0; i < slots.Length; i++)
         {

@@ -27,7 +27,7 @@ public class Auction : MonoBehaviour
     [SerializeField]
     private GameObject goCancelToSellBtn;
 
-    private int selectedAuctionItemIndex;   // 현재 선택된 경매장 아이템
+    private int selectedAuctionItemIndex = -1;   // 현재 선택된 경매장 아이템
     private AuctionItem selectedAuctionItem;             // 현재 선택된 경매장 아이템
     public AuctionItem SelectedAuctionItem { get { return selectedAuctionItem; } }
     public AuctionItemSlot[] buySlots;
@@ -86,14 +86,22 @@ public class Auction : MonoBehaviour
     public void ClearAuctionList()
     {
         // !!! 임시
-        for (int i = 0; i < buySlots.Length; i++)
+        if (buySlots != null)
         {
-            Destroy(buySlots[i].gameObject);
+            for (int i = 0; i < buySlots.Length; i++)
+            {
+                Destroy(buySlots[i].gameObject);
+            }
         }
-        for (int i = 0; i < sellSlots.Length; i++)
+        
+        if (sellSlots != null)
         {
-            Destroy(sellSlots[i].gameObject);
+            for (int i = 0; i < sellSlots.Length; i++)
+            {
+                Destroy(sellSlots[i].gameObject);
+            }
         }
+        
         buySlots = null;
         sellSlots = null;
     }
@@ -167,9 +175,6 @@ public class Auction : MonoBehaviour
         {
             return;
         }
-        Debug.Log(SelectedAuctionItem.id);
-        Debug.Log(SelectedAuctionItem.userId);
-        Debug.Log(SelectedAuctionItem.itemId);
         gameManager.CancelToSell();
 
         foreach(AuctionItemSlot item in buySlots)

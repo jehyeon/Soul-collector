@@ -102,22 +102,23 @@ public class UIController: MonoBehaviour
             }
             else
             {
+                CloseUI();
                 OpenPushUI();
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            // Inventory & Equipment
-            if (isActivatedAuctionUI)
-            {
-                CloseAuctionUI();
-            }
-            else
-            {
-                OpenAuctionUI();
-            }
-        }
+        // if (Input.GetKeyDown(KeyCode.U))
+        // {
+        //     // Inventory & Equipment
+        //     if (isActivatedAuctionUI)
+        //     {
+        //         CloseAuctionUI();
+        //     }
+        //     else
+        //     {
+        //         OpenAuctionUI();
+        //     }
+        // }
 
         if (Input.GetKeyDown(KeyCode.I))
         {
@@ -128,46 +129,51 @@ public class UIController: MonoBehaviour
             }
             else
             {
+                CloseUI();
                 OpenEquipmentUI();
             }
         }
         
-        if (Input.GetKeyDown(KeyCode.O))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            // Inventory & Equipment
-            if (isActivatedReinforceUI)
-            {
-                CloseReinforceUI();
-            }
-            else
-            {
-                OpenReinforceUI();
-            }
+            CloseUI();
         }
+        // if (Input.GetKeyDown(KeyCode.O))
+        // {
+        //     // Inventory & Equipment
+        //     if (isActivatedReinforceUI)
+        //     {
+        //         CloseReinforceUI();
+        //     }
+        //     else
+        //     {
+        //         OpenReinforceUI();
+        //     }
+        // }
 
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            if (isActivatedShopUI)
-            {
-                CloseShopUI();
-            }
-            else
-            {
-                OpenShopUI();
-            }
-        }
+        // if (Input.GetKeyDown(KeyCode.P))
+        // {
+        //     if (isActivatedShopUI)
+        //     {
+        //         CloseShopUI();
+        //     }
+        //     else
+        //     {
+        //         OpenShopUI();
+        //     }
+        // }
 
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            if (isActivatedCraftUI)
-            {
-                CloseCraftUI();
-            }
-            else
-            {
-                OpenCraftUI();
-            }
-        }
+        // if (Input.GetKeyDown(KeyCode.C))
+        // {
+        //     if (isActivatedCraftUI)
+        //     {
+        //         CloseCraftUI();
+        //     }
+        //     else
+        //     {
+        //         OpenCraftUI();
+        //     }
+        // }
     }
 
     public void UpdateStatUI(Stat characterStat)
@@ -292,6 +298,16 @@ public class UIController: MonoBehaviour
     public void CloseItemDetail()
     {
         itemDetail.Close();
+    }
+
+    public void CloseUI()
+    {
+        CloseEquipmentUI();
+        CloseShopUI();
+        CloseAuctionUI();
+        ClosePushUI();
+        CloseCraftUI();
+        CloseReinforceUI();
     }
 
     // 플레이어 체력바

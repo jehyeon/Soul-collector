@@ -255,6 +255,11 @@ public class Inventory : MonoBehaviour
             return;
         }
         
+        if (selectedSlotIndexList == null)
+        {
+            selectedSlotIndexList = new List<int>();
+        }
+
         if (selectedSlotIndexList.Count > 0)
         {
             foreach(int index in selectedSlotIndexList)

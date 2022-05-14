@@ -63,6 +63,7 @@ public class PlayerController : MonoBehaviour
                     player.Move(raycastHit.point);
                     // ActivateMoveCursor(raycastHit.point);
                     MovePoint.Instance.Activate(raycastHit.point);
+                    return;
                 }
 
                 // 적 클릭하면 target 설정
@@ -72,18 +73,27 @@ public class PlayerController : MonoBehaviour
                     
                     // 커서 추가
                     ActivateAttackCursor(raycastHit.collider.gameObject.transform);
+                    return;
                 }
 
                 if (raycastHit.collider.CompareTag("Item"))
                 {
                     player.MoveToItem(raycastHit.collider.gameObject);
                     MovePoint.Instance.Activate(raycastHit.collider.transform.position);
+                    return;
                 }
 
-                if (raycastHit.collider.CompareTag("Portal"))
-                {
-                    raycastHit.collider.gameObject.GetComponent<Portal>().Enter();
-                }
+                // if (raycastHit.collider.CompareTag("Portal"))
+                // {
+                //     raycastHit.collider.gameObject.GetComponent<Portal>().Enter();
+                //     return;
+                // }
+                
+                // if (raycastHit.collider.CompareTag("NPC"))
+                // {
+                //     raycastHit.collider.gameObject.GetComponent<NPC>().Talk();
+                //     return;
+                // }
             }
         }
     }

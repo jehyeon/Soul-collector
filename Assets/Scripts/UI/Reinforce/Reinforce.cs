@@ -264,16 +264,20 @@ public class Reinforce : MonoBehaviour
             scroll.Clear();
         }
 
-        foreach (ReinforceSlot slot in slots)
+        if (slots != null)
         {
-            if (slot.Item == null)
+            foreach (ReinforceSlot slot in slots)
             {
-                break;
-            }
+                if (slot.Item == null)
+                {
+                    break;
+                }
 
-            gameManager.Inventory.UnSelectUsingSlotId(slot.InventorySlotId);
-            slot.Clear();
+                gameManager.Inventory.UnSelectUsingSlotId(slot.InventorySlotId);
+                slot.Clear();
+            }
         }
+        
 
         reinforcingItemCount = 0;
         IsClearedReinforcingItems();
