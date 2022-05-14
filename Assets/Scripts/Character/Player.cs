@@ -151,7 +151,6 @@ public class Player : ACharacter
                 {
                     // 인벤토리에 빈 슬롯이 있는 경우
                     item.Return();   // 아이템 return
-                    playerController.ClearMoveCursor();
                     gameManager.UIController.PlayGetItemSound();
                 }
 
@@ -169,7 +168,6 @@ public class Player : ACharacter
             {
                 // 이동 상태에서 목적지에 도착하면
                 IdleMode();
-                playerController.ClearMoveCursor(); // 타겟 마크 제거
             }
         }
     }

@@ -13,10 +13,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private GameObject targetParnet;
     [SerializeField]
-    private GameObject moveTargetPref;
-    [SerializeField]
     private GameObject attackTargetPref;
-    private GameObject moveTarget;
     private GameObject attackTarget;
     
     [SerializeField]
@@ -64,7 +61,8 @@ public class PlayerController : MonoBehaviour
                 if (raycastHit.collider.CompareTag("Ground"))
                 {
                     player.Move(raycastHit.point);
-                    ActivateMoveCursor(raycastHit.point);
+                    // ActivateMoveCursor(raycastHit.point);
+                    MovePoint.Instance.Activate(raycastHit.point);
                 }
 
                 // 적 클릭하면 target 설정
@@ -74,13 +72,17 @@ public class PlayerController : MonoBehaviour
                     
                     // 커서 추가
                     ActivateAttackCursor(raycastHit.collider.gameObject.transform);
-                    ClearMoveCursor();
                 }
 
                 if (raycastHit.collider.CompareTag("Item"))
                 {
                     player.MoveToItem(raycastHit.collider.gameObject);
-                    ActivateMoveCursor(raycastHit.collider.transform.position); // 커서 추가
+                    MovePoint.Instance.Activate(raycastHit.collider.transform.position);
+                }
+
+                if (raycastHit.collider.CompareTag("Portal"))
+                {
+                    raycastHit.collider.gameObject.GetComponent<Portal>().Enter();
                 }
             }
         }
@@ -118,7 +120,6 @@ public class PlayerController : MonoBehaviour
         {
             // 키보드 입력이 있는 경우
             player.Move(this.transform.position + new Vector3(moveX, 0, moveZ).normalized, true);
-            ClearMoveCursor();  // 키보드 이동 시 이동 타겟 클리어
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
@@ -137,38 +138,15 @@ public class PlayerController : MonoBehaviour
     // -------------------------------------------------------------
     // 타겟
     // -------------------------------------------------------------
-    public void ActivateMoveCursor(Vector3 point)
-    {
-        if (moveTarget == null)
-        {
-            moveTarget = Instantiate(moveTargetPref);
-            moveTarget.transform.parent = targetParnet.transform;
-        }
-
-        moveTarget.SetActive(true);
-        moveTarget.transform.position = point;
-    }
-
     public void ActivateAttackCursor(Transform transform)
     {
         if (attackTarget == null)
         {
             attackTarget = Instantiate(attackTargetPref);
         }
-        ClearMoveCursor();
         attackTarget.SetActive(true);
         attackTarget.transform.parent = transform;
         attackTarget.transform.localPosition = Vector3.zero;
-    }
-
-    public void ClearMoveCursor()
-    {
-        if (moveTarget == null)
-        {
-            moveTarget = Instantiate(moveTargetPref);
-            moveTarget.transform.parent = targetParnet.transform;
-        }
-        moveTarget.SetActive(false);
     }
 
     public void ClearAttackCursor()
@@ -266,7 +244,6 @@ public class PlayerController : MonoBehaviour
     {
         // 이동 및 타겟, 커서 초기화
         ClearAttackCursor();
-        ClearMoveCursor();
         player.SetTarget(null);
         player.StopMove();
 
@@ -285,7 +262,6 @@ public class PlayerController : MonoBehaviour
     {
         // 이동 및 타겟, 커서 초기화
         ClearAttackCursor();
-        ClearMoveCursor();
         player.SetTarget(null);
         player.StopMove();
 

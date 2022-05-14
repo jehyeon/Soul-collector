@@ -90,7 +90,7 @@ public class AutoHunt : MonoBehaviour
     private void GetItem()
     {
         player.MoveToItem(items[0].gameObject);
-        playerController.ActivateMoveCursor(items[0].transform.position);
+        MovePoint.Instance.Activate(items[0].transform.position);
         autoMode = AutoHuntMode.GetItem;
     }
 
@@ -100,7 +100,6 @@ public class AutoHunt : MonoBehaviour
                     
         // 커서 추가
         playerController.ActivateAttackCursor(enemies[0].gameObject.transform);
-        playerController.ClearMoveCursor();
         autoMode = AutoHuntMode.HuntEnemy;
     }
 
