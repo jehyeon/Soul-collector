@@ -13,10 +13,6 @@ public class DungeonSystem : MonoBehaviour
 
     [SerializeField]
     private GameObject spawnerParent;
-
-    // Portal prefab
-    [SerializeField]
-    private GameObject portalPref;
     
     // Spawner prefab
     [SerializeField]
@@ -73,25 +69,27 @@ public class DungeonSystem : MonoBehaviour
     // -------------------------------------------------------------
     private void CreatePortal(int roomNumber, bool isNextFloorPortal = true)
     {
-        GameObject portalObject = Instantiate(
-            portalPref, 
-            new Vector3(
-                generator.Rooms[roomNumber].X * roomWidth,
-                0f,
-                generator.Rooms[roomNumber].Y * roomWidth
-            ),
-            Quaternion.Euler(new Vector3(0, 90f, 0))
-        );
-
         if (isNextFloorPortal)
         {
-            // 다음 층 포탈
-            portalObject.GetComponent<Portal>().Set(2);
+            PortalSystem.Instance.CreatePortal(
+                new Vector3(
+                    generator.Rooms[roomNumber].X * roomWidth,
+                    2f,
+                    generator.Rooms[roomNumber].Y * roomWidth
+                ),
+                PortalType.NextFloor
+            );
         }
         else
         {
-            // 마을로 돌아가는 포탈
-            portalObject.GetComponent<Portal>().Set(1, true);   // true: 플레이어가 한번 통과해야 활성화
+            PortalSystem.Instance.CreatePortal(
+                new Vector3(
+                    generator.Rooms[roomNumber].X * roomWidth,
+                    2f,
+                    generator.Rooms[roomNumber].Y * roomWidth
+                ),
+                PortalType.GoViliage
+            );
         }
     }
     // -------------------------------------------------------------

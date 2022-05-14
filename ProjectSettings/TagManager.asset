@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - Item
   - Obstacle
+  - Portal
   layers:
   - Default
   - TransparentFX

@@ -83,11 +83,11 @@ public class PlayerController : MonoBehaviour
                     return;
                 }
 
-                // if (raycastHit.collider.CompareTag("Portal"))
-                // {
-                //     raycastHit.collider.gameObject.GetComponent<Portal>().Enter();
-                //     return;
-                // }
+                if (raycastHit.collider.CompareTag("Portal"))
+                {
+                    raycastHit.collider.gameObject.GetComponent<Portal>().Enter();
+                    return;
+                }
                 
                 // if (raycastHit.collider.CompareTag("NPC"))
                 // {

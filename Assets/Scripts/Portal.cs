@@ -2,70 +2,67 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum PortalType
+{
+    NextFloor,
+    GoDungeon,
+    GoViliage,
+    Red,
+    Gold,
+    Boss
+}
+
 public class Portal : MonoBehaviour
 {
-    private bool disableMode;
     private GameManager gameManager;
 
-    [SerializeField]
-    private int portalId;
+    private GameObject portalOpen;
+    private GameObject portalIdle;
+    private PortalType type;
 
-    // private Portal anotherPortal;
-
-    public int Id { get { return portalId; } }
-
-    // public void SetAnotherPortal(Portal another)
-    // {
-    //     anotherPortal = another;
-    //     disableMode = false;
-    // }
-
-    // public void Disable()
-    // {
-    //     disableMode = true;
-    // }
-    public void Set(int id, bool disable = false)
+    public void Set(GameObject open, GameObject idle, PortalType portalType)
     {
-        portalId = id;
-        disableMode = disable;
+        portalOpen = open;
+        portalOpen.transform.parent = this.transform;
+        portalOpen.transform.localPosition = Vector3.zero;
+        portalIdle = idle;
+        portalIdle.transform.parent = this.transform;
+        portalIdle.transform.localPosition = Vector3.zero;
+        type = portalType;
+        StartCoroutine("CreatePortal");
     }
 
-    private void OnTriggerEnter(Collider other)
+    IEnumerator CreatePortal()
     {
-        if (disableMode)
+        portalOpen.SetActive(true);
+        yield return new WaitForSeconds(0.8f);
+        portalIdle.SetActive(true);
+        portalOpen.SetActive(false);
+    }
+
+    public void Enter()
+    {
+        if (gameManager == null)
         {
-            // disableMode 일 때는 동작 안함
+            gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+        }
+
+        if (type == PortalType.GoViliage)
+        {
+            gameManager.PopupAsk("GoViliage", "마을로 이동하시겠습니까?", "아니요", "네");
             return;
         }
 
-        if (other.CompareTag("Player"))
+        if (type == PortalType.NextFloor)
         {
-            if (gameManager == null)
-            {
-                gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
-            }
-            if (portalId == 0)
-            {
-                // viliage에서 포탈에 들어가면
-                gameManager.PopupAsk("GoDungeon", "던전으로 이동하시겠습니까?", "아니요", "네");
-            }
-            else if (portalId == 1)
-            {
-                gameManager.PopupAsk("GoViliage", "마을로 이동하시겠습니까?", "아니요", "네");
-            }
-            else
-            {
-                gameManager.PopupAsk("GoNextFloor", "다음 층으로 이동하시겠습니까?", "아니요", "네");
-            }
+            gameManager.PopupAsk("GoNextFloor", "다음 층으로 이동하시겠습니까?", "아니요", "네");
+            return;
         }
-    }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
+        if (type == PortalType.GoDungeon)
         {
-            // 플레이어가 포탈에서 나가면 활성화
-            disableMode = false;
-        }    
+            gameManager.PopupAsk("GoDungeon", "던전으로 이동하시겠습니까?", "아니요", "네");
+            return;
+        }
     }
 }

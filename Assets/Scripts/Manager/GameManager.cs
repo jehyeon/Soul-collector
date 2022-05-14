@@ -84,6 +84,9 @@ public class GameManager : MonoBehaviour
         // Load Shop, Craft Info
         craft.InitCraftItemSlots();
         shop.InitShopItemSlots();
+
+        // 던전 포탈 생성
+        PortalSystem.Instance.CreatePortal(new Vector3(10f, 2f, 0), PortalType.GoDungeon);
     }
 
     // -------------------------------------------------------------
