@@ -296,6 +296,9 @@ public class GameManager : MonoBehaviour
         
         // 인벤토리 아이템 삭제
         inventory.Delete();  // 선택한 아이템 삭제 및 save and load
+        
+        // !!! 임시로 버그 방지를 위해 아이템 등록 시 UI가 닫힘
+        UIController.CloseUI();
     }
 
     public void CancelToSell()

@@ -7,6 +7,7 @@ using System.Linq;
 public class Save
 {
     // json to obj를 위해 save는 모두 public으로 선언
+    public string URL;
     public string UserId;
     public int Gold;              // Gold 정보
     public List<int> Skill;
@@ -19,6 +20,7 @@ public class Save
     // Methods
     public Save()
     {
+        URL = "http://127.0.0.1:5000";
         UserId = System.Guid.NewGuid().ToString();
         Gold = 0;
         LastSlotIndex = 0;

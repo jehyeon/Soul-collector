@@ -46,7 +46,7 @@ public class ApiManager : MonoBehaviour
     [SerializeField]
     private GameManager gameManager;
 
-    private string URL = "http://127.0.0.1:5000";       // TEMP
+    // private string URL = "http://127.0.0.1:5000";       // TEMP
 
     // -------------------------------------------------------------
     // Users
@@ -70,7 +70,7 @@ public class ApiManager : MonoBehaviour
                     userId = userId
                 };
 
-                StartCoroutine(Post(URL + "/api/users/create", JsonUtility.ToJson(user)));
+                StartCoroutine(Post(gameManager.SaveManager.Save.URL + "/api/users/create", JsonUtility.ToJson(user)));
 
                 // !!! 생성 확인 미구현
             }
@@ -84,7 +84,7 @@ public class ApiManager : MonoBehaviour
 
     IEnumerator CheckUserById(string userId, System.Action<string> callback = null)
     {
-        UnityWebRequest www = UnityWebRequest.Get(URL + "/api/users/" + userId);
+        UnityWebRequest www = UnityWebRequest.Get(gameManager.SaveManager.Save.URL + "/api/users/" + userId);
         yield return www.SendWebRequest();
 
         if (www.result != UnityWebRequest.Result.Success)
@@ -111,7 +111,7 @@ public class ApiManager : MonoBehaviour
             userId = System.Guid.NewGuid().ToString()
         };
 
-        StartCoroutine(Post(URL + "/api/users/create", JsonUtility.ToJson(user)));
+        StartCoroutine(Post(gameManager.SaveManager.Save.URL + "/api/users/create", JsonUtility.ToJson(user)));
     }
 
     // -------------------------------------------------------------
@@ -137,7 +137,7 @@ public class ApiManager : MonoBehaviour
 
     IEnumerator GetAuction(System.Action<string> callback = null)
     {
-        UnityWebRequest www = UnityWebRequest.Get(URL + "/api/auction");
+        UnityWebRequest www = UnityWebRequest.Get(gameManager.SaveManager.Save.URL + "/api/auction");
         yield return www.SendWebRequest();
 
         if (www.result != UnityWebRequest.Result.Success)
@@ -163,7 +163,7 @@ public class ApiManager : MonoBehaviour
             price = _price
         };
         
-        StartCoroutine(Post(URL + "/api/auction/add", JsonUtility.ToJson(data)));
+        StartCoroutine(Post(gameManager.SaveManager.Save.URL + "/api/auction/add", JsonUtility.ToJson(data)));
     }
 
     public void DeleteAuctionItem(string _userId, int _auctionId)
@@ -175,7 +175,7 @@ public class ApiManager : MonoBehaviour
             id = _auctionId
         };
 
-        StartCoroutine(Post(URL + "/api/auction/delete", JsonUtility.ToJson(data)));
+        StartCoroutine(Post(gameManager.SaveManager.Save.URL + "/api/auction/delete", JsonUtility.ToJson(data)));
     }
     // -------------------------------------------------------------
     // Push
@@ -199,7 +199,7 @@ public class ApiManager : MonoBehaviour
 
     IEnumerator GetPush(string userId, System.Action<string> callback = null)
     {
-        UnityWebRequest www = UnityWebRequest.Get(URL + "/api/push/" + userId);
+        UnityWebRequest www = UnityWebRequest.Get(gameManager.SaveManager.Save.URL + "/api/push/" + userId);
         yield return www.SendWebRequest();
 
         if (www.result != UnityWebRequest.Result.Success)
@@ -223,7 +223,7 @@ public class ApiManager : MonoBehaviour
             gold = _gold
         };
 
-        StartCoroutine(Post(URL + "/api/push/add", JsonUtility.ToJson(data)));
+        StartCoroutine(Post(gameManager.SaveManager.Save.URL + "/api/push/add", JsonUtility.ToJson(data)));
     }
     
     public void DeletePush(string _userId, int _pushId)
@@ -234,7 +234,7 @@ public class ApiManager : MonoBehaviour
             id = _pushId
         };
 
-        StartCoroutine(Post(URL + "/api/push/delete", JsonUtility.ToJson(data)));
+        StartCoroutine(Post(gameManager.SaveManager.Save.URL + "/api/push/delete", JsonUtility.ToJson(data)));
     }
 
     IEnumerator Post(string url, string jsonString)
