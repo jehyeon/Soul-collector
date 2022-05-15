@@ -73,6 +73,29 @@ public class Reinforce : MonoBehaviour
 
     public void ReinforceItems()
     {
+        // !!! NOT GOOD
+        bool existMaxLevelItem = false;
+        for (int i = 0; i < slots.Count; i++)
+        {
+            if (slots[i].Item == null)
+            {
+                break;
+            }
+
+            if (slots[i].Item.Level == 9)
+            {
+                existMaxLevelItem = true;
+                return;
+            }
+        }
+
+        if (existMaxLevelItem)
+        {
+            // +9 아이템이 있는 경우
+            gameManager.PopupMessage("강화가 불가능한 아이템이 있습니다.");
+            return;
+        }
+        
         List<int> success = new List<int>();
 
         // 강화 주문서 수량 조절
@@ -106,10 +129,25 @@ public class Reinforce : MonoBehaviour
             // 아이템 강화 시도
             if (Random.value < percent)
             {
+                int tryNum = 1;
+                if (scroll.Item.Id == 38 || scroll.Item.Id == 39)
+                {
+                    // 빛나는 강화 주문서인 경우
+                    // 1 ~ 3번 upgrade
+                    tryNum = Random.Range(1, 4);
+                }
                 // 강화 성공
-                Item nextItem = gameManager.ItemManager.Get(slots[i].Item.Id + 1);
-                slots[i].Upgrade(nextItem);
+                if (slots[i].Item.Level + tryNum > 9)
+                {
+                    tryNum = 9 - slots[i].Item.Level; 
+                }
+                Item nextItem = gameManager.ItemManager.Get(slots[i].Item.Id + tryNum);
+                for (int j = 0; j < tryNum; j++)
+                {
+                    slots[i].Upgrade(nextItem);
+                }
                 gameManager.Inventory.SuccessReinforce(slots[i].InventorySlotId, nextItem);
+
                 success.Add(slots[i].InventorySlotId);
             }
             else
@@ -139,8 +177,6 @@ public class Reinforce : MonoBehaviour
     // -------------------------------------------------------------
     public bool Add(Item item, int inventorySlotId, int count = 1)
     {
-        Debug.Log(item.Id);
-        Debug.Log(inventorySlotId);
         if (CheckSrollItem(item))
         {
             // 추가하려는 아이템이 주문서인 경우
@@ -238,7 +274,8 @@ public class Reinforce : MonoBehaviour
     private bool CheckSrollItem(Item item)
     {
         // 스크롤 아이템인지 확인
-        if (item.Id == 13 || item.Id == 14 || item.Id == 15 || item.Id == 16)
+        if (item.Id == 13 || item.Id == 14 || item.Id == 15 || item.Id == 16
+            || item.Id == 38 || item.Id == 39)
         {
             return true;
         }
@@ -248,7 +285,8 @@ public class Reinforce : MonoBehaviour
 
     private bool CheckSrollItem(int itemId)
     {
-        if (itemId == 13 || itemId == 14 || itemId == 15 || itemId == 16)
+        if (itemId == 13 || itemId == 14 || itemId == 15 || itemId == 16
+            || itemId == 38 || itemId == 39)
         {
             return true;
         }

@@ -27,6 +27,16 @@ public class UseItemSystem
                 gameManager.UIController.CloseUI();
                 gameManager.UIController.OpenReinforceUI();
                 break;
+            case 38:
+                // 빛나는 무기 강화 주문서
+                gameManager.UIController.CloseUI();
+                gameManager.UIController.OpenReinforceUI();
+                break;
+            case 39:
+                // 빛나는 방어구 강화 주문서
+                gameManager.UIController.CloseUI();
+                gameManager.UIController.OpenReinforceUI();
+                break;
             case 12:
                 // 빈 주문서
                 OpenRandomBox(slotIndex, 17);

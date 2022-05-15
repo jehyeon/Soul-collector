@@ -278,14 +278,15 @@ public class Player : ACharacter
     protected override void Die()
     {
         Time.timeScale = 0;
-        gameManager.PopupMessage("플레이어가 사망했습니다.\n5초 뒤 마을에서 리스폰합니다.", 60f);
+        gameManager.PopupMessage("플레이어가 사망했습니다.\n5초 뒤 마을에서 리스폰합니다.", 5f);
         StartCoroutine("PlayerDie");
     }
 
     IEnumerator PlayerDie()
     {
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSecondsRealtime(5f);
         Time.timeScale = 1;
+        gameManager.PopupMessageClose();
         gameManager.GoViliage();
         yield break;
     }

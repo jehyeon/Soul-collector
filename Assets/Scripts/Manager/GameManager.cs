@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class GameManager : MonoBehaviour
 {
@@ -101,7 +102,6 @@ public class GameManager : MonoBehaviour
     private void GoDungeon()
     {
         LoadingSceneManager.LoadScene("Default Dungeon");
-
         // 던전 Floor UI
         floor = 1;
         uiController.ActivateFloorText(1);
@@ -129,6 +129,28 @@ public class GameManager : MonoBehaviour
 
         return enemySystem.GetEnemyObjects(floor);
     }
+
+    // public void DeleteRandomEquippedItem()
+    // {
+    //     var equipped = from equipItemId in saveManager.Save.Equipped
+    //                    where equipItemId != -1
+    //                    select equipItemId;
+    //     int[] equippedItems = equipped.ToArray();
+    //     Debug.Log(equippedItems);
+    //     if (equippedItems.Length == 0)
+    //     {
+    //         return;
+    //     }
+    //     int removeItemId = equippedItems[Random.Range(0, equippedItems.Length)];
+
+    //     var deleted = from equipItemId in saveManager.Save.Equipped
+    //                    where equipItemId != removeItemId
+    //                    select equipItemId;
+    //     Debug.Log(saveManager.Save.Equipped);
+    //     saveManager.Save.Equipped = deleted.ToList();
+    //     Debug.Log(saveManager.Save.Equipped);
+    //     saveManager.SaveData();
+    // }
 
     // -------------------------------------------------------------
     // Equipment, Inventory 아이템 선택, 장착 해제
@@ -273,8 +295,8 @@ public class GameManager : MonoBehaviour
         (
             auction.SelectedAuctionItem.userId, 
             0, 
-            string.Format("아이템 판매 대금입니다.\n판매 금액: {0}", auction.SelectedAuctionItem.price), 
-            auction.SelectedAuctionItem.price
+            string.Format("아이템 판매 대금입니다.\n판매 금액: {0}", Mathf.FloorToInt((float)(auction.SelectedAuctionItem.price * 0.9))), 
+            Mathf.FloorToInt((float)(auction.SelectedAuctionItem.price * 0.9))
         );
     }
 

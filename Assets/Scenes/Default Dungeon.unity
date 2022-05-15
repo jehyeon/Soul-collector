@@ -170,7 +170,7 @@ MonoBehaviour:
   whiteTrollPref: {fileID: 0}
   darkTrollPref: {fileID: 0}
   defaultMinotaurPref: {fileID: 3343540161937743216, guid: d5d49ff4887d6db4d99d5df95b0ba50e, type: 3}
-  whiteMinotaurPref: {fileID: 3343540161937743216, guid: d5d49ff4887d6db4d99d5df95b0ba50e, type: 3}
+  whiteMinotaurPref: {fileID: 441973426186769675, guid: 3c7cb835fa422914d970504fa712b76d, type: 3}
   blueMinotaurPref: {fileID: 0}
   defaultMedusaPref: {fileID: 0}
   greenMedusaPref: {fileID: 0}
@@ -879,7 +879,6 @@ MonoBehaviour:
   generator: {fileID: 400579355}
   roomWidth: 20
   spawnerParent: {fileID: 1086485342}
-  portalPref: {fileID: 8808451005288357109, guid: 880d8813305d24941baf9a642ecab6ca, type: 3}
   spawnerPref: {fileID: 3694687822408674786, guid: 7e268e1668abeaf4b9d5674ab214e259, type: 3}
 --- !u!1 &2107610736
 GameObject:

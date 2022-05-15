@@ -693,13 +693,13 @@ public class Inventory : MonoBehaviour
             else if(item.ItemType == ItemType.Use)
             {
                 // 사용 아이템인 경우
-                if (item.Id == 13)
+                if (item.Id == 13 || item.Id == 38)
                 {
                     // 무기 강화 주문서
                     gameManager.Reinforce.SetScrollType(ScrollType.Weapon);
                     return true;
                 }
-                else if (item.Id == 14)
+                else if (item.Id == 14 || item.Id == 39)
                 {
                     // 방어구 강화 주문서
                     gameManager.Reinforce.SetScrollType(ScrollType.Armor);
@@ -716,7 +716,7 @@ public class Inventory : MonoBehaviour
         else if (gameManager.Reinforce.ScrollType == ScrollType.Weapon)
         {
             // 무기 강화 중인 경우
-            if (item.ItemType == ItemType.Weapon || item.Id == 13)
+            if (item.ItemType == ItemType.Weapon || item.Id == 13 || item.Id == 38)
             {
                 // 무기만 선택 가능
                 return true;
@@ -727,7 +727,7 @@ public class Inventory : MonoBehaviour
         else if (gameManager.Reinforce.ScrollType == ScrollType.Armor)
         {
             // 방어구 강화 중인 경우
-            if (item.ItemType == ItemType.Armor || item.Id == 14)
+            if (item.ItemType == ItemType.Armor || item.Id == 14 || item.Id == 39)
             {
                 // 방어구만 선택 가능
                 return true;

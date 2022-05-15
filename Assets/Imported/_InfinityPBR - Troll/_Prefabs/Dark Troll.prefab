@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 8030203563169602226}
   - component: {fileID: 395621477477276368}
   m_Layer: 7
-  m_Name: Troll (3)
+  m_Name: Dark Troll
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -103,13 +103,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sound: {fileID: 1418572601440950211}
   minDamage: 0
-  maxDamage: 0
-  defaultDamage: 45
-  maxHp: 50
-  damageReduction: 0
-  attackSpeed: 0.66
+  maxDamage: 50
+  defaultDamage: 50
+  maxHp: 100
+  damageReduction: 5
+  attackSpeed: 0.825
   moveSpeed: 2
   attackRange: 2
+  setDropId: 2
 --- !u!114 &1418572601440950211
 MonoBehaviour:
   m_ObjectHideFlags: 0
