@@ -92,10 +92,13 @@ public class GameManager : MonoBehaviour
     // -------------------------------------------------------------
     // 씬 이동
     // -------------------------------------------------------------
-    private void GoViliage()
+    public void GoViliage()
     {
-        LoadingSceneManager.LoadScene("Main");
         PlayerReset();
+        LoadingSceneManager.LoadScene("Main");
+
+        // 마을에서 던전 가는 포탈 재 생성
+        PortalSystem.Instance.CreatePortal(new Vector3(10f, 2f, 0), PortalType.GoDungeon);
 
         // 던전 Floor UI
         floor = 0;
@@ -126,6 +129,7 @@ public class GameManager : MonoBehaviour
     private void PlayerReset()
     {
         player.transform.position = Vector3.zero;
+        player.Stat.Heal(true);
     }
 
     // -------------------------------------------------------------
@@ -385,6 +389,9 @@ public class GameManager : MonoBehaviour
         {
             case "Delete":
                 inventory.Delete();
+                return;
+            case "Sell":
+                inventory.Sell();
                 return;
             // case "Craft":
             //     craft.CraftItem();

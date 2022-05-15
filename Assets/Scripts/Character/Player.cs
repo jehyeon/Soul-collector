@@ -266,13 +266,28 @@ public class Player : ACharacter
         }
         damageTextSystem.FloatDamageText(real, this.transform.position);
 
+        if (stat.Hp < 1)
+        {
+            Die();
+            return true;
+        }
+
         return false;
     }
 
     protected override void Die()
     {
         Time.timeScale = 0;
-        gameManager.PopupMessage("플레이어 사망", 60f);
+        gameManager.PopupMessage("플레이어가 사망했습니다.\n5초 뒤 마을에서 리스폰합니다.", 60f);
+        StartCoroutine("PlayerDie");
+    }
+
+    IEnumerator PlayerDie()
+    {
+        yield return new WaitForSeconds(5f);
+        Time.timeScale = 1;
+        gameManager.GoViliage();
+        yield break;
     }
 
     // -------------------------------------------------------------

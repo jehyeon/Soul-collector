@@ -20,10 +20,24 @@ public class Save
     public Save()
     {
         UserId = System.Guid.NewGuid().ToString();
-        Gold = 9999999;     // !!! for test
+        Gold = 0;
         LastSlotIndex = 0;
         LastSlotId = 0;
-        Equipped = new List<int> {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
+        // 기본 장비 장착
+        Equipped = new List<int> {
+            301,
+            -1,
+            1501,
+            1701,
+            -1,
+            2101,
+            2301,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1
+        };
         Skill = new List<int>();
         Slots = new List<SlotSave>();
         InventorySize = 60;

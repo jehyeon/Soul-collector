@@ -17,43 +17,48 @@ public class UseItemSystem
         // 사용 즉시 바로 소모하는 건 itemIndex를 사용하여 index 수정
         switch (itemId)
         {
-            case 1615:
+            case 13:
                 // 무기 강화 주문서
-                // gameManager.Inventory.StartReinforceMode(slotIndex, ItemType.Weapon);
+                gameManager.UIController.CloseUI();
+                gameManager.UIController.OpenReinforceUI();
                 break;
-            case 1616:
+            case 14:
                 // 방어구 강화 주문서
+                gameManager.UIController.CloseUI();
+                gameManager.UIController.OpenReinforceUI();
+                break;
+            case 12:
+                // 빈 주문서
+                OpenRandomBox(slotIndex, 17);
+                break;
+            case 17:
+                // 제작 재료 상자
+                OpenRandomBox(slotIndex, 16);
+                break;
+            case 18:
+                // 무기 상자
+                OpenRandomBox(slotIndex, 18);
                 // gameManager.Inventory.StartReinforceMode(slotIndex, ItemType.Armor);
                 break;
-            case 1620:
+            case 19:
+                // 방어구 상자
+                OpenRandomBox(slotIndex, 19);
+                // gameManager.Inventory.StartReinforceMode(slotIndex, ItemType.Armor);
+                break;
+            case 24:
+                // 붕대
+                gameManager.Inventory.UpdateItemCount(slotIndex);
+                gameManager.Player.Heal(50);
+                break;
+            case 25:
                 // 체력 포션
                 gameManager.Inventory.UpdateItemCount(slotIndex);
                 gameManager.Player.Heal(50);
                 break;
-            case 1621:
+            case 26:
                 // 고급 체력 포션
                 gameManager.Inventory.UpdateItemCount(slotIndex);
                 gameManager.Player.Heal(200);
-                break;
-            case 1622:
-                // 제작 재료 상자
-                OpenRandomBox(slotIndex, 3);
-                break;
-            case 1623:
-                // 방어구 상자 (1)
-                OpenRandomBox(slotIndex, 1);
-                break;
-            case 1624:
-                // 고급 방어구 상자
-                // gameManager.Inventory.UpdateItemCountRaw(itemIndex);
-                break;
-            case 1625:
-                // 무기 상자 (2)
-                OpenRandomBox(slotIndex, 2);
-                break;
-            case 1626:
-                // 고급 무기 상자
-                // gameManager.Inventory.UpdateItemCountRaw(itemIndex);
                 break;
         }
     }

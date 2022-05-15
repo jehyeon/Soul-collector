@@ -16,7 +16,7 @@ public class DropSystem : MonoBehaviour
     {
         // 장비 아이템인 경우 아이템 타입에 맞게 외형 변경
         GameObject itemObject;
-        if (item.Id < 1600)
+        if (item.Id > 100)
         {
             // !!! sword 프리팹으로 고정
             itemObject = swordOP.Get();

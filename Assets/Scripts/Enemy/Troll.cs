@@ -13,6 +13,7 @@ public class Troll : Enemy
     public float attackSpeed;
     public float moveSpeed;
     public float attackRange;
+    public int setDropId = 20;
 
     private void Start()
     {
@@ -25,10 +26,9 @@ public class Troll : Enemy
             maxHp, damageReduction, 
             attackSpeed, moveSpeed, attackRange
         );
-
-        // Drop table Id
-        dropId = 0;
         
+        dropId = setDropId;
+
         // Sync agent
         agent.speed = stat.MoveSpeed;
         animator.SetFloat("MoveSpeed", stat.MoveSpeed * .2f);   // Animation speed = actual speed * 5

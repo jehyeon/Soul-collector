@@ -354,7 +354,7 @@ public class Inventory : MonoBehaviour
         }
 
         if (mode == InventoryMode.Shop)
-        {
+        {   
             // 상점에서는 아이템 삭제 버튼 비활성화
             btnDelete.gameObject.SetActive(false);
             if (selectedSlotIndex == -1 && selectedSlotIndexList.Count == 0)
@@ -414,6 +414,12 @@ public class Inventory : MonoBehaviour
         {
             // 경매장에서 판매 버튼 클릭 시
             gameManager.PopupSetCount("Auction", "판매 가격을 설정해주세요.", "취소", "확인", 9999999);
+            return;
+        }
+
+        if (mode == InventoryMode.Shop)
+        {   
+            gameManager.PopupAsk("Sell", "아이템을 판매하시겠습니까?", "아니요", "네");
             return;
         }
 
@@ -529,6 +535,20 @@ public class Inventory : MonoBehaviour
         {
             SaveAndLoad();
         }
+    }
+    // -------------------------------------------------------------
+    // Sell
+    // -------------------------------------------------------------
+    public void Sell()
+    {
+        Debug.Log(slots[selectedSlotIndex].Item.Rank);
+        int price = 100 * (int)Mathf.Pow(10, slots[selectedSlotIndex].Item.Rank);
+        Debug.Log(price * slots[selectedSlotIndex].Count);
+        gameManager.SaveManager.Save.DeleteSlot(selectedSlotIndex);
+        UpdateGold(slots[selectedSlotIndex].Count * price);
+        ResetSelectSlot();
+
+        SaveAndLoad();
     }
 
     // -------------------------------------------------------------
@@ -673,13 +693,13 @@ public class Inventory : MonoBehaviour
             else if(item.ItemType == ItemType.Use)
             {
                 // 사용 아이템인 경우
-                if (item.Id == 1615)
+                if (item.Id == 13)
                 {
                     // 무기 강화 주문서
                     gameManager.Reinforce.SetScrollType(ScrollType.Weapon);
                     return true;
                 }
-                else if (item.Id == 1616)
+                else if (item.Id == 14)
                 {
                     // 방어구 강화 주문서
                     gameManager.Reinforce.SetScrollType(ScrollType.Armor);
@@ -696,7 +716,7 @@ public class Inventory : MonoBehaviour
         else if (gameManager.Reinforce.ScrollType == ScrollType.Weapon)
         {
             // 무기 강화 중인 경우
-            if (item.ItemType == ItemType.Weapon || item.Id == 1615)
+            if (item.ItemType == ItemType.Weapon || item.Id == 13)
             {
                 // 무기만 선택 가능
                 return true;
@@ -707,7 +727,7 @@ public class Inventory : MonoBehaviour
         else if (gameManager.Reinforce.ScrollType == ScrollType.Armor)
         {
             // 방어구 강화 중인 경우
-            if (item.ItemType == ItemType.Armor || item.Id == 1616)
+            if (item.ItemType == ItemType.Armor || item.Id == 14)
             {
                 // 방어구만 선택 가능
                 return true;
@@ -723,7 +743,9 @@ public class Inventory : MonoBehaviour
     {
         // 강화 성공
         // +1 아이템으로 교체
+        // Debug.Log(slotId);
         int slotIndex = FindItemUsingSlotId(slotId);
+        // Debug.Log(slotIndex);
         // slots[slotIndex].Upgrade(newItem);
         gameManager.SaveManager.Save.Slots[slotIndex].SetItemId(newItem.Id);
     }

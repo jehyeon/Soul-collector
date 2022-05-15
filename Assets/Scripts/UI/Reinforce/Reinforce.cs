@@ -98,9 +98,10 @@ public class Reinforce : MonoBehaviour
             }
 
             // 강화 확률, 확률 수정 시 아래 percent 코드 수정이 필요함
-            float percent = slots[i].Item.Level % 2 == 0 
-                ? .5f
-                : .33f;
+            // float percent = slots[i].Item.Level % 2 == 0 
+            //     ? .5f
+            //     : .33f;
+            float percent = 0.5f;
 
             // 아이템 강화 시도
             if (Random.value < percent)
@@ -237,7 +238,7 @@ public class Reinforce : MonoBehaviour
     private bool CheckSrollItem(Item item)
     {
         // 스크롤 아이템인지 확인
-        if (item.Id == 1615 || item.Id == 1616 || item.Id == 1617 || item.Id == 1618)
+        if (item.Id == 13 || item.Id == 14 || item.Id == 15 || item.Id == 16)
         {
             return true;
         }
@@ -247,7 +248,7 @@ public class Reinforce : MonoBehaviour
 
     private bool CheckSrollItem(int itemId)
     {
-        if (itemId == 1615 || itemId == 1616 || itemId == 1617 || itemId == 1618)
+        if (itemId == 13 || itemId == 14 || itemId == 15 || itemId == 16)
         {
             return true;
         }

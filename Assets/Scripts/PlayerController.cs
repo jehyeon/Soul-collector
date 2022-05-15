@@ -100,6 +100,11 @@ public class PlayerController : MonoBehaviour
 
     private void KeyBoardAction()
     {
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            player.gameManager.GoViliage();
+        }
+        
         // 자동 사냥 모드
         if (Input.GetKeyDown(KeyCode.G))
         {

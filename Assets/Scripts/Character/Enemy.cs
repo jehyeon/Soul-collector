@@ -233,6 +233,7 @@ public class Enemy : ACharacter
     protected override void Die()
     {
         hpBar.Return();
+        state = EnemyState.Idle;
         hpBar = null;
         spawner.Die(this);
     }
