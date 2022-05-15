@@ -84,9 +84,6 @@ public class GameManager : MonoBehaviour
         // Load Shop, Craft Info
         craft.InitCraftItemSlots();
         shop.InitShopItemSlots();
-
-        // 던전 포탈 생성
-        PortalSystem.Instance.CreatePortal(new Vector3(10f, 2f, 0), PortalType.GoDungeon);
     }
 
     // -------------------------------------------------------------
@@ -94,11 +91,7 @@ public class GameManager : MonoBehaviour
     // -------------------------------------------------------------
     public void GoViliage()
     {
-        PlayerReset();
         LoadingSceneManager.LoadScene("Main");
-
-        // 마을에서 던전 가는 포탈 재 생성
-        PortalSystem.Instance.CreatePortal(new Vector3(10f, 2f, 0), PortalType.GoDungeon);
 
         // 던전 Floor UI
         floor = 0;
@@ -108,7 +101,6 @@ public class GameManager : MonoBehaviour
     private void GoDungeon()
     {
         LoadingSceneManager.LoadScene("Default Dungeon");
-        PlayerReset();
 
         // 던전 Floor UI
         floor = 1;
@@ -119,17 +111,10 @@ public class GameManager : MonoBehaviour
     {
         // 다음층으로 던전 생성
         LoadingSceneManager.LoadScene("Default Dungeon");   // 씬 리로드
-        PlayerReset();
 
         // 던전 Floor UI
         floor += 1;
         uiController.ActivateFloorText(floor);
-    }
-
-    private void PlayerReset()
-    {
-        player.transform.position = Vector3.zero;
-        player.Stat.Heal(true);
     }
 
     // -------------------------------------------------------------
@@ -142,8 +127,6 @@ public class GameManager : MonoBehaviour
             enemySystem = GameObject.Find("EnemySystem").GetComponent<EnemySystem>();
         }
 
-        Debug.Log(enemySystem);
-        Debug.Log(enemySystem.GetEnemyObjects(floor));
         return enemySystem.GetEnemyObjects(floor);
     }
 

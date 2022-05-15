@@ -13,6 +13,7 @@ public abstract class ACharacter : MonoBehaviour
     protected bool canAttack;           // 공격 쿨타임
     
     public GameObject Target { get { return target; } }
+    public NavMeshAgent Agent { get { return agent; } }
 
     protected DamageTextSystem damageTextSystem;    // !!! 임시
 

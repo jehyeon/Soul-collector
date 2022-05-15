@@ -30,7 +30,9 @@ public class DamageText : MonoBehaviour
     {
         // 초기화
         objectPool = obp;
-        text.text = string.Format("{0}", damage);
+        text.text = damage == 0
+            ? "Block"
+            : string.Format("{0}", damage);
         this.transform.position = Camera.main.WorldToScreenPoint(position);
         alpha.a = 1f;
         dir = textDir;

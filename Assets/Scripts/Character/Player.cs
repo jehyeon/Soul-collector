@@ -172,7 +172,7 @@ public class Player : ACharacter
         }
     }
 
-    private void IdleMode()
+    public void IdleMode()
     {
         state = PlayerState.Idle;
         StopMove();

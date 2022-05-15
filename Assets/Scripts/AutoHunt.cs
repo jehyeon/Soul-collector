@@ -40,7 +40,7 @@ public class AutoHunt : MonoBehaviour
                     return;
                 }
 
-                Invoke("StartFind", 0.5f);
+                Invoke("StartFind", 1f);
             }
             else if (autoMode == AutoHuntMode.HuntEnemy)
             {
@@ -50,7 +50,7 @@ public class AutoHunt : MonoBehaviour
                     return;
                 }
 
-                Invoke("StartFind", 0.5f);
+                Invoke("StartFind", 1f);
             }
             
             // 자동 사냥 모드를 끄려면 AutoHunt Component를 제거

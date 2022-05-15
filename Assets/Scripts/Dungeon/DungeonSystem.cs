@@ -30,6 +30,12 @@ public class DungeonSystem : MonoBehaviour
         }
         floor = gameManager.Floor;
         Load();
+
+        // Player reset
+        gameManager.Player.IdleMode();
+        gameManager.Player.Agent.enabled = false;
+        gameManager.Player.transform.position = Vector3.zero;
+        gameManager.Player.Agent.enabled = true;
     }
     // -------------------------------------------------------------
     // Level design
@@ -44,7 +50,17 @@ public class DungeonSystem : MonoBehaviour
         CreatePortal(0, false);
         CreatePortal(1, true);
 
-        CreateSpawners(1f);
+
+        // 층별 Enemy 개체 종류는 GameManager.GetEnemyObject에서 처리
+        if (floor % 2 == 1)
+        {
+            // 홀수 층은 스폰 율이 높음
+            CreateSpawners(0.8f, 2);
+        }
+        else
+        {
+            CreateSpawners(1f);
+        }
     }
 
     // -------------------------------------------------------------
@@ -95,7 +111,7 @@ public class DungeonSystem : MonoBehaviour
     // -------------------------------------------------------------
     // 스포너 생성
     // -------------------------------------------------------------
-    private void CreateSpawners(float percent)
+    private void CreateSpawners(float percent, int maxCount = 1)
     {
         // percent: Enemy가 나오는 방 비율
         for (int i = 2; i < generator.Rooms.Count; i++)
@@ -114,7 +130,7 @@ public class DungeonSystem : MonoBehaviour
                 );
                 spawnerObject.name = i.ToString();
                 spawnerObject.transform.parent = spawnerParent.transform;
-                spawnerObject.GetComponent<Spawner>().Set(gameManager, roomWidth, 1, 15f);
+                spawnerObject.GetComponent<Spawner>().Set(gameManager, roomWidth, Random.Range(1, maxCount + 1), 30f);
             }
         }
     }

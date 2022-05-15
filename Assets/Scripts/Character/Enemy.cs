@@ -96,11 +96,6 @@ public class Enemy : ACharacter
 
         if (state == EnemyState.Idle)
         {
-            if ((this.transform.position - startPos).sqrMagnitude > 1)
-            {
-                // Idle state인데 이상한 곳에 있는 경우
-                this.transform.position = startPos;
-            }
             if (targetDir.sqrMagnitude < Mathf.Pow(findRange, 2))
             {
                 // 플레이어를 찾기 전

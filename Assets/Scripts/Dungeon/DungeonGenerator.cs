@@ -35,7 +35,7 @@ public class DungeonGenerator : MonoBehaviour
     private void Awake()
     {
         // default
-        maxRoomCount = 50;
+        maxRoomCount = 25;
         roomCount = 0;
         roomWidth = 20f;
         rooms = new List<DungeonRoom>();
@@ -47,7 +47,7 @@ public class DungeonGenerator : MonoBehaviour
     // -------------------------------------------------------------
     // 던전 생성, 초기화
     // -------------------------------------------------------------
-    public void Generate(int maxCount = 50)
+    public void Generate(int maxCount = 25)
     {
         roomCount = 0;
         maxRoomCount = maxCount;

@@ -47,7 +47,18 @@ public class Save
             LastSlotId += 1;
         }
     }
+    // 마지막 빈 슬롯 id return
+    public int GetLastEmptySlotId()
+    {
+        if (Slots[LastSlotIndex] != null)
+        {
+            return Slots[LastSlotIndex].Id;
+        }
 
+        Debug.LogWarning("Inventory full");
+
+        return -1;
+    }
     // 맨 앞 빈 슬롯에 아이템 추가
     public void AddItem(int itemId, int itemCount)
     {

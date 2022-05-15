@@ -32,7 +32,10 @@ public class InventorySlot : Slot, IPointerClickHandler, IPointerEnterHandler, I
         index = slotindex;
         inventory = parentInventory;
     }
-
+    public void SetId(int slotId)
+    {
+        id = slotId;
+    }
     public void Load(int slotId, Item loadedItem, int count)
     {
         id = slotId;

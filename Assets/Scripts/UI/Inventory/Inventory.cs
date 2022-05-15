@@ -175,7 +175,7 @@ public class Inventory : MonoBehaviour
                 }
             }
         }
-        
+        slots[gameManager.SaveManager.Save.LastSlotIndex].SetId(gameManager.SaveManager.Save.GetLastEmptySlotId());
         slots[gameManager.SaveManager.Save.LastSlotIndex].Set(item, count);     // only view
         gameManager.SaveManager.Save.AddItem(item.Id, count);
         UpdateItemSlotCountUI();    // 아이템 슬롯에 새로 추가된 경우 slot count ui 업데이트

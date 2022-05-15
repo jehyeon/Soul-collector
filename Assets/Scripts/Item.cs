@@ -193,7 +193,7 @@ public class Item
 
     public override string ToString()
     {
-        if (_itemType == ItemType.Weapon)
+        if (_itemType == ItemType.Weapon || _itemType == ItemType.Armor)
         {
             // 무기 description
             string description = "";
@@ -210,13 +210,6 @@ public class Item
             {
                 description += "무기 데미지 " + _minDamage.ToString() + " ~ " + _maxDamage.ToString() + "\n";
             }
-
-            return description;
-        }
-        else if (_itemType == ItemType.Armor)
-        {
-            // 방어구 description
-            string description = "";
             if (_damageReduction != 0)
             {
                 description += "데미지 감소 " + _damageReduction.ToString() + "\n";

@@ -195,51 +195,49 @@ public class Stat
 
     public void Equip(Item item)
     {
-        if (item.ItemType == ItemType.Weapon)
+        if (item.ItemType != ItemType.Weapon && item.ItemType != ItemType.Armor)
         {
-            // 무기
-            _maxDamage += item.MaxDamage;
-            _minDamage += item.MinDamage;
-            _defaultDamage += item.DefaultDamage;
-            _attackSpeed += item.AttackSpeed * .01f;
+            // 장착 아이템이 아닌 경우 스탯 변화 없음
+            return;
         }
-        else if (item.ItemType == ItemType.Armor)
-        {
-            // 방어구
-            _damageReduction += item.DamageReduction;
-            _maxHp += item.MaxHp;
-            _hpRecovery += item.HpRecovery;
-            _evasionPercent += item.EvasionPercent;
-            _criticalPercent += item.CriticalPercent;
-            _moveSpeed += item.MoveSpeed * .05f;
 
-            if (_hp > _maxHp)
-            {
-                _hp = _maxHp;
-            }
+        _maxDamage += item.MaxDamage;
+        _minDamage += item.MinDamage;
+        _defaultDamage += item.DefaultDamage;
+        _attackSpeed += item.AttackSpeed * .01f;
+        _damageReduction += item.DamageReduction;
+        _maxHp += item.MaxHp;
+        _hpRecovery += item.HpRecovery;
+        _evasionPercent += item.EvasionPercent;
+        _criticalPercent += item.CriticalPercent;
+        _moveSpeed += item.MoveSpeed * .05f;
+
+        if (_hp > _maxHp)
+        {
+            _hp = _maxHp;
         }
     }
 
     public void UnEquip(Item item)
     {
-        if (item.ItemType == ItemType.Weapon)
+        if (item.ItemType != ItemType.Weapon && item.ItemType != ItemType.Armor)
         {
-            // 무기
-            _maxDamage -= item.MaxDamage;
-            _minDamage -= item.MinDamage;
-            _defaultDamage -= item.DefaultDamage;
-            _attackSpeed -= item.AttackSpeed * .01f;
+            // 장착 아이템이 아닌 경우 스탯 변화 없음
+            return;
         }
-        else if (item.ItemType == ItemType.Armor)
-        {
-            // 방어구
-            _damageReduction -= item.DamageReduction;
-            _maxHp -= item.MaxHp;
-            _hpRecovery -= item.HpRecovery;
-            _evasionPercent -= item.EvasionPercent;
-            _criticalPercent -= item.CriticalPercent;
-            _moveSpeed -= item.MoveSpeed * 0.05f;
-        }
+
+        // 무기
+        _maxDamage -= item.MaxDamage;
+        _minDamage -= item.MinDamage;
+        _defaultDamage -= item.DefaultDamage;
+        _attackSpeed -= item.AttackSpeed * .01f;
+        // 방어구
+        _damageReduction -= item.DamageReduction;
+        _maxHp -= item.MaxHp;
+        _hpRecovery -= item.HpRecovery;
+        _evasionPercent -= item.EvasionPercent;
+        _criticalPercent -= item.CriticalPercent;
+        _moveSpeed -= item.MoveSpeed * 0.05f;
 
         Heal(0);    // 장비 착용 해제 후 hp가 maxHp 넘는 경우 maxHp가 되도록 고정
     }

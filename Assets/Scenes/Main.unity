@@ -52030,6 +52030,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1090371464}
+  - component: {fileID: 1090371465}
   m_Layer: 0
   m_Name: Village
   m_TagString: Untagged
@@ -52062,6 +52063,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1090371465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1090371463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebb0c3422ef8bf349a712f7583ecf5de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1092042077 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8801589038867150782, guid: 2fc687804e64b5143a99ccd10efc0aef, type: 3}
@@ -82353,7 +82366,7 @@ MonoBehaviour:
   attackSpeed: 1
   moveSpeed: 3.5
   attackRange: 2
-  dropId: 0
+  setDropId: 0
 --- !u!1001 &3560122829336639956
 PrefabInstance:
   m_ObjectHideFlags: 0
