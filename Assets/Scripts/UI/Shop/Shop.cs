@@ -118,6 +118,10 @@ public class Shop : MonoBehaviour
 
     public void Close()
     {
+        if (selectedShopItemIndex != -1)
+        {
+            UnSelect();
+        }
         this.gameObject.SetActive(false);
     }
     

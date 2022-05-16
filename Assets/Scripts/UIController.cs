@@ -308,6 +308,10 @@ public class UIController: MonoBehaviour
         ClosePushUI();
         CloseCraftUI();
         CloseReinforceUI();
+
+        popupMessage.Close();
+        popupSetCount.Close();
+        popupAsk.Close();
     }
 
     // 플레이어 체력바

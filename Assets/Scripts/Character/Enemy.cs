@@ -44,7 +44,7 @@ public class Enemy : ACharacter
 
         // Enemy
         findRange = 5;
-        backRange = 15;
+        backRange = 20;
         wakeUpDelay = 2f;
     }
 

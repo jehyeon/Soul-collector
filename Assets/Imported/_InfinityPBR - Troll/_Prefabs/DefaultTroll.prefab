@@ -1325,8 +1325,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sound: {fileID: 2514473357109702986}
-  minDamage: 5
-  maxDamage: 8
+  minDamage: 6
+  maxDamage: 10
   defaultDamage: 0
   maxHp: 30
   damageReduction: 0

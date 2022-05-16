@@ -28,7 +28,7 @@ public class Save
         // 기본 장비 장착
         Equipped = new List<int> {
             301,
-            -1,
+            1901,
             1501,
             1701,
             -1,

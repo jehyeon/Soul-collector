@@ -89,11 +89,11 @@ public class Item
         // 아이템 테이블로부터 가져온 정보
         _imageId = (int)data["imageId"];
         _partNum = (int)data["itemType"];
-        if (_partNum == 0)
+        if (_partNum == 0 || _partNum == 1)
         {
             _itemType = ItemType.Weapon;
         }
-        else if (_partNum > 0 && _partNum < 12)
+        else if (_partNum > 1 && _partNum < 12)
         {
             _itemType = ItemType.Armor;
         }

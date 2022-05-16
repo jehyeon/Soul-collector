@@ -33,7 +33,7 @@ public class PopupAsk : MonoBehaviour
         Time.timeScale = 0;
     }
 
-    private void Close()
+    public void Close()
     {
         textAsk.text = "";
         textLeftBtn.text = "";

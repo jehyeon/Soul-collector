@@ -23,9 +23,11 @@ public class Portal : MonoBehaviour
     public void Set(GameObject open, GameObject idle, PortalType portalType)
     {
         portalOpen = open;
+        portalOpen.SetActive(false);
         portalOpen.transform.parent = this.transform;
         portalOpen.transform.localPosition = Vector3.zero;
         portalIdle = idle;
+        portalIdle.SetActive(false);
         portalIdle.transform.parent = this.transform;
         portalIdle.transform.localPosition = Vector3.zero;
         type = portalType;

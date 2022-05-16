@@ -33,7 +33,7 @@ public class PopupSetCount : MonoBehaviour
         Time.timeScale = 0;
     }
 
-    private void Close()
+    public void Close()
     {
         textMessage.text = "";
         textLeftBtn.text = "";

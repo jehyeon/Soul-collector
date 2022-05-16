@@ -89,6 +89,14 @@ public class Craft : MonoBehaviour
         goCraftBtn.SetActive(false);
     }
 
+    public void UnSelectFromCraft()
+    {
+        if (selectCraftItemIndex != -1)
+        {
+            slots[selectCraftItemIndex].UnSelect();
+        }
+    }
+
     // -------------------------------------------------------------
     // Material UI
     // -------------------------------------------------------------
@@ -170,7 +178,7 @@ public class Craft : MonoBehaviour
             ? 999
             : gameManager.Inventory.GetRemainInventory();
 
-        gameManager.PopupSetCount("Craft", "제작할 아이템의 수량을 입력해주세요,", "취소", "구매"
+        gameManager.PopupSetCount("Craft", "제작할 아이템의 수량을 입력해주세요,", "취소", "제작"
             , maxCount, 1);
     }
 
@@ -247,6 +255,7 @@ public class Craft : MonoBehaviour
 
     public void Close()
     {
+        UnSelectFromCraft();
         this.gameObject.SetActive(false);
     }
 }

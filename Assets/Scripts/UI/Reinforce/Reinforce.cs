@@ -97,9 +97,10 @@ public class Reinforce : MonoBehaviour
         }
         
         List<int> success = new List<int>();
-
+        
         // 강화 주문서 수량 조절
         // save 및 inventory view
+        int scrollItemId = scroll.Item.Id;
         gameManager.Inventory.UpdateScrollItem(scroll.InventorySlotId, reinforcingItemCount);
         // reinforce view
         if (scroll.Count > reinforcingItemCount)
@@ -130,7 +131,7 @@ public class Reinforce : MonoBehaviour
             if (Random.value < percent)
             {
                 int tryNum = 1;
-                if (scroll.Item.Id == 38 || scroll.Item.Id == 39)
+                if (scrollItemId == 38 || scrollItemId == 39)
                 {
                     // 빛나는 강화 주문서인 경우
                     // 1 ~ 3번 upgrade

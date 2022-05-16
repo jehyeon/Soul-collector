@@ -36,7 +36,7 @@ public class AuctionTest : MonoBehaviour
         }
         else
         {
-            Debug.Log(www.downloadHandler.text);
+            // Debug.Log(www.downloadHandler.text);
         }
     }
 
@@ -66,19 +66,7 @@ public class AuctionTest : MonoBehaviour
 
         yield return request.SendWebRequest();
 
-        Debug.Log("Status Code: " + request.responseCode);
-        Debug.Log(request.downloadHandler.text);
-        // UnityWebRequest www = UnityWebRequest.Post(url, form);
-        // yield return www.SendWebRequest();
-
-        // if (www.result != UnityWebRequest.Result.Success)
-        // {
-        //     Debug.Log(www.error);
-        // }
+        // Debug.Log("Status Code: " + request.responseCode);
+        // Debug.Log(request.downloadHandler.text);
     }
-
-    // Auction
-    // private void 
-
-    // Pushes
 }

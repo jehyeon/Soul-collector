@@ -18,5 +18,16 @@ public class Village : MonoBehaviour
         player.transform.position = Vector3.zero;
         agent.enabled = true;
         player.Heal(true);     // 마을 복귀 시 최대 체력
+
+        // 마을 복귀시 몬스터 체력바 삭제
+        GameObject EnemyBarSystem = GameObject.Find("Enemy Hp bar");
+        if (EnemyBarSystem.transform.childCount > 0)
+        {
+            EnemyHpBar[] childList = EnemyBarSystem.GetComponentsInChildren<EnemyHpBar>();
+            for (int i = 0; i < childList.Length; i++)
+            {
+                Destroy(childList[i].gameObject);
+            }
+        }
     }
 }

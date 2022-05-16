@@ -333,7 +333,6 @@ public class Inventory : MonoBehaviour
             goMultiSelectModeUI.SetActive(false);
             if (selectedSlotIndex != -1)
             {
-                Debug.Log(slots[selectedSlotIndex].Count);
                 if (slots[selectedSlotIndex].Count > 1)
                 {
                     // !!! 아이템 여러개 판매는 일단 미지원
@@ -541,9 +540,8 @@ public class Inventory : MonoBehaviour
     // -------------------------------------------------------------
     public void Sell()
     {
-        Debug.Log(slots[selectedSlotIndex].Item.Rank);
-        int price = 100 * (int)Mathf.Pow(10, slots[selectedSlotIndex].Item.Rank);
-        Debug.Log(price * slots[selectedSlotIndex].Count);
+        // 100, 1000, 10000, 100000
+        int price = 10 * (int)Mathf.Pow(10, slots[selectedSlotIndex].Item.Rank);
         gameManager.SaveManager.Save.DeleteSlot(selectedSlotIndex);
         UpdateGold(slots[selectedSlotIndex].Count * price);
         ResetSelectSlot();
@@ -775,13 +773,16 @@ public class Inventory : MonoBehaviour
     public void DoneReinforce(List<int> remainItemIds)
     {
         // 강화가 모두 끝난 경우
-        SaveAndLoad();      // SaveManager.Save 기준으로 인벤토리 리로드
 
-        // 선택한 슬롯 초기화 후 다시 선택
+        // 선택한 슬롯 초기화
+        
         ResetSelectSlot();
+
+        SaveAndLoad();      // SaveManager.Save 기준으로 인벤토리 리로드
 
         foreach (int id in remainItemIds)
         {
+            // remainItem 다시 select
             // !!! 인벤토리 용량이 커지면 레이턴시가 생길듯
             int slotIndex = FindItemUsingSlotId(id);
             slots[slotIndex].Select();     // view

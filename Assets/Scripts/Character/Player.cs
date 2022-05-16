@@ -25,6 +25,8 @@ public class Player : ACharacter
     public Stat Stat { get { return stat; } }
     public Skill[] Skill { get { return skill; } }
 
+    private float noVeloMoveTime;   // move State인데 움직이지 않는 시간
+
     // -------------------------------------------------------------
     // Init
     // -------------------------------------------------------------
@@ -44,6 +46,8 @@ public class Player : ACharacter
 
         playerController = GetComponent<PlayerController>();
         InvokeRepeating("RecoverHp", 10f, 10f);
+
+        noVeloMoveTime = 0f;
     }
 
     private void SyncStat()
@@ -66,10 +70,10 @@ public class Player : ACharacter
     public void Move(Vector3 destination, bool isKeyboard = false)
     {
         // PlayerController에서 호출
-        if (!isKeyboard)
-        {
-            agent.velocity = Vector3.zero;  // 방향 전환 시 기존 velocity 영향 X
-        }
+        // if (!isKeyboard)
+        // {
+        //     agent.velocity = Vector3.zero;  // 방향 전환 시 기존 velocity 영향 X
+        // }
 
         destinationPos = destination;
         MoveMode();
@@ -162,6 +166,22 @@ public class Player : ACharacter
 
         if (state == PlayerState.Move)
         {
+            if (agent.velocity.sqrMagnitude == 0f)
+            {
+                noVeloMoveTime += Time.deltaTime;
+
+                if (noVeloMoveTime > 0.05f)
+                {
+                    // 0.05초 이상 제자리 걸음인 경우
+                    IdleMode();
+                    noVeloMoveTime = 0f;
+                }
+            }
+            else
+            {
+                noVeloMoveTime = 0f;
+            }
+
             agent.SetDestination(destinationPos);
 
             if ((destinationPos - this.transform.position).sqrMagnitude <= 0.1f)

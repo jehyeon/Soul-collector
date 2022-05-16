@@ -82467,7 +82467,7 @@ PrefabInstance:
     - target: {fileID: 3560122828472401357, guid: 957fbe8ea650f6c4fb213cfbdb844dfb, type: 3}
       propertyPath: attackTargetPref
       value: 
-      objectReference: {fileID: 2709349973804272415, guid: 39733697388d8624f9f851850565c6cb, type: 3}
+      objectReference: {fileID: 112286, guid: a119a064493e9364da6c1cb42c877f19, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 957fbe8ea650f6c4fb213cfbdb844dfb, type: 3}
 --- !u!198 &4149845388870207642
