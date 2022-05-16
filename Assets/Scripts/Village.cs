@@ -17,5 +17,6 @@ public class Village : MonoBehaviour
         agent.enabled = false;
         player.transform.position = Vector3.zero;
         agent.enabled = true;
+        player.Heal(true);     // 마을 복귀 시 최대 체력
     }
 }

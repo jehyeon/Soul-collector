@@ -78,6 +78,10 @@ public class Stat
     public void DecreaseHp(int damage)
     {
         _hp -= damage;
+        if (_hp < 1)
+        {
+            _hp = 0;
+        }
     }
 
     public void LoadFromCSV(int id, string fileName)

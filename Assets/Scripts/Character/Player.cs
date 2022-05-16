@@ -313,6 +313,12 @@ public class Player : ACharacter
         gameManager.UIController.UpdatePlayerHpBar(stat.Hp, stat.MaxHp);
     }
 
+    public void Heal(bool maxHeal)
+    {
+        stat.Heal(9999);
+        gameManager.UIController.UpdatePlayerHpBar(stat.Hp, stat.MaxHp);
+    }
+
     // -------------------------------------------------------------
     // Inventory 장착 (스탯 변화)
     // -------------------------------------------------------------

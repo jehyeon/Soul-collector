@@ -93,7 +93,7 @@ public class GameManager : MonoBehaviour
     public void GoViliage()
     {
         LoadingSceneManager.LoadScene("Main");
-
+        
         // 던전 Floor UI
         floor = 0;
         uiController.DeActivateFloorText();
