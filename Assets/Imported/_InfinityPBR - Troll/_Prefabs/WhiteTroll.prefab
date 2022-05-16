@@ -102,15 +102,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sound: {fileID: 4317641637061074872}
-  minDamage: 20
-  maxDamage: 30
+  minDamage: 40
+  maxDamage: 60
   defaultDamage: 0
-  maxHp: 50
-  damageReduction: 0
+  maxHp: 100
+  damageReduction: 5
   attackSpeed: 0.66
   moveSpeed: 2
   attackRange: 2
-  setDropId: 1
+  setDropId: 2
 --- !u!114 &4317641637061074872
 MonoBehaviour:
   m_ObjectHideFlags: 0

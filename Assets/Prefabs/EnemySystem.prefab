@@ -44,10 +44,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultTrollPref: {fileID: 3992661026738680706, guid: bdf795f78cb5df04397f2cbd3cccee57, type: 3}
-  whiteTrollPref: {fileID: 441973426186769675, guid: 3c7cb835fa422914d970504fa712b76d, type: 3}
-  darkTrollPref: {fileID: 0}
-  defaultMinotaurPref: {fileID: 3343540161937743216, guid: d5d49ff4887d6db4d99d5df95b0ba50e, type: 3}
-  whiteMinotaurPref: {fileID: 0}
+  whiteTrollPref: {fileID: 3343540161937743216, guid: d5d49ff4887d6db4d99d5df95b0ba50e, type: 3}
+  darkTrollPref: {fileID: 441973426186769675, guid: 3c7cb835fa422914d970504fa712b76d, type: 3}
+  defaultMinotaurPref: {fileID: 6902869309958563520, guid: 6651e54d1c06a7a49a33af7b2e0f2157, type: 3}
+  whiteMinotaurPref: {fileID: 7959174084961096225, guid: da0257e351bf3a646bb1ff8a08c28b68, type: 3}
   blueMinotaurPref: {fileID: 0}
-  defaultMedusaPref: {fileID: 0}
+  defaultMedusaPref: {fileID: 441973426186769675, guid: 3c7cb835fa422914d970504fa712b76d, type: 3}
   greenMedusaPref: {fileID: 0}
