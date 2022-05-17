@@ -75,6 +75,12 @@ public class Equipment : MonoBehaviour
             return;
         }
 
+        if (gameManager.Inventory.isFullInventory())
+        {
+            gameManager.PopupMessage("인벤토리에 남은 공간이 없습니다.");
+            UnSelectSlot();
+            return;
+        }
         gameManager.UnEquip(slots[selectedSlotIndex].Item);
         slots[selectedSlotIndex].UnEquip();
         UnSelectSlot();

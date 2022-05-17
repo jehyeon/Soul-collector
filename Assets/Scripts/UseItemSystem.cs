@@ -18,24 +18,14 @@ public class UseItemSystem
         switch (itemId)
         {
             case 13:
-                // 무기 강화 주문서
-                gameManager.UIController.CloseUI();
-                gameManager.UIController.OpenReinforceUI();
-                break;
             case 14:
-                // 방어구 강화 주문서
-                gameManager.UIController.CloseUI();
-                gameManager.UIController.OpenReinforceUI();
-                break;
             case 38:
-                // 빛나는 무기 강화 주문서
-                gameManager.UIController.CloseUI();
-                gameManager.UIController.OpenReinforceUI();
-                break;
             case 39:
+                // 무기 강화 주문서
+                // 방어구 강화 주문서
+                // 빛나는 무기 강화 주문서
                 // 빛나는 방어구 강화 주문서
-                gameManager.UIController.CloseUI();
-                gameManager.UIController.OpenReinforceUI();
+                StartReinforce(slotIndex);
                 break;
             case 12:
                 // 빈 주문서
@@ -48,12 +38,10 @@ public class UseItemSystem
             case 18:
                 // 무기 상자
                 OpenRandomBox(slotIndex, 18);
-                // gameManager.Inventory.StartReinforceMode(slotIndex, ItemType.Armor);
                 break;
             case 19:
                 // 방어구 상자
                 OpenRandomBox(slotIndex, 19);
-                // gameManager.Inventory.StartReinforceMode(slotIndex, ItemType.Armor);
                 break;
             case 24:
                 // 붕대
@@ -73,20 +61,57 @@ public class UseItemSystem
         }
     }
 
+    public bool CheckCanMultiUse(int itemId)
+    {
+        // 다중 사용이 가능한 아이템인지 확인
+        // 사용 아이템이 추가되는 경우 조건문 업데이트
+        if (itemId == 12 || itemId == 17 || itemId == 18 || itemId == 19)
+        {
+            return true;
+        }
+
+        return false;
+    }
+    // -------------------------------------------------------------
+    // 랜덤 박스
+    // -------------------------------------------------------------
     private void OpenRandomBox(int boxSlotIndex, int dropId)
     {
+        bool isOK = gameManager.GetItemCheckInventory(GetRandomItemId(dropId));
+
+        if (!isOK)
+        {
+            // 인벤토리가 꽉차서 아이템 추가가 안됨
+            return;
+        }
         // boxSlotIndex의 아이템 1개 소모 후 dropId의 랜덤 아이템 추가
         if (gameManager.Inventory.TryToUpdateItemCount(boxSlotIndex))
         {
             // 항목 삭제 후 Save and Reload
             gameManager.Inventory.Delete(boxSlotIndex);
         }
-        gameManager.GetItem(GetRandomItemId(dropId));
-        gameManager.SaveManager.SaveData();     // 아이템 추가는 Reload 없어도 됨
     }
 
     private int GetRandomItemId(int dropTableId)
     {
         return gameManager.DropManager.RandomItem(dropTableId);
+    }
+
+    // -------------------------------------------------------------
+    // 아이템 강화
+    // -------------------------------------------------------------
+    private void StartReinforce(int slotIndex)
+    {
+        // 강화 UI Open
+        gameManager.UIController.CloseUI();
+        gameManager.UIController.OpenReinforceUI();
+
+        // Inventory Select
+        InventorySlot selectedSlot = gameManager.Inventory.Slots[slotIndex];
+        selectedSlot.Select();                          // view
+        gameManager.Inventory.SelectSlot(slotIndex);    // data
+
+        // Reinforce Add
+        gameManager.Reinforce.Add(selectedSlot.Item, selectedSlot.Id, selectedSlot.Count);
     }
 }

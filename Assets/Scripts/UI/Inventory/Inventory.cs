@@ -401,6 +401,15 @@ public class Inventory : MonoBehaviour
 
     public void ClickInventoryActBtn()
     {
+        if (mode == InventoryMode.Shop)
+        {
+            if (selectedSlotIndex != -1 || selectedSlotIndexList.Count > 0)
+            {
+                gameManager.PopupAsk("Sell", "아이템을 판매하시겠습니까?", "아니요", "네");
+            }   
+            return;
+        }
+
         if (selectedSlotIndex == -1)
         {
             // 선택된 아이템이 없는 경우 버튼 활성화가 되지 않음
@@ -416,19 +425,23 @@ public class Inventory : MonoBehaviour
             return;
         }
 
-        if (mode == InventoryMode.Shop)
-        {   
-            gameManager.PopupAsk("Sell", "아이템을 판매하시겠습니까?", "아니요", "네");
-            return;
-        }
-
         if (slots[selectedSlotIndex].Item.ItemType == ItemType.Use)
         {
+            if (!useItemSystem.CheckCanMultiUse(slots[selectedSlotIndex].Item.Id))
+            {
+                // 다중 사용이 불가능한 아이템인 경우
+                useItemSystem.Use(slots[selectedSlotIndex].Item.Id, selectedSlotIndex);
+                return;
+            }
+
+            if (isFullInventory())
+            {
+                gameManager.PopupMessage("인벤토리에 남은 공간이 없습니다.");
+                return;
+            }
+
             // 사용 아이템인 경우
-            // UseItemSystem으로 사용한 item id 및 slot index 전달
-            useItemSystem.Use(slots[selectedSlotIndex].Item.Id, selectedSlotIndex);
-            
-            UpdateInventoryActBtn();
+            gameManager.PopupSetCount("Use", "사용할 아이템의 수량을 설정해주세요.", "취소", "사용", slots[selectedSlotIndex].Count);
             return;
         }
 
@@ -466,6 +479,25 @@ public class Inventory : MonoBehaviour
     public void CloseItemDetail()
     {
         gameManager.UIController.CloseItemDetail();
+    }
+
+    // -------------------------------------------------------------
+    // Use Item #Use
+    // -------------------------------------------------------------
+    public void Use(int count)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            // UseItemSystem으로 사용한 item id 및 slot index 전달
+            useItemSystem.Use(slots[selectedSlotIndex].Item.Id, selectedSlotIndex);
+            if (isFullInventory())
+            {
+                // 남은 인벤토리 슬롯이 없는 경우 종료
+                break;
+            }
+        }
+            
+        UpdateInventoryActBtn();
     }
 
     // -------------------------------------------------------------
@@ -540,13 +572,41 @@ public class Inventory : MonoBehaviour
     // -------------------------------------------------------------
     public void Sell()
     {
-        // 100, 1000, 10000, 100000
-        int price = 10 * (int)Mathf.Pow(10, slots[selectedSlotIndex].Item.Rank);
-        gameManager.SaveManager.Save.DeleteSlot(selectedSlotIndex);
-        UpdateGold(slots[selectedSlotIndex].Count * price);
-        ResetSelectSlot();
+        if (selectedSlotIndex == -1 && selectedSlotIndexList.Count == 0)
+        {
+            // 선택된 슬롯이 없는 경우
+            return;
+        }
 
-        SaveAndLoad();
+        int price;
+        if (multiSelectMode && selectedSlotIndexList.Count > 0)
+        {
+            // 다중 판매인 경우
+            int indexDiff = 0;
+            selectedSlotIndexList.Sort();
+            foreach(int index in selectedSlotIndexList)
+            {
+                price = 10 * (int)Mathf.Pow(10, slots[index].Item.Rank);
+                gameManager.SaveManager.Save.DeleteSlot(index - indexDiff);
+                indexDiff += 1;
+                UpdateGold(slots[index].Count * price);
+            }
+            ResetSelectSlot();
+            SaveAndLoad();
+            return;
+        }
+
+        if (!multiSelectMode && selectedSlotIndex != -1)
+        {
+            // 단일 판매인 경우
+            price = 10 * (int)Mathf.Pow(10, slots[selectedSlotIndex].Item.Rank);
+            gameManager.SaveManager.Save.DeleteSlot(selectedSlotIndex);
+            UpdateGold(slots[selectedSlotIndex].Count * price);
+
+            ResetSelectSlot();
+            SaveAndLoad();
+            return;
+        }
     }
 
     // -------------------------------------------------------------

@@ -59,7 +59,7 @@ public class Shop : MonoBehaviour
 
         if (gameManager.Inventory.isFullInventory())
         {
-            gameManager.PopupMessage("인벤토리에 공간이 부족합니다.");
+            gameManager.PopupMessage("인벤토리에 남은 공간이 없습니다.");
             return;
         }
 

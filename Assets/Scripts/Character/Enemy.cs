@@ -238,7 +238,7 @@ public class Enemy : ACharacter
         if (hpBar == null)
         {
             // init
-            hpBar = spawner.GameManager.InitHpBar();
+            hpBar = spawner.GameManager.InitHpBar(this.transform.position);
             hpBar.SetTransform(this.transform);
         }
 

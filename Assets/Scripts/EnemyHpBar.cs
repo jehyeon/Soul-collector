@@ -11,12 +11,6 @@ public class EnemyHpBar : MonoBehaviour
     private Transform enemyTransform;
     private Vector3 offset;
 
-    // Start is called before the first frame update
-    private void Start()
-    {
-        offset = new Vector3(0, 2.5f, 0);
-    }
-
     private void Update()
     {
         if (enemyTransform != null)
@@ -30,8 +24,9 @@ public class EnemyHpBar : MonoBehaviour
         enemyTransform = transform;
     }
     
-    public void SetParentSystem(EnemyHpBarSystem parent)
+    public void Set(EnemyHpBarSystem parent, Vector3 _offset)
     {
+        offset = _offset;
         parentSystem = parent;
     }
 

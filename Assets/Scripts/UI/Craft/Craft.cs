@@ -155,7 +155,7 @@ public class Craft : MonoBehaviour
         if (gameManager.Inventory.isFullInventory())
         {
             // 무조건 하나 이상이 비워져 있어야 함
-            gameManager.PopupMessage("인벤토리에 공간이 부족합니다.");
+            gameManager.PopupMessage("인벤토리에 남은 공간이 없습니다.");
             return;
         }
 

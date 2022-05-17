@@ -358,7 +358,7 @@ public class GameManager : MonoBehaviour
     // -------------------------------------------------------------
     // 체력바 System
     // -------------------------------------------------------------
-    public EnemyHpBar InitHpBar()
+    public EnemyHpBar InitHpBar(Vector3 initPos)
     {
         // In Default Dungeon scene
         if (enemyHpBarSystem == null)
@@ -366,7 +366,7 @@ public class GameManager : MonoBehaviour
             enemyHpBarSystem = GameObject.Find("Enemy HP Bar System").GetComponent<EnemyHpBarSystem>();
         }
 
-        return enemyHpBarSystem.InitHpBar();
+        return enemyHpBarSystem.InitHpBar(initPos);
     }
 
     // -------------------------------------------------------------
@@ -435,6 +435,9 @@ public class GameManager : MonoBehaviour
                 return;
             case "Craft":
                 craft.CraftItem(count);
+                return;
+            case "Use":
+                inventory.Use(count);
                 return;
         }
     }
