@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System.Linq;
 
 public class Equipment : MonoBehaviour
 {
@@ -14,11 +15,13 @@ public class Equipment : MonoBehaviour
     [SerializeField]
     private GameObject goEquipmentSlotPref;
     [SerializeField]
-    private GameObject goSlotParent;
+    private GameObject goSlotParentOne;
+    [SerializeField]
+    private GameObject goSlotParentTwo;
 
     // 버튼
     [SerializeField]
-    private GameObject goUnEquipBtn;
+    private GameObject goQuickSlotBtn;
 
     // 스탯 정보
     [SerializeField]
@@ -26,7 +29,7 @@ public class Equipment : MonoBehaviour
     // [SerializeField]
     // private TextMeshProUGUI goDefenseStatText;
 
-    private EquipmentSlot[] slots;
+    public EquipmentSlot[] slots;
     private int selectedSlotIndex;
 
     // -------------------------------------------------------------
@@ -39,16 +42,20 @@ public class Equipment : MonoBehaviour
 
     public void InitEquipmentSlots()
     {
-        // 장비 슬롯 12개 생성
-        for (int i = 0; i < 12; i++)
-        {
-            GameObject equipmentSlot = Instantiate(goEquipmentSlotPref);
-            equipmentSlot.transform.SetParent(goSlotParent.transform);
-            equipmentSlot.GetComponent<EquipmentSlot>().Init(i, this.gameObject.GetComponent<Equipment>());
-        }
+        List<EquipmentSlot> slotList = new List<EquipmentSlot>();
+        slotList.AddRange(goSlotParentOne.GetComponentsInChildren<EquipmentSlot>());
+        slotList.AddRange(goSlotParentTwo.GetComponentsInChildren<EquipmentSlot>());
+        slots = slotList.OrderBy(slot => slot.Index).ToArray();
+        // foreach(EquipmentSlot slot in slotList)
+        // {
+        //     Debug.Log(slot.Index);
+        // }
+        // slots = sorted.ToArray();
 
-        // 생성된 슬롯을 slots에 저장
-        slots = goSlotParent.GetComponentsInChildren<EquipmentSlot>();
+        for (int i = 0; i < slots.Length; i++)
+        {
+            Debug.Log(slots[i].Index);
+        }
     }
 
     // -------------------------------------------------------------
@@ -135,6 +142,24 @@ public class Equipment : MonoBehaviour
     }
 
     // -------------------------------------------------------------
+    // Quick slot
+    // -------------------------------------------------------------
+    public void ShowQuickSlotBtn()
+    {
+        goQuickSlotBtn.SetActive(true);
+    }
+
+    public void CloseQuickSlotBtn()
+    {
+        goQuickSlotBtn.SetActive(false);
+    }
+
+    public void OpenSetQuickSlot()
+    {
+        
+    }
+
+    // -------------------------------------------------------------
     // 스탯 UI 업데이트
     // -------------------------------------------------------------
     public void UpdateStatText(Stat stat)
@@ -159,5 +184,7 @@ public class Equipment : MonoBehaviour
             slots[selectedSlotIndex].UnSelect();
             selectedSlotIndex = -1;
         }
+
+        CloseQuickSlotBtn();
     }    
 }

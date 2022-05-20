@@ -25,6 +25,8 @@ public class UIController: MonoBehaviour
     private Auction auction;            // 경매장
     [SerializeField]
     private Push push;                  // 푸시
+    [SerializeField]
+    private QuickSlotSystem quickSlot;  // 퀵슬롯
 
     // 팝업 메시지
     [SerializeField]
@@ -184,6 +186,7 @@ public class UIController: MonoBehaviour
     // Inventory UI + background
     public void OpenInventoryUI(string type = "default")
     {
+        CloseQuickSlotUI();
         background.SetActive(true);
         inventory.Open(type);
     }
@@ -193,6 +196,7 @@ public class UIController: MonoBehaviour
         background.SetActive(false);
         inventory.Close();
         itemDetail.Close();
+        OpenQuickSlotUI();
     }
 
     // Equipment UI + Inventory UI
@@ -247,6 +251,7 @@ public class UIController: MonoBehaviour
     // Push UI
     public void OpenPushUI()
     {
+        CloseQuickSlotUI();
         isActivatedPushUI = true;
         background.SetActive(true);
         push.Open();
@@ -257,9 +262,10 @@ public class UIController: MonoBehaviour
         isActivatedPushUI = false;
         background.SetActive(false);
         push.Close();
+        OpenQuickSlotUI();
     }
 
-    // Craft UI
+    // Craft UI + Inventory UI
     public void OpenCraftUI()
     {
         isActivatedCraftUI = true;
@@ -274,7 +280,7 @@ public class UIController: MonoBehaviour
         CloseInventoryUI();
     }
 
-    // Reinforce UI
+    // Reinforce UI + Inventory UI
     public void OpenReinforceUI()
     {
         isActivatedReinforceUI = true;
@@ -287,6 +293,17 @@ public class UIController: MonoBehaviour
         isActivatedReinforceUI = false;
         reinforce.Close();
         CloseInventoryUI();
+    }
+
+    // QuickSlot UI
+    public void OpenQuickSlotUI()
+    {
+        quickSlot.Open();
+    }
+
+    public void CloseQuickSlotUI()
+    {
+        quickSlot.Close();
     }
 
     // Item Detail

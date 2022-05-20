@@ -6,25 +6,18 @@ using UnityEngine.UI;
 
 public class EquipmentSlot : Slot, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    private int index;
     private bool isSelected;
 
-    // 상위 Equipment
-    private Equipment equipment;
+    [SerializeField]
+    private Equipment equipment;    // 상위 Equipment
 
     [SerializeField]
     private GameObject go_selectedFrame;
+    [SerializeField]
+    private int slotIndex;          // Equipment index
 
-    // -------------------------------------------------------------
-    // 인벤토리 슬롯 생성 및 로드
-    // -------------------------------------------------------------
-    public void Init(int slotindex, Equipment parentEquipment)
-    {
-        // 게임 시작 시 슬롯 생성될 때 부여
-        index = slotindex;
-        equipment = parentEquipment;
-    }
-
+    public int Index { get { return slotIndex; } }
+    
     // -------------------------------------------------------------
     // 인벤토리 슬롯 터치 이벤트
     // -------------------------------------------------------------
@@ -41,7 +34,7 @@ public class EquipmentSlot : Slot, IPointerClickHandler, IPointerEnterHandler, I
             // 마우스 왼클릭
             if (!isSelected)
             {
-                equipment.SelectSlot(index);
+                equipment.SelectSlot(slotIndex);
                 Select();
             }
             else
@@ -53,7 +46,7 @@ public class EquipmentSlot : Slot, IPointerClickHandler, IPointerEnterHandler, I
         else if (eventData.button == PointerEventData.InputButton.Right)
         {
             // 마우스 우클릭
-            equipment.UnEquipItem(index);
+            equipment.UnEquipItem(slotIndex);
         }
     }
 

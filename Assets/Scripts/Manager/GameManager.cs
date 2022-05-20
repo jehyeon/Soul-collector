@@ -164,10 +164,20 @@ public class GameManager : MonoBehaviour
         inventory.UpdateInventoryActBtn(true);
     }
 
-    public void SelectSlotOnInventory()
+    public void SelectSlotOnInventory(ItemType itemType)
     {
         // 장착 슬롯 unselect
         equipment.UnSelectSlot();
+
+        if (itemType == ItemType.Use)
+        {
+            // 선택한 아이템이 사용 아이템인 경우
+            equipment.ShowQuickSlotBtn();
+        }
+        else
+        {
+            equipment.CloseQuickSlotBtn();
+        }
     }
 
     public void CallUnEquipOnInventory()

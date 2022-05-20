@@ -186,7 +186,9 @@ public class Inventory : MonoBehaviour
     // -------------------------------------------------------------
     public void SelectSlot(int slotIndex)
     {
-        gameManager.SelectSlotOnInventory();
+        // 아이템이 있는 slot을 클릭한 경우에만 호출 됨
+        // slots[slotIndex]는 null이거나 out of index일 수가 없음
+        gameManager.SelectSlotOnInventory(slots[slotIndex].Item.ItemType);
 
         if (multiSelectMode)
         {
@@ -382,6 +384,14 @@ public class Inventory : MonoBehaviour
             return;
         }
 
+        if (slots[selectedSlotIndex].Item.ItemType == ItemType.Material)
+        {
+            // 제작 아이템인 경우
+            goInventoryActBtn.SetActive(false);
+            textInventoryActBtn.text = "";
+            return;
+        }
+
         if (slots[selectedSlotIndex].Item.ItemType == ItemType.Use)
         {
             // 사용 아이템인 경우
@@ -393,6 +403,7 @@ public class Inventory : MonoBehaviour
         if (slots[selectedSlotIndex].Item.ItemType == ItemType.Weapon 
         || slots[selectedSlotIndex].Item.ItemType == ItemType.Armor)
         {
+            // 장착 아이템인 경우
             goInventoryActBtn.SetActive(true);
             textInventoryActBtn.text = "장착";
             return;
