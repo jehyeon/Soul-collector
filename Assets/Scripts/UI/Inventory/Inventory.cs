@@ -511,6 +511,27 @@ public class Inventory : MonoBehaviour
         UpdateInventoryActBtn();
     }
 
+    public void UseBySlotId(int slotId)
+    {
+        int slotIndex = FindItemUsingSlotId(slotId);
+        if (slotIndex == -1)
+        {
+            return;
+        }
+        int itemId = slots[slotIndex].Item.Id;
+        if (useItemSystem.CheckCanMultiUse(slotIndex))
+        {
+            // 인벤토리가 꽉 찬 경우 사용이 불가능한 아이템
+            if (isFullInventory())
+            {
+                gameManager.PopupMessage("인벤토리에 남은 공간이 없습니다.");
+                return;
+            }
+        }
+
+        useItemSystem.Use(itemId, slotIndex);
+    }
+
     // -------------------------------------------------------------
     // Delete Item #Delete
     // -------------------------------------------------------------
@@ -554,6 +575,8 @@ public class Inventory : MonoBehaviour
     {
         ResetSelectSlot();
 
+        // Use 아이템 && 퀵슬롯 등록 아이템인 경우 slot clear
+        CheckIsExistQuickSlot(wantToDeleteItemIndex);
         gameManager.SaveManager.Save.DeleteSlot(wantToDeleteItemIndex);
         if (save)
         {
@@ -570,6 +593,8 @@ public class Inventory : MonoBehaviour
         int indexDiff = 0;  
         foreach(int index in wantToDeleteItemIndeices)
         {
+            // Use 아이템 && 퀵슬롯 등록 아이템인 경우 slot clear
+            CheckIsExistQuickSlot(index);
             gameManager.SaveManager.Save.DeleteSlot(index - indexDiff);
             indexDiff += 1;
         }
@@ -598,6 +623,8 @@ public class Inventory : MonoBehaviour
             foreach(int index in selectedSlotIndexList)
             {
                 price = 10 * (int)Mathf.Pow(10, slots[index].Item.Rank);
+                // Use 아이템 && 퀵슬롯 등록 아이템인 경우 slot clear
+                CheckIsExistQuickSlot(index);
                 gameManager.SaveManager.Save.DeleteSlot(index - indexDiff);
                 indexDiff += 1;
                 UpdateGold(slots[index].Count * price);
@@ -611,6 +638,8 @@ public class Inventory : MonoBehaviour
         {
             // 단일 판매인 경우
             price = 10 * (int)Mathf.Pow(10, slots[selectedSlotIndex].Item.Rank);
+            // Use 아이템 && 퀵슬롯 등록 아이템인 경우 slot clear
+            CheckIsExistQuickSlot(selectedSlotIndex);
             gameManager.SaveManager.Save.DeleteSlot(selectedSlotIndex);
             UpdateGold(slots[selectedSlotIndex].Count * price);
 
@@ -837,6 +866,8 @@ public class Inventory : MonoBehaviour
         }
         else
         {
+            // 퀵슬롯 등록 아이템인 경우 slot clear
+            CheckIsExistQuickSlot(slotIndex);
             gameManager.SaveManager.Save.DeleteSlot(slotIndex);
         }
     }
@@ -861,6 +892,19 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    // -------------------------------------------------------------
+    // QuickSlot
+    // -------------------------------------------------------------
+    private void CheckIsExistQuickSlot(int index)
+    {
+        if (slots[index].Item.ItemType == ItemType.Use)
+        {
+            // 사용 아이템인 경우 퀵슬롯 등록 아이템인지 확인
+            // 퀵슬롯 등록 아이템이면 퀵슬롯 해제
+            gameManager.QuickSlotSystem.CheckIsQuickSlot(slots[index].Id, false);
+        }
+    }
+    
     // -------------------------------------------------------------
     // Search
     // -------------------------------------------------------------
@@ -897,6 +941,16 @@ public class Inventory : MonoBehaviour
         }
 
         return -1;
+    }
+
+    public Item GetItemBySlotId(int slotId)
+    {
+        int index = FindItemUsingSlotId(slotId);
+        if (index == -1)
+        {
+            return null;
+        }
+        return slots[index].Item;
     }
 
     public int GetItemAmount(int itemId)

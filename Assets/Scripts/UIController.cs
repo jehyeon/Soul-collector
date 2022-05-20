@@ -296,9 +296,9 @@ public class UIController: MonoBehaviour
     }
 
     // QuickSlot UI
-    public void OpenQuickSlotUI()
+    public void OpenQuickSlotUI(bool isDefaultMode = true)
     {
-        quickSlot.Open();
+        quickSlot.Open(isDefaultMode);
     }
 
     public void CloseQuickSlotUI()

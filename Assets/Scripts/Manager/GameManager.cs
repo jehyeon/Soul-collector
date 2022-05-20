@@ -20,6 +20,8 @@ public class GameManager : MonoBehaviour
     private Player player;
     [SerializeField]
     private SkillSystem skillSystem;
+    [SerializeField]
+    private QuickSlotSystem quickSlotSystem;
 
     [SerializeField]
     private Inventory inventory;
@@ -51,7 +53,7 @@ public class GameManager : MonoBehaviour
     public CraftManager CraftManager { get { return craftManager; } }
     public ShopManager ShopManager { get { return shopManager; } }
     public UIController UIController { get { return uiController; } }
-
+    public QuickSlotSystem QuickSlotSystem { get { return quickSlotSystem; } }
     public Inventory Inventory { get { return inventory; } }
     public Reinforce Reinforce { get { return reinforce; } }
     public Player Player { get { return player; } }
@@ -81,6 +83,9 @@ public class GameManager : MonoBehaviour
         // Load Skill info
         skillSystem.InitSkillSystem();
         LoadSkillInfo();
+
+        // Load QuickSlot info
+        quickSlotSystem.LoadQuickSlotSystem();
 
         // Load Shop, Craft Info
         craft.InitCraftItemSlots();
@@ -356,6 +361,14 @@ public class GameManager : MonoBehaviour
     {
         apiManager.DeletePush(saveManager.Save.UserId, push.SelectedPushId);
     }
+
+    // // -------------------------------------------------------------
+    // // 스킬
+    // // -------------------------------------------------------------
+    // public List<int> LoadQuickSlotInfo()
+    // {
+    //     return saveManager.Save.QuickSlot;
+    // }
 
     // -------------------------------------------------------------
     // 스킬

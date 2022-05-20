@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
 using TMPro;
 
 public class Slot : MonoBehaviour
@@ -83,6 +80,11 @@ public class Slot : MonoBehaviour
     {
         itemCount += count;
         text_count.text = itemCount.ToString();
+    }
+
+    public void SetBackground(Color background)
+    {
+        img_background.color = background;
     }
 
     // 슬롯 비우기

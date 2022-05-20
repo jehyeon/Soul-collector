@@ -156,7 +156,8 @@ public class Equipment : MonoBehaviour
 
     public void OpenSetQuickSlot()
     {
-        
+        // Set QuickSlot mode로 UI 오픈
+        gameManager.UIController.OpenQuickSlotUI(false);
     }
 
     // -------------------------------------------------------------
