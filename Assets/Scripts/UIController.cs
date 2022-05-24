@@ -14,6 +14,8 @@ public class UIController: MonoBehaviour
     [SerializeField]
     private Equipment equiment;         // 장착 정보
     [SerializeField]
+    private Collect collect;            // 컬렉션
+    [SerializeField]
     private Reinforce reinforce;        // 장비 강화
     [SerializeField]
     private ItemDetail itemDetail;      // 아이템 툴팁
@@ -57,6 +59,7 @@ public class UIController: MonoBehaviour
 
     private bool isActivatedInventoryUI;
     private bool isActivatedEquipmentUI;
+    private bool isActivatedCollectUI;
     private bool isActivatedShopUI;
     private bool isActivatedCraftUI;
     private bool isActivatedReinforceUI;
@@ -80,6 +83,7 @@ public class UIController: MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
         isActivatedInventoryUI = false;
         isActivatedEquipmentUI = false;
+        isActivatedCollectUI = false;
         isActivatedShopUI = false;
         isActivatedCraftUI = false;
         isActivatedReinforceUI = false;
@@ -109,19 +113,6 @@ public class UIController: MonoBehaviour
             }
         }
 
-        // if (Input.GetKeyDown(KeyCode.U))
-        // {
-        //     // Inventory & Equipment
-        //     if (isActivatedAuctionUI)
-        //     {
-        //         CloseAuctionUI();
-        //     }
-        //     else
-        //     {
-        //         OpenAuctionUI();
-        //     }
-        // }
-
         if (Input.GetKeyDown(KeyCode.I))
         {
             // Inventory & Equipment
@@ -135,47 +126,24 @@ public class UIController: MonoBehaviour
                 OpenEquipmentUI();
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            if (isActivatedCollectUI)
+            {
+                CloseCollectUI();
+            }
+            else
+            {
+                CloseUI();
+                OpenCollectUI();
+            }
+        }
         
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             CloseUI();
         }
-        // if (Input.GetKeyDown(KeyCode.O))
-        // {
-        //     // Inventory & Equipment
-        //     if (isActivatedReinforceUI)
-        //     {
-        //         CloseReinforceUI();
-        //     }
-        //     else
-        //     {
-        //         OpenReinforceUI();
-        //     }
-        // }
-
-        // if (Input.GetKeyDown(KeyCode.P))
-        // {
-        //     if (isActivatedShopUI)
-        //     {
-        //         CloseShopUI();
-        //     }
-        //     else
-        //     {
-        //         OpenShopUI();
-        //     }
-        // }
-
-        // if (Input.GetKeyDown(KeyCode.C))
-        // {
-        //     if (isActivatedCraftUI)
-        //     {
-        //         CloseCraftUI();
-        //     }
-        //     else
-        //     {
-        //         OpenCraftUI();
-        //     }
-        // }
     }
 
     public void UpdateStatUI(Stat characterStat)
@@ -215,6 +183,27 @@ public class UIController: MonoBehaviour
         equiment.Close();
         CloseInventoryUI();
 
+        sound.PlayOpenInventorySound();
+    }
+
+    // Collect UI
+    public void OpenCollectUI()
+    {
+        CloseQuickSlotUI();
+        isActivatedCollectUI = true;
+        background.SetActive(true);
+        collect.Open();
+        
+        sound.PlayOpenInventorySound();
+    }
+
+    public void CloseCollectUI()
+    {
+        isActivatedCollectUI = false;
+        background.SetActive(false);
+        collect.Close();
+        OpenQuickSlotUI();
+        
         sound.PlayOpenInventorySound();
     }
 
