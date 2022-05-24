@@ -202,8 +202,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activateMark: {fileID: 911864275746685284}
-  textObject: {fileID: 0}
-  index: 0
+  textObject: {fileID: 911864276259979320}
 --- !u!1 &911864276259979322
 GameObject:
   m_ObjectHideFlags: 0

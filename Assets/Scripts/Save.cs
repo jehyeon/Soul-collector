@@ -10,6 +10,8 @@ public class Save
     public string URL;
     public string UserId;
     public int Gold;              // Gold 정보
+    public int AttackCollection;
+    public int DefenseCollection;
     public List<int> Skill;
     public List<int> QuickSlot;
     public int LastSlotIndex;     // 아이템이 있는 마지막 슬롯 index
@@ -41,6 +43,8 @@ public class Save
             -1,
             -1
         };
+        AttackCollection = -1;
+        DefenseCollection = -1;
         Skill = new List<int>();
         QuickSlot = new List<int>
         {

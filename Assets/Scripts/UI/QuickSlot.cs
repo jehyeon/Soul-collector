@@ -49,6 +49,12 @@ public class QuickSlot : Slot, IPointerClickHandler, IPointerEnterHandler, IPoin
         {
             parent.GameManager.Inventory.UseBySlotId(id);
         }
+
+        if (parent.GameManager.Inventory.GetItemBySlotId(id) == null)
+        {
+            // Use 이후 아이템 검색이 안되는 경우 (삭제된 경우)
+            parent.DeleteQuickSlot(index);
+        }
     }
 
     // -------------------------------------------------------------

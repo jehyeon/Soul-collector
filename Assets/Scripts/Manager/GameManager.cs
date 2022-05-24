@@ -28,6 +28,8 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Equipment equipment;
     [SerializeField]
+    private Collect collect;
+    [SerializeField]
     private Craft craft;
     [SerializeField]
     private Shop shop;
@@ -79,6 +81,9 @@ public class GameManager : MonoBehaviour
         equipment.InitEquipmentSlots();
         LoadEquipInfo();
         player.Heal(99999);     // 세이브에 현재 체력 정보는 저장하지 않음 -> 최대 체력 스폰
+
+        // Load Collection info
+        collect.InitCollection(this, saveManager.Save.AttackCollection, saveManager.Save.DefenseCollection);
 
         // Load Skill info
         skillSystem.InitSkillSystem();
