@@ -8,27 +8,31 @@ public class UIController: MonoBehaviour
 {
     // UI 조작 관리
     [SerializeField]
-    private GameObject background;      // 배경
+    private GameObject background;          // 배경
     [SerializeField]
-    private Inventory inventory;        // 인벤토리
+    private Inventory inventory;            // 인벤토리
     [SerializeField]
-    private Equipment equiment;         // 장착 정보
+    private TextMeshProUGUI characterDPS;   // 캐릭터 DPS
     [SerializeField]
-    private Collect collect;            // 컬렉션
+    private TextMeshProUGUI characterDamageReduction;   // 캐릭터 데미지 리덕션
     [SerializeField]
-    private Reinforce reinforce;        // 장비 강화
+    private Equipment equiment;             // 장착 정보
     [SerializeField]
-    private ItemDetail itemDetail;      // 아이템 툴팁
+    private Collect collect;                // 컬렉션
     [SerializeField]
-    private Shop shop;                  // 상점
+    private Reinforce reinforce;            // 장비 강화
     [SerializeField]
-    private Craft craft;                // 아이템 제작
+    private ItemDetail itemDetail;          // 아이템 툴팁
     [SerializeField]
-    private Auction auction;            // 경매장
+    private Shop shop;                      // 상점
     [SerializeField]
-    private Push push;                  // 푸시
+    private Craft craft;                    // 아이템 제작
     [SerializeField]
-    private QuickSlotSystem quickSlot;  // 퀵슬롯
+    private Auction auction;                // 경매장
+    [SerializeField]
+    private Push push;                      // 푸시
+    [SerializeField]
+    private QuickSlotSystem quickSlot;      // 퀵슬롯
 
     // 팝업 메시지
     [SerializeField]
@@ -149,6 +153,8 @@ public class UIController: MonoBehaviour
     public void UpdateStatUI(Stat characterStat)
     {
         equiment.UpdateStatText(characterStat);
+        characterDPS.text = string.Format("{0}", characterStat.DPS);
+        characterDamageReduction.text = string.Format("{0}", characterStat.DamageReduction);
     }
 
     // Inventory UI + background

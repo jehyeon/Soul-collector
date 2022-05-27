@@ -39,6 +39,8 @@ public class Stat
     public float MoveSpeed { get { return _moveSpeed; } }
     public float AttackRange { get { return _attackRange; } }
 
+    public float DPS { get { return GetDPS(); } }
+
     public Stat()
     {
         // 플레이어 초기값
@@ -73,6 +75,16 @@ public class Stat
         _attackSpeed = attackSpeed;
         _moveSpeed = moveSpeed;
         _attackRange = attackRange;
+    }
+
+    private float GetDPS()
+    {
+        float criticalPercent = _criticalPercent * 0.01f;
+        float nonCriAvgDamage = (float)((1 - criticalPercent) * (Mathf.FloorToInt((_minDamage + _maxDamage) / 2) + _defaultDamage));
+        float criAvgDamage = (float)(criticalPercent * (_maxDamage + _defaultDamage));
+        // Debug.Log(nonCriAvgDamage);
+        // Debug.Log(criAvgDamage);
+        return Mathf.Floor((nonCriAvgDamage + criAvgDamage) * _attackSpeed * 100f) * 0.01f;
     }
 
     public void DecreaseHp(int damage)

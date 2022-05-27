@@ -46,16 +46,6 @@ public class Equipment : MonoBehaviour
         slotList.AddRange(goSlotParentOne.GetComponentsInChildren<EquipmentSlot>());
         slotList.AddRange(goSlotParentTwo.GetComponentsInChildren<EquipmentSlot>());
         slots = slotList.OrderBy(slot => slot.Index).ToArray();
-        // foreach(EquipmentSlot slot in slotList)
-        // {
-        //     Debug.Log(slot.Index);
-        // }
-        // slots = sorted.ToArray();
-
-        for (int i = 0; i < slots.Length; i++)
-        {
-            Debug.Log(slots[i].Index);
-        }
     }
 
     // -------------------------------------------------------------
