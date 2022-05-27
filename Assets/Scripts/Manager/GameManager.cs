@@ -429,9 +429,9 @@ public class GameManager : MonoBehaviour
             case "Sell":
                 inventory.Sell();
                 return;
-            // case "Craft":
-            //     craft.CraftItem();
-            //     return;
+            case "Collect":
+                collect.RegisterCollection();
+                return;
             case "Reinforce":
                 reinforce.ReinforceItems();
                 return;

@@ -14,6 +14,8 @@ public class Collection : MonoBehaviour, IPointerClickHandler
     [SerializeField]
     private GameObject activateMark;
     [SerializeField]
+    private GameObject selectedMark;
+    [SerializeField]
     private TextMeshProUGUI textObject;
 
     private int index;
@@ -23,10 +25,13 @@ public class Collection : MonoBehaviour, IPointerClickHandler
     private bool activated = false;
 
     public string StatText { get { return statText; } }
+    public bool Activated { get { return activated; } }
+    public int Index { get { return index; } }
 
-    public void Set(Collect collect, int _index)
+    public void Set(Collect collect, CollectionType _type, int _index)
     {
         parent = collect;
+        type = _type;
         index = _index;
     }
 
@@ -45,6 +50,12 @@ public class Collection : MonoBehaviour, IPointerClickHandler
     public void Select()
     {
         parent.Select(type, index);
+        selectedMark.SetActive(true);
+    }
+
+    public void UnSelect()
+    {
+        selectedMark.SetActive(false);
     }
 
     public void OnPointerClick(PointerEventData eventData)
