@@ -3,10 +3,11 @@ using UnityEngine;
 public enum BuffType
 {
     Skill,
-    Item
+    Item,
+    Collection
 }
 
-public class Buff : MonoBehaviour
+public class Buff
 {
     private int id;
     private bool isDebuff;

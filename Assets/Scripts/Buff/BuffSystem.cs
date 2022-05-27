@@ -5,24 +5,25 @@ using System.Collections.Generic;
 public class BuffSystem : MonoBehaviour
 {
     [SerializeField]
-    private GameObject buffPref;
+    private GameManager gameManager;
+    [SerializeField]
+    private ObjectPool buffSlotOP;
+    [SerializeField]
+    private GameObject buffParent;
 
-    private UIController uiController;
-
-    private Buff[] buffs;
+    private BuffSlot[] buffs;
     private int lastBuffIndex;
 
     private void Awake()
     {
         lastBuffIndex = 0;
-        uiController = GameObject.Find("UI Controller").GetComponent<UIController>();
     }
 
     public void AddBuff(float remainTime = -1)
     {
-        GameObject buff = Instantiate(buffPref);
-        buff.transform.parent = uiController.BuffParent.transform;
-        buff.GetComponent<Buff>().Set(lastBuffIndex);
+        GameObject buffSlot = buffSlotOP.Get();
+        buffSlot.transform.parent = buffParent.transform;
+        // buff.GetComponent<Buff>().Set(lastBuffIndex);
         lastBuffIndex += 1;
     }
 

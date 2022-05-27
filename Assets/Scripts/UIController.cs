@@ -80,7 +80,6 @@ public class UIController: MonoBehaviour
     public ItemDetail ItemDetail { get { return itemDetail; } }
     public GameObject DamageTextParent { get { return damageTextParent; } }
     public GameObject EnemyHpBarParent {  get { return enemyHpBarParent; } }
-    public GameObject BuffParent { get { return buffParent; } }
 
     private void Awake()
     {
