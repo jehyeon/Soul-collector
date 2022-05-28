@@ -349,8 +349,7 @@ public class Player : ACharacter
         SyncStat();
 
         // view 수정
-        gameManager.UIController.UpdateStatUI(stat);
-        gameManager.UIController.UpdatePlayerHpBar(stat.Hp, stat.MaxHp);
+        gameManager.UIController.UpdateStatUI();
     }
 
     public void UnEquip(Item unEquipping)
@@ -360,8 +359,7 @@ public class Player : ACharacter
         SyncStat();
 
         // view 수정
-        gameManager.UIController.UpdateStatUI(stat);
-        gameManager.UIController.UpdatePlayerHpBar(stat.Hp, stat.MaxHp);
+        gameManager.UIController.UpdateStatUI();
     }
 
     // -------------------------------------------------------------

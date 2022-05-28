@@ -41,7 +41,7 @@ public class Stat
 
     public float DPS { get { return GetDPS(); } }
 
-    public Stat()
+    public Stat(bool reset = false)
     {
         // 플레이어 초기값
         _criticalPercent = 0;
@@ -58,6 +58,17 @@ public class Stat
         _evasionPercent = 0;
         _moveSpeed = 5f;
         _attackRange = 2f;
+
+        if (reset)
+        {
+            _attackSpeed = 0;
+            _defaultDamage = 0;
+            _maxHp = 0;
+            _hp = 0;
+            _hpRecovery = 0;
+            _moveSpeed = 0;
+            _attackRange = 0;
+        }
     }
 
     public void SetEnemyStat(
@@ -208,7 +219,72 @@ public class Stat
             + "회피율: " + _evasionPercent.ToString() + "\n"
             + "이동속도: " + _moveSpeed.ToString() + "\n";
     }
+    // -------------------------------------------------------------
+    // for Collection
+    // -------------------------------------------------------------
+    public void SumForCollect(int collectionIndex, int amount)
+    {
+        // !!! not good
+        switch (collectionIndex)
+        {
+            case 0:
+                _defaultDamage += amount;
+                break;
+            case 1:
+                _criticalPercent += (float)amount;
+                break;
+            case 2:
+                _attackSpeed += (float)amount;
+                break;
+            case 3:
+                _damageReduction += amount;
+                break;
+            case 4:
+                _hpRecovery += amount;
+                break;
+            case 5:
+                _maxHp += amount;
+                break;
+        }
+    }
+    // -------------------------------------------------------------
+    // 버프로 인한 스탯 변화 (Item, Skill)
+    // 1. 스탯이 바뀌는 패시브 스킬
+    // -------------------------------------------------------------
+    public void ActivateBuff(Buff buff)
+    {
+        _defaultDamage += buff.Stat.DefaultDamage;
+        _attackSpeed += buff.Stat.AttackSpeed * 0.01f;
+        _criticalPercent += buff.Stat.CriticalPercent;
+        _maxHp += buff.Stat.MaxHp;
+        _damageReduction += buff.Stat.DamageReduction;
+        _hpRecovery += buff.Stat.HpRecovery;
+        _moveSpeed += buff.Stat.MoveSpeed;
 
+        if (_hp > _maxHp)
+        {
+            _hp = _maxHp;
+        }
+    }
+
+    public void DeActivateBuff(Buff buff, bool hpContinue = false)
+    {
+        _defaultDamage -= buff.Stat.DefaultDamage;
+        _attackSpeed -= buff.Stat.AttackSpeed * 0.01f;
+        _criticalPercent -= buff.Stat.CriticalPercent;
+        _maxHp -= buff.Stat.MaxHp;
+        _hpRecovery -= buff.Stat.HpRecovery;
+        _moveSpeed -= buff.Stat.MoveSpeed;
+
+        if (_hp > _maxHp && !hpContinue)
+        {
+            _hp = _maxHp;
+        }
+    }
+
+    // -------------------------------------------------------------
+    // 장착으로 인한 스탯 변화
+    // -------------------------------------------------------------
     public void Equip(Item item)
     {
         if (item.ItemType != ItemType.Weapon && item.ItemType != ItemType.Armor)

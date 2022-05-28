@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -29,6 +27,8 @@ public class GameManager : MonoBehaviour
     private Equipment equipment;
     [SerializeField]
     private Collect collect;
+    [SerializeField]
+    private BuffSystem buffSystem;
     [SerializeField]
     private Craft craft;
     [SerializeField]
@@ -83,7 +83,7 @@ public class GameManager : MonoBehaviour
         player.Heal(99999);     // 세이브에 현재 체력 정보는 저장하지 않음 -> 최대 체력 스폰
 
         // Load Collection info
-        collect.InitCollection(this, saveManager.Save.AttackCollection, saveManager.Save.DefenseCollection);
+        collect.InitCollection(this);
 
         // Load Skill info
         skillSystem.InitSkillSystem();
@@ -367,13 +367,15 @@ public class GameManager : MonoBehaviour
         apiManager.DeletePush(saveManager.Save.UserId, push.SelectedPushId);
     }
 
-    // // -------------------------------------------------------------
-    // // 스킬
-    // // -------------------------------------------------------------
-    // public List<int> LoadQuickSlotInfo()
-    // {
-    //     return saveManager.Save.QuickSlot;
-    // }
+    // -------------------------------------------------------------
+    // Collection
+    // -------------------------------------------------------------
+    public void AddCollectionBuff(Stat stat)
+    {
+        Sprite buffImage = Resources.Load<Sprite>("Skill/0");
+        // collection buff id는 0으로 고정
+        buffSystem.AddBuff(0, buffImage, stat, -1);
+    }
 
     // -------------------------------------------------------------
     // 스킬

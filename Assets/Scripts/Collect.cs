@@ -36,23 +36,17 @@ public class Collect : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI requireNumber;
 
+    private Stat totalStat;
     private int selectedIndex = -1;
     private CollectionType selectedType;
-
-    private int attackCollectionIndex;
-    private int defenseCollectionIndex;
 
     private string[] attackCollectionType = {"기본 데미지", "치명타 확률", "공격속도"};
     private string[] attackCollectionSign = {"", "%", "%"};
     private string[] defenseCollectionType = {"데미지 감소", "HP 자동 회복", "최대 HP"};
 
-    public void InitCollection(GameManager gm, int savedAttackCollectionIndex, int savedDefenseCollectionIndex)
+    public void InitCollection(GameManager gm)
     {
         gameManager = gm;
-
-        // collection 진행도를 save로부터 가져옴
-        attackCollectionIndex = savedAttackCollectionIndex;
-        defenseCollectionIndex = savedDefenseCollectionIndex;
 
         attackCollections = attackCollectionList.GetComponentsInChildren<Collection>();
         defenseCollections = defenseCollectionList.GetComponentsInChildren<Collection>();
@@ -65,7 +59,7 @@ public class Collect : MonoBehaviour
                 attackCollectionType[index % 3], index / 3 + 1, attackCollectionSign[index % 3]
             ));
 
-            if (index <= attackCollectionIndex)
+            if (index <= gameManager.SaveManager.Save.AttackCollection)
             {
                 attackCollections[index].ActivateView();
             }
@@ -82,11 +76,35 @@ public class Collect : MonoBehaviour
                 defenseCollectionType[index % 3], (index / 3 + 1) * offset
             ));
 
-            if (index <= defenseCollectionIndex)
+            if (index <= gameManager.SaveManager.Save.DefenseCollection)
             {
                 defenseCollections[index].ActivateView();
             }
         }
+
+        ApproveCollectionStat();
+    }
+
+    public void ApproveCollectionStat()
+    {
+        // 스탯 초기화
+        totalStat = new Stat(true);
+
+        for (int index = 0; index <= gameManager.SaveManager.Save.AttackCollection; index++)
+        {
+            totalStat.SumForCollect(index % 3, index / 3 + 1);
+        }
+
+        for (int index = 0; index <= gameManager.SaveManager.Save.DefenseCollection; index++)
+        {
+            int offset = index % 3 == 2
+                ? 10
+                : 1;
+            totalStat.SumForCollect(index % 3 + 3, (index / 3 + 1) * offset);
+        }
+
+        // 컬렉션 버프 업데이트
+        gameManager.AddCollectionBuff(totalStat);
     }
 
     // Select
@@ -136,7 +154,7 @@ public class Collect : MonoBehaviour
                 ? attackCollections
                 : defenseCollections;
 
-            if (!selectedCollections[collection.Index - 1].Activated)
+            if (collection.Index > 0 && !selectedCollections[collection.Index - 1].Activated)
             {
                 // 이전 단계 컬렉션이 등록되지 않은 경우
                 alreadyActivated.SetActive(false);
@@ -208,9 +226,21 @@ public class Collect : MonoBehaviour
         int requireNumber = collection.Index + 1;
 
         collection.ActivateView();
-        gameManager.Inventory.UpdateItemCountUsingItemId(9, -1 * requireNumber);
 
+        if (collection.Type == CollectionType.Attack)
+        {
+            gameManager.SaveManager.Save.AttackCollection += 1;
+        }
+        else
+        {
+            gameManager.SaveManager.Save.DefenseCollection += 1;
+        }
+
+        gameManager.Inventory.UpdateItemCountUsingItemId(9, -1 * requireNumber);
+        gameManager.SaveManager.SaveData();
         UpdateMaterialUI(collection);
+
+        ApproveCollectionStat();
     }
 
     // Collect UI

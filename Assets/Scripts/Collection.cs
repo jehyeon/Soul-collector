@@ -27,6 +27,7 @@ public class Collection : MonoBehaviour, IPointerClickHandler
     public string StatText { get { return statText; } }
     public bool Activated { get { return activated; } }
     public int Index { get { return index; } }
+    public CollectionType Type { get { return type; } }
 
     public void Set(Collect collect, CollectionType _type, int _index)
     {

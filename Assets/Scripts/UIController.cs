@@ -70,6 +70,8 @@ public class UIController: MonoBehaviour
     private bool isActivatedAuctionUI;
     private bool isActivatedPushUI;
 
+    [SerializeField]
+    private Player player;
     // 플레이어 체력바
     [SerializeField]
     private Slider hpBar;
@@ -149,11 +151,13 @@ public class UIController: MonoBehaviour
         }
     }
 
-    public void UpdateStatUI(Stat characterStat)
+    public void UpdateStatUI()
     {
-        equiment.UpdateStatText(characterStat);
-        characterDPS.text = string.Format("{0}", characterStat.DPS);
-        characterDamageReduction.text = string.Format("{0}", characterStat.DamageReduction);
+        equiment.UpdateStatText(player.Stat);
+        characterDPS.text = string.Format("{0}", player.Stat.DPS);
+        characterDamageReduction.text = string.Format("{0}", player.Stat.DamageReduction);
+        
+        UpdatePlayerHpBar(player.Stat.Hp, player.Stat.MaxHp);
     }
 
     // Inventory UI + background

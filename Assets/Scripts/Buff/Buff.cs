@@ -2,21 +2,22 @@ using UnityEngine;
 
 public enum BuffType
 {
+    Collection,
     Skill,
-    Item,
-    Collection
+    Item
 }
 
 public class Buff
 {
-    private int id;
     private bool isDebuff;
     private BuffType type;
+    private Stat stat;
 
-    public int Id { get { return id; } }
+    public BuffType Type { get { return type; } }
+    public Stat Stat { get { return stat; } }
 
-    public void Set(int _id)
+    public void SetStat(Stat buffStat)
     {
-        id = _id;
+        stat = buffStat;
     }
 }
