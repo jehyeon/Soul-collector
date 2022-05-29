@@ -20,9 +20,13 @@ public class UIController: MonoBehaviour
     [SerializeField]
     private Collect collect;                // 컬렉션
     [SerializeField]
+    private SkillSystem skill;              // 스킬
+    [SerializeField]
     private Reinforce reinforce;            // 장비 강화
     [SerializeField]
     private ItemDetail itemDetail;          // 아이템 툴팁
+    [SerializeField]
+    private SkillDetail skillDetail;          // 스킬, 컬렉션 툴팁
     [SerializeField]
     private Shop shop;                      // 상점
     [SerializeField]
@@ -48,10 +52,6 @@ public class UIController: MonoBehaviour
     [SerializeField]
     private GameObject enemyHpBarParent;
 
-    // 버프
-    [SerializeField]
-    private GameObject buffParent;
-
     // Sound
     private UIEffectSound sound;
 
@@ -64,6 +64,7 @@ public class UIController: MonoBehaviour
     private bool isActivatedInventoryUI;
     private bool isActivatedEquipmentUI;
     private bool isActivatedCollectUI;
+    private bool isActivatedSkillUI;
     private bool isActivatedShopUI;
     private bool isActivatedCraftUI;
     private bool isActivatedReinforceUI;
@@ -80,21 +81,34 @@ public class UIController: MonoBehaviour
     private TextMeshProUGUI hpBarText;      // Text Hp
 
     public ItemDetail ItemDetail { get { return itemDetail; } }
+    public SkillDetail SkillDetail { get { return skillDetail; } }
     public GameObject DamageTextParent { get { return damageTextParent; } }
     public GameObject EnemyHpBarParent {  get { return enemyHpBarParent; } }
 
+    private static UIController instance = null;
+    public static UIController Instance { get { return instance; } }
+
     private void Awake()
     {
-        DontDestroyOnLoad(this.gameObject);
-        isActivatedInventoryUI = false;
-        isActivatedEquipmentUI = false;
-        isActivatedCollectUI = false;
-        isActivatedShopUI = false;
-        isActivatedCraftUI = false;
-        isActivatedReinforceUI = false;
-        isActivatedAuctionUI = false;
+        if (instance == null)
+        {
+            instance = this;
+            isActivatedInventoryUI = false;
+            isActivatedEquipmentUI = false;
+            isActivatedCollectUI = false;
+            isActivatedSkillUI = false;
+            isActivatedShopUI = false;
+            isActivatedCraftUI = false;
+            isActivatedReinforceUI = false;
+            isActivatedAuctionUI = false;
 
-        sound = GetComponent<UIEffectSound>();
+            sound = GetComponent<UIEffectSound>();
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
     }
     
     private void Update()
@@ -129,6 +143,19 @@ public class UIController: MonoBehaviour
             {
                 CloseUI();
                 OpenEquipmentUI();
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            if (isActivatedSkillUI)
+            {
+                CloseSkillUI();
+            }
+            else
+            {
+                CloseUI();
+                OpenSkillUI();
             }
         }
 
@@ -211,6 +238,28 @@ public class UIController: MonoBehaviour
         isActivatedCollectUI = false;
         background.SetActive(false);
         collect.Close();
+        OpenQuickSlotUI();
+        
+        sound.PlayOpenInventorySound();
+    }
+
+    // Collect UI
+    public void OpenSkillUI()
+    {
+        CloseQuickSlotUI();
+        isActivatedSkillUI = true;
+        background.SetActive(true);
+        skill.Open();
+        
+        sound.PlayOpenInventorySound();
+    }
+
+    public void CloseSkillUI()
+    {
+        isActivatedSkillUI = false;
+        background.SetActive(false);
+        skill.Close();
+        skillDetail.Close();
         OpenQuickSlotUI();
         
         sound.PlayOpenInventorySound();
@@ -315,6 +364,17 @@ public class UIController: MonoBehaviour
         itemDetail.Close();
     }
 
+    // Skill, Collection Detail
+    public void OpenSkillDetail(Vector3 pos, string skillName, Color skillNameColor, string des, string additionalDes = "")
+    {
+        skillDetail.Open(pos, skillName, skillNameColor, des, additionalDes);
+        sound.PlaySelectItemSound();
+    }
+    public void CloseSkillDetail()
+    {
+        skillDetail.Close();
+    }
+
     public void CloseUI()
     {
         CloseEquipmentUI();
@@ -323,6 +383,8 @@ public class UIController: MonoBehaviour
         ClosePushUI();
         CloseCraftUI();
         CloseReinforceUI();
+        CloseSkillUI();
+        CloseSkillDetail();
 
         popupMessage.Close();
         popupSetCount.Close();

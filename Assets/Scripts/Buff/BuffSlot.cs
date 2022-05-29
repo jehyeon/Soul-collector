@@ -1,8 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.EventSystems;
 
-public class BuffSlot : MonoBehaviour
+public class BuffSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField]
     private Image buffImage;
@@ -72,5 +73,20 @@ public class BuffSlot : MonoBehaviour
         CancelInvoke("UpdateRemainTimeText");
 
         EndBuff(true);
+    }
+
+    // 마우스 이벤트
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        // Vector3 pos, string skillName, Color skillNameColor, string des, string additionalDes = ""
+        SkillDes info = SkillManager.Instance.Get(id);
+        // 마우스 오버
+        UIController.Instance.OpenSkillDetail(transform.position, info.Name, info.Color, info.Description, buff.Stat.ToStringForTooltip());
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        // 마우스 오버 아웃
+        UIController.Instance.CloseSkillDetail();
     }
 }

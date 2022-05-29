@@ -377,6 +377,14 @@ public class GameManager : MonoBehaviour
         buffSystem.AddBuff(0, buffImage, stat, -1);
     }
 
+    public void AddEmptyBuff(int skillId, Sprite buffImage)
+    {
+        Stat emptyStat = new Stat(true);
+        // 패시브 스킬, 스탯은 skill component를 player에 추가하여 처리
+        // 지속 시간 무제한, 버프 view만 추가
+        buffSystem.AddBuff(skillId, buffImage, emptyStat, -1);
+    }
+
     // -------------------------------------------------------------
     // 스킬
     // -------------------------------------------------------------

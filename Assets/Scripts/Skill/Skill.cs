@@ -7,32 +7,44 @@ public enum SkillType
     Active,
 }
 
+public enum SkillRank
+{
+    Red,
+    Blue,
+    Green
+}
+
 public class Skill : MonoBehaviour
 {
+    [SerializeField]
     protected int id;
-    protected int rank;
+    [SerializeField]
+    protected SkillType type;
+    [SerializeField]
+    protected SkillRank rank;
     protected bool activated;
     protected int priorSkillId;
-    protected SkillType type;
+
+    protected Player player;
 
     public int Id { get { return id; } }
     public SkillType Type { get { return type; } }
+    public SkillRank Rank { get { return rank; } }
 }
 
-public class PassiveSkill : Skill
+public abstract class PassiveSkill : Skill
 {
-    protected Player player;
-
     protected void Start()
     {
-        player = GetComponent<Player>();
+        // player = GetComponent<Player>();
+    }
+
+    protected void StartSkill()
+    {
         Activate();
     }
 
-    protected virtual void Activate()
-    {
-        // 하위 클래스에서 할당
-    }
+    protected abstract void Activate();
 }
 
 public abstract class ActiveSkill : Skill

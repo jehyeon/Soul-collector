@@ -198,6 +198,37 @@ public class Stat
             + "이동속도: " + _moveSpeed.ToString() + "\n";
     }
 
+    public string ToStringForTooltip()
+    {
+        string text = "";
+        if (_defaultDamage != 0)
+        {
+            text += "기본 데미지 +" + _defaultDamage.ToString() + "\n";
+        }
+        if (_attackSpeed != 0)
+        {
+            text += "공격속도 +" + _attackSpeed.ToString() + "%\n";
+        }
+        if (_criticalPercent != 0)
+        {
+            text += "치명타 확률 +" + _criticalPercent.ToString() + "%\n";
+        }
+        if (_maxHp != 0)
+        {
+            text += "최대 체력 +" + _maxHp.ToString() + "\n";
+        }
+        if (_hpRecovery != 0)
+        {
+            text += "Hp 자동 회복 +" + _hpRecovery.ToString() + "\n";
+        }
+        if (_damageReduction != 0)
+        {
+            text += "데미지 감소 +" + _damageReduction.ToString() + "\n";
+        }
+
+        return text;
+    }
+
     public string GetAtkStatDes()
     {
         return 

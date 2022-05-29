@@ -82,7 +82,10 @@ public class Collect : MonoBehaviour
             }
         }
 
-        ApproveCollectionStat();
+        if (gameManager.SaveManager.Save.AttackCollection != -1 && gameManager.SaveManager.Save.DefenseCollection != -1)
+        {
+            ApproveCollectionStat();
+        }
     }
 
     public void ApproveCollectionStat()
