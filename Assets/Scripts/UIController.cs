@@ -385,6 +385,7 @@ public class UIController: MonoBehaviour
         CloseReinforceUI();
         CloseSkillUI();
         CloseSkillDetail();
+        CloseCollectUI();
 
         popupMessage.Close();
         popupSetCount.Close();
