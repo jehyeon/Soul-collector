@@ -16,17 +16,10 @@ public enum SkillRank
 
 public class Skill : MonoBehaviour
 {
-    [SerializeField]
     protected int id;
-    [SerializeField]
     protected SkillType type;
-    [SerializeField]
     protected SkillRank rank;
-    protected bool activated;
-    protected int priorSkillId;
-
     protected Player player;
-
     public int Id { get { return id; } }
     public SkillType Type { get { return type; } }
     public SkillRank Rank { get { return rank; } }
@@ -34,13 +27,13 @@ public class Skill : MonoBehaviour
 
 public abstract class PassiveSkill : Skill
 {
+    protected Stat passiveStat;
+    public Stat PassiveStat { get { return passiveStat; } }
+
     protected void Start()
     {
-        // player = GetComponent<Player>();
-    }
-
-    protected void StartSkill()
-    {
+        player = GetComponent<Player>();
+        passiveStat = new Stat(true);
         Activate();
     }
 

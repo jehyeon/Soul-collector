@@ -11,8 +11,8 @@ public class SkillSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     private Image image;
     [SerializeField]
     private Image frame;
-    [SerializeField]
-    private GameObject deactive;
+    // [SerializeField]
+    // private GameObject deactive;
     [SerializeField]
     private int skillId;
     [SerializeField]
@@ -46,13 +46,16 @@ public class SkillSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             ColorUtility.TryParseHtmlString("#B71B1BFF", out fontColor);
         }
         frame.color = frameColor;
+
     }
 
     public void Activate()
     {
         // view
         activated = true;
-        deactive.SetActive(false);
+        Color tempColor = image.color;
+        tempColor.a = 1f;
+        image.color = tempColor;
     }
 
     public void OnPointerEnter(PointerEventData eventData)

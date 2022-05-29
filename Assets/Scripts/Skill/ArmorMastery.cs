@@ -4,6 +4,10 @@ public class ArmorMastery : PassiveSkill
 {
     protected override void Activate()
     {
-        // player.Stat.DamageReduction +=  1;
+        id = 2;
+        type = SkillType.Passive;
+        rank = SkillRank.Green;
+        passiveStat.SumForCollect(3, 2);
+        player.gameManager.AddPassiveSkillBuff(id, passiveStat);
     }
 }

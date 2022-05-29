@@ -80,7 +80,6 @@ public class GameManager : MonoBehaviour
         Inventory.StartInventory();
         equipment.InitEquipmentSlots();
         LoadEquipInfo();
-        player.Heal(99999);     // 세이브에 현재 체력 정보는 저장하지 않음 -> 최대 체력 스폰
 
         // Load Collection info
         collect.InitCollection(this);
@@ -95,6 +94,8 @@ public class GameManager : MonoBehaviour
         // Load Shop, Craft Info
         craft.InitCraftItemSlots();
         shop.InitShopItemSlots();
+        
+        player.Heal(99999);     // 세이브에 현재 체력 정보는 저장하지 않음 -> 최대 체력 스폰
     }
 
     // -------------------------------------------------------------
@@ -377,13 +378,18 @@ public class GameManager : MonoBehaviour
         buffSystem.AddBuff(0, buffImage, stat, -1);
     }
 
-    public void AddEmptyBuff(int skillId, Sprite buffImage)
+    public void AddPassiveSkillBuff(int skillId, Stat stat)
     {
-        Stat emptyStat = new Stat(true);
-        // 패시브 스킬, 스탯은 skill component를 player에 추가하여 처리
-        // 지속 시간 무제한, 버프 view만 추가
-        buffSystem.AddBuff(skillId, buffImage, emptyStat, -1);
+        Sprite buffImage = Resources.Load<Sprite>(string.Format("Skill/{0}", skillId));
+        buffSystem.AddBuff(skillId, buffImage, stat, -1);
     }
+    // public void AddEmptyBuff(int skillId, Sprite buffImage)
+    // {
+    //     Stat emptyStat = new Stat(true);
+    //     // 패시브 스킬, 스탯은 skill component를 player에 추가하여 처리
+    //     // 지속 시간 무제한, 버프 view만 추가
+    //     buffSystem.AddBuff(skillId, buffImage, emptyStat, -1);
+    // }
 
     // -------------------------------------------------------------
     // 스킬
@@ -393,6 +399,12 @@ public class GameManager : MonoBehaviour
         skillSystem.Activate(saveManager.Save.Skill);
     }
 
+    public void ActivateSkill(int skillId)
+    {
+        saveManager.Save.Skill.Add(skillId);
+        saveManager.SaveData();
+        skillSystem.Activate(skillId);
+    }
     // -------------------------------------------------------------
     // 체력바 System
     // -------------------------------------------------------------

@@ -4,6 +4,10 @@ public class Haste : PassiveSkill
 {
     protected override void Activate()
     {
-        // player.Stat.DamageReduction +=  1;
+        id = 4;
+        type = SkillType.Passive;
+        rank = SkillRank.Green;
+        passiveStat.SumForCollect(6, 5);
+        player.gameManager.AddPassiveSkillBuff(id, passiveStat);
     }
 }

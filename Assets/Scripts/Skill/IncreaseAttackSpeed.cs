@@ -4,6 +4,10 @@ public class IncreaseAttackSpeed : PassiveSkill
 {
     protected override void Activate()
     {
-        // player.Stat.DamageReduction +=  1;
+        id = 6;
+        type = SkillType.Passive;
+        rank = SkillRank.Blue;
+        passiveStat.SumForCollect(2, 5);
+        player.gameManager.AddPassiveSkillBuff(id, passiveStat);
     }
 }

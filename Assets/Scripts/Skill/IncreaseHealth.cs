@@ -4,6 +4,10 @@ public class IncreaseHealth : PassiveSkill
 {
     protected override void Activate()
     {
-        // player.Stat.DamageReduction +=  1;
+        id = 1;
+        type = SkillType.Passive;
+        rank = SkillRank.Green;
+        passiveStat.SumForCollect(5, 25);
+        player.gameManager.AddPassiveSkillBuff(id, passiveStat);
     }
 }

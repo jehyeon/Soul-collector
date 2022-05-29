@@ -58,6 +58,55 @@ public class UseItemSystem
                 gameManager.Inventory.UpdateItemCount(slotIndex);
                 gameManager.Player.Heal(200);
                 break;
+            case 40:
+                gameManager.ActivateSkill(1);
+                gameManager.Inventory.UpdateItemCount(slotIndex);
+                break;
+            case 41:
+                gameManager.ActivateSkill(2);
+                gameManager.Inventory.UpdateItemCount(slotIndex);
+                break;
+            case 42:
+                gameManager.ActivateSkill(3);
+                gameManager.Inventory.UpdateItemCount(slotIndex);
+                break; 
+            case 43:
+                gameManager.ActivateSkill(4);
+                gameManager.Inventory.UpdateItemCount(slotIndex);
+                break;
+            case 44:
+                gameManager.ActivateSkill(5);
+                gameManager.Inventory.UpdateItemCount(slotIndex);
+                break;
+            case 45:
+                gameManager.ActivateSkill(6);
+                gameManager.Inventory.UpdateItemCount(slotIndex);
+                break;               
+            case 46:
+                gameManager.ActivateSkill(20);
+                gameManager.Inventory.UpdateItemCount(slotIndex);
+                break;
+            case 47:
+                gameManager.ActivateSkill(21);
+                gameManager.Inventory.UpdateItemCount(slotIndex);
+                break;
+            case 48:
+                gameManager.ActivateSkill(22);
+                gameManager.Inventory.UpdateItemCount(slotIndex);
+                break;
+            case 49:
+                gameManager.ActivateSkill(23);
+                gameManager.Inventory.UpdateItemCount(slotIndex);
+                break;
+            case 50:
+                gameManager.ActivateSkill(24);
+                gameManager.Inventory.UpdateItemCount(slotIndex);
+                break;
+            case 51:
+                gameManager.ActivateSkill(25);
+                gameManager.Inventory.UpdateItemCount(slotIndex);
+                break;
+
         }
     }
 
