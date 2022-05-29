@@ -293,7 +293,7 @@ public class Stat
         _maxHp += buff.Stat.MaxHp;
         _damageReduction += buff.Stat.DamageReduction;
         _hpRecovery += buff.Stat.HpRecovery;
-        _moveSpeed += buff.Stat.MoveSpeed;
+        _moveSpeed += buff.Stat.MoveSpeed  * .05f;
 
         if (_hp > _maxHp)
         {
@@ -307,8 +307,9 @@ public class Stat
         _attackSpeed -= buff.Stat.AttackSpeed * 0.01f;
         _criticalPercent -= buff.Stat.CriticalPercent;
         _maxHp -= buff.Stat.MaxHp;
+        _damageReduction -= buff.Stat.DamageReduction;
         _hpRecovery -= buff.Stat.HpRecovery;
-        _moveSpeed -= buff.Stat.MoveSpeed;
+        _moveSpeed -= buff.Stat.MoveSpeed * .05f;
 
         if (_hp > _maxHp && !hpContinue)
         {

@@ -45,6 +45,8 @@ public class UIController: MonoBehaviour
     private PopupAsk popupAsk;
     [SerializeField]
     private PopupSetCount popupSetCount;
+    [SerializeField]
+    private PopupReward popupReward;
 
     // 몬스터 체력바 및 데미지 표기
     [SerializeField]
@@ -458,5 +460,10 @@ public class UIController: MonoBehaviour
     public void PopupSetCount(string type, string message, string leftText, string rightText, int maxCount, int defaultCount)
     {
         popupSetCount.Popup(type, message, leftText, rightText, maxCount, defaultCount);
+    }
+
+    public void PopupReward(Item item)
+    {
+        popupReward.Popup(item);
     }
 }

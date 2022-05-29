@@ -39,6 +39,8 @@ public class GameManager : MonoBehaviour
     private Auction auction;
     [SerializeField]
     private Push push;
+    [SerializeField]
+    private QuestSystem questSystem;
 
     [SerializeField]
     private UIController uiController;
@@ -217,15 +219,17 @@ public class GameManager : MonoBehaviour
         return true;
     }
 
-    public void GetItem(int itemId)
+    public void GetItem(int itemId, int count)
     {
-        if (inventory.isFullInventory())
+        if (itemId == 0)
         {
-            PopupMessage("인벤토리에 남은 공간이 없습니다.");
-            return;
+            inventory.UpdateGold(count);
         }
-
-        inventory.AcquireItem(itemManager.Get(itemId));
+        else
+        {
+            inventory.AcquireItem(itemManager.Get(itemId), count);
+        }
+        saveManager.SaveData();
     }
 
     public void Drop(int dropId, Vector3 pos)
@@ -441,6 +445,11 @@ public class GameManager : MonoBehaviour
         uiController.PopupSetCount(type, message, leftText, rightText, maxCount, defaultCount);
     }
 
+    public void PopupReward(int itemId)
+    {
+        uiController.PopupReward(itemManager.Get(itemId));
+    }
+
     public void AnswerAsk(string type)
     {
         switch (type)
@@ -469,6 +478,9 @@ public class GameManager : MonoBehaviour
                 return;
             case "GoNextFloor":
                 GoNextFloor();
+                return;
+            case "Reward":
+                questSystem.ClearQuest();
                 return;
         }
     }

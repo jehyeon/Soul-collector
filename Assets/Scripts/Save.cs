@@ -30,7 +30,7 @@ public class Save
         LastSlotId = 0;
         // 기본 장비 장착
         Equipped = new List<int> {
-            301,
+            0,
             1901,
             1501,
             1701,

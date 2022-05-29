@@ -25,6 +25,7 @@ public class Player : ACharacter
     public Stat Stat { get { return stat; } }
     public Skill[] Skill { get { return skill; } }
 
+    public NavMeshAgent PlayerAgent { get { return agent; } }
     private float noVeloMoveTime;   // move State인데 움직이지 않는 시간
 
     // -------------------------------------------------------------
