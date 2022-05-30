@@ -52,11 +52,13 @@ public class UseItemSystem
                 // 체력 포션
                 gameManager.Inventory.UpdateItemCount(slotIndex);
                 gameManager.Player.Heal(50);
+                gameManager.UIController.PlayPotionSound();
                 break;
             case 26:
                 // 고급 체력 포션
                 gameManager.Inventory.UpdateItemCount(slotIndex);
                 gameManager.Player.Heal(200);
+                gameManager.UIController.PlayPotionSound();
                 break;
             case 40:
                 gameManager.ActivateSkill(1);

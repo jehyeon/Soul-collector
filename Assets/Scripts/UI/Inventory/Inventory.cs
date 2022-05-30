@@ -747,6 +747,8 @@ public class Inventory : MonoBehaviour
         }
         // Save
         gameManager.SaveManager.SaveData();
+
+        gameManager.UIController.PlayBuySound();
     }
 
     // -------------------------------------------------------------
@@ -924,7 +926,7 @@ public class Inventory : MonoBehaviour
         return gameManager.SaveManager.Save.InventorySize - gameManager.SaveManager.Save.LastSlotIndex;
     }
 
-    private int FindItemUsingSlotId(int slotId)
+    public int FindItemUsingSlotId(int slotId)
     {
         // 슬롯 아이디로 슬롯 인덱스 찾기
         if (slotId == -1)

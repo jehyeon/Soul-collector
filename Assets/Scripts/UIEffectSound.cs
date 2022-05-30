@@ -11,6 +11,10 @@ public class UIEffectSound : MonoBehaviour
     [SerializeField]
     private AudioSource selectItemSound;
     [SerializeField]
+    private AudioSource potionSound;
+    [SerializeField]
+    private AudioSource getRewardSound;
+    [SerializeField]
     private AudioSource coinSound;
     [SerializeField]
     private AudioSource createSound;
@@ -47,8 +51,22 @@ public class UIEffectSound : MonoBehaviour
         equipMetalSound.Play();
     }
 
+    public void PlayBuySound()
+    {
+        coinSound.Play();
+    }
     public void PlayGetItemSound()
     {
         getItemSound.Play();
+    }
+
+    public void PlayGetRewardSound()
+    {
+        getRewardSound.Play();
+    }
+
+    public void PlayPotionSound()
+    {
+        potionSound.Play();
     }
 }

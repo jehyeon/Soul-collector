@@ -43,8 +43,7 @@ public class QuestJSON
             7,
             8,
             9,
-            10,
-            11
+            10
         };
 
         Done = new List<int>();

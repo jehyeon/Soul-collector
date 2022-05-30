@@ -427,6 +427,16 @@ public class UIController: MonoBehaviour
         sound.PlayGetItemSound();
     }
 
+    public void PlayPotionSound()
+    {
+        sound.PlayPotionSound();
+    }
+
+    public void PlayBuySound()
+    {
+        sound.PlayBuySound();
+    }
+
     // -------------------------------------------------------------
     // Dungeon floor
     // -------------------------------------------------------------
@@ -465,5 +475,6 @@ public class UIController: MonoBehaviour
     public void PopupReward(Item item)
     {
         popupReward.Popup(item);
+        sound.PlayGetRewardSound();
     }
 }

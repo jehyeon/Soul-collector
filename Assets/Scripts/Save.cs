@@ -12,6 +12,8 @@ public class Save
     public int Gold;              // Gold 정보
     public int AttackCollection;
     public int DefenseCollection;
+    public int RushCount;
+    public int KillCount;
     public List<int> Skill;
     public List<int> QuickSlot;
     public int LastSlotIndex;     // 아이템이 있는 마지막 슬롯 index
@@ -28,9 +30,11 @@ public class Save
         Gold = 0;
         LastSlotIndex = 0;
         LastSlotId = 0;
+        RushCount = 0;
+        KillCount = 0;
         // 기본 장비 장착
         Equipped = new List<int> {
-            0,
+            -1,
             1901,
             1501,
             1701,

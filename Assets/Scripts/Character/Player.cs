@@ -267,6 +267,7 @@ public class Player : ACharacter
         {
             // taget이 죽은 경우
             SetTarget(null);
+            gameManager.SaveManager.Save.KillCount += 1;
         }
         yield break;
     }

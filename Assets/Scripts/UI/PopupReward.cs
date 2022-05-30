@@ -27,7 +27,7 @@ public class PopupReward : MonoBehaviour
 
     public void ClickOK()
     {
-        Time.timeScale = 0;
+        Time.timeScale = 1;
         if (gameManager.Inventory.isFullInventory())
         {
             gameManager.PopupMessage("인벤토리에 남은 공간이 없습니다.");

@@ -102,6 +102,7 @@ public class Reinforce : MonoBehaviour
         // save 및 inventory view
         int scrollItemId = scroll.Item.Id;
         gameManager.Inventory.UpdateScrollItem(scroll.InventorySlotId, reinforcingItemCount);
+        gameManager.SaveManager.Save.RushCount += reinforcingItemCount;
         // reinforce view
         if (scroll.Count > reinforcingItemCount)
         {

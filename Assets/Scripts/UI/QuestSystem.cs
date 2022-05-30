@@ -111,6 +111,13 @@ public class QuestSystem : MonoBehaviour
         questJSON.Done.Add(questJSON.Progress[0].Id);
         questJSON.Progress.RemoveAt(0);     // 기존 progress 제거
         // Ready[0]을 Progress에 추가
+        if (questJSON.Ready.Count == 0)
+        {
+            // 더 이상 남은 퀘스트가 없는 경우
+            Destroy(this.gameObject);
+            Save();     // 저장
+            return;
+        }
         QuestProgress newQuest = new QuestProgress((int)questJSON.Ready[0], 0);
         questJSON.Progress.Add(newQuest);
         questJSON.Ready.RemoveAt(0);
@@ -130,5 +137,7 @@ public class QuestSystem : MonoBehaviour
             questJSON.Progress[0].Progress,
             (int)data[questJSON.Progress[0].Id]["count"]
         );
+
+        progressQuest = quest;
     }
 }
