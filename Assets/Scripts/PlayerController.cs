@@ -1,13 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System.Linq;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
     // 이동, 조작 관련 / 목적지 및 타겟 지정
     private Player player;
     private AutoHunt auto;
+    // Auto hunt mark
+    [SerializeField]
+    private Animator autoHuntMarkAnimator;
+    [SerializeField]
+    private TextMeshProUGUI autoHuntMarkText;
 
     // Target Marker
     [SerializeField]
@@ -270,7 +277,12 @@ public class PlayerController : MonoBehaviour
         this.gameObject.AddComponent<AutoHunt>();   
         auto = GetComponent<AutoHunt>();
 
-        player.gameManager.PopupMessage("자동사냥 중입니다.\n아무 키를 누르면 종료 됩니다.", float.PositiveInfinity);
+        // player.gameManager.PopupMessage("자동사냥 중입니다.\n아무 키를 누르면 종료 됩니다.", float.PositiveInfinity);
+        autoHuntMarkText.text = "Auto";
+        autoHuntMarkText.color = new Color(1f, 1f, 1f, 1f);
+        autoHuntMarkAnimator.GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
+        // autoHuntMarkAnimator.Play("AutoHuntAnimation");
+        autoHuntMarkAnimator.enabled = true;
     }
 
     private void StopAutoHunt()
@@ -288,6 +300,10 @@ public class PlayerController : MonoBehaviour
         // 주변 적 타겟 검색 재 시작
         InvokeRepeating("FindNearbyEnemy", 0f, 1f);
 
-        player.gameManager.PopupMessageClose();
+        // player.gameManager.PopupMessageClose();
+        autoHuntMarkText.text = "Stop";
+        autoHuntMarkText.color = new Color(1f, 1f, 1f, 0.5f);
+        autoHuntMarkAnimator.GetComponent<Image>().color = new Color(1f, 1f, 1f, .5f);
+        autoHuntMarkAnimator.enabled = false;
     }
 }

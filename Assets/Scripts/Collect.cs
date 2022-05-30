@@ -176,7 +176,7 @@ public class Collect : MonoBehaviour
                 Color fontColor;
                 int remainItemAmount = gameManager.Inventory.GetItemAmount(9);
                 requireNumber.text = string.Format("{0} / {1}", remainItemAmount, collection.Index + 1);
-                if (remainItemAmount > collection.Index + 1)
+                if (remainItemAmount > collection.Index)
                 {
                     ColorUtility.TryParseHtmlString("#B1ABB2FF", out fontColor);
                     requireNumber.color = fontColor;
