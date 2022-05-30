@@ -31,6 +31,8 @@ public class Village : MonoBehaviour
                 Destroy(childList[i].gameObject);
             }
         }
+
+        player.gameManager.UIController.DeActivateFloorText();
     }
 
     private void Update()

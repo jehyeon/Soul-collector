@@ -36,6 +36,8 @@ public class DungeonSystem : MonoBehaviour
         gameManager.Player.Agent.enabled = false;
         gameManager.Player.transform.position = Vector3.zero;
         gameManager.Player.Agent.enabled = true;
+
+        gameManager.UIController.ActivateFloorText(floor);
     }
     // -------------------------------------------------------------
     // Level design

@@ -448,6 +448,7 @@ public class UIController: MonoBehaviour
     public void DeActivateFloorText()
     {
         floorFrame.SetActive(false);
+        // floorText.text = "Viliage";
     }
 
     // -------------------------------------------------------------

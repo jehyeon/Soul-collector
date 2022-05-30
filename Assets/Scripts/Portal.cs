@@ -19,6 +19,8 @@ public class Portal : MonoBehaviour
     private GameObject portalOpen;
     private GameObject portalIdle;
     private PortalType type;
+    [SerializeField]
+    private SpriteRenderer minimapMark;
 
     public void Set(GameObject open, GameObject idle, PortalType portalType)
     {
@@ -31,6 +33,25 @@ public class Portal : MonoBehaviour
         portalIdle.transform.parent = this.transform;
         portalIdle.transform.localPosition = Vector3.zero;
         type = portalType;
+        switch (portalType)
+        {
+            case PortalType.GoViliage:
+                minimapMark.color = Color.green;
+                break;
+            case PortalType.GoDungeon:
+            case PortalType.NextFloor:
+                minimapMark.color = Color.blue;
+                break;
+            case PortalType.Gold:
+                minimapMark.color = Color.yellow;
+                break;
+            case PortalType.Red:
+                minimapMark.color = Color.red;
+                break;
+            case PortalType.Boss:
+                minimapMark.color = Color.magenta;
+                break;
+        }
         StartCoroutine("CreatePortal");
     }
 

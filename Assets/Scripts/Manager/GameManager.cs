@@ -109,7 +109,6 @@ public class GameManager : MonoBehaviour
         
         // 던전 Floor UI
         floor = 0;
-        uiController.DeActivateFloorText();
     }
 
     private void GoDungeon()
@@ -117,7 +116,13 @@ public class GameManager : MonoBehaviour
         LoadingSceneManager.LoadScene("Default Dungeon");
         // 던전 Floor UI
         floor = 1;
-        uiController.ActivateFloorText(1);
+    }
+
+    public void GoDungeon(int _floor)
+    {
+        LoadingSceneManager.LoadScene("Default Dungeon");
+        // 던전 Floor UI
+        floor = _floor;
     }
 
     private void GoNextFloor()
@@ -127,7 +132,6 @@ public class GameManager : MonoBehaviour
 
         // 던전 Floor UI
         floor += 1;
-        uiController.ActivateFloorText(floor);
     }
 
     // -------------------------------------------------------------

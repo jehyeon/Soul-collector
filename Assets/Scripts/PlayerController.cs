@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour
     private Animator autoHuntMarkAnimator;
     [SerializeField]
     private TextMeshProUGUI autoHuntMarkText;
+    [SerializeField]
+    private GameObject autoHuntForBackground;
 
     // Target Marker
     [SerializeField]
@@ -111,6 +113,11 @@ public class PlayerController : MonoBehaviour
         {
             player.gameManager.GoViliage();
         }
+
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            player.gameManager.GoDungeon(5);
+        }
         
         // 자동 사냥 모드
         if (Input.GetKeyDown(KeyCode.G))
@@ -127,31 +134,43 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        if (isAuto && Input.anyKeyDown)
-        {
-            // 자동 사냥 중일 때 키보드 입력이 생기면 자동 사냥 종료
-            StopAutoHunt();
+        // if (isAuto && Input.anyKeyDown)
+        // {
+        //     // 자동 사냥 중일 때 키보드 입력이 생기면 자동 사냥 종료
+        //     StopAutoHunt();
 
-            return;
-        }
+        //     return;
+        // }
 
         float moveX = Input.GetAxis("Horizontal");
         float moveZ = Input.GetAxis("Vertical");
         
         if (moveX != 0 || moveZ != 0)
         {
+            if (isAuto)
+            {
+                StopAutoHunt();
+            }
             // 키보드 입력이 있는 경우
             player.Move(this.transform.position + new Vector3(moveX, 0, moveZ).normalized, true);
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            if (isAuto)
+            {
+                StopAutoHunt();
+            }
             // 타겟 방향으로 이동
             player.AttackTarget();
         }
 
         if (Input.GetKeyDown(KeyCode.Tab))
         {
+            if (isAuto)
+            {
+                StopAutoHunt();
+            }
             // 타겟 전환
             ChangeTarget();
         }
@@ -264,6 +283,11 @@ public class PlayerController : MonoBehaviour
     // -------------------------------------------------------------
     private void StartAutoHunt()
     {
+        if (player.gameManager.Floor == 0)
+        {
+            // 마을에서는 자동 사냥이 안됨
+            return;
+        }
         // 이동 및 타겟, 커서 초기화
         ClearAttackCursor();
         player.SetTarget(null);
@@ -283,6 +307,7 @@ public class PlayerController : MonoBehaviour
         autoHuntMarkAnimator.GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
         // autoHuntMarkAnimator.Play("AutoHuntAnimation");
         autoHuntMarkAnimator.enabled = true;
+        autoHuntForBackground.SetActive(true);
     }
 
     private void StopAutoHunt()
@@ -305,5 +330,6 @@ public class PlayerController : MonoBehaviour
         autoHuntMarkText.color = new Color(1f, 1f, 1f, 0.5f);
         autoHuntMarkAnimator.GetComponent<Image>().color = new Color(1f, 1f, 1f, .5f);
         autoHuntMarkAnimator.enabled = false;
+        autoHuntForBackground.SetActive(false);
     }
 }
