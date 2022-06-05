@@ -3,6 +3,7 @@ using UnityEngine;
 public enum SkillType
 {
     PercentPassive,
+    AttackedPassive,
     Passive,
     Active,
 }
@@ -38,6 +39,23 @@ public abstract class PassiveSkill : Skill
     }
 
     protected abstract void Activate();
+}
+
+public abstract class AttackedPassiveSkill : Skill
+{
+    protected float percent;
+    protected float time;
+    protected bool activated;
+    public float Percent { get { return percent; } }
+    public bool Activated { get { return activated; } }
+
+    protected virtual void Start()
+    {
+        player = GetComponent<Player>();
+        player.AddAttackedPassiveSkill(this);
+    }
+
+    public abstract void Activate();
 }
 
 public abstract class ActiveSkill : Skill

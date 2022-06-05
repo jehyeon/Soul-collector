@@ -93,16 +93,16 @@ public class InventorySlot : Slot, IPointerClickHandler, IPointerEnterHandler, I
                 }
             }
         }
-        else if (eventData.button == PointerEventData.InputButton.Right)
-        {
-            if (inventory.Mode == InventoryMode.Shop)
-            {
-                // 상점 모드에서는 우클릭 기능 제한
-                return;
-            }
-            // 마우스 우클릭
-            inventory.RightClick(index);
-        }
+        // else if (eventData.button == PointerEventData.InputButton.Right)
+        // {
+        //     if (inventory.Mode == InventoryMode.Shop)
+        //     {
+        //         // 상점 모드에서는 우클릭 기능 제한
+        //         return;
+        //     }
+        //     // 마우스 우클릭
+        //     inventory.RightClick(index);
+        // }
     }
 
     public void OnPointerEnter(PointerEventData eventData)

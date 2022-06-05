@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using System.Collections.Generic;
 
 enum PlayerState
 {
@@ -20,10 +21,12 @@ public class Player : ACharacter
     
     [SerializeField]    // !!! for test
     private PlayerState state;
-    private Skill[] skill;
+
+    public bool invincibility;
+
+    public List<AttackedPassiveSkill> attackedPassiveSkills;
 
     public Stat Stat { get { return stat; } }
-    public Skill[] Skill { get { return skill; } }
 
     public NavMeshAgent PlayerAgent { get { return agent; } }
     private float noVeloMoveTime;   // move State인데 움직이지 않는 시간
@@ -39,6 +42,7 @@ public class Player : ACharacter
         agent = GetComponent<NavMeshAgent>();
         attackAnimSpeed = 1.4f;
         canAttack = true;
+        invincibility = false;
         SyncStat();
 
         // Player
@@ -49,6 +53,9 @@ public class Player : ACharacter
         InvokeRepeating("RecoverHp", 10f, 10f);
 
         noVeloMoveTime = 0f;
+
+        // Skill
+        attackedPassiveSkills = new List<AttackedPassiveSkill>();
     }
 
     private void SyncStat()
@@ -279,6 +286,10 @@ public class Player : ACharacter
 
     public override bool Attacked(int damage)
     {
+        if (invincibility)
+        {
+            damage = 0;
+        }
         int real = stat.TakeDamage(damage);    // 받은 피해 적용 (방어도 계산)
         gameManager.UIController.UpdatePlayerHpBar(stat.Hp, stat.MaxHp);    // view 업데이트
 
@@ -287,6 +298,19 @@ public class Player : ACharacter
             damageTextSystem = GameObject.Find("Damage Text System").GetComponent<DamageTextSystem>();
         }
         damageTextSystem.FloatDamageText(real, this.transform.position);
+
+        if (attackedPassiveSkills.Count > 0)
+        {
+            // 활성화된 스킬이 있는 경우
+            foreach (AttackedPassiveSkill skill in attackedPassiveSkills)
+            {
+                float temp = Random.value;
+                if (temp < skill.Percent)
+                {
+                    skill.Activate();
+                }
+            }
+        }
 
         if (stat.Hp < 1)
         {
@@ -378,5 +402,10 @@ public class Player : ACharacter
             case SkillType.PercentPassive:
                 break;
         }
+    }
+
+    public void AddAttackedPassiveSkill(AttackedPassiveSkill skill)
+    {
+        attackedPassiveSkills.Add(skill);
     }
 }

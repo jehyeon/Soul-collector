@@ -987,6 +987,8 @@ public class Inventory : MonoBehaviour
     {
         gameManager.SaveManager.Save.Gold += amount;
         textGold.text = string.Format("{0:#,0}", gameManager.SaveManager.Save.Gold).ToString();
+        
+        LayoutRebuilder.ForceRebuildLayoutImmediate(textGold.transform.parent.GetComponent<RectTransform>());
     }
 
     // -------------------------------------------------------------
